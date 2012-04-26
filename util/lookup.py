@@ -6,12 +6,12 @@ from bs4 import BeautifulSoup
 
 # TODO  close approach data
 
-class JPL_Asteroid:
+class Asteroid:
   def __init__(self, name):
     self.name = name
 
   def load(self):
-    r = Query(self.name)
+    r = JPL_Query(self.name)
 
     self.data = {}
 
@@ -28,7 +28,7 @@ class JPL_Asteroid:
 
     print self.data
 
-class Query:
+class JPL_Query:
   def __init__(self, query):
     src = urllib.urlopen('http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=%s;cad=1' % query ).read()
     self.soup = BeautifulSoup(src.replace('cellspacing="0"0', ''))
@@ -58,5 +58,5 @@ if __name__ == "__main__":
   if len(sys.argv) != 2:
     print 'usage: lookup <name>'
     sys.exit(1)
-  a = JPL_Asteroid(' '.join(sys.argv[1:]))
+  a = Asteroid(' '.join(sys.argv[1:]))
   a.load()
