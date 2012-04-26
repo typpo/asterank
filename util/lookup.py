@@ -50,10 +50,7 @@ class Query:
   def additionalInfoParameter(self, txt):
     tag = self.soup.find(text=txt)
     if tag:
-      res = tag.parent.next_sibling
-      res = re.sub(r'[^\d.]+', '', res)
-      print res
-
+      res = re.sub(r'[^\d.]+', '', tag.parent.next_sibling)
       return float(res)
     return -1
 
