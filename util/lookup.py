@@ -5,8 +5,7 @@ from bs4 import BeautifulSoup
 
 
 def lookup(query):
-  src = urllib.urlopen('http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=%s' % query ).read()
-  r = Result(src)
+  r = Query(query)
 
   data = {}
   data['diameter_km'] = r.physicalParameter('diameter')
@@ -20,8 +19,9 @@ def lookup(query):
 
   print data
 
-class Result:
-  def __init__(self, src):
+class Query:
+  def __init__(self, query):
+    src = urllib.urlopen('http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=%s' % query ).read()
     self.soup = BeautifulSoup(src.replace('cellspacing="0"0', ''))
 
   def orbitalParameter(self, txt):
