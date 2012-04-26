@@ -6,33 +6,37 @@ from bs4 import BeautifulSoup
 
 def lookup(query):
   src = urllib.urlopen('http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=%s' % query ).read()
-  soup = BeautifulSoup(src.replace('cellspacing="0"0', ''))
+  r = Result(src)
 
-  diameter_km = physicalParameter(soup, 'diameter')
-  gm = physicalParameter(soup, 'GM')
-  density = physicalParameter(soup, 'bulk density')
+  data = {}
+  data['diameter_km'] = r.physicalParameter('diameter')
+  data['gm'] = r.physicalParameter('GM')
+  data['density'] = r.physicalParameter('bulk density')
 
-  passage_jed = orbitalParameter(soup, 't', True)
-  perhilion_au = orbitalParameter(soup, 'q')
-  semimajor_au = orbitalParameter(soup, 'a')
-  period_days = orbitalParameter(soup, 'period')
+  data['passage_jed'] = r.orbitalParameter('t')
+  data['perhilion_au'] = r.orbitalParameter('q')
+  data['semimajor_au'] = r.orbitalParameter('a')
+  data['period_days'] = r.orbitalParameter('period')
 
-def orbitalParameter(soup, txt, subscript=False):
-  tag = soup.find(text=txt)
-  if tag :
-    if subscript:
+  print data
+
+class Result:
+  def __init__(self, src):
+    self.soup = BeautifulSoup(src.replace('cellspacing="0"0', ''))
+
+  def orbitalParameter(self, txt):
+    tag = self.soup.find(text=txt)
+    if tag :
       el = tag.find_parent('td').next_sibling.next_sibling.find('font').next
-    else:
-      el = tag.find_parent('td').next_sibling.next_sibling.find('font').next
-    return float(el)
-  return -1
+      return float(el)
+    return -1
 
-def physicalParameter(soup, txt, subscript=False):
-  tag = soup.find(text=txt)
-  if tag:
-    el = tag.find_parent('td').next_sibling.next_sibling.next_sibling.next_sibling.find('font').next
-    return float(el)
-  return -1
+  def physicalParameter(self, txt):
+    tag = self.soup.find(text=txt)
+    if tag:
+      el = tag.find_parent('td').next_sibling.next_sibling.next_sibling.next_sibling.find('font').next
+      return float(el)
+    return -1
 
 if __name__ == "__main__":
   if len(sys.argv) != 2:
