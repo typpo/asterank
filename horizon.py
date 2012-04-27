@@ -1,5 +1,9 @@
 #!/usr/bin/env python
+#
+# Basic client to browse and search NASA JPL Horizons data
+#
 
+import sys
 import csv
 import telnetlib
 from pymongo import Connection
@@ -37,7 +41,13 @@ def populateDb():
 def telnetLookup():
   t = telnetlib.Telnet()
   t.open('horizons.jpl.nasa.gov', 6775)
-  t.read_very_eager()
+  print t.read_very_eager()
+
+def test():
+  print "I'm here"
 
 if __name__ == "__main__":
-  populateDb()
+  if len(sys.argv) != 2:
+    print 'usage: horizons <fn name>'
+    sys.exit(1)
+  locals()[sys.argv[1]]()
