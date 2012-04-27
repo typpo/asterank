@@ -70,7 +70,6 @@ class JPL_Query:
     tag = tag.next_sibling.next_sibling
     results = []
     while tag:
-      # parse tr block
       texts = map(lambda x: x.get_text(), tag.find_all('font'))
       d = {}
       d['date'] = datetime.strptime(texts[0], '%Y-%b-%d %H:%M')

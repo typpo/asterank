@@ -6,6 +6,7 @@
 import sys
 import csv
 import telnetlib
+import scoring
 from pymongo import Connection
 
 DATA_PATH = 'data/fulldb.csv'
@@ -29,6 +30,9 @@ def populateDb():
         row[key] = val.strip()
       else:
         row[key] = fv
+
+    # compute score
+    row.score = scoring.score(row)
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
