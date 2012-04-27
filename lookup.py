@@ -4,6 +4,7 @@ import sys
 import urllib
 import re
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 class Asteroid:
   def __init__(self, name):
@@ -66,16 +67,15 @@ class JPL_Query:
     tag = tag.next_sibling.next_sibling
     results = []
     while tag:
-      print 'brap'
       # parse tr block
       texts = map(lambda x: x.get_text(), tag.find_all('font'))
       d = {}
-      d['date'] = texts[0]
+      d['date'] = datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
       d['uncertainty'] = texts[1]
       d['body'] = texts[2]
-      d['nom_dist'] = texts[3]
-      d['min_dist'] = texts[4]
-      d['max_dist'] = texts[5]
+      d['nom_dist_au'] = texts[3]
+      d['min_dist_au'] = texts[4]
+      d['max_dist_au'] = texts[5]
       d['v_relative'] = texts[6]
       d['v_infinity'] = texts[7]
       d['jd'] = texts[8]
