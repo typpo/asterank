@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+#
+# Client for live queries to JPL database lookup
+#
 
 import sys
 import urllib
