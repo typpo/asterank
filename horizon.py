@@ -4,7 +4,7 @@ import csv
 import telnetlib
 from pymongo import Connection
 
-DATA_PATH = 'data/minidb.csv'
+DATA_PATH = 'data/fulldb.csv'
 
 def populateDb():
   print 'Loading small body data...this may take a little bit'
@@ -12,6 +12,7 @@ def populateDb():
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
+  coll.ensure_index('full_name', unique=True)
 
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   n = 0
@@ -25,8 +26,10 @@ def populateDb():
       else:
         row[key] = fv
 
-    coll.update({'full_name': row['full_name']}, {'$set:', row}, True)  # upsert
+    coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
+    if n % 10000 == 0:
+      print n, '...'
 
   print 'Loaded', n, 'asteroids'
 
