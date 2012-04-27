@@ -1,10 +1,9 @@
 #!/usr/bin/env python
+
 import sys
 import urllib
 import re
 from bs4 import BeautifulSoup
-
-# TODO  close approach data
 
 class Asteroid:
   def __init__(self, name):
@@ -25,6 +24,8 @@ class Asteroid:
     self.data['period_days'] = r.orbitalParameter('period')
 
     self.data['emoid_au'] = r.additionalInfoParameter('Earth MOID')
+
+    self.data['close_approaches'] = r.closeApproaches()
 
     print self.data
 
@@ -53,6 +54,48 @@ class JPL_Query:
       res = re.sub(r'[^\d.]+', '', tag.parent.next_sibling)
       return float(res)
     return -1
+
+  def closeApproaches(self):
+    tag = self.soup.find(text='Nominal Distance (AU)')
+    if not tag:
+      return None
+    tag = tag.find_parent('tr')
+    if not tag:
+      return None
+
+    tag = tag.next_sibling.next_sibling
+    results = []
+    while tag:
+      print 'brap'
+      # parse tr block
+      texts = map(lambda x: x.get_text(), tag.find_all('font'))
+      d = {}
+      d['date'] = texts[0]
+      d['uncertainty'] = texts[1]
+      d['body'] = texts[2]
+      d['nom_dist'] = texts[3]
+      d['min_dist'] = texts[4]
+      d['max_dist'] = texts[5]
+      d['v_relative'] = texts[6]
+      d['v_infinity'] = texts[7]
+      d['jd'] = texts[8]
+      d['uncertainty2'] = texts[9]
+      d['semi_major'] = texts[10]
+      d['semi_minor'] = texts[11]
+      d['range_lov'] = texts[12]
+      d['n_sigma'] = texts[13]
+      d['bp'] = texts[14]
+      d['orbit_ref'] = texts[15]
+      d['ref'] = texts[16]
+      d['modified'] = texts[17]
+
+      results.append(d)
+
+      tag = tag.next_sibling
+      if tag:
+        tag = tag.next_sibling
+
+    return results
 
 if __name__ == "__main__":
   if len(sys.argv) != 2:
