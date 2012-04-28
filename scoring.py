@@ -12,14 +12,13 @@ def closeness_weight(obj):
   if obj['pha'] != 'N':
     s = s * 1.2
     """
-
-  #s = s * (1 / obj['q'])    # penalize distance aphelion
+  s = s * ((1/obj['ad']) * 100)    # penalize aphelion distance
   return s
 
 def price(obj):
   G = 6.67300e-11
   gmass = 1.47e21 * G if isinstance(obj['GM'], basestring) else obj['GM']
-  radius = obj['diameter'] if 'diameter' in obj else 5000  # 5km radius by default
+  radius = 5000 if obj['diameter'] == '' else obj['diameter']   # 5km radius by default
   vol = 4/3 * math.pi * math.pow(radius, 3) # model as sphere
   density = gmass / vol
 
