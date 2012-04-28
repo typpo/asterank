@@ -12,7 +12,7 @@ def closeness_weight(obj):
     s = s * 1.2
 
   #s = s * (1 / obj['q'])    # penalize distance aphelion
-  return s
+  return 5000 * s
 
 def price(obj):
   G = 6.67300e-11
@@ -21,7 +21,7 @@ def price(obj):
   vol = 4/3 * math.pi * math.pow(radius, 3) # model as sphere
   density = gmass / vol
 
-  return 10000 * ((1+density) * 500.8 + gmass * 60)
+  return 100000 * ((1+density) * 500.8 + gmass * 60)
 
 def score(obj):
-  return closeness_weight(obj) * price(obj)
+  return closeness_weight(obj) + price(obj)

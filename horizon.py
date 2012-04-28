@@ -23,7 +23,7 @@ def populateDb():
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   n = 0
   for row in reader:
-    if row['spec_T'] == '':
+    if row['spec_T'] == '' and row['spec_B'] == '':
       continue
     for key,val in row.items():
       # Clean up the input
