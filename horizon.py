@@ -8,6 +8,7 @@ import csv
 import telnetlib
 import scoring
 from pymongo import Connection
+from sets import Set
 
 DATA_PATH = 'data/fulldb.csv'
 
@@ -22,9 +23,11 @@ def populateDb():
 
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   n = 0
+  types = Set([])
   for row in reader:
     if row['spec_T'] == '' and row['spec_B'] == '':
       continue
+    types.add(row['spec_B'])
     for key,val in row.items():
       # Clean up the input
       try:
@@ -43,6 +46,7 @@ def populateDb():
       print n, '...',
 
   print 'Loaded', n, 'asteroids'
+  print types
 
 
 def telnetLookup():
