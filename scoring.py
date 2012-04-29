@@ -9,7 +9,7 @@ DEFAULT_MASS = 1.47e15  # kg
 
 CLASSIFICATION_MULTIPLIERS = {
   # Estimated value per m^3
-  'D': 1,
+  'D': 5.06,
   'Ld': 1,
   'V': 1,
   'Cgh': 1,
@@ -87,7 +87,8 @@ def price(obj):
   # density in kg/km^3
   #density = mass / vol
 
-  return estimateValue(obj, vol)
+  #return estimateValue(obj, vol)
+  return vol
 
 def estimateValue(obj, vol):
   """
