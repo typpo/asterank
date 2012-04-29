@@ -4,6 +4,9 @@
 from bigfloat import *   # TODO use this
 import math
 
+DEFAULT_RADIUS = 5  # km
+DEFAULT_MASS = 1.47e15  # kg
+
 def closeness_weight(obj):
   emoid = 1 if isinstance(obj['GM'], basestring) else obj['moid']
   s = (10-emoid) * 3
@@ -22,28 +25,28 @@ def price(obj):
   # mass in kg
   exactmass = False
   if isinstance(obj['GM'], basestring):
-    mass = 1.47e15
+    mass = DEFAULT_MASS
   else:
     exactmass = True
     mass = obj['GM'] / G
 
-
   # radius in m
-  if obj['diameter'] == '':
+  if isinstance(obj['diameter'], basestring):
     if exactmass:
       # If we know the mass, don't make assumptions about radius
       print 'Disqualified', obj['full_name']
       return -1
 
     # 5km radius by default
-    radius = 5
+    radius = DEFAULT_RADIUS
   else:
     if not exactmass:
       # If we know the radius, don't make assumptions about mass
-      print 'Disqualified', obj['full_name']
-      return -1
-
-    radius = obj['diameter'] / 2
+      # a lot of things meet this test
+      #print 'Disqualified', obj['full_name']
+      radius = DEFAULT_RADIUS
+    else:
+      radius = obj['diameter'] / 2
 
   # vol in km^3
   vol = 4/3 * math.pi * math.pow(radius, 3) # model as sphere
