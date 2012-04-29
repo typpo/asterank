@@ -1,7 +1,7 @@
 #
 # Scoring function for asteroid objects
 #
-from bigfloat import *   # TODO use this
+#from bigfloat import *   # TODO use this
 import math
 
 DEFAULT_RADIUS = 5  # km
@@ -9,22 +9,17 @@ DEFAULT_MASS = 1.47e15  # kg
 
 CLASSIFICATION_MULTIPLIERS = {
   # Estimated value per m^3
-  'S:': 1,
+  'D': 1,
   'Ld': 1,
   'V': 1,
-  'K:': 1,
   'Cgh': 1,
   'C type': 1,
-  'X:' : 1,
-  'C:' : 1,
   'Q' : 1,
-  'V:' : 1,
   'K' : 1,
   'A' : 1,
   'C' : 1,
   'B' : 1,
   'S(IV)': 1,
-  'Sq:': 1,
   'Sr': 1,
   'Sq': 1,
   'L': 1,
@@ -100,14 +95,15 @@ def estimateValue(obj, vol):
   """
 
   vol = vol * 1e9   # volume in m^3
-  m1 = CLASSIFICATION_MULTIPLIERS.get(obj['spec_B'], 1)
-  m2 = CLASSIFICATION_MULTIPLIERS.get(obj['spec_T'], 1)
-  if spec_B == 1 and spec_T == 1:
+  m1 = CLASSIFICATION_MULTIPLIERS.get(obj['spec_B'], -1)
+  #m2 = CLASSIFICATION_MULTIPLIERS.get(obj['spec_T'], -1)
+  #if m1 == -1 and m2 == -1:
+  if m1 == -1:
     print obj['full_name'], 'does not have mapped spectra type:', obj
-    return -1
+  return m1
 
   # TODO do we want to prefer SMASS?
-  return math.max(m1, m2)
+  #return max(m1, m2)
 
 def score(obj):
   #return price(obj) + closeness_weight(obj)

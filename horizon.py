@@ -25,17 +25,20 @@ def populateDb():
   n = 0
   types = Set([])
   for row in reader:
-    if row['spec_T'] == '' and row['spec_B'] == '':
+    #if row['spec_T'] == '' and row['spec_B'] == '':
+    if row['spec_B'] == '':
       continue
-    types.add(row['spec_B'])
+
+    # Clean up inputs
     for key,val in row.items():
-      # Clean up the input
       try:
         fv = float(val)
       except ValueError, TypeError:
         row[key] = val.strip()
       else:
         row[key] = fv
+    row['spec_T'] = row['spec_T'].replace(':', '')
+    row['spec_B'] = row['spec_B'].replace(':', '')
 
     # compute score
     row['score'] = scoring.score(row)
@@ -46,7 +49,6 @@ def populateDb():
       print n, '...',
 
   print 'Loaded', n, 'asteroids'
-  print types
 
 
 def telnetLookup():
