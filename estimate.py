@@ -4,7 +4,7 @@
 
 # General constants
 GENERAL_INDEX = {
-  'COST_TO_ORBIT': 22000000,  # $ / kg
+  'cost_to_orbit': 22000000,  # $ / kg
 }
 
 # Keys are asteroid spectra type. Values are maps from a material
@@ -37,3 +37,17 @@ MATERIALS_INDEX = {
   },
 
 }
+
+def valuePerKg(type):
+  mat_price_per_kg = 0
+  for mat in SPECTRA_INDEX[type]:
+    mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg']
+  return mat_price_per_kg
+
+def savedPerKg(type):
+  cto = GENERAL_INDEX['cost_to_orbit']
+  var ret = 0
+  for mat in SPECTRA_INDEX[type]:
+    pct = SPECTRA_INDEX[type][mat]
+    ret += cto * pct / 100
+  return ret
