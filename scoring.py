@@ -50,6 +50,7 @@ def price(obj):
       radius = obj['diameter'] / 2
 
   # vol in km^3
+  # TODO switch to ellipsoid vol
   vol = 4/3 * math.pi * math.pow(radius, 3) # model as sphere
 
   # density in kg/km^3
