@@ -58,7 +58,7 @@ def price(obj):
   #density = mass / vol
   """
 
-  return estimate.valuePerKg(obj, vol) * mass
+  return estimate.valuePerKg(obj) * mass
 
 def score(obj):
   #return price(obj) + closeness_weight(obj)
