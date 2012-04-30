@@ -20,8 +20,11 @@ SPECTRA_INDEX = {
     'nickel': 10,
     'cobalt': 10,
   },
+  'poo': {
+    'stainless steel': 50,
 
-},
+  }
+}
 
 # Keys are raw materials. Values are maps contain information on
 # the value of these materials.
@@ -40,14 +43,13 @@ MATERIALS_INDEX = {
 
 def valuePerKg(type):
   mat_price_per_kg = 0
-  for mat in SPECTRA_INDEX[type]:
-    mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg']
+  for mat, pct in SPECTRA_INDEX[type].iteritems():
+    mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg'] * pct / 100
   return mat_price_per_kg
 
 def savedPerKg(type):
   cto = GENERAL_INDEX['cost_to_orbit']
-  var ret = 0
-  for mat in SPECTRA_INDEX[type]:
-    pct = SPECTRA_INDEX[type][mat]
+  ret = 0
+  for mat,pct in SPECTRA_INDEX[type].iteritems():
     ret += cto * pct / 100
   return ret
