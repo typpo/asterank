@@ -31,6 +31,7 @@ def price(obj):
     exactmass = True
     mass = obj['GM'] / G
 
+  """
   # radius in m
   if isinstance(obj['diameter'], basestring):
     if exactmass:
@@ -55,19 +56,9 @@ def price(obj):
 
   # density in kg/km^3
   #density = mass / vol
-
-  return estimateValue(obj, vol) * mass
-
-def estimateValue(obj, vol):
-  """
-  vol: volume in km^3
   """
 
-  vol = vol * 1e9   # volume in m^3
-  type = obj['spec_B']
-
-
-  return estimate.valuePerKg(obj['spec_B'])
+  return estimate.valuePerKg(obj, vol) * mass
 
 def score(obj):
   #return price(obj) + closeness_weight(obj)

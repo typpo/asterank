@@ -27,7 +27,8 @@ def populateDb():
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
-      continue
+      #continue
+      row['spec_B'] = 'S'
 
     # Clean up inputs
     for key,val in row.items():
