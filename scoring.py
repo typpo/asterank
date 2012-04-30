@@ -3,42 +3,10 @@
 #
 #from bigfloat import *   # TODO use this
 import math
+import estimate
 
 DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
-
-CLASSIFICATION_MULTIPLIERS = {
-  # Estimated value per m^3
-  'D': 5.06,
-  'Ld': 1,
-  'V': 1,
-  'Cgh': 1,
-  'C type': 1,
-  'Q' : 1,
-  'K' : 1,
-  'A' : 1,
-  'C' : 1,
-  'B' : 1,
-  'S(IV)': 1,
-  'Sr': 1,
-  'Sq': 1,
-  'L': 1,
-  'O': 1,
-  'Sk': 1,
-  'S': 1,
-  'R': 1,
-  'U': 1,
-  'T': 1,
-  'Sl': 1,
-  'X': 1,
-  'Sa': 1,
-  'Xk': 1,
-  'Ch': 1,
-  'Cb': 1,
-  'Cg': 1,
-  'Xe': 1,
-  'Xc': 1,
-}
 
 def closeness_weight(obj):
   emoid = 1 if isinstance(obj['GM'], basestring) else obj['moid']
@@ -87,8 +55,7 @@ def price(obj):
   # density in kg/km^3
   #density = mass / vol
 
-  #return estimateValue(obj, vol)
-  return vol
+  return estimateValue(obj, vol) * mass
 
 def estimateValue(obj, vol):
   """
@@ -96,15 +63,10 @@ def estimateValue(obj, vol):
   """
 
   vol = vol * 1e9   # volume in m^3
-  m1 = CLASSIFICATION_MULTIPLIERS.get(obj['spec_B'], -1)
-  #m2 = CLASSIFICATION_MULTIPLIERS.get(obj['spec_T'], -1)
-  #if m1 == -1 and m2 == -1:
-  if m1 == -1:
-    print obj['full_name'], 'does not have mapped spectra type:', obj
-  return m1
+  type = obj['spec_B']
 
-  # TODO do we want to prefer SMASS?
-  #return max(m1, m2)
+
+  return estimate.valuePerKg(obj['spec_B'])
 
 def score(obj):
   #return price(obj) + closeness_weight(obj)

@@ -4,7 +4,7 @@
 
 # General constants
 GENERAL_INDEX = {
-  'cost_to_orbit': 22000000,  # $ / kg
+  'cost_to_orbit': 2900,  # $ / kg
 }
 
 # Keys are asteroid spectra type. Values are maps from a material
@@ -17,13 +17,15 @@ SPECTRA_INDEX = {
     'water': 0.000023,
   },
   'M': {
+    'iron': 88,
     'nickel': 10,
-    'cobalt': 10,
+    'cobalt': 0.5,
   },
-  'poo': {
-    'stainless steel': 50,
-
-  }
+  'X': {  # TODO these vals only apply to M-type within X
+    'iron': 88,
+    'nickel': 10,
+    'cobalt': 0.5,
+  },
 }
 
 # Keys are raw materials. Values are maps contain information on
@@ -33,7 +35,25 @@ MATERIALS_INDEX = {
     '$_per_kg': 0.01
   },
   'hydrogen': {
-    '$_per_kg': 0.01
+    '$_per_kg': 3.65808137,
+  },
+  'nitrogen': {
+    '$_per_kg': 0.074094,
+  },
+  'ammonia': {
+    '$_per_kg': 0,
+  },
+  'oxygen': {
+    '$_per_kg': 0.21,
+  },
+  'iron': {
+    '$_per_kg': 2e-7,
+  },
+  'nickel': {
+    '$_per_kg': 0.00002,
+  },
+  'cobalt': {
+    '$_per_kg': 0,
   },
   'stainless steel': {
     '$_per_kg': 0.20
@@ -42,10 +62,13 @@ MATERIALS_INDEX = {
 }
 
 def valuePerKg(type):
-  mat_price_per_kg = 0
-  for mat, pct in SPECTRA_INDEX[type].iteritems():
-    mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg'] * pct / 100
-  return mat_price_per_kg
+  try:
+    mat_price_per_kg = 0
+    for mat, pct in SPECTRA_INDEX[type].iteritems():
+      mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg'] * pct / 100
+    return mat_price_per_kg
+  except:
+    return -1
 
 def savedPerKg(type):
   cto = GENERAL_INDEX['cost_to_orbit']
