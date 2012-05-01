@@ -1,6 +1,7 @@
 var express = require('express')
-  , _ = require('underscore')
   , app = express.createServer()
+  , _ = require('underscore')
+  , mutil = require('./mongo.js')
 
 // Express config
 app.set('views', __dirname + '/views');
@@ -21,7 +22,35 @@ app.get('/', function(req, res) {
 
 app.get('/top', function(req, res) {
   var num = req.query['n'] || 100;
-  res.send('');
+  mutil.getCollection('asteroids', function(err, coll) {
+    if (err) {
+      res.send({err:true});
+      return;
+    }
+    coll.find().sort({score:-1}).limit(100).toArray(function(err, results) {
+      if (err) {
+        res.send({err:true});
+        return;
+      }
+      res.send(results);
+    });
+  });
+});
+
+app.get('/tot', function(req, res) {
+  mutil.getCollection('asteroids', function(err, coll) {
+    if (err) {
+      res.send({n:500000});
+      return;
+    }
+    coll.count(function(err, count) {
+      if (err) {
+        res.send({n:500000});
+        return;
+      }
+      res.send({n:count});
+    });
+  });
 });
 
 app.get('/search/:q', function(req, res) {
