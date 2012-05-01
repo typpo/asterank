@@ -19,3 +19,19 @@ body * {
 .welcome-blurb > * {
   font-size: 18px;
 }
+
+.results select, .results input {
+  display: inline;
+}
+
+.results td {
+  width: 100px;
+}
+
+.results {
+  margin: 15px;
+}
+
+.results .ui-icon {
+  float: right;
+}
