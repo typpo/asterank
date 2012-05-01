@@ -20,8 +20,14 @@ body * {
   font-size: 18px;
 }
 
-.results select, .results input {
+.results select {
   display: inline;
+  width: 75px;
+}
+
+.results input {
+  display: inline;
+  width: 125px;
 }
 
 .results td {
