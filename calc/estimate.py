@@ -136,6 +136,9 @@ SPECTRA_INDEX = {
   'T': {
 
   },
+  'U': {
+
+  },
   'V': {
     'magnesium silicate': 1e-30,
     'iron silicate': 0,
@@ -196,17 +199,19 @@ MATERIALS_INDEX = {
   'stainless steel': {
     '$_per_kg': 0.20
   },
-
+  'magnesium silicate': {
+    '$_per_kg': 1e-25,
+  },
+  'iron silicate': {
+    '$_per_kg': 0,
+  },
 }
 
 def valuePerKg(type):
-  try:
-    mat_price_per_kg = 0
-    for mat, pct in SPECTRA_INDEX[type].iteritems():
-      mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg'] * pct / 100
-    return mat_price_per_kg
-  except:
-    return -1
+  mat_price_per_kg = 0
+  for mat, pct in SPECTRA_INDEX[type].iteritems():
+    mat_price_per_kg += MATERIALS_INDEX[mat]['$_per_kg'] * pct / 100
+  return mat_price_per_kg
 
 def savedPerKg(type):
   cto = GENERAL_INDEX['cost_to_orbit']
