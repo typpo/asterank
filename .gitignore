@@ -2,6 +2,8 @@
 *.swo
 *.pyc
 *~
+*.log
 
 node_modules
-
+build
+pip-log.txt

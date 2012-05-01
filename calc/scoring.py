@@ -11,16 +11,16 @@ DEFAULT_MASS = 1.47e15  # kg
 def closeness_weight(obj):
   emoid = 1 if isinstance(obj['GM'], basestring) else obj['moid']
   s = (10-emoid) * 3
-  """
-  if obj['neo'] != 'N':
-    s = s * 1.4
-  if obj['pha'] != 'N':
-    s = s * 1.2
-    """
   s = s * ((1/obj['ad']) * 100)    # penalize aphelion distance
+  # TODO probably get more technical about the orbit
   return s
 
 def price(obj):
+  """
+  Returns a tuple of $ by two metrics:
+    0. Asteroid value per kg in raw materials.
+    1. Asteroid $ saved per kg versus sending it up from Earth.
+  """
   G = 6.67300e-20   # km^3 / kgs^2
 
   # mass in kg
@@ -58,8 +58,7 @@ def price(obj):
   #density = mass / vol
   """
 
-  return estimate.valuePerKg(obj) * mass
-
-def score(obj):
-  #return price(obj) + closeness_weight(obj)
-  return price(obj)
+  stype = obj['spec_B']
+  return [estimate.valuePerKg(stype) * mass,
+          estimate.savedPerKg(stype) * mass,
+         ]

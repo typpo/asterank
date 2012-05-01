@@ -8,7 +8,6 @@ import csv
 import telnetlib
 import scoring
 from pymongo import Connection
-from sets import Set
 
 DATA_PATH = 'data/fulldb.csv'
 
@@ -23,7 +22,6 @@ def populateDb():
 
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   n = 0
-  types = Set([])
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
@@ -42,7 +40,9 @@ def populateDb():
     row['spec_B'] = row['spec_B'].replace(':', '')
 
     # compute score
-    row['score'] = scoring.score(row)
+    row['price'], row['saved'] = scoring.price(row)
+    row['closeness'] = scoring.closeness_weight(row)
+    row['score'] = row['price'] / 1e9 * row['closeness']
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1

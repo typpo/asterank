@@ -1,0 +1,3 @@
+#!/bin/sh
+# just a shortcut
+exec "`dirname $0`/horizon.py" populateDb
