@@ -2,7 +2,7 @@ var Mongolian = require('mongolian')
   , _ = require('underscore')
   , sys = require('sys')
   , path = require('path')
-  , spawn = require('child_process').spawn;
+  , exec = require('child_process').exec;
 
 function topN(num, cb) {
   var db = new Mongolian('localhost/asterank');
