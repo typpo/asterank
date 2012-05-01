@@ -28,7 +28,6 @@ app.get('/top', function(req, res) {
   var server = new Mongolian;
   var db = server.db('asterank');
   var coll = db.collection('asteroids');
-
   coll.find().limit(num).sort({score:-1}).toArray(function(err, docs) {
     if (err) {
       res.send({err:true});
@@ -44,19 +43,16 @@ app.get('/top', function(req, res) {
   });
 });
 
-app.get('/tot', function(req, res) {
-  mutil.getCollection('asteroids', function(err, coll) {
+app.get('/count', function(req, res) {
+  var server = new Mongolian;
+  var db = server.db('asterank');
+  var coll = db.collection('asteroids');
+  coll.count(function(err, count) {
     if (err) {
       res.send({n:500000});
       return;
     }
-    coll.count(function(err, count) {
-      if (err) {
-        res.send({n:500000});
-        return;
-      }
-      res.send({n:count});
-    });
+    res.send({n:count});
   });
 });
 
