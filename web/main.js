@@ -21,13 +21,15 @@ app.get('/', function(req, res) {
 });
 
 app.get('/top', function(req, res) {
-  var num = req.query['n'] || 100;
+  var num = parseInt(req.query['n']);
+  if (isNaN(num) || typeof num !== 'number') num = 100;
+
   mutil.getCollection('asteroids', function(err, coll) {
     if (err) {
       res.send({err:true});
       return;
     }
-    coll.find().sort({score:-1}).limit(100).toArray(function(err, results) {
+    coll.find().sort({score:-1}).limit(num).toArray(function(err, results) {
       if (err) {
         res.send({err:true});
         return;
