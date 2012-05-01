@@ -12,7 +12,6 @@ app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
-
 // App
 
 app.get('/', function(req, res) {
@@ -24,7 +23,6 @@ app.get('/', function(req, res) {
 app.get('/top', function(req, res) {
   var num = parseInt(req.query['n']);
   if (isNaN(num) || typeof num !== 'number') num = 100;
-
   lookup.topN(num, function(err, result) {
     res.send({aaData:result});
   });
@@ -38,9 +36,9 @@ app.get('/count', function(req, res) {
 });
 
 app.get('/info/:query', function(req, res) {
-  // query JPL database for full information, but cache this stuff
-
-  res.send('ok');
+  lookup.query(req.params.query, function(err, result) {
+    res.send({data: result});
+  });
 });
 
 app.get('/search/:q', function(req, res) {
