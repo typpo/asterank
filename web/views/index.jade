@@ -16,46 +16,50 @@ div.navbar.navbar-fixed-top
             a(href='/') Disclaimer
 
 div.span12
-  div.container
-    div.hero-unit(style='padding:15px')
-      h2 Asterank is an economic and scientific catalog of over 500,000 asteroids in our solar system.
+  div.hero-unit(style='padding:15px')
+    h2 Asterank is an economic and scientific catalog of over 500,000 asteroids in our solar system.
 
-    div.welcome-blurb.alert.alert-info
-      <a class="close" data-dismiss="alert" href="#">×</a>
-      p With all the recent hype around asteroid mining, I wanted real numbers.  How realistic are the trillion dollar estimates?  What about the costs and overhead?
+  div.welcome-blurb.alert.alert-info
+    <a class="close" data-dismiss="alert" href="#">×</a>
+    p With all the recent hype around asteroid mining, I wanted real numbers.  How realistic are the trillion dollar estimates?  What about the costs and overhead?
 
-      p I've attempted to calculate or infer things like asteroid mass and composition.  I’ve collected data on their orbits fromsources including NASA and JPL.  Using this information, I estimate the costs and rewards of commercially exploiting rocks in space.
+    p I've attempted to calculate or infer things like asteroid mass and composition.  I’ve collected data on their orbits from sources including NASA and JPL.  Using this information, I estimate the costs and rewards of commercially exploiting rocks in space.
 
-      p Take a look at the results:
-        ul
-          li Best overall (most cost-effective)
-          li Most accessible
-          li Most profitable
+    p Take a look at the results:
+      ul
+        li Best overall (most cost-effective)
+        li Most accessible
+        li Most profitable
 
-      p There is $$ worth of rock out there.
+    p There is $$ worth of rock out there.
 
-    div
-      div.row
-        div.span4.well
-          form.form-inline
-            div
-              span Show top
-              select#load(style='margin:0 5px 0').input-small
-                option 100
-                option 1,000
-                option 10,000
-                option 100,000
-                option 1,000,000
-              span  asteroids
+  div.row
+    div.span12.well
+      form.form-inline(style='margin:0')
+        div
+          span Search top
+          select#top_num(style='margin:0 5px 0').input-small
+            option 100
+            option 1,000
+            option 10,000
+            option 100,000
+            option 1,000,000
+          span  asteroids sorted by
+          select#top_sort(style='margin:0 5px 0').input-medium
+            option most cost effective
+            option most valuable
+            option closest
+          input#submit.btn.btn-primary(type='submit')
 
-            div(style='margin: 5px 0 0')
-              p or
-            div(style='margin: 5px 0 0')
-              span Search for an object:
-              input#search(type='text', style='margin: 0 5px 0')
+        //
+          div(style='margin: 5px 0 0')
+            p or
+          div(style='margin: 5px 0 0')
+            span Search for an object:
+            input#search(type='text', style='margin: 0 5px 0')
 
-            div(style='margin: 5px 0 0')
-              input#submit.btn.btn-primary(type='submit')
+          div(style='margin: 5px 0 0')
+            input#submit.btn.btn-primary(type='submit')
 
 div.results
   table#tbl(border=1, cellpadding=5, cellspacing=10)
