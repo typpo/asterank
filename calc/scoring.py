@@ -10,7 +10,7 @@ DEFAULT_MASS = 1.47e15  # kg
 
 def closeness_weight(obj):
   emoid = 1 if isinstance(obj['GM'], basestring) else obj['moid']
-  s = (10-(emoid*emoid)) * 3
+  s = pow((20-emoid)+1, 2)
   s = s * ((1/obj['ad']) * 100)    # penalize aphelion distance
   # TODO probably get more technical about the orbit
   return s
