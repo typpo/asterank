@@ -34,7 +34,7 @@ app.get('/top', function(req, res) {
         res.send({err:true});
         return;
       }
-      res.send(results);
+      res.send({aaData:results});
     });
   });
 });
