@@ -6,6 +6,7 @@
 import sys
 import urllib
 import re
+import json
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -31,7 +32,7 @@ class Asteroid:
 
     self.data['close_approaches'] = r.closeApproaches()
 
-    print self.data
+    #print self.data
 
 class JPL_Query:
   def __init__(self, query):
@@ -72,7 +73,7 @@ class JPL_Query:
     while tag:
       texts = map(lambda x: x.get_text(), tag.find_all('font'))
       d = {}
-      d['date'] = datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
+      d['date'] = texts[0]  #datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
       d['uncertainty'] = texts[1]
       d['body'] = texts[2]
       d['nom_dist_au'] = texts[3]
@@ -105,3 +106,4 @@ if __name__ == "__main__":
     sys.exit(1)
   a = Asteroid(' '.join(sys.argv[1:]))
   a.load()
+  print json.dumps(a.data)
