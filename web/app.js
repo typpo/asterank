@@ -1,7 +1,7 @@
 var express = require('express')
   , app = express.createServer()
   , _ = require('underscore')
-  , Mongolian = require('mongolian')
+  , lookup = require('./lookup.js')
 
 // Express config
 app.set('views', __dirname + '/views');
@@ -25,33 +25,22 @@ app.get('/top', function(req, res) {
   var num = parseInt(req.query['n']);
   if (isNaN(num) || typeof num !== 'number') num = 100;
 
-  var server = new Mongolian;
-  var db = server.db('asterank');
-  var coll = db.collection('asteroids');
-  coll.find().limit(num).sort({score:-1}).toArray(function(err, docs) {
-    if (err) {
-      res.send({err:true});
-      return;
-    }
-    var result = _.map(docs, function(doc) {
-      return _.pick(doc, 'score', 'saved', 'price', 'closeness', 'GM', 'spec_B', 'full_name',
-                      'moid', 'neo', 'pha', 'diameter');
-    });
+  lookup.topN(num, function(err, result) {
     res.send({aaData:result});
   });
+
 });
 
 app.get('/count', function(req, res) {
-  var server = new Mongolian;
-  var db = server.db('asterank');
-  var coll = db.collection('asteroids');
-  coll.count(function(err, count) {
-    if (err) {
-      res.send({n:500000});
-      return;
-    }
-    res.send({n:count});
+  lookup.count(num, function(err, result) {
+    res.send({n: result});
   });
+});
+
+app.get('/info/:query', function(req, res) {
+  // query JPL database for full information, but cache this stuff
+
+  res.send('ok');
 });
 
 app.get('/search/:q', function(req, res) {
