@@ -19,17 +19,34 @@ div.span12
       p There is $$ worth of rock out there.
 
     div.results
-      form.form-search
-        input#search.search-query(type='text')
+      div.row
+        div.span4.well
+          form.form-inline
+            div
+              span Show top
+              select#load(style='margin:0 5px 0')
+                option test
+              span  asteroids
 
-      table(border=1, cellpadding=5, cellspacing=10)
-        thead(style='font-weight:bold;')
-          td 123
-          td 457
-          td 980
-        tr
-          td dkjdasjhdas
-          td asdkasdl
-          td adslkdasjkl
+            div(style='margin: 5px 0 0')
+              p or
+            div(style='margin: 5px 0 0')
+              span Search for an object:
+              input#search(type='text', style='margin: 0 5px 0')
+
+            div(style='margin: 5px 0 0')
+              input#submit.btn.btn-primary(type='submit')
+
+      div.row
+        div.span12
+          table(border=1, cellpadding=5, cellspacing=10)
+            thead(style='font-weight:bold;')
+              td 123
+              td 457
+              td 980
+            tr
+              td dkjdasjhdas
+              td asdkasdl
+              td adslkdasjkl
 
 
