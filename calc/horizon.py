@@ -42,7 +42,7 @@ def populateDb():
     # compute score
     row['price'], row['saved'] = scoring.price(row)
     row['closeness'] = scoring.closeness_weight(row)
-    row['score'] = row['price'] / 1e9 * row['closeness']
+    row['score'] = row['price'] / 1e20 * row['closeness']
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
