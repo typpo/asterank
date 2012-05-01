@@ -15,7 +15,7 @@ app.use(express.bodyParser());
 
 app.get('/', function(req, res) {
   res.render('index', {
-    admin: opts.admin,
+
   });
 });
 
