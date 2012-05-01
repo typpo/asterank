@@ -33,8 +33,6 @@ app.get('/top', function(req, res) {
       res.send({err:true});
       return;
     }
-
-    console.log(docs);
     var result = _.map(docs, function(doc) {
       return _.pick(doc, 'score', 'saved', 'price', 'closeness', 'GM', 'spec_B', 'full_name',
                       'moid', 'neo', 'pha', 'diameter');
