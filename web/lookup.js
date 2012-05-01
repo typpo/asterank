@@ -2,11 +2,10 @@ var Mongolian = require('mongolian')
   , _ = require('underscore')
   , sys = require('sys')
   , path = require('path')
-  , exec = require('child_process').exec;
+  , spawn = require('child_process').spawn;
 
 function topN(num, cb) {
-  var server = new Mongolian;
-  var db = server.db('asterank');
+  var db = new Mongolian('localhost/asterank');
   var coll = db.collection('asteroids');
   coll.find().limit(num).sort({score:-1}).toArray(function(err, docs) {
     if (err) {
@@ -22,8 +21,7 @@ function topN(num, cb) {
 }
 
 function count(cb) {
-  var server = new Mongolian;
-  var db = server.db('asterank');
+  var db = new Mongolian('localhost/asterank');
   var coll = db.collection('asteroids');
   coll.count(function(err, count) {
     if (err) {
@@ -35,22 +33,38 @@ function count(cb) {
 }
 
 function query(query, cb) {
-  // query JPL database for full information, but cache it
-
+  // Validate - this stuff will be exec'ed. Should switch to spawn.
   if (!/^[a-z0-9 ]+$/.test(query)) {
     cb(true, null);
     return;
   }
+  query = query.trim();
 
-  var child = exec(path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query,
-               function (error, stdout, stderr) {
-    if (error) {
-      cb(true, null);
+  // Query JPL database for full information, but check the cache first.
+  var db = new Mongolian('localhost/asterank');
+  var coll = db.collection('jpl');
+  coll.findOne({tag_name: query}, function(err, doc) {
+    if (err || !doc) {
+      var child = exec(path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query,
+                   function (error, stdout, stderr) {
+        if (error) {
+          cb(true, null);
+        }
+        else {
+          var result = JSON.parse(stdout);
+          cb(null, result);
+          // record it in cache
+          result.tag_name = query;
+          coll.insert(result);
+        }
+      });
     }
     else {
-      cb(null, JSON.parse(stdout));
+      delete doc._id;
+      cb(null, doc);
     }
   });
+
 }
 
 module.exports = {
