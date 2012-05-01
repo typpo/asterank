@@ -19,6 +19,15 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/top', function(req, res) {
+  var num = req.query['n'] || 100;
+  res.send('');
+});
+
+app.get('/search/:q', function(req, res) {
+  res.send('');
+});
+
 var port = process.env.PORT || 8080;
 app.listen(port);
 
