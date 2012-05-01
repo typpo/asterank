@@ -4,6 +4,8 @@ $(function() {
   $('#tbl').dataTable( {
     "bProcessing": true,
     "sAjaxSource": "/top",
+    "aaSorting": [[ 1, "desc" ]],
+    "bJQueryUI": true,
     "aoColumns": [
         { "mDataProp": "full_name" },
         { "mDataProp": "score" },
