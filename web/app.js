@@ -24,7 +24,7 @@ app.get('/top', function(req, res) {
   var num = parseInt(req.query['n']);
   if (isNaN(num) || typeof num !== 'number') num = 100;
   lookup.topN(num, function(err, result) {
-    res.send({aaData:result});
+    res.send({results:result});
   });
 
 });
