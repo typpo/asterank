@@ -11,7 +11,8 @@ $(function() {
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
         if (typeof (val) === 'number' && $.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
-          val = toFuzz(val);
+          var suffix = obj['inexact'] ? '*' : '';
+          val = toFuzz(val) + suffix;
         }
         else if (val.length > 15) {
           val = val.substring(0,12) + '...';

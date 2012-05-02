@@ -40,6 +40,7 @@ def price(obj):
   exactmass = False
   if isinstance(obj['GM'], basestring):
     mass = DEFAULT_MASS
+    obj['inexact'] = True
   else:
     exactmass = True
     mass = obj['GM'] / G
