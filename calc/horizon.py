@@ -25,8 +25,8 @@ def populateDb():
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
-      #continue
-      row['spec_B'] = 'S'
+      continue
+      #row['spec_B'] = 'S'
 
     # Clean up inputs
     for key,val in row.items():
@@ -42,7 +42,13 @@ def populateDb():
     # compute score
     row['price'], row['saved'] = scoring.price(row)
     row['closeness'] = scoring.closeness_weight(row)
-    row['score'] = row['price'] / 1e19 * row['closeness']
+    # TODO move this into scoring once I get it right
+    score = min(row['price'], 1e14) / 1e12
+    if score < 0.1:
+      row['score'] = score
+    else:
+      score = score + row['closeness']
+    row['score'] = score
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
