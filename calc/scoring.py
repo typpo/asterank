@@ -7,9 +7,10 @@ import estimate
 
 DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
+DEFAULT_MOID = 1.5
 
 def closeness_weight(obj):
-  emoid = 1 if isinstance(obj['GM'], basestring) else obj['moid']
+  emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
   s = pow((20-emoid)+1, 2)
   s = s * ((1/obj['ad']) * 100)    # penalize aphelion distance
   # TODO probably get more technical about the orbit
