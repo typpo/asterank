@@ -1,5 +1,6 @@
 
 var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'moid', 'pha'];
+var FUZZY_FIELDS = ['price', 'saved'];
 
 $(function() {
   var $tbody = $('#tbl tbody');
@@ -9,7 +10,7 @@ $(function() {
       var html = '<tr>';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
-        if (typeof (val) === 'number') {
+        if (typeof (val) === 'number' && $.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
           val = toFuzz(val);
         }
         else if (val.length > 15) {
