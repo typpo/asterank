@@ -30,14 +30,14 @@ body * {
   width: 125px;
 }
 
-.results td {
-  width: 100px;
-}
-
 .results {
   margin: 15px;
 }
 
 .results .ui-icon {
   float: right;
+}
+
+.row-selected {
+  background-color: #9FAFD1;
 }
