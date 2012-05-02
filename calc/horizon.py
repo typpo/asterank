@@ -7,9 +7,11 @@ import sys
 import csv
 import telnetlib
 import scoring
+import re
 from pymongo import Connection
 
 DATA_PATH = 'data/fulldb.csv'
+DV_PATH = 'data/deltav/db.csv'
 
 def populateDb():
   print 'Loading small body data...this may take a while'
@@ -21,6 +23,7 @@ def populateDb():
   coll.ensure_index('score')
 
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
+  designation_regex = re.compile('.*\((.*)\)')
   n = 0
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
@@ -50,6 +53,10 @@ def populateDb():
     else:
       score = score + row['closeness']
     row['score'] = score
+
+    m = designation_regex.match(row['full_name'])
+    if m:
+      row['prov_des'] = m.groups()[0]
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
