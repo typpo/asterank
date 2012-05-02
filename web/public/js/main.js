@@ -30,7 +30,7 @@ $(function() {
       $(this).addClass('row-selected');
       // TODO open some dialog?
       //
-      $('#object-modal').modal();
+      //$('#object-modal').modal();
     }
   });
 
