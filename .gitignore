@@ -3,6 +3,7 @@
 *.pyc
 *~
 *.log
+*.rdb
 
 node_modules
 build
