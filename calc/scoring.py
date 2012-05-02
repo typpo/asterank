@@ -8,7 +8,7 @@ import estimate
 
 DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
-DEFAULT_MOID = 2  # TODO get avg moid
+DEFAULT_MOID = 1  # TODO get avg moid
 
 def closeness_weight(obj):
   emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
@@ -27,7 +27,7 @@ def closeness_weight(obj):
   ph_score = pow(math.e, -0.5 * ph)
 
   # TODO probably get more technical about the orbit
-  return pow(moid_score + aph_score + ma_score + ph_score + 1, 2)
+  return pow(moid_score + aph_score + ma_score + ph_score + 1, 2) / emoid
 
 def price(obj):
   """
