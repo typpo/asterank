@@ -8,25 +8,20 @@ $(function() {
       var obj = data.results[i];
       var html = '<tr>';
       for (var j=0; j < HEADERS.length; j++) {
-        html += '<td>' + obj[HEADERS[j]] + '</td>';
+        var val = obj[HEADERS[j]] + '';
+        if (val.length > 15) {
+          val = val.substring(0,12) + '...';
+
+        }
+        html += '<td>' + val + '</td>';
       }
       html += '</tr>';
       $tbody.append(html);
     }
-
   });
 
   $(document).on('click', '#tbl tbody tr', function(e) {
-    if ($(this).hasClass('row-selected') ) {
-      $(this).removeClass('row-selected');
-    }
-    else {
-      $('#tbl tr.row-selected').removeClass('row-selected');
-      $(this).addClass('row-selected');
-      // TODO open some dialog?
-      //
-      //$('#object-modal').modal();
-    }
+    // Update right hand side
   });
 
 });
