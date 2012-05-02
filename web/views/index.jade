@@ -67,28 +67,40 @@ div.span12
           div(style='margin: 5px 0 0')
             input#submit.btn.btn-primary(type='submit')
 
-div.results(style='width:50%;float:left;')
-  table#tbl(border=1, cellpadding=5, cellspacing=10)
-    thead
+div.row(style='margin-left:0')
+  div.results(style='width:70%;float:left;overflow:auto;overflow-y:hidden;-ms-overflow-y: hidden;')
+    table#tbl(border=1, cellpadding=5, cellspacing=10, width='100%')
+      thead
+        tr
+          th Name
+          th Score
+          th Price
+          th Saved
+          th Closeness
+          th MOID
+          th pha
+          th Type
+          th Mass (GM)
+          th Diameter
+      tbody
+
+  div(style='width:25%;float:right;padding:15px 0 0')
+    h1 Pallas 2
+    table(border=1)
       tr
-        th Name
-        th Score
-        th Price
-        th Saved
-        th Closeness
-        th MOID
-        th pha
-        th Type
-        th Mass (GM)
-        th Diameter
-    tbody
-  div
-    ul
-    li Price - the current price of the raw materials in this object.
-    li Saved - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
-    li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
-    li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
-    li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
+        td Full designation
+        td blahblah
+      tr
+        td Orbit
+        td meow
+
+div.row(style='margin-left:15px')
+  ul
+  li Price - the current price of the raw materials in this object.
+  li Saved - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
+  li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
+  li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
+  li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
 
 div#feedback-modal.modal(style='display:none;')
   div.modal-header
