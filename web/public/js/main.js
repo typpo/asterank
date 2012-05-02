@@ -29,6 +29,8 @@ $(function() {
       $('#tbl tr.row-selected').removeClass('row-selected');
       $(this).addClass('row-selected');
       // TODO open some dialog?
+      //
+      $('#object-modal').modal();
     }
   });
 
