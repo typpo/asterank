@@ -1,5 +1,5 @@
 
-var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'pha', 'moid'];
+var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'moid', 'pha'];
 
 $(function() {
   var $tbody = $('#tbl tbody');
@@ -8,10 +8,12 @@ $(function() {
       var obj = data.results[i];
       var html = '<tr>';
       for (var j=0; j < HEADERS.length; j++) {
-        var val = obj[HEADERS[j]] + '';
-        if (val.length > 15) {
+        var val = obj[HEADERS[j]];
+        if (typeof (val) === 'number') {
+          val = toFuzz(val);
+        }
+        else if (val.length > 15) {
           val = val.substring(0,12) + '...';
-
         }
         html += '<td>' + val + '</td>';
       }
