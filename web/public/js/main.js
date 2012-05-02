@@ -5,6 +5,7 @@ $(function() {
     "bProcessing": true,
     "sAjaxSource": "/top",
     "aaSorting": [[ 1, "desc" ]],
+    "sAjaxDataProp": "results",
     "bJQueryUI": true,
     "aoColumns": [
       { "mDataProp": "full_name" },
