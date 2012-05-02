@@ -11,10 +11,15 @@ DEFAULT_MOID = 1.5
 
 def closeness_weight(obj):
   emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
-  s = pow((20-emoid)+1, 2)
-  s = s * ((1/obj['ad']) * 100)    # penalize aphelion distance
+  moid_score = 10-emoid*5
+  moid_score = pow(max(moid_score, 0), 2)
+
+  # penalize aphelion distance
+  aph_score = 10-obj['ad']*5
+  aph_score = pow(max(aph_score, 0), 2)
+
   # TODO probably get more technical about the orbit
-  return s
+  return moid_score + aph_score
 
 def price(obj):
   """
@@ -60,6 +65,5 @@ def price(obj):
   """
 
   stype = obj['spec_B']
-  return [estimate.valuePerKg(stype) * mass,
-          estimate.savedPerKg(stype) * mass,
-         ]
+  return (estimate.valuePerKg(stype) * mass,
+          estimate.savedPerKg(stype) * mass)
