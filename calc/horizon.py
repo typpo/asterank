@@ -21,15 +21,16 @@ def populateDb():
   coll = db.asteroids
   coll.ensure_index('full_name', unique=True)
   coll.ensure_index('score')
+  coll.ensure_index('prov_des')
 
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
-  designation_regex = re.compile('.*\((.*)\)')
+  designation_regex = re.compile('.*\(([^\)]*)\)')
   n = 0
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
-      continue
-      #row['spec_B'] = 'S'
+      #continue
+      row['spec_B'] = 'S'
 
     # Clean up inputs
     for key,val in row.items():
@@ -57,11 +58,27 @@ def populateDb():
     m = designation_regex.match(row['full_name'])
     if m:
       row['prov_des'] = m.groups()[0]
+    else:
+      row['prov_des'] = ''
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
     if n % 1000 == 0:
       print n, '...',
+
+  # now match dv
+  f = open(DV_PATH, 'r')
+  lines = f.readlines()
+  f.close()
+  print '\nLoading deltav data...'
+  for line in lines:
+    parts = line.split(',')
+    des = parts[0]
+    dv = float(parts[1])
+    if coll.find_one({'prov_des': des}) is None:
+      print 'Could not find asteroid with designation', des, 'for dv match'
+    coll.update({'prov_des': des}, {'$set': {'dv': dv}})
+
 
   print 'Loaded', n, 'asteroids'
 
