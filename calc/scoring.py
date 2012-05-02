@@ -27,7 +27,7 @@ def closeness_weight(obj):
   ph_score = pow(math.e, -0.5 * ph)
 
   # TODO probably get more technical about the orbit
-  return pow(moid_score + aph_score + ma_score + ph_score + 1, 2) / emoid
+  return pow(moid_score + aph_score + ma_score + ph_score + 1, 2)
 
 def price(obj):
   """

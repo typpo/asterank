@@ -10,6 +10,8 @@ $(function() {
       var html = '<tr>';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
+        if (!val)
+          val = '';
         if (typeof (val) === 'number' && $.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
           var suffix = obj['inexact'] ? '*' : '';
           val = toFuzz(val) + suffix;
