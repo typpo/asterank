@@ -4,7 +4,7 @@
 
 # General constants
 GENERAL_INDEX = {
-  'cost_to_orbit': 2900,  # $ / kg
+  'cost_to_orbit': 2200,  # $ / kg
 }
 
 # Keys are asteroid spectra type. Values are maps from a material
@@ -133,7 +133,7 @@ SPECTRA_INDEX = {
 }
 
 
-# Keys are raw materials. Values are maps contain information on
+# Keys are raw materials. Values are maps containing information on
 # the value of these materials.
 MATERIALS_INDEX = {
   'water': {
@@ -185,4 +185,4 @@ def savedPerKg(type):
   ret = 0
   for mat,pct in SPECTRA_INDEX[type].iteritems():
     ret += cto * pct / 100
-  return ret - (cto / 10)  # assume it costs 1/10 as much to mine and get off the asteroid
+  return ret - (cto / 100)  # assume it costs 1/100 as much to mine and get off the asteroid

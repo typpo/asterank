@@ -3,6 +3,7 @@
 #
 #from bigfloat import *   # TODO use this
 import math
+import random
 import estimate
 
 DEFAULT_RADIUS = 5  # km
@@ -41,6 +42,7 @@ def price(obj):
   if isinstance(obj['GM'], basestring):
     mass = DEFAULT_MASS
     obj['inexact'] = True
+    mass = mass + (random.random() - .5) * 1e14   # some random factor
   else:
     exactmass = True
     mass = obj['GM'] / G
