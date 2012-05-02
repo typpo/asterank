@@ -67,8 +67,8 @@ div.span12
           div(style='margin: 5px 0 0')
             input#submit.btn.btn-primary(type='submit')
 
-div.results
-  table#tbl(border=1, cellpadding=5, cellspacing=10, width='100%')
+div.results(style='width:50%;float:left;')
+  table#tbl(border=1, cellpadding=5, cellspacing=10)
     thead
       tr
         th Name
@@ -89,3 +89,24 @@ div.results
     li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
     li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
     li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
+
+div#feedback-modal.modal(style='display:none;')
+  div.modal-header
+    a.close(data-dismiss='modal') ×
+    h2 Feedback
+  div.modal-body
+    p
+      textarea.xlarge(rows=5, cols=80, style='width:500px')#feedback
+  div.modal-footer
+    a#submit-feedback.btn.btn-primary(data-dismiss='modal') Submit
+    a.btn(data-dismiss='modal') Close
+
+div#object-modal.modal(style='display:none;')
+  div.modal-header
+    a.close(data-dismiss='modal') ×
+    h2#object-modal-title Object details
+  div#object-modal-body.modal-body
+    p blah
+  div.modal-footer
+    a#submit-object.btn.btn-primary(data-dismiss='modal') Submit
+    a.btn(data-dismiss='modal') Close
