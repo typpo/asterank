@@ -25,6 +25,12 @@ div.span12
 
     p I've attempted to calculate or infer things like asteroid mass and composition.  I’ve collected data on their orbits from sources including NASA and JPL.  Using this information, I estimate the costs and rewards of commercially exploiting rocks in space.
 
+    p There are three factors we consider in this evaluation:
+      ol
+        li <strong>Cost to Orbit</strong> - The biggest obstacle to the commercialization of space getting things into orbit.  How much money do we save by mining in space?
+        li <strong>Cost of Materials</strong> - Asteroids are full of valuable raw materials.  How much are they worth?
+        li something else
+
     p Take a look at the results:
       ul
         li Best overall (most cost-effective)
@@ -71,9 +77,15 @@ div.results
         th Saved
         th Closeness
         th MOID
-        th neo
         th pha
         th Type
         th Mass (GM)
         th Diameter
     tbody
+  div
+    ul
+    li Price - the current price of the raw materials in this object.
+    li Saved - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
+    li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
+    li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
+    li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.

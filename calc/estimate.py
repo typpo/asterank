@@ -7,39 +7,6 @@ GENERAL_INDEX = {
   'cost_to_orbit': 2900,  # $ / kg
 }
 
-CLASSIFICATION_MULTIPLIERS = {
-  # Estimated value per m^3
-  'D': 5.06,
-  'Ld': 1,
-  'V': 1,
-  'Cgh': 1,
-  'C type': 1,
-  'Q' : 1,
-  'K' : 1,
-  'A' : 1,
-  'C' : 1,
-  'B' : 1,
-  'S(IV)': 1,
-  'Sr': 1,
-  'Sq': 1,
-  'L': 1,
-  'O': 1,
-  'Sk': 1,
-  'S': 1,
-  'R': 1,
-  'U': 1,
-  'T': 1,
-  'Sl': 1,
-  'X': 1,
-  'Sa': 1,
-  'Xk': 1,
-  'Ch': 1,
-  'Cb': 1,
-  'Cg': 1,
-  'Xe': 1,
-  'Xc': 1,
-}
-
 # Keys are asteroid spectra type. Values are maps from a material
 # to the percent mass of each material.
 SPECTRA_INDEX = {
@@ -218,4 +185,4 @@ def savedPerKg(type):
   ret = 0
   for mat,pct in SPECTRA_INDEX[type].iteritems():
     ret += cto * pct / 100
-  return ret
+  return ret - (cto / 2)  # assume it costs half as much to mine and get off the asteroid

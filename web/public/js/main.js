@@ -14,7 +14,6 @@ $(function() {
       { "mDataProp": "saved" },
       { "mDataProp": "closeness" },
       { "mDataProp": "moid" },
-      { "mDataProp": "neo" },
       { "mDataProp": "pha" },
       { "mDataProp": "spec_B" },
       { "mDataProp": "GM" },
