@@ -43,8 +43,9 @@ def populateDb():
     row['price'], row['saved'] = scoring.price(row)
     row['closeness'] = scoring.closeness_weight(row)
     # TODO move this into scoring once I get it right
-    score = min(row['price'], 1e14) / 1e12
-    if score < 0.1:
+    score = min(row['price'], 1e14) / 1e13
+    if score < 0.0001:
+      # It's worthless, so closeness doesn't matter
       row['score'] = score
     else:
       score = score + row['closeness']
