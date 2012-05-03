@@ -21,9 +21,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/top', function(req, res) {
-  var num = parseInt(req.query['n']);
-  if (isNaN(num) || typeof num !== 'number') num = 100;
-  lookup.topN(num, function(err, result) {
+  var num = parseInt(req.query.n);
+  if (isNaN(num) || typeof num !== 'number')
+    num = 100;
+  else
+    num = Math.max(num, 10000);
+  lookup.topN(num, req.query.sort, function(err, result) {
     res.send({results:result});
   });
 
