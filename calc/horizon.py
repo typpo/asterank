@@ -29,8 +29,8 @@ def populateDb():
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
-      #continue
-      row['spec_B'] = 'S'
+      continue
+      #row['spec_B'] = 'S'
 
     # Clean up inputs
     for key,val in row.items():
@@ -47,7 +47,7 @@ def populateDb():
     row['price'], row['saved'] = scoring.price(row)
     row['closeness'] = scoring.closeness_weight(row)
     # TODO move this into scoring once I get it right
-    score = min(row['price'], 1e14) / 1e13
+    score = min(row['price'], 1e14) / 5e12
     if score < 0.0001:
       # It's worthless, so closeness doesn't matter
       row['score'] = score
