@@ -11,6 +11,10 @@ $(function() {
     var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $(this).attr('data-obj');
     $('#details h1').html(obj);
+
+    // workaround for a glitch on mobile devices
+    $("#tbl-container").scroll();
+
     $.getJSON('/info/' + obj, function(result) {
       $tbody.empty();
       for (var x in result.data) {
@@ -43,10 +47,14 @@ $(function() {
           }
         }
       }
+      // workaround for a glitch on mobile devices
+      $("#tbl-container").scroll();
 
     });
   });
-
+  $("#tbl").thfloat({
+    attachment: '#tbl-container'
+  });
 });
 
 function doSearch() {
