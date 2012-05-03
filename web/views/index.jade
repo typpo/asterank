@@ -19,8 +19,7 @@ div.span12
   div.hero-unit(style='padding:15px')
     h2 Asterank is an economic and scientific catalog of over 500,000 asteroids in our solar system.
 
-  div.welcome-blurb.alert.alert-info
-    <a class="close" data-dismiss="alert" href="#">×</a>
+  div.welcome-blurb.well
     p With all the recent hype around asteroid mining, I wanted real numbers.  How realistic are the trillion dollar estimates?  What about the costs and overhead?
 
     p I've attempted to calculate or infer things like asteroid mass and composition.  I’ve collected data on their orbits from multiple scientific sources.  Using this information, I estimate the costs and rewards of commercially exploiting rocks in space.
@@ -33,29 +32,28 @@ div.span12
 
     p Remember, the data that we have on these objects is very sparse.  I make a ton of assumptions.  Don't start a space mission based on these rankings.
 
-  div.row
-    div.span11.offset1
-      form.form-inline(style='margin:0')
-        div.search-thing
-          span Search top
-          select#top_num(style='margin:0 5px 0').input-small
-            option(value=100) 100
-            option(value=1000) 1,000
-            option(value=5000) 5,000
-            option(value=10000) 10,000+
-          span  asteroids sorted by
-          select#top_sort(style='margin:0 5px 0').input-xlarge
-            option(value='score', selected) most cost effective
-            option(value='price') most valuable
-            option(value='closeness') closest
-          input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:250px;margin-top:15px;margin-bottom:15px;')
+  div.well(style='text-align:center;')
+    form.form-inline(style='margin:0')
+      div.search-thing
+        span Search top
+        select#top_num(style='margin:0 5px 0').input-small
+          option(value=100) 100
+          option(value=1000) 1,000
+          option(value=5000) 5,000
+          option(value=10000) 10,000+
+        span  asteroids sorted by
+        select#top_sort(style='margin:0 5px 0').input-xlarge
+          option(value='score', selected) most cost effective
+          option(value='price') most valuable
+          option(value='closeness') closest
+        input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;')
 
 div.row#loading(style='display:none;')
   div.span12.offset1
     h1 LOADING...
 
 div#results.row(style='display:none;')
-  div.span2(style='position:fixed;top:55%;left:15px')
+  div.span3
     div#instructions
       h3 Click on an object to view its details.
     div#details(style='display:none;')
@@ -66,7 +64,7 @@ div#results.row(style='display:none;')
             th Data
             th Value
         tbody
-  div.offset3.span9
+  div.span9(style='height:400px;overflow:scroll;')
     table#tbl.table.table-bordered.table-striped.table-condensed
       thead
         tr
@@ -84,13 +82,16 @@ div#results.row(style='display:none;')
       tbody(style='cursor:pointer;')
 
 div#legend.row(style='margin-left:15px;display:none;')
-  div.span12
-    ul
-    li Price - the current price of the raw materials in this object.
-    li Cost from Earth - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
-    li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
-    li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
-    li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
+  div.span2.offset9
+    span
+      a(href='#', onClick="$('#legend-details').toggle();return false;") Explain column names
+    div#legend-details(style='display:none;')
+      ul
+      li Price - the current price of the raw materials in this object.
+      li Cost from Earth - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
+      li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
+      li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
+      li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
 
 div#feedback-modal.modal(style='display:none;')
   div.modal-header
