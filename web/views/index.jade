@@ -50,7 +50,11 @@ div.span12
             option(value='closeness') closest
           input#submit.btn.btn-primary(type='submit')
 
-div.row
+div.row#loading(style='display:none;')
+  div.span12.offset1
+    h1 LOADING...
+
+div#results.row(style='display:none;')
   div.span2
     div#instructions
       h3 Click on an object to view its details.
@@ -62,7 +66,7 @@ div.row
             th Data
             th Value
         tbody
-  div.results.span10
+  div.span10
     table#tbl.table.table-bordered.table-striped.table-condensed
       thead
         tr
@@ -79,8 +83,7 @@ div.row
           th pha
       tbody(style='cursor:pointer;')
 
-
-div.row(style='margin-left:15px')
+div#legend.row(style='margin-left:15px;display:none;')
   div.span12
     ul
     li Price - the current price of the raw materials in this object.

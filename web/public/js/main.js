@@ -3,9 +3,7 @@ var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'a
 var FUZZY_FIELDS = ['price', 'saved'];
 
 $(function() {
-
   $('#submit').on('click', doSearch);
-
   var $tbody = $('#tbl tbody');
   $(document).on('click', '#tbl tbody tr', function(e) {
     $('#instructions').hide();
@@ -51,6 +49,9 @@ $(function() {
 });
 
 function doSearch() {
+  $('#legend').hide();
+  $('#results').hide();
+  $('#loading').show();
   var $tmp = $('tbody').empty();
   $.getJSON('/top', {sort:$('#top_sort').val(),n:$('#top_num').val()}, function(data) {
     for (var i=0; i < data.results.length; i++) {
@@ -77,7 +78,10 @@ function doSearch() {
       html += '</tr>';
       $tmp.append(html);
     }
+    $('#tbl tbody').append($tmp.children());
+    $('#loading').hide();
+    $('#results').show();
+    $('#legend').show();
   });
-  $('#tbl tbody').append($tmp.children());
   return false;
 }
