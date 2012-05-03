@@ -3,34 +3,10 @@ var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'a
 var FUZZY_FIELDS = ['price', 'saved'];
 
 $(function() {
-  var $tbody = $('#tbl tbody');
-  $.getJSON('/top', {sort:$('#top_sort').val()}, function(data) {
-    for (var i=0; i < data.results.length; i++) {
-      var obj = data.results[i];
-      var name = obj.prov_des || obj.full_name;
-      var html = '<tr data-obj="' + name + '">';
-      for (var j=0; j < HEADERS.length; j++) {
-        var val = obj[HEADERS[j]];
-        if (!val)
-          val = '';
-        if (typeof (val) === 'number' && $.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
-          var suffix = obj['inexact'] ? '*' : '';
-          val = toFuzz(val) + suffix;
-        }
-        else {
-          val = val + '';
-          var limit = j==0 ? 20 : 12;
-          if (val.length > limit) {
-            val = val.substring(0,9) + '...';
-          }
-        }
-        html += '<td>' + val + '</td>';
-      }
-      html += '</tr>';
-      $tbody.append(html);
-    }
-  });
 
+  $('#submit').on('click', doSearch);
+
+  var $tbody = $('#tbl tbody');
   $(document).on('click', '#tbl tbody tr', function(e) {
     $('#instructions').hide();
     var $tbody = $('#details').show().find('tbody').html('Loading...');
@@ -73,3 +49,35 @@ $(function() {
   });
 
 });
+
+function doSearch() {
+  var $tmp = $('tbody').empty();
+  $.getJSON('/top', {sort:$('#top_sort').val(),n:$('#top_num').val()}, function(data) {
+    for (var i=0; i < data.results.length; i++) {
+      var obj = data.results[i];
+      var name = obj.prov_des || obj.full_name;
+      var html = '<tr data-obj="' + name + '">';
+      for (var j=0; j < HEADERS.length; j++) {
+        var val = obj[HEADERS[j]];
+        if (!val)
+          val = '';
+        if (typeof (val) === 'number' && $.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
+          var suffix = obj['inexact'] ? '*' : '';
+          val = toFuzz(val) + suffix;
+        }
+        else {
+          val = val + '';
+          var limit = j==0 ? 20 : 12;
+          if (val.length > limit) {
+            val = val.substring(0,9) + '...';
+          }
+        }
+        html += '<td>' + val + '</td>';
+      }
+      html += '</tr>';
+      $tmp.append(html);
+    }
+  });
+  $('#tbl tbody').append($tmp.children());
+  return false;
+}
