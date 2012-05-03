@@ -14,7 +14,9 @@ SPECTRA_INDEX = {
   },
   'B': {
     'hydrogen': 0.235,
-    'iron': 25,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
+    'iron': 10,
   },
   'C': {
     'water': 0.000023,
@@ -146,7 +148,7 @@ MATERIALS_INDEX = {
     '$_per_kg': 0.074094,
   },
   'ammonia': {
-    '$_per_kg': 0,
+    '$_per_kg': 0.01,
   },
   'oxygen': {
     '$_per_kg': 0.21,
