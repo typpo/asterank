@@ -46,6 +46,10 @@ def populateDb():
 
     # compute score
     row['price'], row['saved'] = scoring.price(row)
+    # assume the cost of mining a distant asteroid per kg won't be much better
+    # than cost to launch from earth
+    # ie., 99.999% of revenue is spent on operations
+    row['saved'] = row['saved'] * 0.00001
     row['closeness'] = scoring.closeness_weight(row)
     # TODO move this into scoring once I get it right
     score = min(row['price'], 1e14) / 5e12
