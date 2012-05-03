@@ -18,7 +18,7 @@ function toFuzz(n) {
   for (var i=0; i < fuzzes.length; i++) {
     var x = fuzzes[i];
     if (n / x.num >= 1) {
-      return (n / x.num).toFixed(3) + ' ' + x.word;
+      return (n / x.num).toFixed(0) + ' ' + x.word;
     }
   }
   return n;
