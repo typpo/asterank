@@ -161,7 +161,7 @@ MATERIALS_INDEX = {
     '$_per_kg': 1.01e-5,
   },
   'cobalt': {
-    '$_per_kg': 0,
+    '$_per_kg': 0.20,
   },
   'stainless steel': {
     '$_per_kg': 0.20

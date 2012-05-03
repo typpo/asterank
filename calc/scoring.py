@@ -16,16 +16,17 @@ def closeness_weight(obj):
 
   # penalize aphelion distance
   aph = obj['ad']
-  aph_score = pow(math.e, -0.9 * aph)
+  aph_score = 1/(1+math.exp(0.9*aph))
 
   major_axis = obj['a']
-  ma_score = pow(math.e, -0.5 * major_axis)
+  ma_score = 1/(1+math.exp(0.45*major_axis))
 
-  ph = obj['per']
-  ph_score = pow(math.e, -0.5 * ph)
+  ph = obj['q']
+  ph_score = 1/(1+math.exp(0.9*ph))
 
   dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
-  dv_score = pow(math.e, -0.9 * dv)
+  #dv_score = pow(math.e, -0.9 * dv)
+  dv_score = 1/(1+math.exp(0.3*dv))
 
   # TODO probably get more technical about the orbit
   return pow(aph_score + ma_score + ph_score + dv_score + 1, 2) / (emoid+1)
