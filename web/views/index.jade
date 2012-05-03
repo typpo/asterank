@@ -61,9 +61,9 @@ div.span12
           div(style='margin: 5px 0 0')
             input#submit.btn.btn-primary(type='submit')
 
-div.span12
-  div.row(style='margin-left:0')
-    div.results(style='width:80%;float:left;overflow:auto;overflow-y:hidden;-ms-overflow-y: hidden')
+div.span12(style='margin:0')
+  div.row(style='margin:0')
+    div.results.span8
       table#tbl.table.table-bordered.table-striped.table-condensed
         thead
           tr
@@ -78,14 +78,19 @@ div.span12
             th MOID (AU)
             th &Delta;V (km/s)
             th pha
-        tbody
+        tbody(style='cursor:pointer;')
 
-    div(style='width:15%;float:right;margin:15px 0 0')
+    div.span3
       div#instructions
         p Click on an object to view its details.
       div#details(style='display:none;')
         h1
-        table(border=1)
+        table.table(border=1, valign='top')
+          thead
+            tr
+              th Data
+              th Value
+          tbody
 
 div.row(style='margin-left:15px')
   div.span12
@@ -105,4 +110,18 @@ div#feedback-modal.modal(style='display:none;')
       textarea.xlarge(rows=5, cols=80, style='width:500px')#feedback
   div.modal-footer
     a#submit-feedback.btn.btn-primary(data-dismiss='modal') Submit
+    a.btn(data-dismiss='modal') Close
+
+div#approaches-modal.modal(style='display:none;')
+  div.modal-header
+    a.close(data-dismiss='modal') ×
+    h2 Close Approaches for <span id="close-approaches-name"></span>
+  div.modal-body(style='overflow:auto;height:250px;')
+    table.table
+      thead
+        tr
+          th Date
+          th Distance (AU)
+      tbody
+  div.modal-footer
     a.btn(data-dismiss='modal') Close
