@@ -28,14 +28,10 @@ div.span12
     p There are three major factors in this evaluation:
       ol
         li <strong>Cost of Materials</strong> - Asteroids are full of valuable ore.
-        li <strong>Cost of Operations</strong> - Getting to an asteroid and Moving the sheer amount of raw material isn't easy.
+        li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy.
         li <strong>Relative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material up from Earth?
 
-    p Take a look at the results:
-      ul
-        li Best overall (most cost-effective)
-        li Most accessible
-        li Most profitable
+    p Remember, the data that we have on these objects is very sparse.  I make a ton of assumptions.  Don't start a space mission based on these rankings.
 
   div.row
     div.span12.well
@@ -67,7 +63,7 @@ div.span12
 
 div.span12
   div.row(style='margin-left:0')
-    div.results(style='width:85%;float:left;overflow:auto;overflow-y:hidden;-ms-overflow-y: hidden')
+    div.results(style='width:80%;float:left;overflow:auto;overflow-y:hidden;-ms-overflow-y: hidden')
       table#tbl.table.table-bordered.table-striped.table-condensed
         thead
           tr
@@ -84,15 +80,12 @@ div.span12
             th pha
         tbody
 
-    div(style='width:10%;float:right;margin:15px 0 0')
-      h1 Pallas 2
-      table(border=1)
-        tr
-          td Full designation
-          td blahblah
-        tr
-          td Orbit
-          td meow
+    div(style='width:15%;float:right;margin:15px 0 0')
+      div#instructions
+        p Click on an object to view its details.
+      div#details(style='display:none;')
+        h1
+        table(border=1)
 
 div.row(style='margin-left:15px')
   div.span12

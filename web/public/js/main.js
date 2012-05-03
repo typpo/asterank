@@ -7,7 +7,8 @@ $(function() {
   $.getJSON('/top', function(data) {
     for (var i=0; i < data.results.length; i++) {
       var obj = data.results[i];
-      var html = '<tr>';
+      var name = obj.prov_des || obj.full_name;
+      var html = '<tr data-obj="' + name + '">';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
         if (!val)
@@ -30,7 +31,19 @@ $(function() {
   });
 
   $(document).on('click', '#tbl tbody tr', function(e) {
-    // Update right hand side
+    $('#instructions').hide();
+    var $table = $('#details').show().find('table').html('Loading...');
+    var obj = $(this).attr('data-obj');
+    $('#details h1').html(obj);
+    $.getJSON('/info/' + obj, function(result) {
+      $table.empty();
+      for (var x in result.data) {
+        if (result.data.hasOwnProperty(x)) {
+          $table.append('<tr><td>' + x + '</td><td>' + result.data[x] + '</td></tr>');
+        }
+      }
+
+    });
   });
 
 });
