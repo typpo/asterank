@@ -27,8 +27,10 @@ $(function() {
             var approaches = '';
             for (var i=0; i < item.length; i++) {
               var distau = parseFloat(item[i].nom_dist_au);
+              var rel_velocity = parseFloat(item[i].v_relative);
               approaches += '<tr><td>' + item[i].date + '</td><td>'
-                + distau.toFixed(5) + '</td></tr>';
+                + distau.toFixed(5) + '</td><td>'
+                + rel_velocity + '</td></tr>';
             }
             item = approaches;
             var $row = $('<tr><td>' + x
