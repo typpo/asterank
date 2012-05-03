@@ -52,7 +52,7 @@ div.row#loading(style='display:none;')
   div.span12.offset1
     h1 LOADING...
 
-div#results.row(style='display:none;')
+div#results.row-fluid(style='display:none;')
   div.span3
     div#instructions
       h3 Click on an object to view its details.
@@ -81,7 +81,7 @@ div#results.row(style='display:none;')
           th pha
       tbody(style='cursor:pointer;')
 
-div#legend.row(style='margin-left:15px;display:none;')
+div#legend.row-fluid(style='margin-left:15px;display:none;')
   div.span2.offset9
     span
       a(href='#', onClick="$('#legend-details').toggle();return false;") Explain column names
