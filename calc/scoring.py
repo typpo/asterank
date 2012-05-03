@@ -9,7 +9,7 @@ import estimate
 DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
 DEFAULT_MOID = 2  # TODO get avg moid
-DEFAULT_DV = 10 #km/s
+DEFAULT_DV = 6.5 #km/s
 
 def closeness_weight(obj):
   emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
@@ -26,7 +26,7 @@ def closeness_weight(obj):
 
   dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
   #dv_score = pow(math.e, -0.9 * dv)
-  dv_score = 1/(1+math.exp(0.3*dv))
+  dv_score = 1/(1+math.exp(0.16*dv-5)) * 3
 
   # TODO probably get more technical about the orbit
   return pow(aph_score + ma_score + ph_score + dv_score + 1, 2) / (emoid+1)

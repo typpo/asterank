@@ -22,6 +22,7 @@ def populateDb():
   coll.ensure_index('full_name', unique=True)
   coll.ensure_index('score')
   coll.ensure_index('prov_des')
+  coll.drop()
 
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   designation_regex = re.compile('.*\(([^\)]*)\)')
@@ -52,7 +53,7 @@ def populateDb():
       # It's worthless, so closeness doesn't matter
       row['score'] = score
     else:
-      score = score * row['closeness']**2
+      score = score * row['closeness']**3
     row['score'] = score
 
     m = designation_regex.match(row['full_name'])
