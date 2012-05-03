@@ -11,6 +11,7 @@ $(function() {
     var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $(this).attr('data-obj');
     $('#details h1').html(obj);
+    $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
     // workaround for a glitch on mobile devices
     $("#tbl-container").scroll();
@@ -49,6 +50,8 @@ $(function() {
       }
       // workaround for a glitch on mobile devices
       $("#tbl-container").scroll();
+
+      $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
     });
   });
@@ -90,6 +93,7 @@ function doSearch() {
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
     $('#legend').show();
+    $('html,body').animate({scrollTop: $('#tbl-container').offset().top-60},500);
   });
   return false;
 }
