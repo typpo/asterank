@@ -18,7 +18,10 @@ function toFuzz(n) {
   for (var i=0; i < fuzzes.length; i++) {
     var x = fuzzes[i];
     if (n / x.num >= 1) {
-      return (n / x.num).toFixed(0) + ' ' + x.word;
+      var prefix = (n / x.num);
+      if (i==0 && prefix > 100)
+        return '>100 ' + x.word;
+      return prefix.toFixed(2) + ' ' + x.word;
     }
   }
   return n;

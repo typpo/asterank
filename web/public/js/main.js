@@ -32,7 +32,9 @@ $(function() {
             }
             item = approaches;
             var $row = $('<tr><td>' + x
-              + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view</span></td></tr>')
+              + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
+              + item.length
+              + ')</span></td></tr>')
               .on('click', function() {
                 $('#close-approaches-name').html(obj);
                 $('#approaches-modal tbody').empty().append(approaches);
