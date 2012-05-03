@@ -19,8 +19,9 @@ $(function() {
         }
         else {
           val = val + '';
-          if (val.length > 15) {
-            val = val.substring(0,12) + '...';
+          var limit = j==0 ? 20 : 12;
+          if (val.length > limit) {
+            val = val.substring(0,9) + '...';
           }
         }
         html += '<td>' + val + '</td>';
@@ -32,14 +33,33 @@ $(function() {
 
   $(document).on('click', '#tbl tbody tr', function(e) {
     $('#instructions').hide();
-    var $table = $('#details').show().find('table').html('Loading...');
+    var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $(this).attr('data-obj');
     $('#details h1').html(obj);
     $.getJSON('/info/' + obj, function(result) {
-      $table.empty();
+      $tbody.empty();
       for (var x in result.data) {
         if (result.data.hasOwnProperty(x)) {
-          $table.append('<tr><td>' + x + '</td><td>' + result.data[x] + '</td></tr>');
+          var item = result.data[x];
+          if (!item) continue;
+
+          if (x === 'close_approaches') {
+            var approaches = '';
+            for (var i=0; i < item.length; i++) {
+              approaches += '<tr><td>' + item[i].date + '</td><td>' + item[i].nom_dist_au + '</td></tr>';
+            }
+            item = approaches;
+
+            var $row = $('<tr><td>' + x + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">click to view</span></td></tr>')
+              .on('click', function() {
+                $('#close-approaches-name').html(obj);
+                $('#approaches-modal tbody').empty().append(approaches);
+                $('#approaches-modal').modal();
+            });
+            $tbody.append($row);
+          }
+          else
+            $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
         }
       }
 
