@@ -34,9 +34,9 @@ div.span12
     p Remember, the data that we have on these objects is very sparse.  I make a ton of assumptions.  Don't start a space mission based on these rankings.
 
   div.row
-    div.span12.well
+    div.span7.well
       form.form-inline(style='margin:0')
-        div
+        div.search-thing
           span Search top
           select#top_num(style='margin:0 5px 0').input-small
             option(value=100) 100
@@ -44,11 +44,12 @@ div.span12
             option(value=5000) 5,000
             option(value=10000) 10,000+
           span  asteroids sorted by
-          select#top_sort(style='margin:0 5px 0').input-medium
+          select#top_sort(style='margin:0 5px 0').input-xlarge
             option(value='score', selected) most cost effective
             option(value='price') most valuable
             option(value='closeness') closest
-          input#submit.btn.btn-primary(type='submit')
+          div
+            input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:250px;margin-top:15px;')
 
 div.row#loading(style='display:none;')
   div.span12.offset1
