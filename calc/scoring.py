@@ -8,13 +8,11 @@ import estimate
 
 DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
-DEFAULT_MOID = 1  # TODO get avg moid
+DEFAULT_MOID = 2  # TODO get avg moid
+DEFAULT_DV = 10 #km/s
 
 def closeness_weight(obj):
   emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
-  #moid_score = pow(math.e, -0.5 * emoid)
-  moid_score = 0
-  #moid_score = pow(max(moid_score, 0), 2)
 
   # penalize aphelion distance
   aph = obj['ad']
@@ -26,8 +24,11 @@ def closeness_weight(obj):
   ph = obj['per']
   ph_score = pow(math.e, -0.5 * ph)
 
+  dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
+  dv_score = pow(math.e, -0.9 * dv)
+
   # TODO probably get more technical about the orbit
-  return pow(moid_score + aph_score + ma_score + ph_score + 1, 2)
+  return pow(aph_score + ma_score + ph_score + dv_score + 1, 2) / (emoid+1)
 
 def price(obj):
   """
