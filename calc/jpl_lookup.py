@@ -101,7 +101,7 @@ class JPL_Query:
     return results
 
 if __name__ == "__main__":
-  if len(sys.argv) != 2:
+  if len(sys.argv) < 2:
     print 'usage: lookup <name>'
     sys.exit(1)
   a = Asteroid(' '.join(sys.argv[1:]))

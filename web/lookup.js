@@ -13,8 +13,10 @@ function topN(num, cb) {
       return;
     }
     var result = _.map(docs, function(doc) {
-      return _.pick(doc, 'score', 'saved', 'price', 'closeness', 'GM', 'spec_B', 'full_name',
-                      'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'q');
+      return _.pick(doc, 'score', 'saved', 'price', 'closeness', 'GM',
+        'spec_B', 'full_name',
+        'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'q',
+        'prov_des');
     });
     cb(null, result);
   });
@@ -34,7 +36,7 @@ function count(cb) {
 
 function query(query, cb) {
   // Validate - this stuff will be exec'ed. Should switch to spawn.
-  if (!/^[a-z0-9 ]+$/.test(query)) {
+  if (!/^[A-Za-z0-9 ]+$/.test(query)) {
     cb(true, null);
     return;
   }
@@ -45,9 +47,11 @@ function query(query, cb) {
   var coll = db.collection('jpl');
   coll.findOne({tag_name: query}, function(err, doc) {
     if (err || !doc) {
-      var child = exec(path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query,
-                   function (error, stdout, stderr) {
+      var cmd = path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query;
+      console.log('Looking up', query, ':', cmd);
+      var child = exec(cmd, function (error, stdout, stderr) {
         if (error) {
+          console.error(error);
           cb(true, null);
         }
         else {
