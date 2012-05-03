@@ -4,10 +4,24 @@ var Mongolian = require('mongolian')
   , path = require('path')
   , exec = require('child_process').exec;
 
-function topN(num, cb) {
+var VALID_SORT_FIELDS = {
+  score: -1,
+  price: -1,
+  saved: -1,
+  closeness: -1,
+}
+
+function topN(num, sort, cb) {
+  sort = sort || 'score';
+  if (!VALID_SORT_FIELDS[sort]) {
+    cb(true, null);
+    return;
+  }
   var db = new Mongolian('localhost/asterank');
   var coll = db.collection('asteroids');
-  coll.find().limit(num).sort({score:-1}).toArray(function(err, docs) {
+  var sortobj = {};
+  sortobj[sort] = VALID_SORT_FIELDS[sort];
+  coll.find().limit(num).sort(sortobj).toArray(function(err, docs) {
     if (err) {
       cb(true, null);
       return;
@@ -58,7 +72,6 @@ function query(query, cb) {
           var result = JSON.parse(stdout);
           cb(null, result);
           // record it in cache
-          result.tag_name = query;
           coll.insert(result);
         }
       });

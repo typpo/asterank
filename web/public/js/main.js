@@ -4,7 +4,7 @@ var FUZZY_FIELDS = ['price', 'saved'];
 
 $(function() {
   var $tbody = $('#tbl tbody');
-  $.getJSON('/top', function(data) {
+  $.getJSON('/top', {sort:$('#top_sort').val()}, function(data) {
     for (var i=0; i < data.results.length; i++) {
       var obj = data.results[i];
       var name = obj.prov_des || obj.full_name;
@@ -51,7 +51,6 @@ $(function() {
                 + distau.toFixed(5) + '</td></tr>';
             }
             item = approaches;
-
             var $row = $('<tr><td>' + x
               + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view</span></td></tr>')
               .on('click', function() {
