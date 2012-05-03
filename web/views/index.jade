@@ -61,36 +61,35 @@ div.span12
           div(style='margin: 5px 0 0')
             input#submit.btn.btn-primary(type='submit')
 
-div.span12(style='margin:0')
-  div.row(style='margin:0')
-    div.results.span8
-      table#tbl.table.table-bordered.table-striped.table-condensed
+div.row
+  div.span2
+    div#instructions
+      h3 Click on an object to view its details.
+    div#details(style='display:none;')
+      h1
+      table.table.table-bordered.table-condensed
         thead
           tr
-            th Name
-            th Score
-            th Value ($)
-            th Cost from Earth ($)
-            th Closeness
-            th Type
-            th Aphelion (AU)
-            th Perhelion (AU)
-            th MOID (AU)
-            th &Delta;V (km/s)
-            th pha
-        tbody(style='cursor:pointer;')
+            th Data
+            th Value
+        tbody
+  div.results.span10
+    table#tbl.table.table-bordered.table-striped.table-condensed
+      thead
+        tr
+          th Name
+          th Score
+          th Value ($)
+          th Cost from Earth ($)
+          th Closeness
+          th Type
+          th Aphelion (AU)
+          th Perhelion (AU)
+          th MOID (AU)
+          th &Delta;V (km/s)
+          th pha
+      tbody(style='cursor:pointer;')
 
-    div.span3
-      div#instructions
-        p Click on an object to view its details.
-      div#details(style='display:none;')
-        h1
-        table.table(border=1, valign='top')
-          thead
-            tr
-              th Data
-              th Value
-          tbody
 
 div.row(style='margin-left:15px')
   div.span12
