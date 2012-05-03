@@ -68,8 +68,7 @@ function doSearch() {
         }
         else {
           val = val + '';
-          var limit = j==0 ? 20 : 12;
-          if (val.length > limit) {
+          if (val.length > 12) {
             val = val.substring(0,9) + '...';
           }
         }
