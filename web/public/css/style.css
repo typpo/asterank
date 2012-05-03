@@ -6,3 +6,10 @@ body {
 .welcome-blurb > * {
   font-size: 18px;
 }
+
+.search-thing * {
+  font-size:20px;font-weight:900
+}
+.search-thing select {
+  height: 1.8em;
+}
