@@ -63,7 +63,7 @@ div#results.row-fluid(style='display:none;')
         tbody
   div.span9(style='height:400px;overflow:scroll;overflow-x:auto;')
     table#tbl.table.table-bordered.table-striped.table-condensed
-      thead
+      thead(style='position:fixed')
         tr
           th Name
           th Score
@@ -84,9 +84,12 @@ div#legend.row-fluid(style='margin-left:15px;display:none;')
       a(href='#', onClick="$('#legend-details').toggle();return false;") Explain column names
     div#legend-details(style='display:none;')
       ul
-      li Price - the current price of the raw materials in this object.
-      li Cost from Earth - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
-      li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
+      li Value - the current value of the raw materials in this object.
+      li Cost from Earth - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's predicted rate per kg)
+      li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
+      li Aphelion - Greatest distance from sun.
+      li Perhelion - Least distance from sun.
+      li &Delta;v (for spacecraft rendezvous) - Change in velocity required to rendezvous with this asteroid.
       li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
       li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
 
