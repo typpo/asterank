@@ -62,7 +62,7 @@ function query(query, cb) {
   coll.findOne({tag_name: query}, function(err, doc) {
     if (err || !doc) {
       var cmd = path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query;
-      console.log('Looking up', query, ':', cmd);
+      console.log('Looking up @ JPL:', query, ':', cmd);
       var child = exec(cmd, function (error, stdout, stderr) {
         if (error) {
           console.error(error);
@@ -72,12 +72,15 @@ function query(query, cb) {
           var result = JSON.parse(stdout);
           cb(null, result);
           // record it in cache
+          result.tag_name = query;
           coll.insert(result);
         }
       });
     }
     else {
+      console.log('From JPL cache:', query);;
       delete doc._id;
+      delete doc.tag_name;
       cb(null, doc);
     }
   });
