@@ -3,41 +3,6 @@ body {
 
 }
 
-body * {
-
-}
-
-.left {
-  float:left;
-}
-
-.right {
-  float:right;
-}
-
-
 .welcome-blurb > * {
   font-size: 18px;
-}
-
-.results select {
-  display: inline;
-  width: 75px;
-}
-
-.results input {
-  display: inline;
-  width: 125px;
-}
-
-.results {
-  margin: 15px;
-}
-
-.results .ui-icon {
-  float: right;
-}
-
-.row-selected {
-  background-color: #9FAFD1;
 }
