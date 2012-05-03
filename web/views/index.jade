@@ -86,12 +86,13 @@ div#legend.row-fluid(style='margin-left:15px;display:none;')
     div#legend-details(style='display:none;')
       ul
       li Value - the current value of the raw materials in this object.
-      li Profit - the <em>very</em> hypothetical cost of processing and moving raw asteroid is estimated as 99.999% of the projected cost of sending a kg into space from Earth.  This is probably a generously low estimation. Positive profit means it's worth it to mine this object.
+      li Profit - the <em>very</em> hypothetical cost of processing and moving raw asteroid is estimated (very generously) as 99.999% of the projected cost of sending a kg into space from Earth. Positive profit means it's worth it to mine this object.
+      li Closeness - an overall score that estimates how accessible the object is.
       li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
       li Aphelion - Greatest distance from sun.
       li Perhelion - Least distance from sun.
       li &Delta;v (for spacecraft rendezvous) - Change in velocity required to rendezvous with this asteroid.
-      li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
+      li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as a potential hazard to Earth.
       li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
 
 div#feedback-modal.modal(style='display:none;')
@@ -115,6 +116,7 @@ div#approaches-modal.modal(style='display:none;')
         tr
           th Date
           th Distance (AU)
+          th Relative Velocity (km/s)
       tbody
   div.modal-footer
     a.btn(data-dismiss='modal') Close

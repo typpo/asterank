@@ -22,7 +22,10 @@ class Asteroid:
     self.data['diameter_km'] = r.physicalParameter('diameter')
     self.data['gm'] = r.physicalParameter('GM')
     self.data['density'] = r.physicalParameter('bulk density')
+    self.data['extent_km'] = r.physicalParameter('extent')
+    self.data['rotation_h'] = r.physicalParameter('rotation period')
 
+    self.data['inclination_deg'] = r.orbitalParameter('i')
     self.data['passage_jed'] = r.orbitalParameter('t')
     self.data['perhilion_au'] = r.orbitalParameter('q')
     self.data['semimajor_au'] = r.orbitalParameter('a')
