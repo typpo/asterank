@@ -36,7 +36,7 @@ div.row-fluid
     div.well(style='text-align:center;')
       form.form-inline(style='margin:0')
         div.search-thing
-          span Search top
+          span Show top
           select#top_num(style='margin:0 5px 0').input-small
             option(value=100) 100
             option(value=1000) 1,000
@@ -61,7 +61,7 @@ div#results.row-fluid(style='display:none;')
             th Data
             th Value
         tbody
-  div.span9(style='height:400px;overflow:scroll;')
+  div.span9(style='height:400px;overflow:scroll;overflow-x:auto;')
     table#tbl.table.table-bordered.table-striped.table-condensed
       thead
         tr
@@ -79,7 +79,7 @@ div#results.row-fluid(style='display:none;')
       tbody(style='cursor:pointer;')
 
 div#legend.row-fluid(style='margin-left:15px;display:none;')
-  div.span2.offset9
+  div.span10
     span
       a(href='#', onClick="$('#legend-details').toggle();return false;") Explain column names
     div#legend-details(style='display:none;')
