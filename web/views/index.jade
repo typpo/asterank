@@ -34,7 +34,7 @@ div.span12
     p Remember, the data that we have on these objects is very sparse.  I make a ton of assumptions.  Don't start a space mission based on these rankings.
 
   div.row
-    div.span7.well
+    div.span11.offset1
       form.form-inline(style='margin:0')
         div.search-thing
           span Search top
@@ -48,15 +48,14 @@ div.span12
             option(value='score', selected) most cost effective
             option(value='price') most valuable
             option(value='closeness') closest
-          div
-            input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:250px;margin-top:15px;')
+          input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:250px;margin-top:15px;margin-bottom:15px;')
 
 div.row#loading(style='display:none;')
   div.span12.offset1
     h1 LOADING...
 
 div#results.row(style='display:none;')
-  div.span2
+  div.span2(style='position:fixed;top:55%;left:15px')
     div#instructions
       h3 Click on an object to view its details.
     div#details(style='display:none;')
@@ -67,7 +66,7 @@ div#results.row(style='display:none;')
             th Data
             th Value
         tbody
-  div.span10
+  div.offset3.span9
     table#tbl.table.table-bordered.table-striped.table-condensed
       thead
         tr

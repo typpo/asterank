@@ -25,7 +25,7 @@ app.get('/top', function(req, res) {
   if (isNaN(num) || typeof num !== 'number')
     num = 100;
   else
-    num = Math.max(num, 10000);
+    num = Math.min(num, 10000);
   lookup.topN(num, req.query.sort, function(err, result) {
     res.send({results:result});
   });
