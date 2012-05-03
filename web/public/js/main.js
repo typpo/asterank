@@ -52,6 +52,7 @@ function doSearch() {
   $('#legend').hide();
   $('#results').hide();
   $('#loading').show();
+  $('#submit').attr('disabled', 'disabled').val('Loading...');
   var $tmp = $('tbody').empty();
   $.getJSON('/top', {sort:$('#top_sort').val(),n:$('#top_num').val()}, function(data) {
     for (var i=0; i < data.results.length; i++) {
@@ -77,6 +78,7 @@ function doSearch() {
       html += '</tr>';
       $tmp.append(html);
     }
+    $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
     $('#loading').hide();
     $('#results').show();
