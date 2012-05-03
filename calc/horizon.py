@@ -52,7 +52,7 @@ def populateDb():
       # It's worthless, so closeness doesn't matter
       row['score'] = score
     else:
-      score = score + row['closeness']
+      score = score * row['closeness']**2
     row['score'] = score
 
     m = designation_regex.match(row['full_name'])

@@ -14,7 +14,7 @@ function topN(num, cb) {
     }
     var result = _.map(docs, function(doc) {
       return _.pick(doc, 'score', 'saved', 'price', 'closeness', 'GM', 'spec_B', 'full_name',
-                      'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv');
+                      'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'q');
     });
     cb(null, result);
   });

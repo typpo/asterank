@@ -67,22 +67,24 @@ div.span12
 
 div.span12
   div.row(style='margin-left:0')
-    div.results(style='width:70%;float:left;overflow:auto;overflow-y:hidden;-ms-overflow-y: hidden')
+    div.results(style='width:85%;float:left;overflow:auto;overflow-y:hidden;-ms-overflow-y: hidden')
       table#tbl.table.table-bordered.table-striped.table-condensed
         thead
           tr
             th Name
             th Score
             th Value ($)
-            th Saved ($)
+            th Cost from Earth ($)
             th Closeness
             th Type
+            th Aphelion (AU)
+            th Perhelion (AU)
             th MOID (AU)
             th &Delta;V (km/s)
             th pha
         tbody
 
-    div(style='width:25%;float:right;padding:15px 0 0')
+    div(style='width:10%;float:right;margin:15px 0 0')
       h1 Pallas 2
       table(border=1)
         tr
@@ -96,7 +98,7 @@ div.row(style='margin-left:15px')
   div.span12
     ul
     li Price - the current price of the raw materials in this object.
-    li Saved - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
+    li Cost from Earth - the hypothetical cost of getting the valuable material in this object from Earth into space (at SpaceX's published rate per kg), less the estimated overhead of getting these materials off an asteroid.
     li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object can come to Earth.
     li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as potentially hazard to Earth.
     li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.

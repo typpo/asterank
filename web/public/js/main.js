@@ -1,5 +1,5 @@
 
-var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'moid', 'dv', 'pha'];
+var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B', 'a', 'q', 'moid', 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved'];
 
 $(function() {
@@ -16,8 +16,11 @@ $(function() {
           var suffix = obj['inexact'] ? '*' : '';
           val = toFuzz(val) + suffix;
         }
-        else if (val.length > 15) {
-          val = val.substring(0,12) + '...';
+        else {
+          val = val + '';
+          if (val.length > 15) {
+            val = val.substring(0,12) + '...';
+          }
         }
         html += '<td>' + val + '</td>';
       }
