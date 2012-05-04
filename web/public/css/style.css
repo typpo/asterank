@@ -4,6 +4,7 @@ body {
 
 .welcome-blurb > * {
   font-size: 18px;
+  line-height: 1.2em;
 }
 .welcome-blurb li { margin-top: 1em; }
 
