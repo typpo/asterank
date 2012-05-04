@@ -15,9 +15,11 @@ app.use(express.bodyParser());
 // App
 
 app.get('/', function(req, res) {
-  res.render('index', {
+  res.render('index');
+});
 
-  });
+app.get('/about', function(req, res) {
+  res.render('about');
 });
 
 app.get('/top', function(req, res) {
