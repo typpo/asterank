@@ -1,11 +1,12 @@
 body {
   margin-top: 50px;
-
 }
 
 .welcome-blurb > * {
   font-size: 18px;
 }
+.welcome-blurb li { margin-top: 1em; }
+
 
 .search-thing * {
   font-size:20px;font-weight:900
