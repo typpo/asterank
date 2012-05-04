@@ -13,6 +13,16 @@ from pymongo import Connection
 DATA_PATH = 'data/fulldb.csv'
 DV_PATH = 'data/deltav/db.csv'
 
+THOLEN_MAPPINGS = {
+  'M': 'M',
+  'E': 'M',
+  'P': 'P',
+  'B': 'B',
+  'C': 'C',
+  'F': 'C',
+  'G': 'C',
+}
+
 def populateDb():
   print 'Loading small body data...this may take a while'
 
@@ -30,8 +40,9 @@ def populateDb():
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
-      continue
-      #row['spec_B'] = 'S'
+      if row['spec_T'] == 'M':
+      else:
+        row['spec_B'] = 'S'
 
     # Clean up inputs
     for key,val in row.items():
