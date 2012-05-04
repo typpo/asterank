@@ -60,18 +60,19 @@ div#results.row-fluid(style='display:none;')
             th Value
         tbody
   div#tbl-container.span9(style='height:400px;overflow:scroll;overflow-x:auto;')
-    table#tbl.table.table-bordered.table-striped.table-condensed
+    table#tbl.table.table-bordered.table-striped
       thead(style='background-color:#fff')
         tr
           th Name
           th Score
           th Value ($)
-          th Closeness
           th Est. Profit ($)
+          th Closeness
           th Type
-          th Aphelion (AU)
-          th Perhelion (AU)
-          th MOID (AU)
+          //
+            th Aphelion (AU)
+            th Perhelion (AU)
+            th MOID (AU)
           th &Delta;V (km/s)
           th pha
       tbody(style='cursor:pointer;')

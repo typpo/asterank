@@ -1,6 +1,6 @@
 
-var HEADERS = ['full_name', 'score', 'price','profit', 'closeness', 'spec_B',
-  'a', 'q', 'moid', 'dv', 'pha'];
+var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
+  /*'a', 'q', 'moid',*/ 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 
 $(function() {
@@ -98,8 +98,8 @@ function doSearch() {
         }
         else {
           val = val + '';
-          if (val.length > 12) {
-            val = val.substring(0,9) + '...';
+          if (val.length > 20) {
+            val = val.substring(0,17) + '...';
           }
         }
         html += '<td>' + val + '</td>';
