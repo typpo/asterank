@@ -7,10 +7,15 @@ $(function() {
   $('#submit').on('click', doSearch);
   var $tbody = $('#tbl tbody');
   $(document).on('click', '#tbl tbody tr', function(e) {
+
     $('#instructions').hide();
     var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $(this).attr('data-obj');
-    $('#details h2').html($(this).attr('data-full-name'));
+    var fullname = $(this).attr('data-full-name');
+    mixpanel.track('info', {
+      fullname: fullname
+    });
+    $('#details h2').html(fullname);
     $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
     // workaround for a glitch on mobile devices
@@ -37,6 +42,9 @@ $(function() {
               + item.length
               + ')</span></td></tr>')
               .on('click', function() {
+                mixpanel.track('approaches', {
+                  fullname: fullname
+                });
                 $('#close-approaches-name').html(obj);
                 $('#approaches-modal tbody').empty().append(approaches);
                 $('#approaches-modal').modal();
@@ -61,6 +69,8 @@ $(function() {
   $("#tbl").thfloat({
     attachment: '#tbl-container'
   });
+
+  mixpanel.track('home');
 });
 
 function doSearch() {
@@ -70,7 +80,10 @@ function doSearch() {
   $('#results').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
   var $tmp = $('tbody').empty();
-  $.getJSON('/top', {sort:$('#top_sort').val(),n:$('#top_num').val()}, function(data) {
+  var searchparams = {sort:$('#top_sort').val(),n:$('#top_num').val()};
+  mixpanel.track('search', searchparams);
+
+  $.getJSON('/top', searchparams, function(data) {
     for (var i=0; i < data.results.length; i++) {
       var obj = data.results[i];
       var name = obj.prov_des || obj.full_name;
