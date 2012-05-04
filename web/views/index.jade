@@ -18,7 +18,7 @@ div.row-fluid
 
     div.welcome-blurb.well
       img(style='float:right;padding-left:10px;padding-bottom:11px;width:300px;height:auto', src='http://i.imgur.com/vvAjG.jpg')
-      p Asteroid mining has been in the news recently. <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">Planetary Resources</a> is an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
+      p Asteroid mining has been <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">in the news</a> recently. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
 
       p We've collected, computed, or inferred important data points such as asteroid mass and composition using scraped data from multiple scientific sources.  With this information, we estimate the costs and rewards of mining rocks in space.
 
@@ -28,7 +28,7 @@ div.row-fluid
           li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
           li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
 
-      p The data on these objects is public but very sparse.  It's 2012, and there are no "experts" in this field.  Assumptions are made.
+      p The data on these objects is public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
 
     div.well(style='text-align:center;')
       form.form-inline(style='margin:0')
@@ -69,10 +69,6 @@ div#results.row-fluid(style='display:none;')
           th Est. Profit ($)
           th Closeness
           th Type
-          //
-            th Aphelion (AU)
-            th Perhelion (AU)
-            th MOID (AU)
           th &Delta;V (km/s)
           th pha
       tbody(style='cursor:pointer;')
@@ -84,15 +80,15 @@ div#legend.row-fluid(style='margin-left:15px;display:none;')
     div#legend-details(style='display:none;')
       ul
       li Value - the current value of the raw materials in this object.
-      //
-        li Cost - the <em>very</em> hypothetical cost of processing and moving raw asteroid is estimated to be 25% of the projected cost of sending a kg of material into space from Earth, with a 5% loss of material.
+      li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
       li Closeness - an overall score that estimates how accessible the object is.
       li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
       li Aphelion - Greatest distance from sun.
       li Perhelion - Least distance from sun.
-      li &Delta;v (for spacecraft rendezvous) - Change in velocity required to rendezvous with this asteroid.
+      li &Delta;v - change in velocity required to rendezvous.
       li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as a potential hazard to Earth.
       li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
+      li * - indicates that mass was estimated, rather than exact.
 
 div#feedback-modal.modal(style='display:none;')
   div.modal-header
