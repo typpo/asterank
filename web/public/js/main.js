@@ -1,6 +1,6 @@
 
-var HEADERS = ['full_name', 'score', 'price', 'closeness', 'spec_B',
-  'a', 'q', 'moid', 'dv', 'pha','profit'];
+var HEADERS = ['full_name', 'score', 'price','profit', 'closeness', 'spec_B',
+  'a', 'q', 'moid', 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 
 $(function() {
