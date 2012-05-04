@@ -32,7 +32,6 @@ $(function() {
                 + distau.toFixed(5) + '</td><td>'
                 + rel_velocity + '</td></tr>';
             }
-            item = approaches;
             var $row = $('<tr><td>' + x
               + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
               + item.length

@@ -19,24 +19,30 @@ SPECTRA_INDEX = {
     'iron': 10,
   },
   'C': {
-    'water': 0.000023,
+    'water': 1.55495461,
+    'nickel-iron': 0.0869229283
   },
   'Ch': {
-    'water': 0.000023,
+    'water': 1.55495461,
+    'nickel-iron': 0.0869229283
   },
   'Cg': {
-    'water': 0.000023,
+    'water': 1.55495461,
+    'nickel-iron': 0.0869229283
   },
   'Cgh': {
-    'water': 0.000023,
+    'water': 1.55495461,
+    'nickel-iron': 0.0869229283
   },
   'C type': {
-    'water': 0.000023,
+    'water': 1.55495461,
+    'nickel-iron': 0.0869229283
   },
   'Cb': {   # transition object between C and B
-    'water': 0.000011,
     'hydrogen': 0.1175,
     'iron': 12.5,
+    'water': 0.775,
+    'nickel-iron': 0.0434
   },
   'D': {
     'water': 0.000023,
@@ -60,6 +66,9 @@ SPECTRA_INDEX = {
   },
   'O': {
     'nickel-iron': 2.965,
+  },
+  'P': {  # correspond to CI, CM carbonaceous chondrites
+    'water': 12.5,
   },
   'R': {
     'magnesium silicate': 1e-30,
@@ -95,8 +104,7 @@ SPECTRA_INDEX = {
     'iron silicate': 0,
   },
   'Q': {
-    'magnesium silicate': 1e-30,
-    'iron silicate': 0,
+    'nickel-iron': 13.315,
   },
   'R': {
     'magnesium silicate': 1e-30,
