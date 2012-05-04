@@ -19,21 +19,22 @@ class Asteroid:
 
     self.data = {}
 
-    self.data['diameter_km'] = r.physicalParameter('diameter')
-    self.data['gm'] = r.physicalParameter('GM')
-    self.data['density'] = r.physicalParameter('bulk density')
-    self.data['extent_km'] = r.physicalParameter('extent')
-    self.data['rotation_h'] = r.physicalParameter('rotation period')
+    self.data['Diameter (km)'] = r.physicalParameter('diameter')
+    self.data['GM (km^3/s^2)'] = r.physicalParameter('GM')
+    self.data['Density (g/cm^3)'] = r.physicalParameter('bulk density')
+    self.data['Extent (km)'] = r.physicalParameter('extent')
+    self.data['Rotation (hrs)'] = r.physicalParameter('rotation period')
 
-    self.data['inclination_deg'] = r.orbitalParameter('i')
-    self.data['passage_jed'] = r.orbitalParameter('t')
-    self.data['perhilion_au'] = r.orbitalParameter('q')
-    self.data['semimajor_au'] = r.orbitalParameter('a')
-    self.data['period_days'] = r.orbitalParameter('period')
+    self.data['Inclination (deg)'] = r.orbitalParameter('i')
+    self.data['Passage (JED)'] = r.orbitalParameter('t')
+    self.data['Perhilion (AU)'] = r.orbitalParameter('q')
+    self.data['Aphelion (AU)'] = r.orbitalParameter('Q')
+    self.data['Semi-major Axis (AU)'] = r.orbitalParameter('a')
+    self.data['Period (days)'] = r.orbitalParameter('period')
 
-    self.data['emoid_au'] = r.additionalInfoParameter('Earth MOID')
+    self.data['EMOID (AU)'] = r.additionalInfoParameter('Earth MOID')
 
-    self.data['close_approaches'] = r.closeApproaches()
+    self.data['Close Approaches'] = r.closeApproaches()
 
     #print self.data
 

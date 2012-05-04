@@ -2,6 +2,7 @@
 var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
   /*'a', 'q', 'moid',*/ 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
+var CLOSE_APPROACHES_FIELD = 'Close Approaches';
 
 $(function() {
   $('#submit').on('click', doSearch);
@@ -28,7 +29,7 @@ $(function() {
           var item = result.data[x];
           if (!item) continue;
 
-          if (x === 'close_approaches') {
+          if (x === CLOSE_APPROACHES_FIELD) {
             var approaches = '';
             for (var i=0; i < item.length; i++) {
               var distau = parseFloat(item[i].nom_dist_au);
