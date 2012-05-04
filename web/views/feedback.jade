@@ -14,19 +14,23 @@ div.navbar.navbar-fixed-top
 div.span12
   div.row-fluid
     h1 Feedback
-    h3 All feedback is welcome, especially if it makes this site more informative, accurate, and interesting. Thanks!
+    p All feedback is welcome, especially if it makes this site more informative, accurate, and interesting.
+    p I'm especially interested in fine-tuning the estimations and calculations for asteroid composition, value of materials, and cost of extraction.
+    p <strong>Please email ian /at/ asterank /dot/ com</strong>
+    p Thanks!
 
-    div.span6.well
-      form.form-horizontal(action='/feedback', method='POST')
-        fieldset
-          div.control-group
-            label.control-label(for='feedback') Email
-            div.controls
-              input#email.input-medium(type='text',name='email')
-          div.control-group
-            label.control-label(for='feedback',name='feedback') Feedback
-            div.controls
-              textarea#feedback.input-xlarge(rows=5)
-          div.form-actions
-            button(type='submit').btn.btn-primary Send
+    //
+      div.span6.well
+        form.form-horizontal(action='/feedback', method='POST')
+          fieldset
+            div.control-group
+              label.control-label(for='feedback') Email
+              div.controls
+                input#email.input-medium(type='text',name='email')
+            div.control-group
+              label.control-label(for='feedback',name='feedback') Feedback
+              div.controls
+                textarea#feedback.input-xlarge(rows=5)
+            div.form-actions
+              button(type='submit').btn.btn-primary Send
 
