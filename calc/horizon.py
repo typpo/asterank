@@ -61,7 +61,8 @@ def populateDb():
       if newspec:
         row['spec_B'] = newspec   # TODO should have our own merged spec row
       else:
-        continue
+        row['spec_B'] = 'S'
+        #continue
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
