@@ -33,7 +33,7 @@ def populateDb():
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
-  coll.drop()
+  #coll.drop()
   coll.ensure_index('full_name', unique=True)
   coll.ensure_index('score')
   coll.ensure_index('prov_des')
@@ -61,8 +61,8 @@ def populateDb():
       if newspec:
         row['spec_B'] = newspec   # TODO should have our own merged spec row
       else:
-        row['spec_B'] = 'S'
-        #continue
+        #row['spec_B'] = 'S'
+        continue
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
@@ -92,6 +92,9 @@ def populateDb():
     # ie., 99.999% of revenue is spent on operations
     row['saved'] = row['saved'] * 0.00001
     row['closeness'] = scoring.closeness_weight(row)
+    row['profit'] = scoring.profit(row)
+
+
     # TODO move this into scoring once I get it right
     score = min(row['price'], 1e14) / 5e12
     if score < 0.0001:

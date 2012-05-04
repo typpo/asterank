@@ -1,7 +1,7 @@
 
 var HEADERS = ['full_name', 'score', 'price', 'closeness', 'spec_B',
-  'a', 'q', 'moid', 'dv', 'pha'];
-var FUZZY_FIELDS = ['price', 'saved'];
+  'a', 'q', 'moid', 'dv', 'pha','profit'];
+var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 
 $(function() {
   $('#submit').on('click', doSearch);

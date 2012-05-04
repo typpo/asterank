@@ -206,3 +206,7 @@ def savedPerKg(type):
   for mat,pct in SPECTRA_INDEX[type].iteritems():
     ret += cto * pct / 100
   return ret - (cto / 3)  # assume it costs 1/3 as much to mine and get off the asteroid
+
+def profitRatio(dv):
+  # Baseline profit is 10%
+  return .65 / dv
