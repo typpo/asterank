@@ -85,5 +85,9 @@ def price(obj):
   """
 
   stype = obj['spec_B']
-  return (estimate.valuePerKg(stype) * mass,
-          estimate.savedPerKg(stype) * mass)
+  value = estimate.valuePerKg(stype) * mass
+  saved = estimate.savedPerKg(stype) * mass
+  return (value, saved)
+
+def profit(obj):
+  return obj['price'] * obj['closeness'] / 6 * estimate.profitRatio(obj['dv'] if 'dv' in obj else DEFAULT_DV)

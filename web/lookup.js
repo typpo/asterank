@@ -27,8 +27,8 @@ function topN(num, sort, cb) {
       return;
     }
     var result = _.map(docs, function(doc) {
-      return _.pick(doc, 'score', 'saved', 'price', 'closeness', 'GM',
-        'spec_B', 'full_name',
+      return _.pick(doc, 'score', 'saved', 'price', 'profit',
+        'closeness', 'GM', 'spec_B', 'full_name',
         'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'q',
         'prov_des');
     });
