@@ -16,17 +16,17 @@ div.row-fluid
 
     div.welcome-blurb.well
       img(style='float:right;padding-left:10px;padding-bottom:11px;width:300px;height:auto', src='http://i.imgur.com/vvAjG.jpg')
-      p With all the recent hype around asteroid mining, I wanted real numbers.  How realistic are the trillion dollar estimates?  What about the costs and overhead?
+      p After the recent hype over asteroid mining, I wanted numbers.  How realistic are the trillion dollar estimates?  What about the costs and overhead?
 
       p I've attempted to calculate or infer things like asteroid mass and composition.  I’ve collected data on their orbits from multiple scientific sources.  Using this information, I estimate the costs and rewards of commercially exploiting rocks in space.
 
       p There are three major factors in this evaluation:
         ol
-          li <strong>Cost of Materials</strong> - Asteroids are full of valuable ore.
+          li <strong>Value of Materials</strong> - Asteroids are full of valuable metals, volatiles, and water.
           li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy.
-          li <strong>Relative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material up from Earth?
+          li <strong>Relative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
 
-      p Remember, the data that we have on these objects is very sparse.  I make a ton of assumptions.  Don't start a space mission based on these rankings.
+      p This data focuses #1 mostly because it's hard to estimate the cost of mining in space.  Remember, the data that we have on these objects is very sparse.  I make assumptions.  Don't start a space mission based on these rankings.
 
     div.well(style='text-align:center;')
       form.form-inline(style='margin:0')
@@ -49,7 +49,7 @@ div#results.row-fluid(style='display:none;')
     div#instructions
       h3 Click on an object to view its details.
     div#details(style='display:none;')
-      h1
+      h2
       table.table.table-bordered.table-condensed
         thead
           tr
@@ -63,7 +63,6 @@ div#results.row-fluid(style='display:none;')
           th Name
           th Score
           th Value ($)
-          th Profit ($)
           th Closeness
           th Type
           th Aphelion (AU)
@@ -80,7 +79,8 @@ div#legend.row-fluid(style='margin-left:15px;display:none;')
     div#legend-details(style='display:none;')
       ul
       li Value - the current value of the raw materials in this object.
-      li Profit - the <em>very</em> hypothetical cost of processing and moving raw asteroid is estimated (very generously) as 99.999% of the projected cost of sending a kg into space from Earth. Positive profit means it's worth it to mine this object.
+      //
+        li Cost - the <em>very</em> hypothetical cost of processing and moving raw asteroid is estimated to be 25% of the projected cost of sending a kg of material into space from Earth, with a 5% loss of material.
       li Closeness - an overall score that estimates how accessible the object is.
       li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
       li Aphelion - Greatest distance from sun.

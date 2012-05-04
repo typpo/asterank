@@ -66,6 +66,7 @@ SPECTRA_INDEX = {
   },
   'O': {
     'nickel-iron': 2.965,
+    'platinum': 1.5,
   },
   'P': {  # correspond to CI, CM carbonaceous chondrites
     'water': 12.5,
@@ -176,6 +177,9 @@ MATERIALS_INDEX = {
   'stainless steel': {
     '$_per_kg': 0.20
   },
+  'platinum': {
+    '$_per_kg': 5
+  },
   'magnesium silicate': {
     '$_per_kg': 1e-25,
   },
@@ -196,3 +200,4 @@ def savedPerKg(type):
   for mat,pct in SPECTRA_INDEX[type].iteritems():
     ret += cto * pct / 100
   return ret - (cto / 100)  # assume it costs 1/100 as much to mine and get off the asteroid
+
