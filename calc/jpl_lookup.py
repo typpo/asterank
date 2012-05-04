@@ -24,6 +24,7 @@ class Asteroid:
     self.data['Density (g/cm^3)'] = r.physicalParameter('bulk density')
     self.data['Extent (km)'] = r.physicalParameter('extent')
     self.data['Rotation (hrs)'] = r.physicalParameter('rotation period')
+    self.data['Albedo'] = r.physicalParameter('geometric albedo')
 
     self.data['Inclination (deg)'] = r.orbitalParameter('i')
     self.data['Passage (JED)'] = r.orbitalParameter('t')
