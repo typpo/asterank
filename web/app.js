@@ -22,6 +22,17 @@ app.get('/about', function(req, res) {
   res.render('about');
 });
 
+app.get('/feedback', function(req, res) {
+  res.render('feedback');
+});
+
+app.post('/feedback', function(req, res) {
+  var email = req.body.email;
+  var feedback = req.body.feedback;
+
+  res.redirect('/')
+});
+
 app.get('/top', function(req, res) {
   var num = parseInt(req.query.n);
   if (isNaN(num) || typeof num !== 'number')

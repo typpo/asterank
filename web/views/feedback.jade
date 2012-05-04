@@ -1,0 +1,32 @@
+div.navbar.navbar-fixed-top
+  div.navbar-inner
+    div.container
+      a.brand(href='/') Asterank
+      div.nav-collapse
+        ul.nav
+          li
+            a(href='/') Home
+          li
+            a(href='/about') About
+          li.active
+            a(href='/feedback') Feedback
+
+div.span12
+  div.row-fluid
+    h1 Feedback
+    h3 All feedback is welcome, especially if it makes this site more informative, accurate, and interesting. Thanks!
+
+    div.span6.well
+      form.form-horizontal(action='/feedback', method='POST')
+        fieldset
+          div.control-group
+            label.control-label(for='feedback') Email
+            div.controls
+              input#email.input-medium(type='text',name='email')
+          div.control-group
+            label.control-label(for='feedback',name='feedback') Feedback
+            div.controls
+              textarea#feedback.input-xlarge(rows=5)
+          div.form-actions
+            button(type='submit').btn.btn-primary Send
+
