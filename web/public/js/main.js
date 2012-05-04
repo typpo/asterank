@@ -6,7 +6,6 @@ var FUZZY_FIELDS = ['price', 'saved'];
 $(function() {
   $('#submit').on('click', doSearch);
   var $tbody = $('#tbl tbody');
-  doSearch();
   $(document).on('click', '#tbl tbody tr', function(e) {
     $('#instructions').hide();
     var $tbody = $('#details').show().find('tbody').html('Loading...');
