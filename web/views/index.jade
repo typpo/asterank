@@ -41,6 +41,7 @@ div.row-fluid
             option(value=10000) 10,000+
           span  asteroids sorted by
           select#top_sort(style='margin:0 5px 0').input-xlarge
+            option(value='profit') profit
             option(value='score', selected) most cost effective
             option(value='price') most valuable
             option(value='closeness') closest
@@ -66,13 +67,13 @@ div#results.row-fluid(style='display:none;')
           th Score
           th Value ($)
           th Closeness
+          th Est. Profit ($)
           th Type
           th Aphelion (AU)
           th Perhelion (AU)
           th MOID (AU)
           th &Delta;V (km/s)
           th pha
-          th pft
       tbody(style='cursor:pointer;')
 
 div#legend.row-fluid(style='margin-left:15px;display:none;')

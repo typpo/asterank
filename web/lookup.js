@@ -9,6 +9,7 @@ var VALID_SORT_FIELDS = {
   price: -1,
   saved: -1,
   closeness: -1,
+  profit: -1,
 }
 
 function topN(num, sort, cb) {
