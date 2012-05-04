@@ -178,7 +178,7 @@ MATERIALS_INDEX = {
     '$_per_kg': 0.20
   },
   'platinum': {
-    '$_per_kg': 5
+    '$_per_kg': 1
   },
   'magnesium silicate': {
     '$_per_kg': 1e-25,
