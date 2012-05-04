@@ -64,6 +64,8 @@ $(function() {
 });
 
 function doSearch() {
+  $('#instructions').show();
+  $('#details').hide();
   $('#legend').hide();
   $('#results').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');

@@ -36,6 +36,7 @@ def populateDb():
   #coll.drop()
   coll.ensure_index('full_name', unique=True)
   coll.ensure_index('score')
+  coll.ensure_index('profit')
   coll.ensure_index('prov_des')
 
   # load delta v data
