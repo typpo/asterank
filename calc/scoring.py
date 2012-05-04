@@ -49,6 +49,12 @@ def price(obj):
     exactmass = True
     mass = obj['GM'] / G
 
+    if mass > 1e18:
+      # if it's huge, penalize it because the surface will be covered in ejecta, etc.
+      # and the goodies will be far beneath
+      mass = mass * 1e-8
+
+
   """
   # radius in m
   if isinstance(obj['diameter'], basestring):

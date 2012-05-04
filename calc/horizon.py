@@ -21,6 +21,12 @@ THOLEN_MAPPINGS = {
   'C': 'C',
   'F': 'C',
   'G': 'C',
+  'Q': 'Q',
+  'R': 'R',
+  'V': 'V',
+  'T': 'T',
+  'D': 'D',
+  'A': 'A',
 }
 
 def populateDb():
@@ -40,9 +46,11 @@ def populateDb():
   for row in reader:
     #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
-      if row['spec_T'] == 'M':
+      newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
+      if newspec:
+        row['spec_B'] = newspec   # TODO should have our own merged spec row
       else:
-        row['spec_B'] = 'S'
+        continue
 
     # Clean up inputs
     for key,val in row.items():
@@ -79,8 +87,8 @@ def populateDb():
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
-    if n % 1000 == 0:
-      print n, '...',
+    if n % 3000 == 0:
+      print n, '...'
 
   # now match dv
   f = open(DV_PATH, 'r')
@@ -92,7 +100,8 @@ def populateDb():
     des = parts[0]
     dv = float(parts[1])
     if coll.find_one({'prov_des': des}) is None:
-      print 'Could not find asteroid with designation', des, 'for dv match'
+      #print 'Could not find asteroid with designation', des, 'for dv match'
+      pass
     coll.update({'prov_des': des}, {'$set': {'dv': dv}})
 
 
