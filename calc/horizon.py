@@ -30,27 +30,48 @@ THOLEN_MAPPINGS = {
 }
 
 def populateDb():
-  print 'Loading small body data...this may take a while'
-
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
+  coll.drop()
   coll.ensure_index('full_name', unique=True)
   coll.ensure_index('score')
   coll.ensure_index('prov_des')
-  coll.drop()
 
+  # load delta v data
+  f = open(DV_PATH, 'r')
+  lines = f.readlines()
+  f.close()
+
+  print 'Loading delta-v data...'
+  deltav_map = {}
+  for line in lines:
+    parts = line.split(',')
+    des = parts[0]
+    dv = float(parts[1])
+    deltav_map[des] = dv
+
+  print 'Loading small body data...this may take a while'
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   designation_regex = re.compile('.*\(([^\)]*)\)')
   n = 0
   for row in reader:
-    #if row['spec_T'] == '' and row['spec_B'] == '':
     if row['spec_B'] == '':
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
         row['spec_B'] = newspec   # TODO should have our own merged spec row
       else:
         continue
+
+    # match it with its delta-v
+    m = designation_regex.match(row['full_name'])
+    if m:
+      row['prov_des'] = m.groups()[0]
+      dv = deltav_map.get(row['prov_des'], None)
+      if dv:
+        row['dv'] = dv
+    else:
+      row['prov_des'] = ''
 
     # Clean up inputs
     for key,val in row.items():
@@ -79,30 +100,10 @@ def populateDb():
       score = score * row['closeness']**3
     row['score'] = score
 
-    m = designation_regex.match(row['full_name'])
-    if m:
-      row['prov_des'] = m.groups()[0]
-    else:
-      row['prov_des'] = ''
-
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     n += 1
     if n % 3000 == 0:
       print n, '...'
-
-  # now match dv
-  f = open(DV_PATH, 'r')
-  lines = f.readlines()
-  f.close()
-  print '\nLoading deltav data...'
-  for line in lines:
-    parts = line.split(',')
-    des = parts[0]
-    dv = float(parts[1])
-    if coll.find_one({'prov_des': des}) is None:
-      #print 'Could not find asteroid with designation', des, 'for dv match'
-      pass
-    coll.update({'prov_des': des}, {'$set': {'dv': dv}})
 
 
   print 'Loaded', n, 'asteroids'
