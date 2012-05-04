@@ -1,5 +1,5 @@
 
-var HEADERS = ['full_name', 'score', 'price', 'saved', 'closeness', 'spec_B',
+var HEADERS = ['full_name', 'score', 'price', 'closeness', 'spec_B',
   'a', 'q', 'moid', 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved'];
 
@@ -10,7 +10,7 @@ $(function() {
     $('#instructions').hide();
     var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $(this).attr('data-obj');
-    $('#details h1').html(obj);
+    $('#details h2').html($(this).attr('data-full-name'));
     $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
     // workaround for a glitch on mobile devices
@@ -72,7 +72,7 @@ function doSearch() {
     for (var i=0; i < data.results.length; i++) {
       var obj = data.results[i];
       var name = obj.prov_des || obj.full_name;
-      var html = '<tr data-obj="' + name + '">';
+      var html = '<tr data-full-name="' + obj.full_name + '" data-obj="' + name + '">';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
         if (!val)
