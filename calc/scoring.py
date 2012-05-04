@@ -16,6 +16,8 @@ def closeness_weight(obj):
 
   # penalize aphelion distance
   aph = obj['ad']
+  if aph > 50:
+    return float('inf')
   aph_score = 1/(1+math.exp(0.9*aph))
 
   major_axis = obj['a']
