@@ -12,6 +12,8 @@ app.use(express.favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
+var DEFAULT_PORT = 9590;
+
 // App
 
 app.get('/', function(req, res) {
@@ -61,7 +63,7 @@ app.get('/search/:q', function(req, res) {
   res.send('');
 });
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || DEFAULT_PORT;
 app.listen(port);
 
 console.log('Started listening on port 8080');
