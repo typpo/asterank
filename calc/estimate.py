@@ -20,29 +20,34 @@ SPECTRA_INDEX = {
   },
   'C': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283
+    'nickel-iron': 0.0869229283,
+    'platinum': 0.01,
   },
   'Ch': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283
+    'nickel-iron': 0.0869229283,
+    'platinum': 0.005,
   },
   'Cg': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283
+    'nickel-iron': 0.0869229283,
+    'platinum': 0.005,
   },
   'Cgh': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283
+    'nickel-iron': 0.0869229283,
+    'platinum': 0.005,
   },
   'C type': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283
+    'nickel-iron': 0.0869229283,
+    'platinum': 0.01,
   },
   'Cb': {   # transition object between C and B
     'hydrogen': 0.1175,
     'iron': 12.5,
     'water': 0.775,
-    'nickel-iron': 0.0434
+    'nickel-iron': 0.0434,
   },
   'D': {
     'water': 0.000023,
@@ -66,7 +71,7 @@ SPECTRA_INDEX = {
   },
   'O': {
     'nickel-iron': 2.965,
-    'platinum': 1.5,
+    'platinum': 1.25,
   },
   'P': {  # correspond to CI, CM carbonaceous chondrites
     'water': 12.5,
@@ -135,6 +140,7 @@ SPECTRA_INDEX = {
     'iron': 88,
     'nickel': 10,
     'cobalt': 0.5,
+    'platinum': 0.005,
   },
   'Xk': {  # TODO these vals only apply to M-type within X
     'iron': 88,
