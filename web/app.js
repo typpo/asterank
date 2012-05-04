@@ -66,4 +66,4 @@ app.get('/search/:q', function(req, res) {
 var port = process.env.PORT || DEFAULT_PORT;
 app.listen(port);
 
-console.log('Started listening on port 8080');
+console.log('Started listening on port ' + port);
