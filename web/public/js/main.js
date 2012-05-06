@@ -5,6 +5,7 @@ var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 var CLOSE_APPROACHES_FIELD = 'Close Approaches';
 
 $(function() {
+  $('.exptip').tooltip();
   $('#submit').on('click', doSearch);
   var $tbody = $('#tbl tbody');
   $(document).on('click', '#tbl tbody tr', function(e) {
