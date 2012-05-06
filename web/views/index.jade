@@ -28,7 +28,7 @@ div.row-fluid
           li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
           li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
 
-      p The data on these objects is public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
+      p The data on these objects are public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
 
     div.well(style='text-align:center;')
       form.form-inline(style='margin:0')
@@ -44,7 +44,7 @@ div.row-fluid
             option(value='profit') profit
             option(value='score', selected) most cost effective
             option(value='price') most valuable
-            option(value='closeness') closest
+            option(value='closeness') accessibility
           input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
 div#results.row-fluid(style='display:none;')
@@ -64,31 +64,39 @@ div#results.row-fluid(style='display:none;')
       thead(style='background-color:#fff')
         tr
           th Name
-          th Score
-          th Value ($)
-          th Est. Profit ($)
-          th Closeness
-          th Type
-          th &Delta;V (km/s)
-          th pha
+          th <a class="exptip" ref="tooltip" title="An overall score, taking into account the accessibility of the asteroid, its potential value, and the cost of moving material off it.">Score</a>
+          th <a class="exptip" ref="tooltip" title="The estimated value of the raw materials in this object.">Value ($)</a>
+          th <a class="exptip" ref="tooltip" title="The <em>very</em> hypothetical profit to be gained from mining this asteroid, taking into account processing and moving raw material">Est. Profit</a> ($)
+          th <a class="exptip" ref="tooltip" title="An overall score for a number of factors contributing to the accessibility of an object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit.">Accessibility</a>
+          th <a class="exptip" ref="tooltip" title="Asteroid type, which helps us estimate its composition.">Type</a>
+          th <a class="exptip" ref="tooltip" title="Indicates the amount of effort required to reach this asteroid from Earth.">&Delta;V</a> (km/s)
+          th <a class="exptip" ref="tooltip" title="Classified as a Potentially Hazardous Object (Yes/No)">PHA</a>
       tbody(style='cursor:pointer;')
+
+div#legend-modal.modal(style='display:none;')
+  div.modal-header
+    a.close(data-dismiss='modal') ×
+    h2 Column Explanations
+  div.modal-body(style='overflow:auto;height:250px;')
+    p
+      ul
+      li Aphelion - Greatest distance from sun.
+      li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
+      li Accessibility - an overall score that estimates how accessible the object is, taking into account the object's orbit around the sun and the energy cost of intersecting its orbit from Earth.
+      li &Delta;v - change in velocity required to rendezvous.
+      li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
+      li Perhelion - Least distance from sun.
+      li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as a potential hazard to Earth.
+      li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
+      li Value - the current value of the raw materials in this object.
+      li * - indicates that mass was estimated, rather than exact.
+  div.modal-footer
+    a.btn(data-dismiss='modal') Close
 
 div#legend.row-fluid(style='margin-left:15px;display:none;')
   div.span10
     span
-      a(href='#', onClick="$('#legend-details').toggle();return false;") Explain column names
-    div#legend-details(style='display:none;')
-      ul
-      li Value - the current value of the raw materials in this object.
-      li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
-      li Closeness - an overall score that estimates how accessible the object is.
-      li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
-      li Aphelion - Greatest distance from sun.
-      li Perhelion - Least distance from sun.
-      li &Delta;v - change in velocity required to rendezvous.
-      li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as a potential hazard to Earth.
-      li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
-      li * - indicates that mass was estimated, rather than exact.
+      a(href='#', onClick="$('#legend-modal').modal();return false;") Explain column names
 
 div#feedback-modal.modal(style='display:none;')
   div.modal-header
