@@ -44,7 +44,7 @@ div.row-fluid
             option(value='profit') profit
             option(value='score', selected) most cost effective
             option(value='price') most valuable
-            option(value='closeness') closest
+            option(value='closeness') accessibility
           input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
 div#results.row-fluid(style='display:none;')
@@ -67,7 +67,7 @@ div#results.row-fluid(style='display:none;')
           th Score
           th Value ($)
           th Est. Profit ($)
-          th Closeness
+          th Accessibility
           th Type
           th &Delta;V (km/s)
           th pha
@@ -81,7 +81,7 @@ div#legend.row-fluid(style='margin-left:15px;display:none;')
       ul
       li Value - the current value of the raw materials in this object.
       li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
-      li Closeness - an overall score that estimates how accessible the object is.
+      li Accessibility - an overall score that estimates how accessible the object is, taking into account the object's orbit around the sun and the energy cost of intersecting its orbit from Earth.
       li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
       li Aphelion - Greatest distance from sun.
       li Perhelion - Least distance from sun.
