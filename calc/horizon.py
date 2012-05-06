@@ -38,6 +38,8 @@ def populateDb():
   coll.ensure_index('score')
   coll.ensure_index('profit')
   coll.ensure_index('prov_des')
+  coll.ensure_index('closeness')
+  coll.ensure_index('price')
 
   # load delta v data
   f = open(DV_PATH, 'r')
@@ -62,8 +64,7 @@ def populateDb():
       if newspec:
         row['spec_B'] = newspec   # TODO should have our own merged spec row
       else:
-        #row['spec_B'] = 'S'
-        continue
+        row['spec_B'] = 'S'
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
