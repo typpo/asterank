@@ -94,9 +94,14 @@ function doSearch() {
         var val = obj[HEADERS[j]];
         if (!val)
           val = '';
-        if (typeof (val) === 'number' && $.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
-          var suffix = obj['inexact'] ? '*' : '';
-          val = toFuzz(val) + suffix;
+        if (typeof (val) === 'number') {
+          if ($.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
+            var suffix = obj['inexact'] ? '*' : '';
+            val = toFuzz(val) + suffix;
+          }
+          else {
+            val = val.toFixed(4);
+          }
         }
         else {
           val = val + '';
