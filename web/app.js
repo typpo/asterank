@@ -18,7 +18,9 @@ var DEFAULT_PORT = 9590;
 // App
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {
+    nosocial: req.query.nosocial !== undefined,
+  });
 });
 
 app.get('/about', function(req, res) {

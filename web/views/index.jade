@@ -13,11 +13,11 @@ div.navbar.navbar-fixed-top
 
 div.row-fluid
   div.span12
-    div.hero-unit(style='padding:15px;margin-bottom:20px')
-      h2 Asterank is an economic and scientific catalog of over 500,000 asteroids in our solar system.
+    div.hero-unit(style='padding:15px;margin-bottom:20px;text-align:center')
+      h2 Asterank is an economic and scientific catalog of over 580,000 asteroids in our solar system.
 
     div.welcome-blurb.well
-      img(style='float:right;padding-left:10px;padding-bottom:11px;width:300px;height:auto', src='http://i.imgur.com/vvAjG.jpg')
+      img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
       p.spacey Asteroid mining has been <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">in the news</a> recently. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
 
       p.spacey(style='font-weight: bold;') We've collected, computed, or inferred important data points such as asteroid mass and composition using scraped data from multiple scientific sources.  With this information, we estimate the costs and rewards of mining rocks in space.
@@ -32,6 +32,10 @@ div.row-fluid
       p.spacey The data on these objects are public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
 
     div.well(style='text-align:center;')
+      noscript
+        div(style='margin-bottom:30px;')
+          h3 Sorry, JavaScript is required to perform searches!  I track usage to determine data that I should preload and features that need improvement.  For a version of the homepage with no 3rd-party social content (eg. Facebook, Twitter share), click <a href="/?nosocial">here</a>.
+
       form.form-inline(style='margin:0')
         div.search-thing
           span Show top
@@ -73,6 +77,15 @@ div#results.row-fluid(style='display:none;')
           th <a class="exptip" ref="tooltip" title="Roughly speaking, the amount of effort required to reach this asteroid from Earth.">&Delta;V</a> (km/s)
           th <a class="exptip" ref="tooltip" title="Classified as a Potentially Hazardous Object (Yes/No)">PHA</a>
       tbody(style='cursor:pointer;')
+
+div#footer(style='text-align:right;margin-top:25px;')
+  - if (!nosocial)
+    <div style="width:115px" class="fb-like" data-href="http://www.asterank.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://asterank.com" target="_blank">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <g:plusone></g:plusone>
+
 
 div#legend-modal.modal(style='display:none;')
   div.modal-header

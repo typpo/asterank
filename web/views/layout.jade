@@ -1,10 +1,12 @@
 !!!
 html
   head
-    title Asteroid Mining Value, Profit, and Rankings - Asterank
+    title Asteroid Mining Value, Profit, and Ranking - Asterank
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     include styles
   body
+    - if (!nosocial)
+      include facebook
     div.container-fluid!= body
     include mixpanel
     include js
