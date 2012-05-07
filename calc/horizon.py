@@ -96,7 +96,6 @@ def populateDb():
     row['closeness'] = scoring.closeness_weight(row)
     row['profit'] = scoring.profit(row)
 
-
     # TODO move this into scoring once I get it right
     score = min(row['price'], 1e14) / 5e12
     if score < 0.0001:
