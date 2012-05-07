@@ -7,6 +7,7 @@
       , "connect-redis": "1.2.0"
       , "redis-url": "latest"
       , "mongolian": "latest"
+      , "sendmail": "latest"
     }
   , "devDependencies": {
     }

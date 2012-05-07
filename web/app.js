@@ -2,6 +2,7 @@ var express = require('express')
   , app = express.createServer()
   , _ = require('underscore')
   , lookup = require('./lookup.js')
+  , mailer = require('./mailer.js')
 
 // Express config
 app.set('views', __dirname + '/views');
@@ -31,7 +32,7 @@ app.get('/feedback', function(req, res) {
 app.post('/feedback', function(req, res) {
   var email = req.body.email;
   var feedback = req.body.feedback;
-
+  mailer.mail(email + ':\r\n' + feedback);
   res.redirect('/')
 });
 
