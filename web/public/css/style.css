@@ -16,6 +16,10 @@ body {
   height: 1.8em;
 }
 
+p .spacey {
+  margin-bottom:30px;
+}
+
 ::-webkit-scrollbar {
 background:transparent;overflow:visible; width:15px;}
 ::-webkit-scrollbar-thumb {
