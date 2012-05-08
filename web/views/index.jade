@@ -80,17 +80,12 @@ div#results.row-fluid(style='display:none;')
 
 div#footer(style='text-align:right;margin-top:35px;margin-right:100px;')
   - if (!nosocial)
-    <div style="width:80px" class="fb-like" data-href="http://www.asterank.com/" data-send="false" data-layout="button_count" data-width="80" data-show-faces="false"></div>
-    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-url="http://asterank.com" target="_blank">Tweet</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    <g:plusone></g:plusone>
-    script
-      (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/plusone.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
-
+    <span class='st_fblike_large' displayText='Facebook Like'></span>
+    <span class='st_twitter_large' displayText='Tweet'></span>
+    <span class='st_email_large' displayText='Email'></span>
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
 
 div#legend-modal.modal(style='display:none;')
   div.modal-header
