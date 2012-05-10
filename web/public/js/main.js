@@ -73,7 +73,6 @@ $(function() {
   });
 
   mixpanel.track('home');
-  doSearch();
 });
 
 function doSearch() {
