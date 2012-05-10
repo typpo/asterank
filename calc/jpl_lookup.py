@@ -78,26 +78,28 @@ class JPL_Query:
     while tag:
       texts = map(lambda x: x.get_text(), tag.find_all('font'))
       d = {}
-      d['date'] = texts[0]  #datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
-      d['uncertainty'] = texts[1]
-      d['body'] = texts[2]
-      d['nom_dist_au'] = texts[3]
-      d['min_dist_au'] = texts[4]
-      d['max_dist_au'] = texts[5]
-      d['v_relative'] = texts[6]
-      d['v_infinity'] = texts[7]
-      d['jd'] = texts[8]
-      d['uncertainty2'] = texts[9]
-      d['semi_major'] = texts[10]
-      d['semi_minor'] = texts[11]
-      d['range_lov'] = texts[12]
-      d['n_sigma'] = texts[13]
-      d['bp'] = texts[14]
-      d['orbit_ref'] = texts[15]
-      d['ref'] = texts[16]
-      d['modified'] = texts[17]
+      pydate = datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
+      if pydate >= datetime.today():
+        d['date'] = texts[0]
+        d['uncertainty'] = texts[1]
+        d['body'] = texts[2]
+        d['nom_dist_au'] = texts[3]
+        d['min_dist_au'] = texts[4]
+        d['max_dist_au'] = texts[5]
+        d['v_relative'] = texts[6]
+        d['v_infinity'] = texts[7]
+        d['jd'] = texts[8]
+        d['uncertainty2'] = texts[9]
+        d['semi_major'] = texts[10]
+        d['semi_minor'] = texts[11]
+        d['range_lov'] = texts[12]
+        d['n_sigma'] = texts[13]
+        d['bp'] = texts[14]
+        d['orbit_ref'] = texts[15]
+        d['ref'] = texts[16]
+        d['modified'] = texts[17]
 
-      results.append(d)
+        results.append(d)
 
       tag = tag.next_sibling
       if tag:
