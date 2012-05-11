@@ -2,11 +2,19 @@ body {
   margin-top: 50px;
 }
 
-.welcome-blurb > * {
+.welcome-blurb p, li {
   font-size: 18px;
   line-height: 1.2em;
 }
 .welcome-blurb li { margin-top: 1em; }
+.welcome-blurb h2 {
+  line-height: 1.4em;
+}
+
+.welcome-blurb p {
+  margin-left: 15px;
+
+}
 
 
 .search-thing * {
