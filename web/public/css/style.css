@@ -9,11 +9,12 @@ body {
 .welcome-blurb li { margin-top: 1em; }
 .welcome-blurb h2 {
   line-height: 1.4em;
+  margin-bottom: 15px;
 }
 
 .welcome-blurb p {
   margin-left: 15px;
-
+  margin-bottom: 15px;
 }
 
 
