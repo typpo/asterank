@@ -76,7 +76,7 @@ div#results.row-fluid(style='display:none;')
           th <a class="exptip" ref="tooltip" title="An overall score, taking into account the accessibility of the asteroid, its potential value, and the cost of moving material off it.">Score</a>
           th <a class="exptip" ref="tooltip" title="The estimated value of the raw materials in this object.">Value</a> ($)
           th <a class="exptip" ref="tooltip" title="The <em>very</em> hypothetical profit to be gained from mining this asteroid, taking into account processing and moving raw material">Est. Profit</a> ($)
-          th <a class="exptip" ref="tooltip" title="An overall score for a number of factors contributing to the accessibility of an object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit.">Accessibility</a>
+          th <a class="exptip" ref="tooltip" title="An overall score for a number of factors contributing to how difficult it is to get to the object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit. A higher score is better.">Accessibility</a>
           th <a class="exptip" ref="tooltip" title="Asteroid type, which helps us estimate its composition.">Type</a>
           th <a class="exptip" ref="tooltip" title="Roughly speaking, the amount of effort required to reach this asteroid from Earth.">&Delta;V</a> (km/s)
           th <a class="exptip" ref="tooltip" title="Classified as a Potentially Hazardous Object (Yes/No)">PHA</a>
@@ -100,7 +100,7 @@ div#legend-modal.modal(style='display:none;')
       ul
       li Aphelion - Greatest distance from sun.
       li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
-      li Accessibility - an overall score that estimates how accessible the object is, taking into account the object's orbit around the sun and the energy cost of intersecting its orbit from Earth.
+      li Accessibility - overall score for a number of factors contributing to how difficult it is to get to the object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit. A higher score is better.
       li &Delta;v - change in velocity required to rendezvous.
       li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
       li Perhelion - Least distance from sun.
