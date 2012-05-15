@@ -138,6 +138,7 @@ table{max-width:100%;border-collapse:collapse;border-spacing:0;}
 .table-bordered thead:last-child tr:last-child th:first-child,.table-bordered tbody:last-child tr:last-child td:first-child{-webkit-border-radius:0 0 0 4px;-moz-border-radius:0 0 0 4px;border-radius:0 0 0 4px;}
 .table-bordered thead:last-child tr:last-child th:last-child,.table-bordered tbody:last-child tr:last-child td:last-child{-webkit-border-radius:0 0 4px 0;-moz-border-radius:0 0 4px 0;border-radius:0 0 4px 0;}
 .table-striped tbody tr:nth-child(odd) td,.table-striped tbody tr:nth-child(odd) th{background-color:#f9f9f9;}
+.table-striped tbody tr:nth-child(even) td,.table-striped tbody tr:nth-child(even) th{background-color:#fff;}
 .table tbody tr:hover td,.table tbody tr:hover th{background-color:#f5f5f5;}
 table .span1{float:none;width:44px;margin-left:0;}
 table .span2{float:none;width:124px;margin-left:0;}
