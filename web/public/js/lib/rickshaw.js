@@ -2212,6 +2212,15 @@ Rickshaw.Graph.Renderer.ScatterPlot = Rickshaw.Class.create( Rickshaw.Graph.Rend
 
 			if (series.disabled) return;
 
+      /*
+      var realstack = [];
+      for (var i=0; i < series.stack.length; i++) {
+        if (series.stack[i].y > 0)
+          realstack.push(series.stack[i]);
+      }
+      series.stack = realstack;
+      */
+
 			var nodes = graph.vis.selectAll("path")
 				.data(series.stack)
 				.enter().append("svg:circle")
