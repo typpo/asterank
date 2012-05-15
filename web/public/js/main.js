@@ -117,6 +117,7 @@ function doSearch() {
       $tmp.append(html);
     }
     graphSpectral();
+    graphProfit();
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
@@ -155,10 +156,9 @@ function toFuzz(n) {
 }
 
 function graphSpectral() {
-  // Group by spectral type
-
-  if (lastResults === null)
+  if (lastResults === null) {
     return;
+  }
 
   var specs_data = [];
   var spec_grouped = _.chain(lastResults).groupBy(function(obj) {
@@ -169,22 +169,37 @@ function graphSpectral() {
       count: val.length
     });
   });
-  console.log(specs_data);
-  barChart(specs_data, 'spec_type', 'count');
+
+  specs_data = specs_data.sort(function(a, b) {
+    return b.count - a.count;
+  });
+  barChart(specs_data, 'spec_type', 'count', '#spec-graph');
 }
 
-function barChart(data, xattr, yattr) {
+function graphProfit() {
+  if (lastResults === null) {
+    return;
+  }
+
+  var data = _.pluck(lastResults, 'profit');
+  console.log(data);
+  barChart(data, null, 'profit', '#profit-graph');
+}
+
+function barChart(data, xattr, yattr, selector) {
+  $(selector).empty();
+
   var padding = 30;
 
-  var barWidth = 40;
+  var barWidth = 20;
   var width = (barWidth + 10) * data.length;
-  var height = 200;
+  var height = 100;
 
   var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
   var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum[yattr]; })]).
     rangeRound([0, height]);
 
-  var barDemo = d3.select("#bar-demo-part3").
+  var barDemo = d3.select(selector).
     append("svg:svg").
     attr("width", width).
     attr("height", height + padding);
@@ -211,15 +226,17 @@ function barChart(data, xattr, yattr) {
     text(function(datum) { return datum[yattr];}).
     attr("fill", "white");
 
-  barDemo.selectAll("text.yAxis").
-    data(data).
-    enter().append("svg:text").
-    attr("x", function(datum, index) { return x(index) + barWidth; }).
-    attr("y", height).
-    attr("dx", -barWidth/2).
-    attr("text-anchor", "middle").
-    attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
-    text(function(datum) { return datum[xattr];}).
-    attr("transform", "translate(0, 18)").
-    attr("class", "yAxis");
+  if (xattr) {
+    barDemo.selectAll("text.yAxis").
+      data(data).
+      enter().append("svg:text").
+      attr("x", function(datum, index) { return x(index) + barWidth; }).
+      attr("y", height).
+      attr("dx", -barWidth/2).
+      attr("text-anchor", "middle").
+      attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
+      text(function(datum) { return datum[xattr];}).
+      attr("transform", "translate(0, 18)").
+      attr("class", "yAxis");
+  }
 }
