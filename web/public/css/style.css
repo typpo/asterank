@@ -29,6 +29,8 @@ p .spacey {
   margin-bottom:30px;
 }
 
+.detail_swatch { float: right; display: inline-block; width: 10px; height: 10px; margin: 0 4px 0 0 }
+
 ::-webkit-scrollbar {
 background:transparent;overflow:visible; width:15px;}
 ::-webkit-scrollbar-thumb {

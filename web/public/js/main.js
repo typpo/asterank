@@ -189,12 +189,17 @@ function scatterScore() {
 
   var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
+  var logscores = {};
   var series = _.chain(lastResults).map(function(obj) {
-    return {
+    var logscore = Math.log(obj.score);
+    var ret = {
       x: 10-obj.closeness,
-      y: Math.log(obj.score),
+      y: logscore,
       stype: obj.spec_B
     };
+    // quite a hack
+    logscores[ret.stype + ',' + ret.x.toFixed(2) + ',' + ret.y.toFixed(2)] = obj;
+    return ret;
   }).groupBy(function(obj) {
     return obj.stype;
   }).map(function(objs, stype) {
@@ -228,14 +233,28 @@ function scatterScore() {
     series: series
   } );
 
-
   graph.renderer.dotSize = 6;
   graph.render();
 
   var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-      graph: graph
-  } );
+    graph: graph,
+    formatter: function(series, x, y) {
 
+      var key = series.name + ',' + x.toFixed(2) + ',' + y.toFixed(2);
+      var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+
+      var name = '';
+      if (logscores[key])
+        name = logscores[key].full_name;
+      var content = swatch
+        + name
+        + '<br>' + series.name + '-type'
+        + '<br>Closeness (logarithmic): ' + x.toFixed(2)
+        + ' <br>Score: '
+        + y.toFixed(2);
+      return content;
+    }
+  } );
 
   var legend = new Rickshaw.Graph.Legend({
     graph: graph,
@@ -263,7 +282,6 @@ function scatterScore() {
 
 
   yAxis.render();
-  console.log(data);
   */
 }
 
