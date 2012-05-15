@@ -139,7 +139,7 @@ function doSearch() {
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
     $('#legend').show();
-    $('html,body').animate({scrollTop: $('#tbl-container').offset().top-60},500);
+    $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
   });
   return false;
 }
