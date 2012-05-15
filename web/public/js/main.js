@@ -222,7 +222,7 @@ function scatterScore() {
 
   Rickshaw.Series.zeroFill(series);
   var graph = new Rickshaw.Graph( {
-    element: document.getElementById("profit-graph"),
+    element: document.getElementById('profit-graph'),
     width: $(window).width(),
     height: 300,
     renderer: 'scatterplot',
@@ -254,7 +254,7 @@ function scatterScore() {
 
   var legend = new Rickshaw.Graph.Legend({
     graph: graph,
-      element: document.querySelector('#profit-graph-legend')
+      element: document.getElementById('profit-graph-legend')
   });
 
   var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
