@@ -2464,7 +2464,7 @@ Rickshaw.Series.zeroFill = function(series) {
 
 		data.forEach( function(d) {
 			if (!d[i] || d[i].x != x) {
-				d.splice(i, null, { x: x, y: 0 });
+				d.splice(i, 0, { x: x, y: 0 });
 			}
 		} );
 

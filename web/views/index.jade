@@ -13,27 +13,28 @@ div.navbar.navbar-fixed-top
 
 div.row-fluid
   div.span12
-    div.hero-unit(style='padding:15px;margin-bottom:20px;text-align:center')
-      h2 Asterank is an economic and scientific catalog of over 580,000 asteroids in our solar system.
+    div#intro
+      div.hero-unit(style='padding:15px;margin-bottom:20px;text-align:center')
+        h2 Asterank is an economic and scientific catalog of over 580,000 asteroids in our solar system.
 
-    div.welcome-blurb.well
-      img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
-      h2 Overview
-      p.spacey Asteroid mining has been <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">in the news</a> recently. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
+      div.welcome-blurb.well
+        img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
+        h2 Overview
+        p.spacey Asteroid mining has been <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">in the news</a> recently. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
 
-      p.spacey(style='font-weight: bold;') We've collected, computed, or inferred important data points such as asteroid mass and composition using scraped data from multiple scientific sources.  With this information, we estimate the costs and rewards of mining rocks in space.
+        p.spacey(style='font-weight: bold;') We've collected, computed, or inferred important data points such as asteroid mass and composition using scraped data from multiple scientific sources.  With this information, we estimate the costs and rewards of mining rocks in space.
 
-      h2 Data
-      p Details on orbits and basic physical parameters are mostly sourced from JPL data.  Composition data is harder to come by.  We make generalizations about asteroids based on their spectral classification and size.  Although scientists know very little about the actual composition of different classes of asteroids, our calculations incorporate conclusions from multiple scientific publications in addition to cross-referencing known meteorite data.
+        h2 Data
+        p Details on orbits and basic physical parameters are mostly sourced from JPL data.  Composition data is harder to come by.  We make generalizations about asteroids based on their spectral classification and size.  Although scientists know very little about the actual composition of different classes of asteroids, our calculations incorporate conclusions from multiple scientific publications in addition to cross-referencing known meteorite data.
 
-      //
-        p There are three major factors:
-          ol
-            li <strong>Value of Materials</strong> - Many asteroids contain metals, volatile compounds, and water.
-            li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
-            li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
+        //
+          p There are three major factors:
+            ol
+              li <strong>Value of Materials</strong> - Many asteroids contain metals, volatile compounds, and water.
+              li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
+              li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
 
-      p.spacey The data on these objects are public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
+        p.spacey The data on these objects are public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
 
     div.well(style='text-align:center;')
       noscript
@@ -59,8 +60,8 @@ div.row-fluid
 div.row-fluid
   div.span5#spec-graph
 div.row-fluid
-  div#profit-graph(style='float:left')
-  div#profit-graph-legend(style='float:right')
+  div.span10#profit-graph
+  div#profit-graph-legend(style='position:absolute;right:0')
 
 div#results.row-fluid(style='display:none;')
   div.span3

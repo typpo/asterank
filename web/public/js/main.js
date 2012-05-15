@@ -116,8 +116,14 @@ function doSearch() {
       html += '</tr>';
       $tmp.append(html);
     }
+    $('#intro').animate({height: 0}, function() {
+      $(this).hide();
+    });
+
+    // TODO exclude mobile
     graphSpectral();
     graphProfit();
+
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
@@ -181,7 +187,7 @@ function graphProfit() {
     return;
   }
 
-  var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
+  var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
   var series = _.chain(lastResults).map(function(obj) {
     return {
@@ -216,7 +222,7 @@ function graphProfit() {
 
   var graph = new Rickshaw.Graph( {
     element: document.getElementById("profit-graph"),
-    width: 760,
+    width: $(window).width(),
     height: 400,
     renderer: 'scatterplot',
     series: series
