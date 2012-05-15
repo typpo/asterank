@@ -139,6 +139,7 @@ function doSearch() {
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
     $('#legend').show();
+    $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
     $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
   });
   return false;
@@ -223,10 +224,11 @@ function scatterScore() {
   }).value();
 
   Rickshaw.Series.zeroFill(series);
+
   var graph = new Rickshaw.Graph( {
     element: document.getElementById('profit-graph'),
     width: $(window).width(),
-    height: 300,
+    height: 220,
     renderer: 'scatterplot',
     series: series
   } );
@@ -244,8 +246,8 @@ function scatterScore() {
       var name = '';
       var valuestr = '';
       var profitstr = '';
-      if (logscores[key]) {
-        var obj = logscores[key];
+      var obj = logscores[key];
+      if (obj) {
         name = obj.full_name;
         valuestr = '<br>Value: $' + toFuzz(obj.price);
         profitstr = '<br>Profit: $' + toFuzz(obj.profit);
@@ -254,7 +256,7 @@ function scatterScore() {
         + name
         + valuestr
         + profitstr
-        + '<br>Closeness: ' + x.toFixed(2)
+        + '<br>Accessibility: ' + x.toFixed(2)
         + ' <br>Score (log): '
         + y.toFixed(2);
       return content;
@@ -263,17 +265,25 @@ function scatterScore() {
 
   var legend = new Rickshaw.Graph.Legend({
     graph: graph,
-      element: document.getElementById('profit-graph-legend')
+    element: document.getElementById('profit-graph-legend')
   });
 
   var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
     graph: graph,
-      legend: legend
+    legend: legend
   });
   var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
     graph: graph,
-      legend: legend
+    legend: legend
   });
+  /*
+  var yAxis = new Rickshaw.Graph.Axis.Y({
+    title: 'test',
+    graph: graph,
+    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+  });
+  yAxis.render();
+  */
 }
 
 function barChart(data, xattr, yattr, selector) {
