@@ -183,10 +183,9 @@ function graphProfit() {
 
   var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
 
-  /*
   var series = _.chain(lastResults).map(function(obj) {
     return {
-      x: obj.closeness,
+      x: 10-obj.closeness,
       y: Math.log(obj.score),
       stype: obj.spec_B
     };
@@ -199,21 +198,21 @@ function graphProfit() {
       name: stype
     };
   }).value();
-
-  */
+    Rickshaw.Series.zeroFill(series);
+  /*
   var data = _.map(lastResults, function(obj) {
     return {
       x: obj.closeness,
       y: Math.log(obj.score)
     };
   });
-    //Rickshaw.Series.zeroFill(series);
-
   var series = [{
     data: data,
     color: 'steelblue',
     name: 'asteroids'
   }];
+
+  */
 
   var graph = new Rickshaw.Graph( {
     element: document.getElementById("profit-graph"),
