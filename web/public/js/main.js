@@ -82,8 +82,15 @@ function doSearch() {
   $('#legend').hide();
   $('#results').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
+
+  // empty graphs
+  $('#spec-graph').empty();
+  $('#profit-graph').empty();
+  $('#profit-graph-legend').empty();
+
   var $tmp = $('tbody').empty();
-  var searchparams = {sort:$('#top_sort').val(),n:$('#top_num').val()};
+  var num_search = parseInt($('#top_num').val());
+  var searchparams = {sort:$('#top_sort').val(),n:num_search};
   mixpanel.track('search', searchparams);
 
   $.getJSON('/top', searchparams, function(data) {
@@ -116,13 +123,15 @@ function doSearch() {
       html += '</tr>';
       $tmp.append(html);
     }
-    $('#intro').animate({height: 0}, function() {
-      $(this).hide();
-    });
+    $('#intro').hide();
 
-    // TODO exclude mobile
-    graphSpectral();
-    scatterScore();
+    if (num_search <= 9000)
+      graphSpectral();
+    if (navigator && !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+      // Exclude mobile devices from the heavy handed stuff
+      if (num_search < 300)
+        scatterScore();
+    }
 
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
@@ -162,7 +171,6 @@ function toFuzz(n) {
 }
 
 function graphSpectral() {
-  $('#spec-graph').empty();
   if (lastResults === null) {
     return;
   }
@@ -184,8 +192,6 @@ function graphSpectral() {
 }
 
 function scatterScore() {
-  $('#profit-graph').empty();
-  $('#profit-graph-legend').empty();
 
   if (lastResults === null) {
     return;
