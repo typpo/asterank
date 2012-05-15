@@ -48,6 +48,6 @@ background-color:#fff;}
 ::-webkit-scrollbar-corner {
 background:transparent;}
 ::-webkit-scrollbar-thumb {
-background-color: #DDD;}
+background-color: #333;}
 ::-webkit-scrollbar-thumb:hover {
-background-color: #999;}
+background-color: #555;}
