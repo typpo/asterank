@@ -268,6 +268,7 @@ function scatterScore() {
     graph: graph,
     element: document.getElementById('profit-graph-legend')
   });
+  $('#profit-graph-legend').prepend('<p style="text-align:center;font-weight:bold;">Asteroid Type</p>');
 
   var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
     graph: graph,
