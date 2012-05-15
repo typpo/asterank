@@ -181,8 +181,9 @@ function graphProfit() {
     return;
   }
 
-  var palette = new Rickshaw.Color.Palette( { scheme: 'spectrum2001' } );
+  var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
 
+  /*
   var series = _.chain(lastResults).map(function(obj) {
     return {
       x: obj.closeness,
@@ -191,20 +192,33 @@ function graphProfit() {
     };
   }).groupBy(function(obj) {
     return obj.stype;
-  })/*.map(function(objs, stype) {
+  }).map(function(objs, stype) {
     return {
       data: objs,
       color: palette.color(),
       name: stype
     };
-  })*/.value();
+  }).value();
 
-  Rickshaw.Series.zeroFill(series);
+  */
+  var data = _.map(lastResults, function(obj) {
+    return {
+      x: obj.closeness,
+      y: Math.log(obj.score)
+    };
+  });
+    //Rickshaw.Series.zeroFill(series);
+
+  var series = [{
+    data: data,
+    color: 'steelblue',
+    name: 'asteroids'
+  }];
 
   var graph = new Rickshaw.Graph( {
     element: document.getElementById("profit-graph"),
-    width: 960,
-    height: 250,
+    width: 760,
+    height: 400,
     renderer: 'scatterplot',
     series: series
   } );
@@ -213,22 +227,10 @@ function graphProfit() {
   graph.renderer.dotSize = 6;
   graph.render();
 
-  /*
   var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-    graph: graph,
-      formatter: function(series, x, y) {
-           var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-           var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-           var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-    return content;
-      }
+      graph: graph
   } );
-  */
 
-  var yAxis = new Rickshaw.Graph.Axis.Y({
-    graph: graph
-  });
-  yAxis.render();
 
   var legend = new Rickshaw.Graph.Legend({
     graph: graph,
@@ -236,6 +238,10 @@ function graphProfit() {
   });
 
   var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+    graph: graph,
+      legend: legend
+  });
+  var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
     graph: graph,
       legend: legend
   });
@@ -249,7 +255,10 @@ function graphProfit() {
   var highlight = new Rickshaw.Graph.Behavior.Series.Highlight( {
       graph: graph,
         legend: legend
-  } );
+
+
+  yAxis.render();
+  console.log(data);
   */
 }
 
