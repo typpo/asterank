@@ -123,7 +123,7 @@ function doSearch() {
       html += '</tr>';
       $tmp.append(html);
     }
-    $('#intro').hide();
+    $('.intro').hide();
 
     if (navigator && !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)
       && !($.browser.msie && $.browser.version < 9)) {
