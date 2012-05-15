@@ -122,7 +122,7 @@ function doSearch() {
 
     // TODO exclude mobile
     graphSpectral();
-    graphProfit();
+    scatterScore();
 
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
@@ -182,7 +182,7 @@ function graphSpectral() {
   barChart(specs_data, 'spec_type', 'count', '#spec-graph');
 }
 
-function graphProfit() {
+function scatterScore() {
   if (lastResults === null) {
     return;
   }

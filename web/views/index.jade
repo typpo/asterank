@@ -58,15 +58,16 @@ div.row-fluid
           input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
 div.row-fluid
-  div.span5#spec-graph
-div.row-fluid
   div.span10#profit-graph
   div#profit-graph-legend(style='position:absolute;right:0')
 
 div#results.row-fluid(style='display:none;')
   div.span3
-    div#instructions
+    div#instructions(style='margin-top:35px;')
       h3 Click on an object to view its details.
+      p
+        strong Spectal distribution of results:
+      div.span5#spec-graph
     div#details(style='display:none;')
       h2
       table.table.table-bordered.table-condensed
