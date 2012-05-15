@@ -131,7 +131,7 @@ function doSearch() {
       // Exclude mobile devices from the heavy handed stuff :(
       if (num_search <= 9000)
         graphSpectral();
-      if (num_search < 300)
+      if (num_search <= 500)
         scatterScore();
     }
 
