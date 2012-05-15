@@ -242,11 +242,18 @@ function scatterScore() {
       var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
 
       var name = '';
-      if (logscores[key])
-        name = logscores[key].full_name;
+      var valuestr = '';
+      var profitstr = '';
+      if (logscores[key]) {
+        var obj = logscores[key];
+        name = obj.full_name;
+        valuestr = '<br>Value: $' + toFuzz(obj.price);
+        profitstr = '<br>Profit: $' + toFuzz(obj.profit);
+      }
       var content = swatch
         + name
-        + '<br>' + series.name + '-type'
+        + valuestr
+        + profitstr
         + '<br>Closeness: ' + x.toFixed(2)
         + ' <br>Score (log): '
         + y.toFixed(2);
