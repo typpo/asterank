@@ -58,10 +58,16 @@ div.row-fluid
 
         p.spacey The data on these objects are public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
 
-div.row-fluid
+div#chart-title.row-fluid(style='display:none;text-align:center;')
+  h3 Value Score vs. Accessibility
+div#chart-container.row-fluid(style='border: 1px solid #ccc;display:none;')
   div.span10#profit-graph
   div#profit-graph-legend(style='position:absolute;right:0;top:135px;')
 
+div#tbl-title.row-fluid(style='display:none;text-align:center;height:30px')
+  div.offset3
+    //
+      h3 Data
 div#results.row-fluid(style='display:none;')
   div.span3
     div#instructions(style='margin-top:35px;')

@@ -81,6 +81,9 @@ function doSearch() {
   $('#details').hide();
   $('#legend').hide();
   $('#results').hide();
+  $('#chart-title').hide();
+  $('#tbl-title').hide();
+  $('#chart-container').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
 
   // empty graphs
@@ -131,14 +134,18 @@ function doSearch() {
       // Exclude mobile devices from the heavy handed stuff :(
       if (num_search <= 9000)
         graphSpectral();
-      if (num_search <= 500)
+      if (num_search <= 500) {
+        $('#chart-title').show();
         scatterScore();
+      }
     }
 
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
     $('#legend').show();
+    $('#tbl-title').show();
+    $('#chart-container').show();
     $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
     $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
   });
