@@ -125,7 +125,9 @@ function doSearch() {
     }
     $('#intro').hide();
 
-    if (navigator && !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+    if (navigator && !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)
+      && !($.browser.msie && $.browser.version < 9)) {
+
       // Exclude mobile devices from the heavy handed stuff :(
       if (num_search <= 9000)
         graphSpectral();
