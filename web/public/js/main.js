@@ -162,6 +162,7 @@ function toFuzz(n) {
 }
 
 function graphSpectral() {
+  $('#spec-graph').empty();
   if (lastResults === null) {
     return;
   }
@@ -183,6 +184,9 @@ function graphSpectral() {
 }
 
 function scatterScore() {
+  $('#profit-graph').empty();
+  $('#profit-graph-legend').empty();
+
   if (lastResults === null) {
     return;
   }
@@ -197,7 +201,7 @@ function scatterScore() {
       y: logscore,
       stype: obj.spec_B
     };
-    // quite a hack
+    // what an ugly hack
     logscores[ret.stype + ',' + ret.x.toFixed(2) + ',' + ret.y.toFixed(2)] = obj;
     return ret;
   }).groupBy(function(obj) {
@@ -209,22 +213,8 @@ function scatterScore() {
       name: stype
     };
   }).value();
-    Rickshaw.Series.zeroFill(series);
-  /*
-  var data = _.map(lastResults, function(obj) {
-    return {
-      x: obj.closeness,
-      y: Math.log(obj.score)
-    };
-  });
-  var series = [{
-    data: data,
-    color: 'steelblue',
-    name: 'asteroids'
-  }];
 
-  */
-
+  Rickshaw.Series.zeroFill(series);
   var graph = new Rickshaw.Graph( {
     element: document.getElementById("profit-graph"),
     width: $(window).width(),
@@ -249,8 +239,8 @@ function scatterScore() {
       var content = swatch
         + name
         + '<br>' + series.name + '-type'
-        + '<br>Closeness (logarithmic): ' + x.toFixed(2)
-        + ' <br>Score: '
+        + '<br>Closeness: ' + x.toFixed(2)
+        + ' <br>Score (logarithmic): '
         + y.toFixed(2);
       return content;
     }
@@ -269,20 +259,6 @@ function scatterScore() {
     graph: graph,
       legend: legend
   });
-
-  /*
-  var order = new Rickshaw.Graph.Behavior.Series.Order( {
-      graph: graph,
-        legend: legend
-  } );
-
-  var highlight = new Rickshaw.Graph.Behavior.Series.Highlight( {
-      graph: graph,
-        legend: legend
-
-
-  yAxis.render();
-  */
 }
 
 function barChart(data, xattr, yattr, selector) {
