@@ -56,10 +56,11 @@ div.row-fluid
             option(value='closeness') accessibility
           input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
-div.row
+div.row-fluid
   div.span5#spec-graph
-div.row
-  div#profit-graph
+div.row-fluid
+  div#profit-graph(style='float:left')
+  div#profit-graph-legend(style='float:right')
 
 div#results.row-fluid(style='display:none;')
   div.span3
