@@ -2,7 +2,7 @@ body {
   margin-top: 50px;
 }
 
-.welcome-blurb p, li {
+.welcome-blurb p, .welcome-blurb li {
   font-size: 18px;
   line-height: 1.2em;
 }
