@@ -3,6 +3,7 @@ var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
   /*'a', 'q', 'moid',*/ 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 var CLOSE_APPROACHES_FIELD = 'Close Approaches';
+var lastResults = null;
 
 $(function() {
   $('.exptip').tooltip();
@@ -86,6 +87,7 @@ function doSearch() {
   mixpanel.track('search', searchparams);
 
   $.getJSON('/top', searchparams, function(data) {
+    lastResults = data.results;
     for (var i=0; i < data.results.length; i++) {
       var obj = data.results[i];
       var name = obj.prov_des || obj.full_name;
@@ -114,6 +116,7 @@ function doSearch() {
       html += '</tr>';
       $tmp.append(html);
     }
+    graphSpectral();
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
@@ -149,4 +152,74 @@ function toFuzz(n) {
     }
   }
   return n;
+}
+
+function graphSpectral() {
+  // Group by spectral type
+
+  if (lastResults === null)
+    return;
+
+  var specs_data = [];
+  var spec_grouped = _.chain(lastResults).groupBy(function(obj) {
+    return obj.spec_B;
+  }).map(function(val, key) {
+    specs_data.push({
+      spec_type: key,
+      count: val.length
+    });
+  });
+  console.log(specs_data);
+  barChart(specs_data, 'spec_type', 'count');
+}
+
+function barChart(data, xattr, yattr) {
+  var padding = 30;
+
+  var barWidth = 40;
+  var width = (barWidth + 10) * data.length;
+  var height = 200;
+
+  var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
+  var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum[yattr]; })]).
+    rangeRound([0, height]);
+
+  var barDemo = d3.select("#bar-demo-part3").
+    append("svg:svg").
+    attr("width", width).
+    attr("height", height + padding);
+
+  barDemo.selectAll("rect").
+    data(data).
+    enter().
+    append("svg:rect").
+    attr("x", function(datum, index) { return x(index); }).
+    attr("y", function(datum) { return height - y(datum[yattr]); }).
+    attr("height", function(datum) { return y(datum[yattr]); }).
+    attr("width", barWidth).
+    attr("fill", "#2d578b");
+
+  barDemo.selectAll("text").
+    data(data).
+    enter().append("svg:text").
+    attr("x", function(datum, index) { return x(index) + barWidth; }).
+    attr("y", function(datum) { return height - y(datum[yattr]); }).
+    attr("dx", -barWidth/2).
+    attr("dy", "1.2em").
+    attr("text-anchor", "middle").
+    attr("style", "font-size: 12; font-family: Helvetica, sans-serif;").
+    text(function(datum) { return datum[yattr];}).
+    attr("fill", "white");
+
+  barDemo.selectAll("text.yAxis").
+    data(data).
+    enter().append("svg:text").
+    attr("x", function(datum, index) { return x(index) + barWidth; }).
+    attr("y", height).
+    attr("dx", -barWidth/2).
+    attr("text-anchor", "middle").
+    attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
+    text(function(datum) { return datum[xattr];}).
+    attr("transform", "translate(0, 18)").
+    attr("class", "yAxis");
 }
