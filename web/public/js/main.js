@@ -125,10 +125,10 @@ function doSearch() {
     }
     $('#intro').hide();
 
-    if (num_search <= 9000)
-      graphSpectral();
     if (navigator && !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-      // Exclude mobile devices from the heavy handed stuff
+      // Exclude mobile devices from the heavy handed stuff :(
+      if (num_search <= 9000)
+        graphSpectral();
       if (num_search < 300)
         scatterScore();
     }
@@ -224,7 +224,7 @@ function scatterScore() {
   var graph = new Rickshaw.Graph( {
     element: document.getElementById("profit-graph"),
     width: $(window).width(),
-    height: 400,
+    height: 300,
     renderer: 'scatterplot',
     series: series
   } );
