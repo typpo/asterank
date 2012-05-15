@@ -181,9 +181,39 @@ function graphProfit() {
     return;
   }
 
-  var data = _.pluck(lastResults, 'profit');
-  console.log(data);
-  barChart(data, null, 'profit', '#profit-graph');
+  var data = _.map(lastResults, function(obj) {
+    return {
+      x: obj.closeness,
+      y: Math.log(obj.score)
+    };
+  });
+
+  var graph = new Rickshaw.Graph( {
+    element: document.getElementById("profit-graph"),
+    width: 960,
+    height: 500,
+    renderer: 'scatterplot',
+    series: [
+      {
+        color: "steelblue",
+        data: data
+      }
+    ]
+  } );
+
+var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+  graph: graph,
+  formatter: function(series, x, y) {
+    var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
+    var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
+    var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
+    return content;
+  }
+} );
+
+
+  graph.renderer.dotSize = 6;
+  graph.render();
 }
 
 function barChart(data, xattr, yattr, selector) {
