@@ -9,7 +9,6 @@ html
       - if (false && typeof(nosocial) !== 'undefined' && !nosocial)
         include facebook
     div.container-fluid!= body
-    //
-      include mixpanel
     <script>mixpanel = {track:function(){}}</script>
+    include mixpanel
     include js
