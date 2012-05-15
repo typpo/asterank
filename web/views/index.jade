@@ -13,11 +13,32 @@ div.navbar.navbar-fixed-top
 
 div.row-fluid
   div.span12
-    div#intro
-      div.hero-unit(style='padding:15px;margin-bottom:20px;text-align:center')
+    div
+      div.intro.hero-unit(style='padding:15px;margin-bottom:20px;text-align:center')
         h2 Asterank is an economic and scientific catalog of over 580,000 asteroids in our solar system.
 
-      div.welcome-blurb.well
+      div.well(style='text-align:center;')
+        noscript
+          div(style='margin-bottom:30px;')
+            h3 Sorry, JavaScript is required to perform searches!  I track usage to determine data that I should prioritize when scraping and features that need improvement.  For a version of the homepage with no 3rd-party social content (eg. Facebook, Twitter share), click <a href="/?nosocial">here</a>.
+
+        form.form-inline(style='margin:0')
+          div.search-thing
+            span Show top
+            select#top_num(style='margin:0 5px 0').input-small
+              option(value=100) 100
+              option(value=1000) 1,000
+              option(value=5000) 5,000
+              option(value=10000) 10,000+
+            span  asteroids sorted by
+            select#top_sort(style='margin:0 5px 0').input-xlarge
+              option(value='profit') profit
+              option(value='score', selected) most cost effective
+              option(value='price') most valuable
+              option(value='closeness') accessibility
+            input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
+
+      div.intro.welcome-blurb.well
         img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
         h2 Overview
         p.spacey Asteroid mining has been <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">in the news</a> recently. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
@@ -35,27 +56,6 @@ div.row-fluid
               li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
 
         p.spacey The data on these objects are public but very sparse.  It's 2012 and there are no "experts" in this field.  Assumptions are made.
-
-    div.well(style='text-align:center;')
-      noscript
-        div(style='margin-bottom:30px;')
-          h3 Sorry, JavaScript is required to perform searches!  I track usage to determine data that I should prioritize when scraping and features that need improvement.  For a version of the homepage with no 3rd-party social content (eg. Facebook, Twitter share), click <a href="/?nosocial">here</a>.
-
-      form.form-inline(style='margin:0')
-        div.search-thing
-          span Show top
-          select#top_num(style='margin:0 5px 0').input-small
-            option(value=100) 100
-            option(value=1000) 1,000
-            option(value=5000) 5,000
-            option(value=10000) 10,000+
-          span  asteroids sorted by
-          select#top_sort(style='margin:0 5px 0').input-xlarge
-            option(value='profit') profit
-            option(value='score', selected) most cost effective
-            option(value='price') most valuable
-            option(value='closeness') accessibility
-          input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
 div.row-fluid
   div.span10#profit-graph
