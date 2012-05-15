@@ -246,7 +246,7 @@ function scatterScore() {
         + name
         + '<br>' + series.name + '-type'
         + '<br>Closeness: ' + x.toFixed(2)
-        + ' <br>Score (logarithmic): '
+        + ' <br>Score (log): '
         + y.toFixed(2);
       return content;
     }
