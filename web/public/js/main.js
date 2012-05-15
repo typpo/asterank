@@ -229,6 +229,7 @@ function scatterScore() {
     element: document.getElementById('profit-graph'),
     width: $(window).width(),
     height: 220,
+    min: 1,
     renderer: 'scatterplot',
     series: series
   } );
