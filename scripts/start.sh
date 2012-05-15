@@ -1,1 +1,1 @@
-nohup hotnode web/app.js &
+nohup supervisor web/app.js &
