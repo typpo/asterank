@@ -128,6 +128,7 @@ function doSearch() {
     }
     $('.intro').hide();
 
+    // really this should be a screen size thing
     if (navigator && !navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
       && !($.browser.msie && $.browser.version < 9)) {
 
@@ -208,11 +209,13 @@ function scatterScore() {
   var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
 
   var logscores = {};
+  lastResults = lastResults.sort(function(a,b) {
+    return a.closeness - b.closeness;
+  });
   var series = _.chain(lastResults).map(function(obj) {
-    var logscore = Math.log(obj.score);
     var ret = {
-      x: 10-obj.closeness,
-      y: logscore,
+      x: Math.log(obj.closeness),
+      y: Math.log(obj.score),
       stype: obj.spec_B
     };
     // what an ugly hack
@@ -269,7 +272,7 @@ function scatterScore() {
         + name
         + valuestr
         + profitstr
-        + '<br>Accessibility: ' + x.toFixed(2)
+        + '<br>Accessibility (log): ' + x.toFixed(2)
         + ' <br>Score (log): '
         + y.toFixed(2);
       return content;

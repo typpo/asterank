@@ -1493,6 +1493,9 @@ Rickshaw.Graph.HoverDetail = Rickshaw.Class.create({
 			if (stackedData[0][i + 1] < domainX) { i++ } else { i-- }
 		}
 
+    if (dataIndex < 0)
+      return;
+
 		var domainX = stackedData[0][dataIndex].x;
 		var formattedXValue = this.xFormatter(domainX);
 		var graphX = graph.x(domainX);
