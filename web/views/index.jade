@@ -60,9 +60,10 @@ div.row-fluid
 
 div#chart-title.row-fluid(style='display:none;text-align:center;')
   h3 Value Score vs. Accessibility
-div#chart-container.row-fluid(style='border: 1px solid #ccc;display:none;')
-  div.span10#profit-graph
-  div#profit-graph-legend(style='position:absolute;right:0;top:135px;')
+div.row-fluid
+  div#chart-container(style='border: 1px solid #ccc;display:none;height:220px')
+    div.span10#profit-graph
+    div#profit-graph-legend(style='position:absolute;right:0;top:135px;height:200px;overflow:hidden;')
 
 div#tbl-title.row-fluid(style='display:none;text-align:center;height:30px')
   div.offset3
