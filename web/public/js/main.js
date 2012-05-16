@@ -139,13 +139,11 @@ function doSearch() {
         scatterScore();
       }
     }
-
     $('#submit').removeAttr('disabled').val('Go');
     $('#tbl tbody').append($tmp.children());
     $('#results').show();
     $('#legend').show();
     $('#tbl-title').show();
-    $('#chart-container').show();
     $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
     $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
   });
@@ -232,9 +230,10 @@ function scatterScore() {
 
   Rickshaw.Series.zeroFill(series);
 
+  var chartwidth = $(window).width() - 160;
   var graph = new Rickshaw.Graph( {
     element: document.getElementById('profit-graph'),
-    width: $(window).width(),
+    width: chartwidth,
     height: 220,
     min: 1,
     renderer: 'scatterplot',
@@ -243,6 +242,12 @@ function scatterScore() {
 
   graph.renderer.dotSize = 6;
   graph.render();
+
+  $('#chart-container').show();
+  $('#chart-container').css('width', chartwidth);
+  $('#profit-graph-legend').css('top', $('#chart-container').offset().top);
+  $('#profit-graph-legend').css('overflow', $('#chart-container').offset().top);
+
 
   var hoverDetail = new Rickshaw.Graph.HoverDetail( {
     graph: graph,
@@ -293,6 +298,7 @@ function scatterScore() {
   });
   yAxis.render();
   */
+
 }
 
 function barChart(data, xattr, yattr, selector) {
