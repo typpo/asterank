@@ -26,17 +26,17 @@ SPECTRA_INDEX = {
   'Ch': {
     'water': 1.55495461,
     'nickel-iron': 0.0869229283,
-    'platinum': 0.005,
+    'platinum': 0.01,
   },
   'Cg': {
     'water': 1.55495461,
     'nickel-iron': 0.0869229283,
-    'platinum': 0.005,
+    'platinum': 0.01,
   },
   'Cgh': {
     'water': 1.55495461,
     'nickel-iron': 0.0869229283,
-    'platinum': 0.005,
+    'platinum': 0.01,
   },
   'C type': {
     'water': 1.55495461,
@@ -48,13 +48,15 @@ SPECTRA_INDEX = {
     'iron': 12.5,
     'water': 0.775,
     'nickel-iron': 0.0434,
+    'platinum': 0.005,
   },
   'D': {
     'water': 0.000023,
   },
-  'K': {  # copied from S
-    'magnesium silicate': 1e-30,
-    'iron silicate': 0,
+  'K': {  # cross between S and C
+    'water': 0.775,
+    'nickel-iron': 0.0434,
+    'platinum': 0.005,
   },
   'L': {  # copied from S
     'magnesium silicate': 1e-30,
@@ -117,7 +119,7 @@ SPECTRA_INDEX = {
     'iron silicate': 0,
   },
   'T': {
-
+    'iron': 6,
   },
   'U': {
 
