@@ -12,6 +12,8 @@ from pymongo import Connection
 
 DATA_PATH = 'data/fulldb.csv'
 DV_PATH = 'data/deltav/db.csv'
+MASS_PATH = 'data/masses.txt'
+G = 6.67300e-20   # km^3 / kgs^2
 
 THOLEN_MAPPINGS = {
   'M': 'M',
@@ -40,6 +42,28 @@ def populateDb():
   coll.ensure_index('prov_des')
   coll.ensure_index('closeness')
   coll.ensure_index('price')
+
+  # load mass data
+  f = open(MASS_PATH, 'r')
+  lines = f.readlines()
+  f.close()
+
+  massd = {}
+  for line in lines:
+    parts = line.split(' ')
+    massidx = len(parts) - 2
+    mass = float(parts[massidx])
+    name = ' '.join(parts[:massidx]).strip()
+
+    if name not in massd:
+      massd[name] = []
+    massd[name].append(mass)
+
+  for name, masses in massd.iteritems():
+    avg = sum(masses) / len(masses)
+    massd[name] = avg
+  del massd['']
+
 
   # load delta v data
   f = open(DV_PATH, 'r')
@@ -87,6 +111,10 @@ def populateDb():
         row[key] = fv
     row['spec_T'] = row['spec_T'].replace(':', '')
     row['spec_B'] = row['spec_B'].replace(':', '')
+
+    # match mass
+    if row['full_name'] in massd:
+      row['GM'] = massd[row['full_name']] * G
 
     # compute score
     row['price'], row['saved'] = scoring.price(row)
