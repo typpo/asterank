@@ -1,0 +1,1168 @@
+ 1 Ceres 9.55E+ 20 4.38E+ 19 Deflec M1
+ 1 Ceres 9.54E+ 20 1.69E+ 19 Deflec M2
+ 1 Ceres 9.94E+ 20 3.98E+ 19 Deflec M5
+y
+ 1 Ceres 9.19E+ 20 1.41E+ 19 Deflec M6
+ 1 Ceres 9.29E+ 20 1.79E+ 19 Deflec M7
+ 1 Ceres 8.27E+ 20 3.78E+ 19 Deflec M8
+y
+ 1 Ceres 9.52E+ 20 7.76E+ 18 Deflec M11
+ 1 Ceres 9.47E+ 20 4.57E+ 18 Deflec M15
+ 1 Ceres 8.73E+ 20 7.96E+ 18 Deflec M17
+y
+ 1 Ceres 9.35E+ 20 7.96E+ 18 Deflec M21
+ 1 Ceres 9.35E+ 20 5.97E+ 19 Deflec M23
+ 1 Ceres 9.47E+ 20 2.98E+ 18 Deflec M29
+ 1 Ceres 9.57E+ 20 1.99E+ 18 Deflec M25
+ 1 Ceres 9.45E+ 20 3.98E+ 18 Deflec M39
+ 1 Ceres 9.45E+ 20 1.39E+ 18 Deflec M49
+ 1 Ceres 9.35E+ 20 5.57E+ 18 Deflec M56
+ 1 Ceres 9.42E+ 20 5.17E+ 18 Deflec M63
+ 1 Ceres 9.46E+ 20 1.59E+ 18 Deflec M72
+ 1 Ceres 9.46E+ 20 7.96E+ 17 Ephem M70
+ 1 Ceres 9.32E+ 20 9.32E+ 19 Ephem M86
+ 1 Ceres 9.46E+ 20 5.67E+ 18 Ephem M93
+ 1 Ceres 9.46E+ 20 1.43E+ 18 Deflec M95
+ 1 Ceres 9.31E+ 20 6.46E+ 18 Ephem M103
+ 2 Pallas 3.16E+ 20 9.94E+ 18 Deflec M17
+y
+ 2 Pallas 2.41E+ 20 5.17E+ 19 Deflec M21
+ 2 Pallas 2.33E+ 20 5.97E+ 18 Deflec M23
+y
+ 2 Pallas 2.14E+ 20 7.56E+ 18 Deflec M29
+ 2 Pallas 1.99E+ 20 1.99E+ 18 Deflec M25
+ 2 Pallas 2.06E+ 20 3.98E+ 18 Deflec M39
+ 2 Pallas 2.04E+ 20 5.97E+ 17 Deflec M49
+ 2 Pallas 2.04E+ 20 5.57E+ 18 Deflec M56
+ 2 Pallas 2.11E+ 20 7.96E+ 18 Deflec M72
+ 2 Pallas 2.04E+ 20 1.99E+ 17 Ephem M70
+ 2 Pallas 2.01E+ 20 2.01E+ 19 Ephem M86
+ 2 Pallas 2.22E+ 20 5.59E+ 18 Ephem M93
+ 2 Pallas 1.79E+ 20 8.95E+ 18 Deflec M92
+y
+ 2 Pallas 2.01E+ 20 1.29E+ 19 Deflec M95
+ 2 Pallas 2.06E+ 20 5.07E+ 18 Ephem M103
+ 2 Pallas 2.07E+ 20 1.70E+ 19 Deflec M97
+ 2 Pallas 1.96E+ 20 1.52E+ 19 Deflec M97
+ 2 Pallas 2.06E+ 20 1.38E+ 19 Deflec M97
+ 2 Pallas 1.88E+ 20 2.38E+ 19 Deflec M97
+ 2 Pallas 2.06E+ 20 2.98E+ 18 Ephem M100
+ 3 Juno 4.16E+ 19 6.96E+ 18 Deflec M31
+y
+ 3 Juno 4.16E+ 19 6.96E+ 18 Deflec M42
+y
+ 3 Juno 2.82E+ 19 1.19E+ 18 Deflec M39
+ 3 Juno 3.00E+ 19 5.97E+ 17 Deflec M49
+ 3 Juno 2.96E+ 19 2.98E+ 18 Deflec M56
+ 3 Juno 2.67E+ 19 4.57E+ 18 Deflec M72
+ 3 Juno 2.30E+ 19 2.30E+ 18 Ephem M86
+ 3 Juno 2.31E+ 19 2.61E+ 18 Ephem M93
+ 3 Juno 1.38E+ 19 7.92E+ 18 Deflec M92
+y
+ 3 Juno 2.86E+ 19 4.57E+ 18 Deflec M95
+ 3 Juno 2.41E+ 19 1.81E+ 18 Ephem M103
+ 3 Juno 2.68E+ 19 3.98E+ 18 Deflec M97
+ 3 Juno 3.04E+ 19 3.30E+ 18 Deflec M97
+ 3 Juno 3.10E+ 19 3.24E+ 18 Deflec M97
+ 3 Juno 1.70E+ 19 5.17E+ 18 Deflec M97
+y
+ 3 Juno 2.35E+ 19 1.19E+ 18 Ephem M100
+ 4 Vesta 2.78E+ 20 8.55E+ 18 Deflec M6
+ 4 Vesta 3.36E+ 20 9.94E+ 18 Deflec M17
+y
+ 4 Vesta 2.70E+ 20 9.94E+ 18 Deflec M21
+ 4 Vesta 2.60E+ 20 3.18E+ 18 Deflec M24
+ 4 Vesta 2.67E+ 20 2.98E+ 18 Deflec M29
+ 4 Vesta 2.70E+ 20 1.99E+ 18 Deflec M25
+ 4 Vesta 2.74E+ 20 5.97E+ 18 Deflec M33
+ 4 Vesta 2.70E+ 20 3.98E+ 18 Deflec M39
+ 4 Vesta 2.67E+ 20 1.99E+ 17 Deflec M49
+ 4 Vesta 2.57E+ 20 1.59E+ 19 Deflec M43
+ 4 Vesta 2.61E+ 20 3.98E+ 18 Deflec M43
+ 4 Vesta 2.23E+ 20 9.94E+ 18 Deflec M43
+y
+ 4 Vesta 2.23E+ 20 3.38E+ 19 Deflec M43
+y
+ 4 Vesta 2.70E+ 20 3.18E+ 18 Deflec M56
+ 4 Vesta 2.62E+ 20 5.97E+ 17 Deflec M72
+ 4 Vesta 2.68E+ 20 5.97E+ 17 Ephem M70
+ 4 Vesta 2.64E+ 20 2.64E+ 19 Ephem M86
+ 4 Vesta 2.65E+ 20 3.35E+ 18 Ephem M93
+ 4 Vesta 2.58E+ 20 1.99E+ 17 Deflec M89
+ 4 Vesta 2.59E+ 20 1.05E+ 18 Deflec M95
+ 4 Vesta 2.61E+ 20 4.10E+ 18 Ephem M103
+ 4 Vesta 2.65E+ 20 3.00E+ 18 Ephem M103
+ 4 Vesta 2.61E+ 20 4.10E+ 18 Deflec M97
+ 4 Vesta 2.59E+ 20 1.41E+ 18 Deflec M97
+ 4 Vesta 2.59E+ 20 1.41E+ 18 Deflec M97
+ 4 Vesta 2.65E+ 20 2.16E+ 18 Deflec M97
+ 4 Vesta 2.59E+ 20 1.19E+ 18 Ephem M100
+ 5 Astraea 2.38E+ 18 2.38E+ 17 Ephem M86
+ 5 Astraea 8.50E+ 18 2.90E+ 18 Deflec M97
+y
+ 5 Astraea 3.39E+ 18 6.92E+ 17 Deflec M97
+ 5 Astraea 8.61E+ 18 2.26E+ 18 Deflec M97
+y
+ 5 Astraea 1.26E+ 19 4.61E+ 18 Deflec M97
+y
+ 6 Hebe 1.37E+ 19 4.38E+ 18 Deflec M26
+ 6 Hebe 1.37E+ 19 1.79E+ 18 Deflec M42
+ 6 Hebe 1.28E+ 19 6.36E+ 17 Deflec M72
+ 6 Hebe 3.18E+ 17 2.19E+ 17 Ephem M80
+y
+ 6 Hebe 9.07E+ 18 9.07E+ 17 Ephem M86
+y
+ 6 Hebe 1.41E+ 19 2.41E+ 18 Ephem M93
+ 6 Hebe 1.34E+ 19 3.26E+ 18 Ephem M103
+ 6 Hebe 1.36E+ 19 2.86E+ 18 Deflec M97
+ 6 Hebe 1.55E+ 19 1.82E+ 18 Deflec M97
+ 6 Hebe 1.54E+ 19 2.42E+ 18 Deflec M97
+ 6 Hebe 1.53E+ 19 3.39E+ 18 Deflec M97
+ 6 Hebe 1.41E+ 19 1.39E+ 18 Ephem M100
+ 7 Iris 3.98E+ 19 1.79E+ 19 Deflec M18
+y
+ 7 Iris 1.19E+ 19 1.99E+ 18 Deflec M28
+ 7 Iris 2.80E+ 19 2.78E+ 18 Deflec M31
+y
+ 7 Iris 2.80E+ 19 2.78E+ 18 Deflec M42
+y
+ 7 Iris 1.03E+ 19 1.59E+ 18 Deflec M39
+ 7 Iris 1.25E+ 19 1.99E+ 17 Deflec M49
+ 7 Iris 1.79E+ 19 1.99E+ 18 Ephem M62
+ 7 Iris 1.36E+ 19 9.94E+ 17 Deflec M72
+ 7 Iris 4.77E+ 19 5.97E+ 18 Deflec M78
+y
+ 7 Iris 1.15E+ 19 1.99E+ 17 Ephem M70
+ 7 Iris 1.19E+ 19 1.19E+ 18 Ephem M86
+ 7 Iris 1.55E+ 19 2.27E+ 18 Ephem M93
+ 7 Iris 1.62E+ 19 9.15E+ 17 Deflec M95
+ 7 Iris 1.10E+ 19 2.63E+ 18 Ephem M103
+ 7 Iris 1.75E+ 19 1.88E+ 18 Deflec M97
+ 7 Iris 1.72E+ 19 1.60E+ 18 Deflec M97
+ 7 Iris 1.68E+ 19 1.59E+ 18 Deflec M97
+ 7 Iris 2.33E+ 19 3.12E+ 18 Deflec M97
+y
+ 7 Iris 1.13E+ 19 7.96E+ 17 Ephem M100
+ 8 Flora 8.47E+ 18 8.95E+ 17 Deflec M72
+ 8 Flora 1.06E+ 19 9.95E+ 16 Ephem M80
+ 8 Flora 3.54E+ 18 3.54E+ 17 Ephem M86
+y
+ 8 Flora 8.10E+ 18 1.26E+ 18 Ephem M93
+ 8 Flora 6.62E+ 18 8.35E+ 17 Deflec M95
+ 8 Flora 4.00E+ 18 8.35E+ 17 Ephem M103
+y
+ 8 Flora 8.44E+ 18 1.49E+ 18 Deflec M97
+ 8 Flora 6.03E+ 18 1.29E+ 18 Deflec M97
+ 8 Flora 7.35E+ 18 1.31E+ 18 Deflec M97
+ 8 Flora 6.75E+ 18 2.06E+ 18 Deflec M97
+ 8 Flora 6.66E+ 18 5.97E+ 17 Ephem M100
+ 9 Metis 1.13E+ 19 2.78E+ 18 Deflec M72
+ 9 Metis 2.29E+ 18 1.99E+ 18 Ephem M80
+y
+ 9 Metis 8.50E+ 18 8.50E+ 17 Ephem M86
+ 9 Metis 2.96E+ 19 1.66E+ 19 Deflec M92
+y
+ 9 Metis 1.13E+ 19 2.19E+ 18 Deflec M95
+ 9 Metis 6.52E+ 18 2.15E+ 18 Ephem M103
+ 9 Metis 8.12E+ 18 2.05E+ 18 Deflec M97
+ 9 Metis 9.08E+ 18 1.34E+ 18 Deflec M97
+ 9 Metis 9.00E+ 18 1.33E+ 18 Deflec M97
+ 9 Metis 1.60E+ 19 3.02E+ 18 Deflec M97
+y
+ 9 Metis 5.95E+ 18 9.95E+ 17 Ephem M100
+ 10 Hygiea 1.55E+ 20 4.97E+ 19 Deflec M18
+y
+ 10 Hygiea 5.57E+ 19 1.99E+ 18 Deflec M28
+y
+ 10 Hygiea 1.11E+ 20 1.39E+ 19 Deflec M26
+y
+ 10 Hygiea 9.96E+ 19 8.15E+ 18 Deflec M31
+ 10 Hygiea 9.97E+ 19 8.16E+ 18 Deflec M42
+ 10 Hygiea 9.03E+ 19 2.59E+ 18 Deflec M45
+ 10 Hygiea 4.18E+ 19 5.97E+ 18 Ephem M62
+y
+ 10 Hygiea 8.85E+ 19 1.39E+ 18 Deflec M72
+ 10 Hygiea 4.97E+ 19 7.96E+ 18 Deflec M78
+y
+ 10 Hygiea 8.04E+ 19 8.04E+ 18 Ephem M86
+ 10 Hygiea 8.67E+ 19 1.47E+ 18 Deflec M95
+ 10 Hygiea 8.94E+ 19 1.54E+ 19 Ephem M103
+ 10 Hygiea 7.73E+ 19 3.88E+ 18 Deflec M97
+ 10 Hygiea 8.30E+ 19 2.94E+ 18 Deflec M97
+ 10 Hygiea 8.21E+ 19 2.92E+ 18 Deflec M97
+ 10 Hygiea 8.07E+ 19 4.19E+ 18 Deflec M97
+ 10 Hygiea 8.65E+ 19 5.57E+ 18 Ephem M100
+ 11 Parthenope 5.13E+ 18 1.99E+ 17 Deflec M9
+ 11 Parthenope 5.09E+ 18 1.39E+ 17 Deflec M24
+y
+ 11 Parthenope 6.15E+ 18 3.98E+ 16 Deflec M72
+ 11 Parthenope 5.33E+ 18 5.33E+ 17 Ephem M86
+ 11 Parthenope 3.75E+ 18 2.05E+ 18 Ephem M93
+ 11 Parthenope 5.89E+ 18 2.53E+ 17 Deflec M97
+ 11 Parthenope 5.21E+ 18 1.57E+ 18 Deflec M97
+ 11 Parthenope 5.86E+ 18 2.51E+ 17 Deflec M97
+ 11 Parthenope 5.86E+ 18 2.55E+ 17 Deflec M97
+ 11 Parthenope 7.56E+ 18 1.79E+ 18 Ephem M100
+ 12 Victoria 2.33E+ 18 5.97E+ 16 Ephem M80
+ 12 Victoria 7.51E+ 18 3.34E+ 18 Ephem M93
+y
+ 12 Victoria 4.49E+ 18 3.80E+ 18 Deflec M97
+ 12 Victoria 1.75E+ 18 2.37E+ 18 Deflec M97
+ 12 Victoria 1.64E+ 18 2.34E+ 18 Deflec M97
+ 12 Victoria 3.56E+ 18 5.13E+ 17 Ephem M100
+ 13 Egeria 1.63E+ 19 3.18E+ 18 Deflec M72
+ 13 Egeria 6.17E+ 18 6.17E+ 17 Ephem M86
+ 13 Egeria 2.22E+ 19 1.60E+ 19 Ephem M93
+ 13 Egeria 1.59E+ 19 4.38E+ 18 Deflec M95
+ 13 Egeria 1.29E+ 19 4.70E+ 18 Deflec M97
+ 13 Egeria 7.39E+ 18 3.24E+ 18 Deflec M97
+ 13 Egeria 6.07E+ 18 3.20E+ 18 Deflec M97
+ 13 Egeria 8.26E+ 18 6.10E+ 18 Deflec M97
+ 14 Irene 8.21E+ 18 1.45E+ 18 Deflec M72
+y
+ 14 Irene 1.41E+ 18 1.99E+ 17 Ephem M80
+ 14 Irene 5.21E+ 18 5.21E+ 17 Ephem M86
+ 14 Irene 5.12E+ 19 1.59E+ 19 Deflec M92
+y
+ 14 Irene 6.94E+ 18 1.63E+ 18 Deflec M95
+ 14 Irene 3.80E+ 18 1.61E+ 18 Ephem M103
+ 14 Irene 4.81E+ 18 2.85E+ 18 Deflec M97
+ 14 Irene 2.79E+ 18 2.02E+ 18 Deflec M97
+ 14 Irene 1.93E+ 18 2.00E+ 18 Deflec M97
+ 14 Irene 1.69E+ 19 5.28E+ 18 Deflec M97
+y
+ 15 Eunomia 1.99E+ 19 7.96E+ 18 Deflec M18
+ 15 Eunomia 2.78E+ 19 3.98E+ 18 Deflec M28
+ 15 Eunomia 2.51E+ 19 5.97E+ 18 Deflec M26
+ 15 Eunomia 2.43E+ 19 3.18E+ 18 Deflec M31
+y
+ 15 Eunomia 2.11E+ 19 3.18E+ 18 Deflec M42
+y
+ 15 Eunomia 3.26E+ 19 1.19E+ 18 Deflec M51
+ 15 Eunomia 3.12E+ 19 3.98E+ 17 Deflec M72
+ 15 Eunomia 1.59E+ 19 5.97E+ 18 Deflec M78
+y
+ 15 Eunomia 2.45E+ 19 2.45E+ 18 Ephem M86
+y
+ 15 Eunomia 3.75E+ 19 3.22E+ 18 Ephem M93
+y
+ 15 Eunomia 3.22E+ 19 9.94E+ 17 Deflec M88
+ 15 Eunomia 3.18E+ 19 2.98E+ 17 Deflec M95
+ 15 Eunomia 2.82E+ 19 2.96E+ 18 Ephem M103
+ 15 Eunomia 3.21E+ 19 7.94E+ 17 Deflec M97
+ 15 Eunomia 3.22E+ 19 7.88E+ 17 Deflec M97
+ 15 Eunomia 3.22E+ 19 7.88E+ 17 Deflec M97
+ 15 Eunomia 3.22E+ 19 8.10E+ 17 Deflec M97
+ 15 Eunomia 2.70E+ 19 1.71E+ 18 Ephem M100
+ 16 Psyche 2.53E+ 20 3.58E+ 19 Deflec M18
+y
+ 16 Psyche 1.73E+ 19 5.17E+ 18 Deflec M20
+ 16 Psyche 4.97E+ 19 1.99E+ 18 Deflec M28
+ 16 Psyche 6.72E+ 19 5.57E+ 18 Deflec M30
+y
+ 16 Psyche 2.67E+ 19 4.38E+ 18 Deflec M42
+ 16 Psyche 2.19E+ 19 7.96E+ 17 Deflec M72
+ 16 Psyche 7.96E+ 19 2.78E+ 19 Deflec M78
+y
+ 16 Psyche 3.17E+ 19 6.37E+ 17 Ephem M80
+ 16 Psyche 3.35E+ 19 3.35E+ 18 Ephem M86
+ 16 Psyche 2.23E+ 19 1.03E+ 19 Ephem M93
+ 16 Psyche 4.59E+ 19 1.93E+ 19 Deflec M92
+ 16 Psyche 2.27E+ 19 8.35E+ 17 Deflec M95
+ 16 Psyche 2.47E+ 19 6.84E+ 18 Ephem M103
+ 16 Psyche 2.35E+ 19 3.94E+ 18 Deflec M97
+ 16 Psyche 2.46E+ 19 1.62E+ 18 Deflec M97
+ 16 Psyche 2.44E+ 19 1.61E+ 18 Deflec M97
+ 16 Psyche 2.02E+ 19 4.34E+ 18 Deflec M97
+ 16 Psyche 2.51E+ 19 3.64E+ 18 Ephem M100
+ 17 Thetis 1.18E+ 18 7.56E+ 16 Deflec M72
+ 17 Thetis 1.43E+ 18 4.97E+ 16 Deflec M95
+ 17 Thetis 4.04E+ 18 1.41E+ 18 Ephem M100
+y
+ 18 Melpomene 3.00E+ 18 1.01E+ 18 Deflec M72
+ 18 Melpomene 1.81E+ 18 3.98E+ 17 Ephem M80
+ 18 Melpomene 4.00E+ 18 4.00E+ 17 Ephem M86
+ 18 Melpomene 3.96E+ 18 2.80E+ 18 Deflec M97
+ 18 Melpomene 5.69E+ 18 1.99E+ 18 Deflec M97
+ 18 Melpomene 4.94E+ 18 1.95E+ 18 Deflec M97
+ 18 Melpomene 1.19E+ 18 3.41E+ 18 Deflec M97
+ 19 Fortuna 1.27E+ 19 4.97E+ 17 Deflec M72
+y
+ 19 Fortuna 4.02E+ 18 3.98E+ 17 Ephem M80
+y
+ 19 Fortuna 6.94E+ 18 6.94E+ 17 Ephem M86
+ 19 Fortuna 6.37E+ 18 2.90E+ 18 Deflec M92
+ 19 Fortuna 8.31E+ 18 7.16E+ 17 Deflec M95
+ 19 Fortuna 6.37E+ 18 1.05E+ 18 Ephem M103
+ 19 Fortuna 1.00E+ 19 1.08E+ 18 Deflec M97
+ 19 Fortuna 1.02E+ 19 9.47E+ 17 Deflec M97
+ 19 Fortuna 1.01E+ 19 9.35E+ 17 Deflec M97
+ 19 Fortuna 1.05E+ 19 1.23E+ 18 Deflec M97
+ 19 Fortuna 8.35E+ 18 5.97E+ 17 Ephem M100
+ 20 Massalia 4.77E+ 18 7.96E+ 17 Deflec M16
+ 20 Massalia 5.67E+ 18 8.15E+ 17 Deflec M72
+ 20 Massalia 4.36E+ 18 4.36E+ 17 Ephem M86
+ 20 Massalia 3.34E+ 18 6.96E+ 17 Deflec M95
+ 20 Massalia 5.88E+ 18 1.46E+ 18 Deflec M97
+ 20 Massalia 5.67E+ 18 1.14E+ 18 Deflec M97
+ 20 Massalia 6.03E+ 18 1.13E+ 18 Deflec M97
+ 20 Massalia 7.07E+ 18 1.68E+ 18 Deflec M97
+ 21 Lutetia 2.57E+ 18 2.39E+ 17 Deflec M72
+y
+ 21 Lutetia 2.06E+ 18 5.97E+ 17 Ephem M80
+y
+ 21 Lutetia 2.08E+ 18 2.08E+ 17 Ephem M86
+y
+ 21 Lutetia 2.54E+ 18 2.33E+ 18 Ephem M93
+y
+ 21 Lutetia 2.61E+ 18 8.75E+ 17 Deflec M72
+y
+ 21 Lutetia 1.70E+ 18 1.40E+ 16 FlyBy M104
+ 21 Lutetia 9.31E+ 17 2.56E+ 18 Deflec M97
+y
+ 21 Lutetia 1.67E+ 18 1.23E+ 18 Ephem M100
+y
+ 22 Kalliope 7.36E+ 18 4.42E+ 17 BinImg M37
+ 22 Kalliope 1.69E+ 19 5.57E+ 18 Deflec M42
+y
+ 22 Kalliope 8.15E+ 18 2.59E+ 17 BinImg M74
+ 22 Kalliope 8.09E+ 18 1.99E+ 17 BinImg M75
+ 22 Kalliope 7.36E+ 18 7.36E+ 17 Ephem M86
+y
+ 22 Kalliope 1.33E+ 19 5.18E+ 18 Deflec M97
+y
+ 22 Kalliope 1.31E+ 19 3.76E+ 18 Deflec M97
+y
+ 22 Kalliope 1.31E+ 19 3.84E+ 18 Deflec M97
+y
+ 22 Kalliope 2.09E+ 19 7.06E+ 18 Deflec M97
+y
+ 23 Thalia 5.97E+ 16 1.99E+ 16 Ephem M80
+y
+ 23 Thalia 1.93E+ 18 1.93E+ 17 Ephem M86
+ 23 Thalia 2.21E+ 18 1.41E+ 18 Ephem M103
+ 24 Themis 5.75E+ 18 2.51E+ 18 Deflec M12
+ 24 Themis 1.99E+ 18 3.98E+ 18 Ephem M62
+ 24 Themis 1.13E+ 19 4.28E+ 18 Deflec M71
+ 24 Themis 6.04E+ 18 6.04E+ 17 Ephem M86
+ 24 Themis 5.62E+ 18 3.78E+ 18 Ephem M93
+ 24 Themis 3.96E+ 18 2.81E+ 18 Deflec M97
+ 24 Themis 4.78E+ 18 1.84E+ 18 Deflec M97
+ 24 Themis 6.16E+ 18 1.85E+ 18 Deflec M97
+ 24 Themis 5.25E+ 18 2.34E+ 18 Deflec M97
+ 24 Themis 1.06E+ 19 4.57E+ 18 Ephem M100
+ 25 Phocaea 5.99E+ 17 5.99E+ 16 Ephem M86
+ 25 Phocaea 3.98E+ 15 3.98E+ 15 Ephem M93
+y
+ 26 Proserpina 7.48E+ 17 8.95E+ 17 Ephem M93
+ 27 Euterpe 1.26E+ 18 1.26E+ 17 Ephem M86
+ 27 Euterpe 4.35E+ 18 1.98E+ 18 Deflec M97
+ 27 Euterpe 2.09E+ 18 1.47E+ 18 Deflec M97
+ 27 Euterpe 2.20E+ 18 1.46E+ 18 Deflec M97
+ 27 Euterpe 5.59E+ 18 3.07E+ 18 Deflec M97
+ 28 Bellona 2.78E+ 18 2.78E+ 17 Deflec M28
+ 28 Bellona 1.39E+ 19 3.98E+ 18 Deflec M78
+y
+ 28 Bellona 2.47E+ 18 2.47E+ 17 Ephem M86
+ 28 Bellona 9.25E+ 18 1.97E+ 18 Ephem M93
+y
+ 29 Amphitrite 1.53E+ 19 2.39E+ 18 Deflec M31
+ 29 Amphitrite 1.53E+ 19 2.59E+ 18 Deflec M42
+ 29 Amphitrite 1.18E+ 19 5.97E+ 17 Deflec M72
+ 29 Amphitrite 9.77E+ 18 1.79E+ 18 Ephem M80
+ 29 Amphitrite 1.36E+ 19 1.36E+ 18 Ephem M86
+ 29 Amphitrite 1.18E+ 19 6.03E+ 18 Deflec M92
+ 29 Amphitrite 1.52E+ 19 6.17E+ 17 Deflec M95
+ 29 Amphitrite 1.48E+ 19 2.96E+ 18 Ephem M103
+ 29 Amphitrite 1.20E+ 19 1.91E+ 18 Deflec M97
+ 29 Amphitrite 1.06E+ 19 1.64E+ 18 Deflec M97
+ 29 Amphitrite 1.10E+ 19 1.63E+ 18 Deflec M97
+ 29 Amphitrite 9.77E+ 18 2.30E+ 18 Deflec M97
+ 29 Amphitrite 1.47E+ 19 1.69E+ 18 Ephem M100
+ 30 Urania 1.42E+ 18 1.42E+ 17 Ephem M86
+ 30 Urania 1.96E+ 18 6.46E+ 17 Deflec M97
+ 30 Urania 2.05E+ 18 6.21E+ 17 Deflec M97
+ 30 Urania 2.03E+ 18 6.21E+ 17 Deflec M97
+ 30 Urania 3.80E+ 18 2.31E+ 18 Deflec M97
+ 31 Euphrosyne 1.87E+ 19 1.03E+ 19 Deflec M42
+ 31 Euphrosyne 6.23E+ 18 1.17E+ 18 Deflec M72
+ 31 Euphrosyne 5.95E+ 19 1.35E+ 19 Ephem M80
+y
+ 31 Euphrosyne 1.71E+ 19 1.71E+ 18 Ephem M86
+ 31 Euphrosyne 5.81E+ 19 1.97E+ 19 Deflec M95
+y
+ 31 Euphrosyne 1.85E+ 19 1.13E+ 19 Deflec M97
+ 31 Euphrosyne 2.31E+ 19 9.44E+ 18 Deflec M97
+ 31 Euphrosyne 2.69E+ 19 9.10E+ 18 Deflec M97
+ 31 Euphrosyne 1.39E+ 19 1.27E+ 19 Deflec M97
+ 31 Euphrosyne 8.75E+ 18 3.98E+ 18 Ephem M100
+ 33 Polyhymnia 6.20E+ 18 7.36E+ 17 Ephem M93
+ 34 Circe 3.61E+ 18 3.39E+ 18 Ephem M93
+ 34 Circe 3.68E+ 18 1.51E+ 18 Ephem M100
+ 36 Atalante 4.32E+ 18 3.80E+ 18 Ephem M93
+ 38 Leda 5.71E+ 18 5.47E+ 18 Ephem M93
+ 39 Laetitia 1.75E+ 19 1.01E+ 18 Ephem M93
+y
+ 39 Laetitia 5.63E+ 18 1.45E+ 18 Deflec M95
+ 39 Laetitia 2.28E+ 18 3.62E+ 18 Deflec M97
+ 39 Laetitia 3.95E+ 18 2.60E+ 18 Deflec M97
+ 39 Laetitia 4.45E+ 18 2.57E+ 18 Deflec M97
+ 39 Laetitia 5.66E+ 18 2.05E+ 18 Ephem M100
+ 41 Daphne 1.05E+ 19 9.95E+ 17 Ephem M80
+y
+ 41 Daphne 7.90E+ 18 7.90E+ 17 Ephem M86
+y
+ 41 Daphne 1.83E+ 19 5.23E+ 18 Ephem M93
+y
+ 41 Daphne 8.43E+ 18 3.52E+ 18 Ephem M103
+y
+ 41 Daphne 6.31E+ 18 1.10E+ 17 BinImg M107
+ 41 Daphne 1.82E+ 19 7.20E+ 18 Deflec M97
+y
+ 41 Daphne 3.02E+ 17 5.67E+ 18 Deflec M97
+y
+ 41 Daphne 4.76E+ 18 5.50E+ 18 Deflec M97
+y
+ 41 Daphne 1.21E+ 19 1.05E+ 19 Deflec M97
+y
+ 41 Daphne 1.02E+ 19 1.19E+ 18 Ephem M100
+y
+ 42 Isis 1.38E+ 18 1.38E+ 17 Ephem M86
+ 42 Isis 3.69E+ 18 2.13E+ 18 Ephem M93
+ 42 Isis 1.85E+ 18 5.93E+ 17 Ephem M100
+ 43 Ariadne 1.50E+ 18 8.55E+ 17 Ephem M93
+ 43 Ariadne 1.04E+ 18 5.11E+ 17 Ephem M100
+ 45 Eugenia 2.98E+ 18 2.98E+ 18 Deflec M18
+y
+ 45 Eugenia 5.97E+ 18 1.99E+ 17 BinImg M19
+ 45 Eugenia 6.96E+ 18 3.98E+ 17 Deflec M28
+y
+ 45 Eugenia 1.99E+ 18 5.97E+ 18 Ephem M62
+y
+ 45 Eugenia 5.69E+ 18 1.19E+ 17 BinImg M75
+ 45 Eugenia 1.79E+ 19 5.97E+ 18 Deflec M78
+y
+ 45 Eugenia 5.95E+ 18 5.95E+ 17 Ephem M86
+y
+ 45 Eugenia 7.68E+ 18 2.81E+ 18 Deflec M97
+y
+ 45 Eugenia 7.11E+ 18 1.63E+ 18 Deflec M97
+y
+ 45 Eugenia 7.57E+ 18 1.62E+ 18 Deflec M97
+y
+ 45 Eugenia 1.14E+ 19 1.97E+ 18 Deflec M97
+y
+ 46 Hestia 2.17E+ 19 1.35E+ 19 Deflec M10
+y
+ 46 Hestia 7.01E+ 18 5.23E+ 18 Ephem M93
+ 46 Hestia 5.75E+ 18 1.23E+ 18 Ephem M100
+ 47 Aglaja 2.17E+ 18 8.55E+ 17 Deflec M72
+ 47 Aglaja 1.07E+ 19 4.57E+ 17 Ephem M93
+y
+ 47 Aglaja 5.88E+ 18 2.09E+ 18 Ephem M100
+ 48 Doris 1.21E+ 19 5.97E+ 18 Deflec M42
+ 48 Doris 4.00E+ 19 2.98E+ 19 Ephem M93
+y
+ 48 Doris 5.89E+ 18 4.84E+ 18 Deflec M97
+ 48 Doris 3.78E+ 18 3.74E+ 18 Deflec M97
+ 48 Doris 3.84E+ 18 3.69E+ 18 Deflec M97
+ 48 Doris 7.94E+ 18 6.39E+ 18 Deflec M97
+ 48 Doris 2.40E+ 19 6.83E+ 18 Ephem M100
+y
+ 49 Pales 2.69E+ 18 4.97E+ 17 Deflec M72
+ 49 Pales 5.07E+ 18 3.87E+ 18 Deflec M97
+ 49 Pales 8.11E+ 18 2.68E+ 18 Deflec M97
+ 49 Pales 7.61E+ 18 2.67E+ 18 Deflec M97
+ 49 Pales 4.93E+ 18 4.90E+ 18 Deflec M97
+ 50 Virginia 3.65E+ 18 2.67E+ 18 Ephem M93
+ 50 Virginia 1.95E+ 18 7.28E+ 17 Ephem M100
+ 4.25E+ 18 2.08E+ 18 Deflec M97
+ 51 Nemausa 5.63E+ 18 1.30E+ 18 Ephem M100
+y
+ 52 Europa 2.15E+ 19 1.19E+ 18 Deflec M28
+ 52 Europa 5.19E+ 19 1.75E+ 19 Deflec M26
+ 52 Europa 2.55E+ 19 4.97E+ 18 Deflec M31
+ 52 Europa 2.53E+ 19 4.97E+ 18 Deflec M42
+ 52 Europa 7.16E+ 19 7.96E+ 18 Ephem M62
+y
+ 52 Europa 1.65E+ 19 1.61E+ 18 Deflec M72
+ 52 Europa 8.35E+ 19 2.19E+ 19 Deflec M78
+y
+ 52 Europa 3.43E+ 19 1.99E+ 18 Ephem M80
+ 52 Europa 2.03E+ 19 2.03E+ 18 Ephem M86
+ 52 Europa 8.41E+ 19 1.60E+ 19 Ephem M93
+y
+ 52 Europa 2.25E+ 19 9.57E+ 18 Deflec M92
+ 52 Europa 2.27E+ 19 1.57E+ 18 Deflec M95
+ 52 Europa 2.22E+ 19 1.67E+ 19 Ephem M103
+ 52 Europa 2.84E+ 19 3.86E+ 18 Deflec M97
+ 52 Europa 2.63E+ 19 3.29E+ 18 Deflec M97
+ 52 Europa 2.78E+ 19 3.25E+ 18 Deflec M97
+ 52 Europa 2.13E+ 19 4.90E+ 18 Deflec M97
+ 52 Europa 1.79E+ 19 4.77E+ 18 Ephem M100
+ 53 Kalypso 5.63E+ 18 5.00E+ 18 Ephem M93
+ 54 Alexandra 4.45E+ 18 2.21E+ 18 Ephem M93
+ 54 Alexandra 1.08E+ 19 6.11E+ 18 Deflec M97
+ 54 Alexandra 1.74E+ 18 3.19E+ 18 Deflec M97
+ 54 Alexandra 2.94E+ 18 3.15E+ 18 Deflec M97
+ 54 Alexandra 6.44E+ 18 6.95E+ 18 Deflec M97
+ 54 Alexandra 1.03E+ 19 1.74E+ 18 Ephem M100
+ 56 Melete 4.62E+ 18 3.60E+ 18 Ephem M93
+ 56 Melete 4.61E+ 18 9.65E+ 17 Ephem M100
+ 57 Mnemosyne 1.33E+ 19 7.96E+ 18 Deflec M97
+ 57 Mnemosyne 1.12E+ 19 5.68E+ 18 Deflec M97
+ 57 Mnemosyne 1.08E+ 19 5.58E+ 18 Deflec M97
+ 57 Mnemosyne 1.76E+ 19 1.08E+ 19 Deflec M97
+ 59 Elpis 5.15E+ 18 3.57E+ 18 Ephem M93
+ 59 Elpis 2.75E+ 18 3.76E+ 17 Deflec M97
+ 59 Elpis 2.88E+ 18 3.72E+ 17 Deflec M97
+ 59 Elpis 2.88E+ 18 3.72E+ 17 Deflec M97
+ 59 Elpis 3.05E+ 18 3.47E+ 18 Deflec M97
+ 59 Elpis 4.15E+ 18 1.75E+ 18 Ephem M100
+ 60 Echo 3.15E+ 17 3.15E+ 16 Ephem M86
+ 60 Echo 8.00E+ 17 7.46E+ 17 Ephem M93
+y
+ 61 Danae 2.89E+ 18 2.78E+ 18 Ephem M93
+ 63 Ausonia 1.53E+ 18 1.53E+ 17 Ephem M86
+ 63 Ausonia 4.02E+ 18 3.35E+ 18 Ephem M93
+y
+ 65 Cybele 1.15E+ 19 2.98E+ 18 Deflec M31
+ 65 Cybele 1.15E+ 19 2.98E+ 18 Deflec M42
+ 65 Cybele 1.78E+ 19 1.21E+ 18 Deflec M72
+ 65 Cybele 1.04E+ 19 1.04E+ 18 Ephem M86
+ 65 Cybele 1.43E+ 19 8.47E+ 18 Ephem M93
+ 65 Cybele 1.05E+ 19 1.91E+ 18 Deflec M95
+ 65 Cybele 1.62E+ 19 3.68E+ 18 Deflec M97
+ 65 Cybele 1.52E+ 19 3.46E+ 18 Deflec M97
+ 65 Cybele 1.52E+ 19 3.45E+ 18 Deflec M97
+ 65 Cybele 1.75E+ 19 1.16E+ 19 Deflec M97
+ 65 Cybele 1.75E+ 19 5.17E+ 18 Ephem M100
+ 67 Asia 1.03E+ 18 9.95E+ 16 Ephem M93
+ 68 Leto 1.39E+ 18 4.00E+ 18 Deflec M97
+ 68 Leto 2.60E+ 18 2.75E+ 18 Deflec M97
+ 68 Leto 3.03E+ 18 2.73E+ 18 Deflec M97
+ 68 Leto 7.23E+ 18 4.85E+ 18 Deflec M97
+ 69 Hesperia 6.20E+ 18 6.20E+ 17 Ephem M86
+ 69 Hesperia 1.99E+ 18 6.54E+ 18 Deflec M97
+ 69 Hesperia 4.98E+ 18 2.10E+ 18 Deflec M97
+ 69 Hesperia 6.56E+ 18 4.27E+ 18 Deflec M97
+ 69 Hesperia 8.12E+ 18 7.48E+ 18 Deflec M97
+ 70 Panopaea 4.33E+ 18 1.09E+ 18 Ephem M100
+ 72 Feronia 3.32E+ 18 8.49E+ 18 Ephem M93
+ 74 Galatea 6.13E+ 18 5.36E+ 18 Ephem M93
+ 76 Freia 4.12E+ 17 2.13E+ 18 Deflec M97
+ 76 Freia 6.72E+ 17 2.06E+ 18 Deflec M97
+ 76 Freia 1.43E+ 19 9.03E+ 18 Deflec M97
+ 77 Frigga 1.74E+ 18 6.76E+ 17 Ephem M93
+ 78 Diana 1.27E+ 18 1.27E+ 17 Ephem M86
+ 78 Diana 6.43E+ 18 4.61E+ 18 Ephem M93
+y
+ 81 Terpsichore 6.19E+ 18 5.31E+ 18 Ephem M93
+ 84 Klio 5.47E+ 17 4.06E+ 17 Ephem M93
+ 85 Io 3.32E+ 17 3.45E+ 18 Deflec M97
+ 85 Io 3.87E+ 18 2.68E+ 18 Deflec M97
+ 85 Io 3.49E+ 18 2.64E+ 18 Deflec M97
+ 85 Io 1.40E+ 18 6.33E+ 18 Deflec M97
+ 87 Sylvia 5.37E+ 19 1.99E+ 19 Deflec M18
+y
+ 87 Sylvia 1.39E+ 19 1.99E+ 18 Deflec M28
+y
+ 87 Sylvia 1.46E+ 19 1.00E+ 18 BinImg M27
+ 87 Sylvia 3.58E+ 19 1.79E+ 19 Ephem M62
+y
+ 87 Sylvia 1.48E+ 19 5.97E+ 16 BinImg M48
+ 87 Sylvia 5.17E+ 19 2.19E+ 19 Deflec M78
+y
+ 87 Sylvia 1.17E+ 19 1.29E+ 19 Deflec M97
+y
+ 87 Sylvia 1.36E+ 19 1.09E+ 19 Deflec M97
+y
+ 87 Sylvia 1.18E+ 19 1.06E+ 19 Deflec M97
+y
+ 87 Sylvia 5.98E+ 18 1.88E+ 19 Deflec M97
+y
+ 88 Thisbe 1.47E+ 19 2.59E+ 18 Deflec M26
+ 88 Thisbe 1.17E+ 19 2.39E+ 18 Deflec M42
+ 88 Thisbe 1.05E+ 19 1.79E+ 18 Deflec M72
+ 88 Thisbe 1.72E+ 19 5.17E+ 17 Ephem M80
+ 88 Thisbe 1.83E+ 19 1.09E+ 18 Deflec M95
+ 88 Thisbe 9.53E+ 18 3.20E+ 18 Deflec M97
+ 88 Thisbe 7.61E+ 18 2.27E+ 18 Deflec M97
+y
+ 88 Thisbe 7.63E+ 18 2.25E+ 18 Deflec M97
+y
+ 89 Julia 7.14E+ 18 2.78E+ 17 Ephem M80
+ 89 Julia 8.32E+ 18 4.14E+ 18 Ephem M93
+ 89 Julia 3.72E+ 17 3.24E+ 18 Deflec M97
+ 90 Antiope 4.10E+ 17 1.19E+ 17 BinImg M32
+y
+ 90 Antiope 8.30E+ 17 1.99E+ 16 BinImg M65
+ 92 Undina 4.19E+ 18 4.39E+ 18 Deflec M97
+ 92 Undina 4.31E+ 18 3.91E+ 18 Deflec M97
+ 92 Undina 4.77E+ 18 3.87E+ 18 Deflec M97
+ 93 Minerva 3.50E+ 18 4.00E+ 17 BinImg M101
+ 94 Aurora 6.20E+ 18 6.20E+ 17 Ephem M86
+ 94 Aurora 3.15E+ 19 2.29E+ 19 Ephem M93
+y
+ 94 Aurora 1.51E+ 18 5.08E+ 18 Deflec M97
+ 94 Aurora 4.18E+ 16 4.17E+ 18 Deflec M97
+ 94 Aurora 1.57E+ 19 7.99E+ 18 Deflec M97
+ 94 Aurora 1.18E+ 19 4.36E+ 18 Ephem M100
+ 96 Aegle 1.74E+ 18 8.31E+ 18 Deflec M97
+ 96 Aegle 3.50E+ 17 4.69E+ 18 Deflec M97
+ 96 Aegle 1.34E+ 19 3.69E+ 18 Ephem M100
+ 97 Klotho 1.33E+ 18 1.33E+ 17 Ephem M86
+ 98 Ianthe 8.24E+ 17 8.24E+ 16 Ephem M86
+ 98 Ianthe 1.47E+ 18 6.90E+ 17 Ephem M100
+ 105 Artemis 1.32E+ 18 1.32E+ 17 Ephem M86
+ 105 Artemis 2.89E+ 18 8.43E+ 17 Ephem M100
+ 106 Dione 3.04E+ 17 3.59E+ 18 Deflec M97
+ 106 Dione 4.29E+ 18 2.64E+ 18 Deflec M97
+ 106 Dione 3.52E+ 18 2.62E+ 18 Deflec M97
+ 106 Dione 3.77E+ 18 5.80E+ 18 Deflec M97
+ 107 Camilla 1.12E+ 19 2.98E+ 17 BinImg M75
+ 107 Camilla 3.62E+ 19 9.24E+ 18 Ephem M93
+y
+ 107 Camilla 3.88E+ 18 1.09E+ 19 Deflec M97
+y
+ 107 Camilla 3.90E+ 19 1.06E+ 19 Deflec M97
+y
+ 107 Camilla 1.76E+ 19 8.69E+ 18 Deflec M97
+y
+ 107 Camilla 2.25E+ 18 1.80E+ 19 Deflec M97
+y
+ 107 Camilla 2.71E+ 19 6.96E+ 18 Ephem M100
+y
+ 111 Ate 1.99E+ 18 1.99E+ 17 Deflec M28
+ 111 Ate 1.67E+ 20 3.78E+ 19 Deflec M78
+y
+ 111 Ate 1.74E+ 18 1.74E+ 17 Ephem M86
+ 111 Ate 2.71E+ 18 2.49E+ 18 Deflec M97
+ 111 Ate 3.42E+ 17 1.65E+ 18 Deflec M97
+ 111 Ate 8.16E+ 17 1.66E+ 18 Deflec M97
+ 112 Iphigenia 1.97E+ 18 6.78E+ 18 Ephem M93
+ 117 Lomia 1.72E+ 19 1.99E+ 17 Ephem M93
+y
+ 117 Lomia 6.36E+ 18 4.35E+ 18 Deflec M97
+ 117 Lomia 5.85E+ 18 3.59E+ 18 Deflec M97
+ 117 Lomia 6.73E+ 18 3.55E+ 18 Deflec M97
+ 117 Lomia 4.88E+ 18 6.61E+ 18 Deflec M97
+ 121 Hermione 9.35E+ 18 1.59E+ 18 Deflec M20
+y
+ 121 Hermione 5.38E+ 18 2.98E+ 17 BinImg M47
+ 121 Hermione 4.70E+ 18 2.00E+ 17 BinImg M84
+ 121 Hermione 5.12E+ 18 2.22E+ 18 Deflec M97
+y
+ 121 Hermione 6.01E+ 18 1.70E+ 18 Deflec M97
+y
+ 121 Hermione 4.58E+ 18 2.13E+ 18 Deflec M97
+y
+ 121 Hermione 6.27E+ 18 2.28E+ 18 Deflec M97
+y
+ 126 Velleda 4.71E+ 17 5.79E+ 18 Ephem M93
+ 127 Johanna 8.76E+ 18 8.75E+ 17 Ephem M93
+y
+ 127 Johanna 3.08E+ 18 1.35E+ 18 Ephem M100
+ 128 Nemesis 3.36E+ 18 6.56E+ 17 Ephem M80
+ 128 Nemesis 9.12E+ 18 5.51E+ 18 Ephem M93
+ 128 Nemesis 9.94E+ 18 3.08E+ 18 Deflec M97
+ 128 Nemesis 8.40E+ 18 2.16E+ 18 Deflec M97
+ 128 Nemesis 8.38E+ 18 2.14E+ 18 Deflec M97
+ 128 Nemesis 3.89E+ 18 4.44E+ 18 Deflec M97
+ 128 Nemesis 6.69E+ 18 2.18E+ 18 Ephem M100
+ 129 Antigone 1.43E+ 19 2.78E+ 17 Ephem M80
+y
+ 129 Antigone 8.62E+ 18 3.67E+ 18 Ephem M93
+y
+ 129 Antigone 4.82E+ 18 5.48E+ 18 Deflec M97
+ 129 Antigone 1.97E+ 18 3.87E+ 18 Deflec M97
+ 129 Antigone 1.33E+ 18 3.79E+ 18 Deflec M97
+ 129 Antigone 2.76E+ 18 8.97E+ 17 Ephem M100
+ 130 Elektra 6.60E+ 18 3.98E+ 17 BinImg M73
+ 130 Elektra 2.22E+ 19 1.60E+ 19 Ephem M93
+y
+ 130 Elektra 1.61E+ 19 8.35E+ 18 Deflec M97
+y
+ 130 Elektra 1.00E+ 19 6.55E+ 18 Deflec M97
+y
+ 130 Elektra 6.93E+ 18 6.42E+ 18 Deflec M97
+y
+ 130 Elektra 1.34E+ 19 1.30E+ 19 Deflec M97
+y
+ 130 Elektra 2.19E+ 17 1.19E+ 17 Ephem M100
+y
+ 132 Aethra 4.12E+ 17 2.71E+ 18 Ephem M93
+ 135 Hertha 1.17E+ 18 1.17E+ 17 Ephem M86
+ 135 Hertha 1.82E+ 18 1.76E+ 18 Ephem M93
+ 137 Meliboea 5.03E+ 18 4.67E+ 18 Deflec M97
+ 137 Meliboea 5.80E+ 18 4.12E+ 18 Deflec M97
+ 137 Meliboea 6.37E+ 18 4.06E+ 18 Deflec M97
+ 137 Meliboea 1.34E+ 19 5.80E+ 18 Deflec M97
+ 138 Tolosa 4.93E+ 17 2.59E+ 17 Ephem M93
+ 139 Juewa 7.14E+ 18 1.99E+ 17 Ephem M80
+ 139 Juewa 2.82E+ 18 2.82E+ 17 Ephem M86
+ 139 Juewa 1.17E+ 19 6.59E+ 18 Ephem M93
+ 139 Juewa 7.32E+ 18 4.27E+ 18 Deflec M97
+ 139 Juewa 4.37E+ 18 3.25E+ 18 Deflec M97
+ 139 Juewa 6.00E+ 18 3.21E+ 18 Deflec M97
+ 139 Juewa 7.86E+ 18 4.83E+ 18 Deflec M97
+ 141 Lumen 8.25E+ 18 5.77E+ 18 Ephem M93
+ 144 Vibilia 9.08E+ 18 5.92E+ 18 Ephem M93
+ 144 Vibilia 4.63E+ 18 2.84E+ 18 Deflec M97
+ 144 Vibilia 5.32E+ 18 1.86E+ 18 Deflec M97
+ 144 Vibilia 4.95E+ 18 1.85E+ 18 Deflec M97
+ 144 Vibilia 4.62E+ 18 3.06E+ 18 Deflec M97
+ 145 Adeona 2.26E+ 18 2.26E+ 17 Ephem M86
+ 145 Adeona 1.73E+ 17 2.39E+ 18 Deflec M97
+ 145 Adeona 2.10E+ 18 2.97E+ 18 Deflec M97
+ 147 Protogeneia 1.23E+ 19 4.77E+ 17 Ephem M93
+ 148 Gallia 4.89E+ 18 1.67E+ 18 Ephem M93
+ 150 Nuwa 1.81E+ 19 8.35E+ 17 Ephem M93
+y
+ 150 Nuwa 2.04E+ 18 2.75E+ 18 Deflec M97
+ 150 Nuwa 1.52E+ 18 6.39E+ 17 Deflec M97
+ 152 Atala 5.43E+ 18 1.24E+ 18 Ephem M100
+ 154 Bertha 4.46E+ 17 1.40E+ 19 Deflec M97
+ 154 Bertha 1.18E+ 19 1.01E+ 19 Deflec M97
+ 154 Bertha 1.27E+ 19 9.57E+ 18 Deflec M97
+ 156 Xanthippe 6.49E+ 18 3.71E+ 18 Ephem M93
+ 163 Erigone 2.01E+ 18 6.76E+ 17 Ephem M93
+ 164 Eva 9.29E+ 17 7.76E+ 17 Ephem M93
+ 165 Loreley 3.18E+ 19 1.99E+ 19 Ephem M62
+ 165 Loreley 1.94E+ 19 1.99E+ 17 Ephem M93
+ 165 Loreley 1.08E+ 19 5.64E+ 18 Deflec M97
+ 165 Loreley 1.87E+ 19 4.30E+ 18 Deflec M97
+ 165 Loreley 1.71E+ 19 4.25E+ 18 Deflec M97
+ 165 Loreley 1.47E+ 18 6.86E+ 18 Deflec M97
+y
+ 168 Sibylla 6.02E+ 18 7.82E+ 18 Deflec M97
+ 168 Sibylla 2.38E+ 18 5.74E+ 18 Deflec M97
+ 173 Ino 7.28E+ 18 5.97E+ 17 Ephem M80
+ 173 Ino 1.34E+ 19 1.13E+ 19 Ephem M93
+ 173 Ino 2.06E+ 18 1.30E+ 18 Deflec M97
+ 173 Ino 1.33E+ 18 1.22E+ 18 Deflec M97
+ 179 Klytaemnestra 2.49E+ 17 1.19E+ 17 Ephem M100
+ 185 Eunike 6.89E+ 18 6.23E+ 18 Deflec M97
+ 185 Eunike 1.97E+ 18 5.14E+ 18 Deflec M97
+ 185 Eunike 6.46E+ 17 5.03E+ 18 Deflec M97
+ 185 Eunike 5.94E+ 18 6.74E+ 18 Deflec M97
+ 187 Lamberta 1.57E+ 18 1.57E+ 17 Ephem M86
+ 187 Lamberta 4.94E+ 18 2.14E+ 18 Ephem M93
+ 189 Phthia 3.84E+ 16 8.15E+ 15 Deflec M72
+ 192 Nausikaa 2.73E+ 18 8.16E+ 17 Ephem M80
+ 192 Nausikaa 1.60E+ 18 1.60E+ 17 Ephem M86
+ 194 Prokne 2.73E+ 18 2.73E+ 17 Ephem M86
+ 194 Prokne 1.75E+ 19 5.81E+ 18 Ephem M93
+y
+ 194 Prokne 2.84E+ 18 6.00E+ 18 Deflec M97
+ 194 Prokne 1.12E+ 18 7.68E+ 18 Deflec M97
+ 194 Prokne 1.60E+ 19 1.06E+ 18 Ephem M100
+y
+ 196 Philomela 6.39E+ 18 5.54E+ 18 Deflec M97
+ 196 Philomela 3.16E+ 18 1.61E+ 18 Deflec M97
+ 196 Philomela 3.30E+ 18 1.61E+ 18 Deflec M97
+ 196 Philomela 7.59E+ 18 6.87E+ 18 Deflec M97
+ 200 Dynamene 1.07E+ 19 1.61E+ 18 Ephem M93
+ 204 Kallisto 6.01E+ 17 1.81E+ 18 Ephem M93
+ 209 Dido 4.59E+ 18 7.42E+ 18 Deflec M97
+ 210 Isabella 3.41E+ 18 1.09E+ 18 Ephem M93
+ 211 Isolda 7.56E+ 18 1.31E+ 18 Ephem M93
+ 211 Isolda 1.99E+ 18 2.28E+ 18 Deflec M97
+ 211 Isolda 2.67E+ 18 1.78E+ 18 Deflec M97
+ 211 Isolda 2.41E+ 18 1.78E+ 18 Deflec M97
+ 211 Isolda 4.16E+ 18 2.66E+ 18 Deflec M97
+ 211 Isolda 7.83E+ 18 3.13E+ 18 Ephem M100
+ 212 Medea 1.32E+ 19 1.05E+ 18 Ephem M93
+ 216 Kleopatra 7.02E+ 18 2.39E+ 17 Ephem M80
+y
+ 216 Kleopatra 4.48E+ 18 4.48E+ 17 Ephem M86
+y
+ 216 Kleopatra 1.12E+ 18 9.15E+ 17 Ephem M93
+y
+ 216 Kleopatra 4.64E+ 18 2.00E+ 17 BinImg M102
+ 216 Kleopatra 7.31E+ 18 2.45E+ 18 Deflec M97
+y
+ 216 Kleopatra 7.12E+ 18 3.95E+ 18 Deflec M97
+y
+ 216 Kleopatra 7.64E+ 18 2.26E+ 18 Deflec M97
+y
+ 216 Kleopatra 7.97E+ 18 2.54E+ 18 Deflec M97
+y
+ 216 Kleopatra 5.69E+ 18 1.77E+ 18 Ephem M100
+y
+ 217 Eudora 1.52E+ 18 5.97E+ 16 Ephem M93
+ 221 Eos 5.87E+ 18 3.38E+ 17 Ephem M93
+ 230 Athamantis 1.89E+ 18 1.89E+ 17 Ephem M86
+ 234 Barbara 4.40E+ 17 1.45E+ 18 Ephem M93
+ 238 Hypatia 4.86E+ 18 4.16E+ 18 Deflec M97
+ 238 Hypatia 5.44E+ 18 3.27E+ 18 Deflec M97
+ 238 Hypatia 6.20E+ 18 3.24E+ 18 Deflec M97
+ 238 Hypatia 8.63E+ 17 7.26E+ 18 Deflec M97
+ 240 Vanadis 4.11E+ 18 3.80E+ 18 Ephem M93
+ 240 Vanadis 8.25E+ 17 3.54E+ 17 Ephem M100
+ 241 Germania 8.61E+ 17 5.00E+ 18 Deflec M97
+ 243 Ida 3.78E+ 16 1.99E+ 15 BinImg M13
+ 253 Mathilde 1.03E+ 17 4.38E+ 15 FlyBy M14
+ 253 Mathilde 1.80E+ 18 1.29E+ 18 Ephem M93
+y
+ 253 Mathilde 1.19E+ 18 5.97E+ 17 Ephem M100
+y
+ 259 Aletheia 8.23E+ 18 4.66E+ 18 Deflec M97
+ 259 Aletheia 7.36E+ 18 4.58E+ 18 Deflec M97
+ 259 Aletheia 2.56E+ 19 9.38E+ 18 Deflec M97
+y
+ 259 Aletheia 3.72E+ 17 1.69E+ 17 Ephem M100
+y
+ 266 Aline 4.15E+ 18 4.18E+ 17 Ephem M93
+ 268 Adorea 1.56E+ 18 1.35E+ 18 Ephem M93
+ 268 Adorea 6.27E+ 18 2.42E+ 18 Ephem M100
+ 283 Emma 1.38E+ 18 3.00E+ 16 BinImg M73
+ 283 Emma 1.00E+ 19 5.16E+ 18 Deflec M97
+y
+ 283 Emma 8.38E+ 18 3.68E+ 18 Deflec M97
+y
+ 283 Emma 8.31E+ 18 3.65E+ 18 Deflec M97
+y
+ 283 Emma 1.63E+ 19 6.03E+ 18 Deflec M97
+y
+ 304 Olga 1.15E+ 18 1.12E+ 18 Ephem M93
+ 306 Unitas 5.33E+ 17 5.77E+ 17 Ephem M93
+ 322 Phaeo 1.86E+ 18 3.98E+ 16 Ephem M93
+ 324 Bamberga 4.56E+ 19 7.56E+ 18 Deflec M42
+y
+ 324 Bamberga 1.01E+ 19 1.59E+ 18 Deflec M39
+ 324 Bamberga 1.09E+ 19 1.99E+ 17 Deflec M49
+ 324 Bamberga 9.35E+ 18 1.39E+ 18 Deflec M56
+ 324 Bamberga 9.15E+ 18 5.97E+ 17 Ephem M70
+ 324 Bamberga 9.90E+ 18 9.90E+ 17 Ephem M86
+ 324 Bamberga 9.33E+ 18 7.54E+ 17 Ephem M93
+ 324 Bamberga 1.06E+ 19 1.97E+ 18 Ephem M103
+ 324 Bamberga 5.61E+ 18 4.78E+ 18 Deflec M97
+ 324 Bamberga 1.13E+ 19 2.02E+ 18 Deflec M97
+ 324 Bamberga 1.08E+ 19 1.99E+ 18 Deflec M97
+ 324 Bamberga 1.09E+ 19 2.18E+ 18 Deflec M97
+ 324 Bamberga 1.13E+ 19 8.55E+ 17 Ephem M100
+ 328 Gudrun 9.72E+ 18 2.59E+ 17 Ephem M93
+y
+ 328 Gudrun 3.74E+ 18 5.30E+ 18 Deflec M97
+ 328 Gudrun 1.86E+ 18 5.20E+ 18 Deflec M97
+ 328 Gudrun 3.25E+ 18 6.50E+ 17 Ephem M100
+ 334 Chicago 1.30E+ 19 3.22E+ 19 Deflec M97
+ 334 Chicago 1.06E+ 18 1.62E+ 19 Deflec M97
+ 337 Devosa 4.94E+ 17 4.94E+ 16 Ephem M86
+y
+ 337 Devosa 1.08E+ 18 1.59E+ 17 Ephem M93
+ 344 Desiderata 1.71E+ 18 1.71E+ 17 Ephem M86
+ 344 Desiderata 6.80E+ 17 3.74E+ 17 Ephem M93
+ 344 Desiderata 4.05E+ 18 8.31E+ 17 Ephem M100
+y
+ 345 Tercidina 4.37E+ 18 4.57E+ 17 Ephem M93
+y
+ 345 Tercidina 2.68E+ 18 1.18E+ 18 Ephem M100
+ 346 Hermentaria 6.33E+ 18 1.79E+ 17 Ephem M93
+ 349 Dembowska 5.19E+ 18 3.23E+ 18 Deflec M97
+ 349 Dembowska 3.10E+ 18 2.51E+ 18 Deflec M97
+ 349 Dembowska 3.67E+ 18 2.50E+ 18 Deflec M97
+ 349 Dembowska 2.08E+ 18 4.34E+ 18 Deflec M97
+ 354 Eleonora 9.71E+ 18 6.96E+ 17 Ephem M80
+ 354 Eleonora 4.90E+ 18 4.90E+ 17 Ephem M86
+ 354 Eleonora 1.97E+ 19 7.63E+ 18 Deflec M97
+y
+ 354 Eleonora 9.32E+ 18 5.00E+ 18 Deflec M97
+ 354 Eleonora 1.20E+ 19 4.90E+ 18 Deflec M97
+ 354 Eleonora 4.39E+ 18 7.18E+ 18 Deflec M97
+ 356 Liguria 7.83E+ 18 1.50E+ 18 Ephem M100
+ 365 Corduba 5.84E+ 18 9.55E+ 17 Ephem M93
+ 372 Palma 5.32E+ 18 5.32E+ 17 Ephem M86
+ 372 Palma 2.76E+ 18 7.48E+ 18 Deflec M97
+ 375 Ursula 2.64E+ 18 5.67E+ 18 Deflec M97
+ 375 Ursula 7.14E+ 18 3.93E+ 18 Deflec M97
+ 375 Ursula 7.44E+ 18 3.89E+ 18 Deflec M97
+ 375 Ursula 1.88E+ 19 6.40E+ 18 Ephem M100
+ 379 Huenna 3.83E+ 17 1.99E+ 16 BinImg M73
+ 381 Myrrha 9.18E+ 18 7.96E+ 17 Ephem M93
+ 386 Siegena 2.35E+ 19 4.18E+ 17 Ephem M93
+y
+ 386 Siegena 6.30E+ 18 9.57E+ 18 Deflec M97
+ 386 Siegena 7.80E+ 18 4.21E+ 18 Deflec M97
+ 386 Siegena 7.70E+ 18 4.17E+ 18 Deflec M97
+ 386 Siegena 1.16E+ 19 9.19E+ 18 Deflec M97
+ 387 Aquitania 5.32E+ 18 6.17E+ 17 Ephem M93
+y
+ 387 Aquitania 1.90E+ 18 6.37E+ 17 Ephem M100
+ 404 Arsinoe 3.42E+ 18 3.03E+ 18 Ephem M93
+ 405 Thia 1.38E+ 18 1.38E+ 17 Ephem M86
+ 409 Aspasia 2.09E+ 18 5.97E+ 16 Ephem M80
+y
+ 409 Aspasia 3.24E+ 18 3.24E+ 17 Ephem M86
+y
+ 409 Aspasia 8.37E+ 18 4.89E+ 18 Deflec M97
+ 409 Aspasia 1.12E+ 19 3.29E+ 18 Deflec M97
+ 409 Aspasia 1.24E+ 19 3.24E+ 18 Deflec M97
+ 409 Aspasia 1.55E+ 19 5.50E+ 18 Deflec M97
+ 410 Chloris 6.91E+ 18 4.73E+ 18 Ephem M93
+ 410 Chloris 6.11E+ 18 9.21E+ 17 Ephem M100
+ 416 Vaticana 3.27E+ 18 3.10E+ 18 Ephem M93
+ 419 Aurelia 1.53E+ 18 1.53E+ 17 Ephem M86
+ 419 Aurelia 1.98E+ 18 1.10E+ 18 Ephem M93
+ 419 Aurelia 2.45E+ 18 7.44E+ 17 Ephem M100
+ 420 Bertholda 1.48E+ 19 9.15E+ 17 Ephem M93
+ 423 Diotima 4.47E+ 18 5.75E+ 18 Deflec M97
+ 423 Diotima 5.76E+ 18 4.15E+ 18 Deflec M97
+ 423 Diotima 6.74E+ 18 4.11E+ 18 Deflec M97
+ 423 Diotima 1.14E+ 19 8.07E+ 18 Deflec M97
+ 423 Diotima 7.56E+ 18 3.48E+ 18 Ephem M100
+ 433 Eros 6.69E+ 15 2.98E+ 12 FlyBy M22
+ 442 Eichsfeldia 1.95E+ 17 1.99E+ 16 Ephem M93
+ 444 Gyptis 7.16E+ 18 3.18E+ 18 Deflec M26
+ 444 Gyptis 1.25E+ 19 2.39E+ 18 Deflec M42
+ 444 Gyptis 1.59E+ 19 1.11E+ 19 Ephem M93
+ 444 Gyptis 1.12E+ 19 4.54E+ 18 Deflec M97
+ 444 Gyptis 1.22E+ 19 2.70E+ 18 Deflec M97
+ 444 Gyptis 1.12E+ 19 2.67E+ 18 Deflec M97
+ 444 Gyptis 4.09E+ 18 6.20E+ 18 Deflec M97
+ 445 Edna 3.47E+ 18 7.76E+ 17 Ephem M93
+ 449 Hamburga 1.57E+ 18 1.40E+ 18 Ephem M93
+ 451 Patientia 9.14E+ 18 9.14E+ 17 Ephem M86
+ 451 Patientia 4.17E+ 19 2.94E+ 19 Ephem M93
+ 451 Patientia 1.78E+ 19 6.82E+ 18 Deflec M97
+ 451 Patientia 1.11E+ 19 6.40E+ 18 Deflec M97
+ 451 Patientia 8.99E+ 18 8.02E+ 18 Deflec M97
+ 451 Patientia 2.98E+ 19 7.36E+ 18 Ephem M100
+y
+ 455 Bruchsalia 1.19E+ 18 1.19E+ 17 Ephem M93
+ 469 Argentina 7.25E+ 18 6.25E+ 18 Ephem M93
+y
+ 469 Argentina 4.53E+ 18 1.76E+ 18 Ephem M100
+ 471 Papagena 1.26E+ 19 7.16E+ 17 Ephem M93
+y
+ 471 Papagena 2.31E+ 18 4.88E+ 18 Deflec M97
+ 471 Papagena 2.08E+ 18 4.78E+ 18 Deflec M97
+ 471 Papagena 6.52E+ 18 9.75E+ 18 Deflec M97
+ 481 Emita 5.78E+ 18 1.45E+ 18 Ephem M93
+ 485 Genua 1.36E+ 18 4.38E+ 17 Ephem M93
+ 488 Kreusa 2.46E+ 18 2.46E+ 17 Ephem M86
+ 488 Kreusa 1.24E+ 19 1.10E+ 19 Ephem M93
+ 488 Kreusa 1.60E+ 19 6.15E+ 18 Deflec M97
+y
+ 488 Kreusa 2.29E+ 18 6.62E+ 17 Deflec M97
+ 488 Kreusa 2.19E+ 18 6.68E+ 17 Deflec M97
+ 488 Kreusa 8.25E+ 17 1.37E+ 19 Deflec M97
+ 488 Kreusa 9.77E+ 18 2.70E+ 18 Ephem M100
+y
+ 490 Veritas 9.32E+ 18 4.37E+ 18 Deflec M97
+ 490 Veritas 4.48E+ 18 2.11E+ 18 Deflec M97
+ 490 Veritas 4.59E+ 18 2.10E+ 18 Deflec M97
+ 490 Veritas 9.51E+ 18 5.62E+ 18 Deflec M97
+ 491 Carina 4.82E+ 18 1.95E+ 18 Ephem M93
+ 503 Evelyn 2.85E+ 18 3.38E+ 17 Ephem M93
+ 505 Cava 3.99E+ 18 3.84E+ 18 Ephem M93
+ 508 Princetonia 1.18E+ 18 7.65E+ 18 Deflec M97
+ 508 Princetonia 3.16E+ 18 1.95E+ 18 Deflec M97
+ 508 Princetonia 3.27E+ 18 1.94E+ 18 Deflec M97
+ 511 Davida 6.64E+ 19 5.57E+ 18 Deflec M26
+y
+ 511 Davida 4.77E+ 19 4.77E+ 18 Deflec M31
+ 511 Davida 4.77E+ 19 4.77E+ 18 Deflec M42
+ 511 Davida 4.38E+ 19 1.99E+ 18 Deflec M72
+ 511 Davida 2.45E+ 19 2.45E+ 18 Ephem M86
+ 511 Davida 3.96E+ 19 8.09E+ 18 Ephem M93
+ 511 Davida 3.77E+ 19 1.97E+ 18 Deflec M95
+ 511 Davida 1.71E+ 19 1.18E+ 19 Ephem M103
+ 511 Davida 2.42E+ 19 7.49E+ 18 Deflec M97
+ 511 Davida 2.77E+ 19 5.20E+ 18 Deflec M97
+ 511 Davida 2.61E+ 19 6.03E+ 18 Deflec M97
+ 511 Davida 2.21E+ 19 9.21E+ 18 Deflec M97
+ 511 Davida 1.81E+ 19 4.77E+ 18 Ephem M100
+ 516 Amherstia 1.43E+ 18 1.33E+ 18 Ephem M93
+ 532 Herculina 3.34E+ 19 5.57E+ 18 Deflec M42
+y
+ 532 Herculina 1.09E+ 19 1.99E+ 17 Ephem M80
+ 532 Herculina 1.33E+ 19 1.33E+ 18 Ephem M86
+ 532 Herculina 5.76E+ 18 1.51E+ 18 Ephem M93
+y
+ 532 Herculina 1.46E+ 19 6.92E+ 18 Deflec M92
+ 532 Herculina 9.89E+ 18 5.59E+ 18 Ephem M103
+ 532 Herculina 1.25E+ 19 6.31E+ 18 Deflec M97
+ 532 Herculina 1.81E+ 19 4.46E+ 18 Deflec M97
+ 532 Herculina 1.75E+ 19 4.33E+ 18 Deflec M97
+ 532 Herculina 2.26E+ 19 8.76E+ 18 Deflec M97
+ 532 Herculina 5.75E+ 18 1.91E+ 18 Ephem M100
+ 536 Merapi 2.15E+ 19 2.44E+ 19 Deflec M97
+ 536 Merapi 3.10E+ 19 2.55E+ 19 Deflec M97
+ 554 Peraga 6.59E+ 17 6.59E+ 16 Ephem M86
+ 554 Peraga 3.13E+ 18 2.54E+ 18 Ephem M93
+y
+ 582 Olympia 4.28E+ 17 1.17E+ 18 Ephem M93
+ 584 Semiramis 8.23E+ 17 5.77E+ 17 Ephem M93
+ 602 Marianna 1.02E+ 19 4.77E+ 17 Ephem M93
+ 604 Tekmessa 1.45E+ 18 2.78E+ 17 Ephem M93
+ 617 Patroclus 1.36E+ 18 1.09E+ 17 BinImg M59
+ 624 Hektor 9.95E+ 18 1.20E+ 17 BinImg M106
+ 626 Notburga 5.35E+ 18 6.52E+ 18 Ephem M93
+y
+ 626 Notburga 3.24E+ 18 1.30E+ 18 Ephem M100
+ 654 Zelinda 1.35E+ 18 1.35E+ 17 Ephem M86
+ 665 Sabine 6.98E+ 17 3.98E+ 17 Ephem M93
+ 675 Ludmilla 1.20E+ 19 2.39E+ 18 Ephem M93
+ 679 Pax 7.14E+ 17 1.99E+ 17 Ephem M93
+ 680 Genoveva 2.69E+ 18 3.98E+ 16 Ephem M93
+ 690 Wratislavia 1.28E+ 19 2.78E+ 17 Ephem M93
+ 702 Alauda 1.36E+ 19 1.12E+ 19 Ephem M93
+y
+ 702 Alauda 6.06E+ 18 3.60E+ 18 BinImg M98
+ 702 Alauda 3.45E+ 18 7.48E+ 18 Deflec M97
+y
+ 702 Alauda 1.17E+ 18 7.44E+ 18 Deflec M97
+y
+ 702 Alauda 2.46E+ 19 1.06E+ 19 Deflec M97
+y
+ 702 Alauda 2.20E+ 19 4.95E+ 18 Ephem M100
+y
+ 704 Interamnia 7.36E+ 19 3.38E+ 19 Deflec M3
+y
+ 704 Interamnia 1.23E+ 20 1.31E+ 20 Deflec M18
+ 704 Interamnia 2.59E+ 19 1.39E+ 18 Deflec M28
+ 704 Interamnia 7.00E+ 19 1.85E+ 19 Deflec M26
+y
+ 704 Interamnia 1.61E+ 19 8.35E+ 18 Deflec M31
+y
+ 704 Interamnia 1.61E+ 19 8.35E+ 18 Deflec M42
+y
+ 704 Interamnia 3.70E+ 19 2.19E+ 18 Deflec M72
+ 704 Interamnia 1.13E+ 20 3.18E+ 19 Deflec M78
+y
+ 704 Interamnia 3.23E+ 19 1.99E+ 17 Ephem M80
+ 704 Interamnia 3.69E+ 19 3.69E+ 18 Ephem M86
+ 704 Interamnia 2.66E+ 19 1.09E+ 19 Deflec M92
+ 704 Interamnia 3.88E+ 19 1.77E+ 18 Deflec M95
+ 704 Interamnia 3.97E+ 19 1.31E+ 19 Ephem M103
+ 704 Interamnia 2.25E+ 19 6.62E+ 18 Deflec M97
+ 704 Interamnia 3.34E+ 19 5.16E+ 18 Deflec M97
+ 704 Interamnia 3.13E+ 19 5.19E+ 18 Deflec M97
+ 704 Interamnia 3.88E+ 19 7.50E+ 18 Deflec M97
+ 704 Interamnia 3.82E+ 19 3.58E+ 18 Ephem M100
+ 720 Bohlinia 1.19E+ 19 1.99E+ 18 Deflec M18
+y
+ 720 Bohlinia 5.97E+ 16 7.96E+ 15 Deflec M28
+ 720 Bohlinia 2.78E+ 18 9.95E+ 17 Deflec M78
+y
+ 735 Marghanna 2.15E+ 18 6.76E+ 17 Ephem M93
+ 739 Mandeville 1.16E+ 18 1.07E+ 18 Ephem M93
+ 747 Winchester 7.96E+ 15 3.98E+ 15 Ephem M80
+y
+ 747 Winchester 2.94E+ 18 2.94E+ 17 Ephem M86
+ 747 Winchester 1.20E+ 19 4.59E+ 18 Ephem M93
+ 747 Winchester 8.10E+ 18 5.86E+ 18 Deflec M97
+ 747 Winchester 4.31E+ 18 4.65E+ 18 Deflec M97
+ 747 Winchester 5.25E+ 18 4.47E+ 18 Deflec M97
+ 747 Winchester 1.33E+ 19 1.47E+ 18 Ephem M100
+y
+ 751 Faina 7.07E+ 18 5.17E+ 17 Ephem M93
+y
+ 751 Faina 3.27E+ 18 5.83E+ 17 Ephem M100
+ 758 Mancunia 9.31E+ 17 7.96E+ 16 Ephem M93
+ 760 Massinga 1.33E+ 18 1.32E+ 18 Ephem M93
+ 762 Pulcova 2.59E+ 18 3.98E+ 17 BinImg M32
+y
+ 762 Pulcova 1.40E+ 18 9.94E+ 16 BinImg M75
+ 762 Pulcova 1.25E+ 19 7.46E+ 18 Deflec M97
+y
+ 762 Pulcova 3.15E+ 19 7.45E+ 18 Deflec M97
+y
+ 762 Pulcova 1.11E+ 18 4.42E+ 17 Ephem M100
+y
+ 769 Tatjana 6.31E+ 18 6.37E+ 17 Ephem M93
+ 776 Berbericia 5.46E+ 18 4.70E+ 18 Deflec M97
+ 776 Berbericia 2.39E+ 16 3.26E+ 18 Deflec M97
+ 776 Berbericia 3.08E+ 17 3.24E+ 18 Deflec M97
+ 776 Berbericia 6.28E+ 18 7.31E+ 18 Deflec M97
+ 784 Pickeringia 3.74E+ 18 3.18E+ 17 Ephem M93
+ 786 Bredichina 2.82E+ 18 2.79E+ 18 Ephem M93
+ 790 Pretoria 4.86E+ 18 4.76E+ 18 Deflec M97
+ 790 Pretoria 4.30E+ 18 4.73E+ 18 Deflec M97
+ 804 Hispania 9.94E+ 18 7.96E+ 18 Deflec M3
+ 804 Hispania 4.02E+ 18 8.55E+ 17 Deflec M72
+ 804 Hispania 5.00E+ 18 3.62E+ 18 Ephem M93
+ 804 Hispania 3.48E+ 18 7.96E+ 17 Deflec M95
+ 804 Hispania 8.56E+ 18 4.71E+ 18 Deflec M97
+ 804 Hispania 5.03E+ 18 2.79E+ 18 Deflec M97
+ 804 Hispania 5.57E+ 18 2.77E+ 18 Deflec M97
+ 804 Hispania 8.65E+ 18 3.72E+ 18 Deflec M97
+ 804 Hispania 6.15E+ 18 2.39E+ 18 Ephem M100
+ 809 Lundia 9.27E+ 14 3.09E+ 14 PheMu M79
+ 854 Frostia 1.06E+ 15 9.50E+ 14 PheMu M50
+ 895 Helio 6.88E+ 18 1.39E+ 19 Deflec M97
+ 895 Helio 7.75E+ 18 3.43E+ 18 Deflec M97
+ 895 Helio 8.21E+ 18 3.41E+ 18 Deflec M97
+ 895 Helio 2.80E+ 19 1.37E+ 19 Deflec M97
+ 914 Palisana 2.35E+ 18 2.39E+ 17 Ephem M93
+ 949 Hel 1.73E+ 18 6.17E+ 17 Ephem M93
+ 1013 Tombecka 1.71E+ 17 1.43E+ 18 Ephem M93
+ 1015 Christa 4.77E+ 18 6.76E+ 17 Ephem M93
+ 1021 Flammario 5.14E+ 18 1.19E+ 17 Ephem M93
+ 1036 Ganymed 1.67E+ 17 3.18E+ 17 Ephem M93
+ 1089 Tama 8.90E+ 14 3.20E+ 14 PheMu M50
+ 1171 Rusthawelia 1.81E+ 18 1.99E+ 17 Ephem M93
+ 1313 Berna 2.25E+ 15 2.00E+ 15 PheMu M50
+ 6.76E+ 18 3.18E+ 18 Deflec M78
+ 3169 Ostro 1.86E+ 14 6.20E+ 13 PheMu M66
+ 3671 Dionysus 8.38E+ 11 2.79E+ 11 PheMu M55
+ 3749 Balam 5.09E+ 14 1.99E+ 13 BinImg M73
+ 4492 Debussy 3.33E+ 14 3.00E+ 14 PheMu M50
+ 5381 Sekhmet 1.04E+ 12 3.46E+ 11 BinRad M35
+ 25143 Itokawa 3.50E+ 10 1.05E+ 09 FlyBy M60
+ 26308 1998 SM165 6.78E+ 18 2.40E+ 18 BinImg M40
+ 35107 1991 VH 1.40E+ 12 1.40E+ 11 BinRad M108
+ 42355 Typhon 9.49E+ 17 5.20E+ 16 BinImg M76
+ 47171 1999 TC36 1.39E+ 19 2.50E+ 18 BinImg M40
+ 47171 1999 TC36 1.44E+ 19 2.20E+ 18 BinImg M54
+ 50000 Quaoar 1.60E+ 21 3.00E+ 20 BinImg M90
+ 58534 Logos 2.70E+ 17 3.00E+ 16 BinImg M38
+ 65489 Ceto 5.41E+ 18 4.20E+ 17 BinImg M68
+ 65803 Didymos 5.24E+ 11 5.24E+ 10 BinRad M91
+ 66063 1998 RO1 3.60E+ 11 1.80E+ 11 PheMu M83
+ 66391 1999 KW4 2.35E+ 12 9.94E+ 10 BinRad M61
+ 66652 Borasisi 3.75E+ 18 4.00E+ 17 BinImg M41
+ 88611 2001 QT297 3.30E+ 18 3.00E+ 18 BinImg M36
+y
+ 88611 2001 QT297 2.36E+ 18 1.00E+ 16 BinImg M46
+ 90482 Orcus 6.32E+ 20 1.00E+ 18 BinImg M87
+ 90482 Orcus 6.41E+ 20 5.00E+ 18 BinImg M94
+ 134340 Pluto 1.30E+ 22 7.00E+ 19 BinImg M53
+ 134860 2000 OJ67 2.14E+ 18 1.10E+ 17 BinImg M82
+ 136108 Haumea 4.20E+ 21 1.00E+ 20 BinImg M44
+y
+ 136108 Haumea 4.01E+ 21 4.00E+ 19 BinImg M81
+ 136199 Eris 1.66E+ 22 2.00E+ 20 BinImg M69
+ 136617 1994 CC 2.59E+ 11 1.30E+ 10 BinRad M96
+ 153591 2001 SN263 9.17E+ 12 2.24E+ 10 BinRad M96
+ 164121 2003 YT1 1.27E+ 12 3.90E+ 11 BinRad M52
+ 175706 1996 FG3 4.27E+ 12 1.42E+ 12 PheMu M83
+ 185851 2000 DP107 4.60E+ 11 5.00E+ 10 BinRad M34
+ 276049 2002 CE26 1.95E+ 13 2.50E+ 12 BinRad M58
+ 311066 2004 DC 3.57E+ 10 3.57E+ 09 BinRad M77
+ 1999 OJ4 3.91E+ 17 2.20E+ 16 BinImg M82
+ 2000 QL251 3.11E+ 18 5.10E+ 16 BinImg M82
+ 2000 UG11 9.35E+ 09 1.59E+ 09 BinRad M32
+ 2001 QC298 1.08E+ 19 7.00E+ 17 BinImg M40
+ 2001 XR254 4.00E+ 18 1.70E+ 17 BinImg M82
+ 2003 QY90 1.01E+ 18 7.85E+ 17 BinImg M57
+ 2003 TJ58 2.25E+ 17 1.50E+ 16 BinImg M82
+ 2004 PB108 9.68E+ 18 5.70E+ 17 BinImg M82
+ 1P/ Halley 3.20E+ 14 1.20E+ 14 CNGF M85
+ 2P/ Encke 9.20E+ 13 5.80E+ 13 CNGF M85
+ 6P/ dArest 2.80E+ 12 8.00E+ 11 CNGF M85
+ 9P/ Tempel1 5.80E+ 13 1.60E+ 13 CNGF M64
+y
+ 9P/ Tempel1 4.50E+ 13 4.85E+ 13 FlyBy M67
+ 9P/ Tempel1 2.30E+ 13 1.60E+ 13 CNGF M85
+y
+ 10P/ Tempel2 3.50E+ 14 1.50E+ 14 CNGF M85
+ 19P/ Borrely 2.70E+ 12 2.10E+ 12 CNGF M85
+ 22P/ Kop  5.30E+ 12 2.20E+ 12 CNGF M85
+ 45P/ H-M-P 1.90E+ 11 3.50E+ 11 CNGF M85
+ 46P/ Wirtanen 3.30E+ 11 2.30E+ 11 CNGF M85
+ 67P/ C-G 1.50E+ 13 6.00E+ 12 CNGF M85
+ 81P/ Wild2 8.10E+ 12 8.10E+ 11 CNGF M85
+ SL9 1.53E+ 12 1.53E+ 11 BkUp M4
