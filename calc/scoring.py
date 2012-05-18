@@ -54,7 +54,7 @@ def price(obj):
     if mass > 1e18:
       # if it's huge, penalize it because the surface will be covered in ejecta, etc.
       # and the goodies will be far beneath
-      mass = mass * 1e-8
+      mass = mass * 1e-4
 
 
   """

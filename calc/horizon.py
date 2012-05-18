@@ -20,7 +20,7 @@ THOLEN_MAPPINGS = {
   'B': 'B',
   'C': 'C',
   'F': 'C',
-  'G': 'C',
+  'G': 'Cgh',
   'Q': 'Q',
   'R': 'R',
   'V': 'V',
@@ -64,6 +64,7 @@ def populateDb():
       if newspec:
         row['spec_B'] = newspec   # TODO should have our own merged spec row
       else:
+        continue # TODO temp
         row['spec_B'] = 'S'
 
     # match it with its delta-v
