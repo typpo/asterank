@@ -1,0 +1,1224 @@
+ 1 Ceres 1014.00 101.40 STM 96
+ 1 Ceres 952.40 3.40 Img-TE 22
+ 1 Ceres 935.20 4.40 Img-TE 41
+ 1 Ceres 950.79 7.69 Img-TE 48
+ 1 Ceres 855.46 56.95 STM 64
+ 1 Ceres 886.47 27.29 NEATM 64
+ 1 Ceres 973.89 13.31 STM 83
+ 2 Pallas 589.00 58.90 STM 96
+ 2 Pallas 498.07 18.79 STM 93
+ 2 Pallas 502.00 6.00 Img-TE 54
+ 2 Pallas 544.00 18.00 Img-TE 58
+ 2 Pallas 512.00 6.00 KOALA 67
+ 2 Pallas 479.80 20.18 STM 64
+ 2 Pallas 523.97 20.82 NEATM 64
+ 2 Pallas 539.00 28.00 LC+ Occ 78
+ 2 Pallas 512.59 4.98 STM 83
+ 2 Pallas 544.00 42.91 NEATM 72
+ 2 Pallas 544.00 60.70 NEATM 72
+ 3 Juno 247.00 24.70 STM 96
+ 3 Juno 233.91 11.19 STM 93
+ 3 Juno 250.30 5.30 Img-TE 48
+ 3 Juno 248.47 6.84 STM 64
+ 3 Juno 262.01 12.05 NEATM 64
+ 3 Juno 252.00 29.00 LC+ Occ 78
+ 3 Juno 231.08 2.59 STM 83
+ 4 Vesta 530.00 53.00 STM 96
+ 4 Vesta 530.00 10.00 Img-TE 2
+ 4 Vesta 510.29 5.80 Img-TE 48
+ 4 Vesta 520.36 6.84 STM 64
+ 4 Vesta 515.85 19.25 NEATM 64
+ 4 Vesta 521.73 7.50 STM 83
+ 5 Astraea 121.00 12.10 STM 96
+ 5 Astraea 119.06 6.50 STM 93
+ 5 Astraea 115.00 6.00 LC+ Occ 78
+ 5 Astraea 110.76 1.37 STM 83
+ 5 Astraea 115.00 9.35 NEATM 72
+ 6 Hebe 204.00 20.39 STM 96
+ 6 Hebe 185.17 2.90 STM 93
+ 6 Hebe 180.42 8.50 STM 64
+ 6 Hebe 180.00 40.00 LC+ Occ 78
+ 6 Hebe 197.14 1.83 STM 83
+ 6 Hebe 185.00 10.68 NEATM 72
+ 7 Iris 208.00 20.79 STM 96
+ 7 Iris 199.83 10.00 STM 93
+ 7 Iris 223.30 37.29 Radar 69
+ 7 Iris 190.46 11.44 STM 64
+ 7 Iris 226.36 10.93 NEATM 64
+ 7 Iris 198.00 27.00 LC+ Occ 78
+ 7 Iris 199.00 26.00 LC+ Occ 78
+ 7 Iris 254.19 3.26 STM 83
+ 8 Flora 135.88 2.29 STM 93
+ 8 Flora 145.75 7.05 NEATM 64
+ 8 Flora 141.00 10.00 LC+ Occ 78
+ 8 Flora 140.00 7.00 LC+ Occ 78
+ 8 Flora 138.30 1.37 STM 83
+ 8 Flora 140.00 1.15 NEATM 72
+ 9 Metis 185.00 18.50 STM 96
+ 9 Metis 154.66 4.25 STM 94
+ 9 Metis 169.00 20.00 LC+ Occ 78
+ 9 Metis 166.47 2.07 TPM 83
+ 10 Hygiea 430.00 43.00 STM 96
+ 10 Hygiea 407.11 6.80 STM 93
+ 10 Hygiea 447.29 18.53 NEATM 64
+ 10 Hygiea 351.00 27.00 LC+ Occ 78
+ 10 Hygiea 443.00 45.00 LC+ Occ 78
+ 10 Hygiea 428.45 6.57 STM 83
+ 10 Hygiea 453.23 19.23 NEATM 72
+ 11 Parthenope 157.00 15.69 STM 96
+ 11 Parthenope 153.33 3.09 STM 93
+ 11 Parthenope 142.36 4.01 NEATM 64
+ 11 Parthenope 150.47 2.05 STM 83
+ 11 Parthenope 159.11 5.94 NEATM 72
+ 12 Victoria 135.00 13.50 STM 96
+ 12 Victoria 112.76 3.09 STM 93
+ 12 Victoria 114.34 3.46 STM 64
+ 12 Victoria 131.02 6.15 NEATM 64
+ 12 Victoria 131.50 1.98 STM 83
+ 12 Victoria 126.63 3.20 NEATM 72
+ 13 Egeria 244.00 24.39 STM 96
+ 13 Egeria 207.63 8.30 STM 93
+ 13 Egeria 223.08 3.46 STM 64
+ 13 Egeria 226.05 9.48 NEATM 64
+ 13 Egeria 203.36 2.56 STM 83
+ 13 Egeria 227.00 25.95 NEATM 72
+ 14 Irene 150.00 15.00 STM 96
+ 14 Irene 144.08 1.94 TPM 83
+ 14 Irene 155.39 4.38 NEATM 72
+ 15 Eunomia 259.00 25.89 STM 96
+ 15 Eunomia 255.33 15.00 STM 93
+ 15 Eunomia 256.41 3.08 STM 83
+ 15 Eunomia 259.00 35.50 NEATM 72
+ 16 Psyche 247.00 24.70 STM 96
+ 16 Psyche 253.16 4.00 STM 93
+ 16 Psyche 262.79 4.09 Img-TE 48
+ 16 Psyche 222.58 5.57 STM 64
+ 16 Psyche 269.69 11.50 NEATM 64
+ 16 Psyche 225.00 20.00 LC+ Occ 78
+ 16 Psyche 225.00 36.00 LC+ Occ 78
+ 17 Thetis 98.00 9.80 STM 96
+ 17 Thetis 90.04 3.70 STM 93
+ 17 Thetis 80.36 3.29 STM 64
+ 17 Thetis 95.84 6.01 NEATM 64
+ 17 Thetis 77.00 8.00 LC+ Occ 78
+ 17 Thetis 74.58 0.99 STM 83
+ 17 Thetis 93.33 2.63 NEATM 72
+ 18 Melpomene 162.00 16.20 STM 96
+ 18 Melpomene 140.57 2.79 STM 93
+ 18 Melpomene 142.85 6.80 NEATM 64
+ 18 Melpomene 139.94 1.85 STM 83
+ 18 Melpomene 141.00 14.71 NEATM 72
+ 19 Fortuna 221.00 22.10 STM 96
+ 19 Fortuna 210.10 3.77 Occ 95
+ 19 Fortuna 209.60 4.96 Img-TE 76
+ 19 Fortuna 199.66 3.01 TPM 83
+ 19 Fortuna 223.00 43.59 NEATM 72
+ 20 Massalia 134.00 13.39 STM 96
+ 20 Massalia 145.50 9.30 STM 93
+ 20 Massalia 152.27 7.19 STM 64
+ 20 Massalia 155.03 9.61 NEATM 64
+ 20 Massalia 131.55 1.15 STM 83
+ 21 Lutetia 98.00 5.00 FlyBy 84
+ 22 Kalliope 174.00 17.39 STM 96
+ 22 Kalliope 181.00 4.59 STM 93
+ 22 Kalliope 166.19 2.79 PheMu 46
+ 22 Kalliope 177.00 4.00 NEATM 47
+ 22 Kalliope 162.66 5.00 STM 64
+ 22 Kalliope 183.11 7.84 NEATM 64
+ 22 Kalliope 143.00 10.00 LC+ Occ 78
+ 22 Kalliope 167.00 15.30 NEATM 72
+ 23 Thalia 117.00 11.69 STM 96
+ 23 Thalia 107.52 2.20 STM 93
+ 23 Thalia 105.98 3.51 STM 94
+ 23 Thalia 101.98 3.68 STM 64
+ 23 Thalia 111.04 6.26 NEATM 64
+ 23 Thalia 106.20 1.88 STM 83
+ 24 Themis 176.80 2.29 TPM 83
+ 24 Themis 202.33 6.05 NEATM 72
+ 25 Phocaea 72.00 7.19 STM 96
+ 25 Phocaea 75.12 3.59 STM 93
+ 25 Phocaea 71.00 8.00 Img 34
+ 25 Phocaea 83.38 5.84 NEATM 64
+ 25 Phocaea 83.20 0.96 STM 83
+ 26 Proserpina 94.80 1.70 STM 93
+ 26 Proserpina 95.91 5.46 NEATM 64
+ 26 Proserpina 87.44 0.95 STM 83
+ 26 Proserpina 87.12 1.32 NEATM 72
+ 27 Euterpe 117.00 11.69 STM 96
+ 27 Euterpe 96.80 2.20 Occ 95
+ 27 Euterpe 109.79 1.53 TPM 83
+ 27 Euterpe 118.00 22.30 NEATM 72
+ 28 Bellona 125.00 12.50 STM 96
+ 28 Bellona 120.90 3.40 STM 93
+ 28 Bellona 123.91 7.38 STM 94
+ 28 Bellona 104.25 2.64 STM 64
+ 28 Bellona 123.98 4.52 NEATM 64
+ 28 Bellona 97.00 11.00 LC+ Occ 78
+ 28 Bellona 100.00 10.00 LC+ Occ 78
+ 28 Bellona 97.40 1.42 STM 83
+ 29 Amphitrite 200.00 20.00 STM 96
+ 29 Amphitrite 212.22 6.80 STM 93
+ 29 Amphitrite 231.21 6.55 STM 64
+ 29 Amphitrite 227.53 7.57 NEATM 64
+ 29 Amphitrite 206.86 2.59 STM 83
+ 29 Amphitrite 227.14 3.97 NEATM 72
+ 30 Urania 94.00 9.39 STM 96
+ 30 Urania 100.15 2.40 STM 93
+ 30 Urania 102.01 4.69 NEATM 64
+ 30 Urania 88.91 0.97 STM 83
+ 30 Urania 98.41 2.14 NEATM 72
+ 31 Euphrosyne 255.89 11.50 STM 93
+ 31 Euphrosyne 265.94 7.00 STM 64
+ 31 Euphrosyne 286.91 12.53 NEATM 64
+ 31 Euphrosyne 276.48 2.85 STM 83
+ 31 Euphrosyne 280.00 60.77 NEATM 72
+ 33 Polyhymnia 53.97 0.91 STM 83
+ 34 Circe 111.00 11.10 STM 96
+ 34 Circe 113.54 3.29 STM 93
+ 34 Circe 109.50 1.79 Occ 95
+ 34 Circe 121.54 7.09 NEATM 64
+ 34 Circe 96.00 10.00 LC+ Occ 78
+ 34 Circe 107.00 10.00 LC+ Occ 78
+ 34 Circe 116.45 1.13 STM 83
+ 34 Circe 113.23 2.89 NEATM 72
+ 36 Atalante 119.00 11.89 STM 96
+ 36 Atalante 105.61 4.00 STM 93
+ 36 Atalante 109.08 2.84 STM 64
+ 36 Atalante 121.06 9.59 NEATM 64
+ 36 Atalante 110.54 1.57 STM 83
+ 36 Atalante 103.00 11.44 NEATM 72
+ 38 Leda 115.93 2.09 STM 93
+ 38 Leda 118.12 5.34 NEATM 64
+ 38 Leda 114.22 1.52 STM 83
+ 38 Leda 116.00 15.50 NEATM 72
+ 39 Laetitia 157.00 15.69 STM 96
+ 39 Laetitia 149.52 8.60 STM 93
+ 39 Laetitia 155.11 5.65 STM 64
+ 39 Laetitia 163.00 12.00 LC+ Occ 78
+ 39 Laetitia 151.57 1.65 STM 83
+ 39 Laetitia 163.00 14.02 NEATM 72
+ 41 Daphne 203.00 20.29 STM 96
+ 41 Daphne 174.00 11.69 STM 93
+ 41 Daphne 172.42 4.07 STM 64
+ 41 Daphne 187.00 20.00 LC+ Occ 78
+ 41 Daphne 200.00 10.00 TPM 79
+ 41 Daphne 179.61 2.57 STM 83
+ 42 Isis 94.00 9.39 STM 96
+ 42 Isis 100.19 3.40 STM 93
+ 42 Isis 102.90 2.28 STM 64
+ 42 Isis 104.69 6.11 NEATM 64
+ 42 Isis 104.50 1.37 STM 83
+ 43 Ariadne 65.87 2.50 STM 93
+ 43 Ariadne 66.72 2.28 STM 64
+ 43 Ariadne 62.74 1.59 NEATM 64
+ 43 Ariadne 58.75 0.87 STM 83
+ 43 Ariadne 72.08 2.19 NEATM 72
+ 45 Eugenia 244.00 24.39 STM 96
+ 45 Eugenia 214.63 4.19 STM 93
+ 45 Eugenia 202.00 5.00 Img 34
+ 45 Eugenia 217.00 8.00 NEATM 47
+ 45 Eugenia 193.00 15.00 Img 47
+ 45 Eugenia 193.69 19.38 STM 64
+ 45 Eugenia 183.57 2.84 STM 83
+ 45 Eugenia 206.13 6.21 NEATM 72
+ 46 Hestia 131.00 13.10 STM 96
+ 46 Hestia 124.13 3.59 STM 93
+ 46 Hestia 132.83 4.53 Occ 95
+ 46 Hestia 133.25 5.65 NEATM 64
+ 46 Hestia 120.62 1.52 STM 83
+ 46 Hestia 124.00 9.64 NEATM 72
+ 47 Aglaja 158.00 15.80 STM 96
+ 47 Aglaja 126.95 7.69 STM 93
+ 47 Aglaja 140.80 6.57 NEATM 64
+ 47 Aglaja 147.05 3.57 STM 83
+ 47 Aglaja 138.00 11.10 NEATM 72
+ 48 Doris 221.80 7.50 STM 93
+ 48 Doris 211.30 16.01 STM 64
+ 48 Doris 200.27 2.75 STM 83
+ 48 Doris 223.42 4.17 NEATM 72
+ 49 Pales 149.80 3.79 STM 93
+ 49 Pales 157.50 4.88 STM 64
+ 49 Pales 148.02 2.55 STM 83
+ 50 Virginia 99.81 5.19 STM 93
+ 50 Virginia 98.96 3.04 NEATM 64
+ 50 Virginia 100.00 7.59 NEATM 72
+ 51 Nemausa 151.00 15.10 STM 96
+ 51 Nemausa 147.86 2.40 STM 93
+ 51 Nemausa 155.86 3.98 STM 64
+ 51 Nemausa 147.17 1.69 STM 83
+ 51 Nemausa 142.60 12.50 NEATM 72
+ 52 Europa 292.00 29.20 STM 96
+ 52 Europa 302.50 5.40 STM 93
+ 52 Europa 308.00 1.50 Img 34
+ 52 Europa 340.75 13.36 NEATM 64
+ 52 Europa 293.00 30.00 LC+ Occ 78
+ 52 Europa 334.55 20.94 NEATM 72
+ 52 Europa 314.00 8.00 Img-TE 91
+ 52 Europa 312.00 10.00 KOALA 91
+ 53 Kalypso 115.37 2.40 STM 93
+ 53 Kalypso 118.63 3.54 STM 64
+ 53 Kalypso 115.30 5.94 NEATM 64
+ 53 Kalypso 101.90 1.02 STM 83
+ 53 Kalypso 115.00 10.31 NEATM 72
+ 54 Alexandra 175.00 17.50 STM 96
+ 54 Alexandra 165.75 3.40 STM 93
+ 54 Alexandra 146.99 2.31 Occ 95
+ 54 Alexandra 135.00 20.00 LC+ Occ 78
+ 54 Alexandra 142.00 9.00 LC+ Occ 78
+ 54 Alexandra 144.46 1.79 STM 83
+ 54 Alexandra 142.00 14.76 NEATM 72
+ 56 Melete 113.23 1.70 STM 93
+ 56 Melete 118.97 2.83 STM 64
+ 56 Melete 125.75 5.71 NEATM 64
+ 56 Melete 105.22 1.15 STM 83
+ 56 Melete 129.07 4.40 NEATM 72
+ 57 Mnemosyne 112.58 2.79 STM 93
+ 57 Mnemosyne 116.58 2.82 STM 64
+ 57 Mnemosyne 112.39 4.92 NEATM 64
+ 57 Mnemosyne 108.76 1.41 STM 83
+ 57 Mnemosyne 122.47 4.69 NEATM 72
+ 59 Elpis 164.80 6.00 STM 93
+ 59 Elpis 173.67 4.30 Occ 95
+ 59 Elpis 156.17 2.30 STM 83
+ 59 Elpis 165.69 3.03 NEATM 72
+ 60 Echo 60.20 1.79 STM 93
+ 60 Echo 63.13 3.26 STM 64
+ 60 Echo 59.36 2.99 NEATM 64
+ 60 Echo 58.95 1.24 STM 83
+ 60 Echo 60.00 3.52 NEATM 72
+ 61 Danae 76.76 4.26 STM 94
+ 61 Danae 82.04 4.30 STM 93
+ 61 Danae 78.12 5.11 STM 64
+ 61 Danae 83.55 1.01 STM 83
+ 61 Danae 85.12 1.96 NEATM 72
+ 63 Ausonia 93.00 9.30 STM 96
+ 63 Ausonia 103.13 2.40 STM 93
+ 63 Ausonia 93.73 5.80 STM 64
+ 63 Ausonia 90.00 18.00 LC+ Occ 78
+ 63 Ausonia 87.47 1.13 STM 83
+ 63 Ausonia 102.97 2.75 NEATM 72
+ 65 Cybele 237.25 4.19 STM 93
+ 65 Cybele 272.70 10.89 TPM 12
+ 65 Cybele 231.86 9.43 STM 64
+ 65 Cybele 272.01 11.14 NEATM 64
+ 67 Asia 59.00 5.90 STM 96
+ 67 Asia 58.11 1.39 STM 93
+ 67 Asia 52.29 15.28 Occ 95
+ 67 Asia 60.18 1.90 STM 64
+ 67 Asia 66.69 3.95 NEATM 64
+ 67 Asia 61.63 0.65 STM 83
+ 67 Asia 62.70 1.76 NEATM 72
+ 68 Leto 127.00 12.69 STM 96
+ 68 Leto 116.33 4.82 STM 94
+ 68 Leto 122.56 5.30 STM 93
+ 68 Leto 128.05 4.03 STM 64
+ 68 Leto 130.90 6.32 NEATM 64
+ 68 Leto 148.00 25.00 LC+ Occ 78
+ 68 Leto 151.00 25.00 LC+ Occ 78
+ 68 Leto 121.95 1.19 STM 83
+ 68 Leto 128.85 4.17 NEATM 72
+ 69 Hesperia 138.13 4.69 STM 93
+ 69 Hesperia 145.88 4.03 STM 64
+ 69 Hesperia 136.75 3.26 NEATM 64
+ 69 Hesperia 132.74 1.52 STM 83
+ 70 Panopaea 151.00 15.10 STM 96
+ 70 Panopaea 122.16 2.29 STM 93
+ 70 Panopaea 130.88 6.53 NEATM 64
+ 70 Panopaea 131.19 1.49 Occ 95
+ 70 Panopaea 141.39 1.91 STM 83
+ 70 Panopaea 139.00 3.84 NEATM 72
+ 72 Feronia 95.00 9.50 STM 96
+ 72 Feronia 85.90 3.59 STM 93
+ 72 Feronia 90.83 4.59 NEATM 64
+ 72 Feronia 83.11 0.94 STM 83
+ 72 Feronia 79.48 1.94 NEATM 72
+ 74 Galatea 118.70 2.79 STM 93
+ 74 Galatea 127.66 3.33 STM 64
+ 74 Galatea 132.02 5.32 NEATM 64
+ 74 Galatea 113.08 2.15 STM 83
+ 76 Freia 158.67 4.96 Occ 95
+ 76 Freia 183.66 4.00 STM 93
+ 76 Freia 161.67 5.23 STM 64
+ 76 Freia 168.36 1.95 STM 83
+ 76 Freia 158.57 8.02 NEATM 72
+ 77 Frigga 66.00 6.59 STM 96
+ 77 Frigga 69.25 2.09 STM 93
+ 77 Frigga 65.69 3.18 STM 64
+ 77 Frigga 68.81 3.07 NEATM 64
+ 77 Frigga 65.81 0.86 STM 83
+ 77 Frigga 67.18 0.90 NEATM 72
+ 78 Diana 120.59 2.70 STM 93
+ 78 Diana 116.00 4.84 STM 64
+ 78 Diana 130.80 7.34 NEATM 64
+ 78 Diana 126.51 1.66 STM 83
+ 81 Terpsichore 119.08 2.09 STM 93
+ 81 Terpsichore 119.72 5.63 Occ 95
+ 81 Terpsichore 127.31 6.32 NEATM 64
+ 81 Terpsichore 122.95 1.41 STM 83
+ 81 Terpsichore 121.58 3.15 NEATM 72
+ 84 Klio 87.00 8.69 STM 96
+ 84 Klio 79.16 1.60 STM 93
+ 84 Klio 81.06 3.42 NEATM 64
+ 84 Klio 78.31 0.96 STM 83
+ 84 Klio 79.00 4.86 NEATM 72
+ 85 Io 147.00 14.69 STM 96
+ 85 Io 169.63 23.00 Occ 95
+ 85 Io 154.78 3.79 STM 93
+ 85 Io 155.24 5.09 STM 64
+ 85 Io 168.00 10.56 NEATM 64
+ 85 Io 163.00 15.00 LC+ Occ 78
+ 85 Io 150.66 1.91 STM 83
+ 85 Io 163.00 18.64 NEATM 72
+ 87 Sylvia 286.50 11.50 Img-TE 21
+ 87 Sylvia 282.00 3.50 Img 34
+ 87 Sylvia 290.30 14.46 NEATM 64
+ 87 Sylvia 262.67 3.85 STM 83
+ 87 Sylvia 288.38 7.61 NEATM 72
+ 88 Thisbe 210.00 21.00 STM 96
+ 88 Thisbe 200.58 5.00 STM 93
+ 88 Thisbe 207.88 5.88 STM 64
+ 88 Thisbe 223.19 10.22 NEATM 64
+ 88 Thisbe 204.00 14.00 LC+ Occ 78
+ 88 Thisbe 220.00 16.00 LC+ Occ 78
+ 88 Thisbe 195.58 2.72 STM 83
+ 89 Julia 167.00 16.70 STM 96
+ 89 Julia 151.46 3.09 STM 93
+ 89 Julia 134.27 4.00 STM 64
+ 89 Julia 160.83 6.53 NEATM 64
+ 89 Julia 140.00 10.00 LC+ Occ 78
+ 89 Julia 146.77 1.90 STM 83
+ 89 Julia 148.08 10.07 NEATM 72
+ 90 Antiope 120.06 4.00 STM 93
+ 90 Antiope 127.01 5.09 NEATM 64
+ 90 Antiope 123.80 2.11 STM 83
+ 90 Antiope 123.55 2.91 NEATM 72
+ 90 Antiope 118.70 2.02 NEATM 72
+ 92 Undina 124.37 2.00 Occ 95
+ 92 Undina 126.41 3.40 STM 93
+ 92 Undina 125.18 2.61 STM 64
+ 92 Undina 133.66 7.38 NEATM 64
+ 92 Undina 120.93 1.70 STM 83
+ 93 Minerva 168.00 16.79 STM 96
+ 93 Minerva 141.55 4.00 STM 93
+ 93 Minerva 156.97 2.82 STM 94
+ 93 Minerva 142.69 3.29 STM 64
+ 93 Minerva 164.75 8.34 NEATM 64
+ 93 Minerva 147.10 2.24 STM 83
+ 94 Aurora 190.00 19.00 STM 96
+ 94 Aurora 183.16 4.61 STM 64
+ 94 Aurora 206.30 8.97 NEATM 64
+ 94 Aurora 179.14 3.82 STM 83
+ 94 Aurora 187.50 7.26 NEATM 72
+ 96 Aegle 167.41 36.86 Occ 95
+ 96 Aegle 170.02 3.40 STM 93
+ 96 Aegle 156.00 9.00 Img 34
+ 96 Aegle 173.11 5.15 STM 64
+ 96 Aegle 176.25 8.68 NEATM 64
+ 96 Aegle 164.77 2.53 STM 83
+ 97 Klotho 80.00 10.00 Occ 95
+ 97 Klotho 82.83 4.50 STM 93
+ 97 Klotho 80.44 4.50 STM 94
+ 97 Klotho 81.72 3.42 STM 64
+ 97 Klotho 87.83 0.97 STM 83
+ 97 Klotho 83.00 5.09 NEATM 72
+ 98 Ianthe 104.44 1.79 STM 93
+ 98 Ianthe 101.97 3.67 STM 64
+ 98 Ianthe 114.30 5.23 NEATM 64
+ 98 Ianthe 104.23 1.28 STM 83
+ 98 Ianthe 110.87 2.31 NEATM 72
+ 105 Artemis 103.65 5.26 STM 93
+ 105 Artemis 119.08 2.79 STM 64
+ 105 Artemis 123.52 1.50 STM 83
+ 105 Artemis 119.00 17.34 NEATM 72
+ 106 Dione 140.00 14.00 STM 96
+ 106 Dione 145.61 0.82 Occ 95
+ 106 Dione 146.58 2.79 STM 93
+ 106 Dione 153.41 2.38 STM 83
+ 107 Camilla 213.00 21.29 STM 96
+ 107 Camilla 222.61 17.10 STM 93
+ 107 Camilla 208.85 10.79 STM 64
+ 107 Camilla 221.10 14.36 NEATM 64
+ 107 Camilla 214.00 28.00 LC+ Occ 78
+ 107 Camilla 200.36 3.51 STM 83
+ 107 Camilla 219.36 5.94 NEATM 72
+ 111 Ate 134.55 4.59 STM 93
+ 111 Ate 140.16 2.40 STM 64
+ 111 Ate 153.16 5.79 NEATM 64
+ 111 Ate 146.55 2.34 STM 83
+ 111 Ate 135.00 18.57 NEATM 72
+ 112 Iphigenia 72.18 4.40 STM 93
+ 112 Iphigenia 71.05 0.94 STM 83
+ 112 Iphigenia 70.37 2.90 NEATM 72
+ 117 Lomia 144.61 5.57 STM 94
+ 117 Lomia 148.71 6.59 STM 93
+ 117 Lomia 157.69 9.94 NEATM 64
+ 117 Lomia 144.91 1.86 STM 83
+ 121 Hermione 209.00 4.69 STM 93
+ 121 Hermione 178.89 7.19 Img 19
+ 121 Hermione 189.00 7.00 Img 34
+ 121 Hermione 187.00 6.00 KOALA 55
+ 121 Hermione 212.00 7.71 NEATM 64
+ 121 Hermione 194.11 2.69 STM 83
+ 126 Velleda 44.81 1.29 STM 93
+ 126 Velleda 47.47 1.53 STM 64
+ 126 Velleda 43.93 0.49 STM 83
+ 127 Johanna 123.33 4.36 STM 94
+ 127 Johanna 112.98 8.79 Occ 95
+ 127 Johanna 114.19 1.52 TPM 83
+ 128 Nemesis 188.16 4.00 STM 93
+ 128 Nemesis 187.80 4.50 STM 94
+ 128 Nemesis 190.33 7.67 NEATM 64
+ 128 Nemesis 177.94 2.06 STM 83
+ 128 Nemesis 188.00 9.00 NEATM 72
+ 129 Antigone 113.00 11.30 STM 96
+ 129 Antigone 113.00 12.00 Radar 45
+ 129 Antigone 125.00 13.00 Img-TE 54
+ 129 Antigone 118.00 19.00 LC+ Occ 78
+ 129 Antigone 119.55 1.41 TPM 83
+ 129 Antigone 129.50 14.77 NEATM 72
+ 130 Elektra 174.00 17.39 STM 96
+ 130 Elektra 182.25 11.80 STM 93
+ 130 Elektra 191.00 2.00 Img 34
+ 130 Elektra 196.00 11.00 NEATM 44
+ 130 Elektra 200.50 13.31 NEATM 64
+ 130 Elektra 191.00 14.00 LC+ Occ 78
+ 130 Elektra 183.02 2.26 STM 83
+ 130 Elektra 198.92 4.11 NEATM 72
+ 132 Aethra 42.86 1.60 STM 93
+ 132 Aethra 31.00 0.20 Occ 95
+ 132 Aethra 43.75 1.89 STM 64
+ 132 Aethra 50.20 3.64 NEATM 64
+ 132 Aethra 44.47 0.74 STM 83
+ 135 Hertha 77.58 2.69 Occ 95
+ 135 Hertha 79.23 2.00 STM 93
+ 135 Hertha 82.01 3.86 STM 94
+ 135 Hertha 77.00 7.00 LC+ Occ 78
+ 135 Hertha 72.77 0.87 STM 83
+ 135 Hertha 77.00 7.82 NEATM 72
+ 137 Meliboea 150.00 15.00 STM 96
+ 137 Meliboea 145.41 3.29 STM 93
+ 137 Meliboea 155.63 10.65 NEATM 64
+ 137 Meliboea 143.77 2.51 STM 83
+ 137 Meliboea 144.00 11.27 NEATM 72
+ 138 Tolosa 46.65 3.81 STM 64
+ 138 Tolosa 57.49 3.38 NEATM 64
+ 138 Tolosa 51.61 0.84 STM 83
+ 139 Juewa 172.00 17.20 STM 96
+ 139 Juewa 156.60 2.79 STM 93
+ 139 Juewa 149.52 5.73 STM 94
+ 139 Juewa 170.78 7.88 NEATM 64
+ 139 Juewa 166.69 2.77 STM 83
+ 139 Juewa 164.00 25.20 NEATM 72
+ 141 Lumen 120.43 4.57 STM 94
+ 141 Lumen 131.02 2.90 STM 93
+ 141 Lumen 137.38 12.05 Occ 95
+ 141 Lumen 139.83 7.90 NEATM 64
+ 141 Lumen 132.16 1.51 STM 83
+ 141 Lumen 137.10 14.56 NEATM 72
+ 144 Vibilia 131.00 13.10 STM 96
+ 144 Vibilia 142.38 2.59 STM 93
+ 144 Vibilia 142.47 4.98 Occ 95
+ 144 Vibilia 138.39 9.11 STM 64
+ 144 Vibilia 142.19 1.76 STM 83
+ 145 Adeona 151.13 3.20 STM 93
+ 145 Adeona 140.99 23.75 Occ 95
+ 145 Adeona 157.88 7.55 NEATM 64
+ 145 Adeona 141.38 5.17 STM 83
+ 145 Adeona 151.00 11.27 NEATM 72
+ 145 Adeona 151.00 8.56 NEATM 72
+ 147 Protogeneia 132.92 5.09 STM 93
+ 147 Protogeneia 122.31 2.85 STM 64
+ 147 Protogeneia 135.13 9.17 NEATM 64
+ 147 Protogeneia 108.41 1.66 STM 83
+ 148 Gallia 82.83 2.83 STM 64
+ 148 Gallia 95.65 4.52 NEATM 64
+ 148 Gallia 80.87 1.03 STM 83
+ 150 Nuwa 151.13 4.50 STM 93
+ 150 Nuwa 158.89 3.97 STM 64
+ 150 Nuwa 159.55 6.67 NEATM 64
+ 150 Nuwa 139.64 2.08 STM 83
+ 150 Nuwa 137.19 3.35 NEATM 72
+ 152 Atala 66.41 4.15 Occ 95
+ 152 Atala 65.00 8.00 LC+ Occ 78
+ 152 Atala 57.11 0.97 STM 83
+ 152 Atala 60.83 0.94 NEATM 72
+ 154 Bertha 184.92 3.59 STM 93
+ 154 Bertha 189.86 5.30 STM 64
+ 154 Bertha 186.35 8.97 NEATM 64
+ 154 Bertha 185.83 2.72 STM 83
+ 154 Bertha 188.75 4.76 NEATM 72
+ 156 Xanthippe 120.98 2.50 STM 93
+ 156 Xanthippe 122.04 3.51 STM 64
+ 156 Xanthippe 114.58 4.23 NEATM 64
+ 156 Xanthippe 115.48 1.74 STM 83
+ 156 Xanthippe 110.72 2.19 NEATM 72
+ 163 Erigone 72.62 5.69 STM 93
+ 163 Erigone 70.68 4.52 STM 64
+ 163 Erigone 77.58 4.65 NEATM 64
+ 163 Erigone 72.13 0.95 STM 83
+ 164 Eva 104.87 1.90 STM 93
+ 164 Eva 100.54 0.86 Occ 95
+ 164 Eva 97.69 1.55 STM 83
+ 164 Eva 108.95 2.97 NEATM 72
+ 165 Loreley 154.77 4.80 STM 93
+ 165 Loreley 166.00 5.50 Img 34
+ 165 Loreley 155.75 4.28 STM 64
+ 165 Loreley 171.00 8.00 LC+ Occ 78
+ 165 Loreley 173.66 2.65 STM 83
+ 168 Sibylla 148.38 4.00 STM 93
+ 168 Sibylla 154.61 2.00 STM 64
+ 168 Sibylla 155.83 10.60 NEATM 64
+ 168 Sibylla 146.47 1.74 STM 83
+ 168 Sibylla 144.00 2.86 NEATM 72
+ 173 Ino 154.10 3.50 STM 93
+ 173 Ino 171.25 7.30 NEATM 64
+ 173 Ino 160.61 3.04 STM 83
+ 179 Klytaemnestra 77.69 1.39 STM 93
+ 179 Klytaemnestra 70.73 3.91 Occ 95
+ 179 Klytaemnestra 80.41 2.73 STM 64
+ 179 Klytaemnestra 72.79 0.80 NEATM 72
+ 185 Eunike 157.50 2.59 STM 93
+ 185 Eunike 167.72 2.82 STM 83
+ 185 Eunike 158.52 6.23 NEATM 72
+ 185 Eunike 155.46 5.26 NEATM 72
+ 187 Lamberta 130.39 2.70 STM 93
+ 187 Lamberta 131.41 4.65 STM 64
+ 187 Lamberta 132.07 7.75 NEATM 64
+ 187 Lamberta 130.44 1.89 STM 83
+ 187 Lamberta 133.00 2.50 NEATM 72
+ 189 Phthia 42.00 4.19 STM 96
+ 189 Phthia 37.65 2.00 STM 93
+ 189 Phthia 40.84 3.22 NEATM 64
+ 189 Phthia 42.47 0.67 STM 83
+ 189 Phthia 40.56 0.39 NEATM 72
+ 192 Nausikaa 99.00 9.89 STM 96
+ 192 Nausikaa 86.00 4.00 Img 34
+ 192 Nausikaa 90.30 2.49 STM 64
+ 192 Nausikaa 89.44 1.14 STM 83
+ 192 Nausikaa 93.00 6.80 NEATM 72
+ 192 Nausikaa 93.00 8.36 NEATM 72
+ 194 Prokne 192.00 19.20 STM 96
+ 194 Prokne 168.41 4.09 STM 93
+ 194 Prokne 182.16 8.80 NEATM 64
+ 194 Prokne 166.72 1.89 STM 83
+ 194 Prokne 169.00 14.46 NEATM 72
+ 196 Philomela 161.00 16.10 STM 96
+ 196 Philomela 136.38 6.30 STM 93
+ 196 Philomela 146.64 7.55 NEATM 64
+ 196 Philomela 141.77 2.01 STM 83
+ 196 Philomela 158.05 6.36 NEATM 72
+ 200 Dynamene 128.36 2.09 STM 93
+ 200 Dynamene 125.11 5.90 STM 64
+ 200 Dynamene 135.86 6.90 NEATM 64
+ 200 Dynamene 129.19 3.64 Occ 95
+ 200 Dynamene 133.83 1.72 STM 83
+ 200 Dynamene 130.52 2.88 NEATM 72
+ 204 Kallisto 50.00 5.00 STM 96
+ 204 Kallisto 48.56 5.50 STM 94
+ 204 Kallisto 48.56 1.20 STM 93
+ 204 Kallisto 50.70 1.66 Occ 95
+ 204 Kallisto 47.99 2.40 STM 64
+ 204 Kallisto 54.15 2.41 NEATM 64
+ 204 Kallisto 51.02 0.60 STM 83
+ 209 Dido 155.08 6.63 Occ 95
+ 209 Dido 135.14 8.35 STM 64
+ 209 Dido 156.92 9.36 NEATM 64
+ 209 Dido 133.42 2.05 STM 83
+ 210 Isabella 86.65 2.29 STM 93
+ 210 Isabella 66.83 1.11 Occ 95
+ 210 Isabella 89.04 8.35 STM 64
+ 210 Isabella 85.97 3.82 NEATM 64
+ 210 Isabella 69.58 0.92 STM 83
+ 211 Isolda 166.00 16.60 STM 96
+ 211 Isolda 143.19 5.09 STM 93
+ 211 Isolda 142.57 4.36 STM 64
+ 211 Isolda 150.94 7.50 NEATM 64
+ 211 Isolda 153.49 1.71 STM 83
+ 211 Isolda 143.00 21.62 NEATM 72
+ 212 Medea 136.11 2.50 STM 93
+ 212 Medea 142.55 4.00 STM 64
+ 212 Medea 146.24 7.90 NEATM 64
+ 212 Medea 153.72 2.88 STM 83
+ 216 Kleopatra 135.07 2.09 STM 93
+ 216 Kleopatra 108.50 15.00 Radar 4
+ 216 Kleopatra 119.55 3.21 STM 64
+ 216 Kleopatra 140.74 7.78 NEATM 64
+ 216 Kleopatra 135.00 4.80 Img 77
+ 216 Kleopatra 121.55 1.60 STM 83
+ 216 Kleopatra 138.00 19.37 NEATM 72
+ 217 Eudora 66.23 2.29 STM 93
+ 217 Eudora 70.76 2.88 STM 64
+ 217 Eudora 68.83 2.54 NEATM 64
+ 217 Eudora 67.80 1.17 STM 83
+ 217 Eudora 69.73 1.21 NEATM 72
+ 221 Eos 95.00 9.50 STM 96
+ 221 Eos 103.87 3.59 STM 93
+ 221 Eos 100.84 4.13 STM 64
+ 221 Eos 113.26 7.00 NEATM 64
+ 221 Eos 107.73 1.51 STM 83
+ 221 Eos 95.77 2.82 NEATM 72
+ 230 Athamantis 125.00 12.50 STM 96
+ 230 Athamantis 108.98 2.00 STM 93
+ 230 Athamantis 105.04 10.00 Occ 95
+ 230 Athamantis 118.59 5.23 NEATM 64
+ 230 Athamantis 108.27 1.17 STM 83
+ 230 Athamantis 109.00 13.02 NEATM 72
+ 234 Barbara 43.75 1.00 STM 93
+ 234 Barbara 46.36 5.23 Occ 95
+ 234 Barbara 44.59 0.30 NEATM 52
+ 234 Barbara 45.27 1.42 STM 64
+ 234 Barbara 51.20 2.52 NEATM 64
+ 234 Barbara 47.79 0.68 STM 83
+ 238 Hypatia 154.00 15.39 STM 96
+ 238 Hypatia 145.91 7.65 Occ 95
+ 238 Hypatia 148.49 3.59 STM 93
+ 238 Hypatia 149.21 14.17 STM 64
+ 238 Hypatia 143.97 1.54 STM 83
+ 238 Hypatia 146.50 8.68 NEATM 72
+ 240 Vanadis 103.90 2.50 STM 93
+ 240 Vanadis 93.08 3.57 Occ 95
+ 240 Vanadis 99.26 10.01 STM 64
+ 240 Vanadis 90.12 1.22 STM 83
+ 240 Vanadis 91.37 2.65 NEATM 72
+ 241 Germania 200.00 20.00 STM 96
+ 241 Germania 183.80 112.59 Occ 95
+ 241 Germania 168.89 3.09 STM 93
+ 241 Germania 171.42 7.30 NEATM 64
+ 241 Germania 181.57 2.93 STM 83
+ 241 Germania 179.96 5.98 NEATM 72
+ 241 Germania 186.27 4.34 NEATM 72
+ 243 Ida 31.29 1.20 IAU 75
+ 253 Mathilde 53.00 2.59 IAU 75
+ 259 Aletheia 178.60 6.80 STM 93
+ 259 Aletheia 190.50 6.00 Img 34
+ 259 Aletheia 195.74 1.83 STM 64
+ 259 Aletheia 198.47 14.97 NEATM 64
+ 259 Aletheia 182.86 3.49 NEATM 72
+ 266 Aline 109.08 2.90 STM 93
+ 266 Aline 112.86 2.78 STM 64
+ 266 Aline 125.19 8.40 NEATM 64
+ 266 Aline 101.98 1.39 STM 83
+ 266 Aline 109.00 18.32 NEATM 72
+ 268 Adorea 139.88 5.19 STM 93
+ 268 Adorea 145.55 5.03 Occ 95
+ 268 Adorea 143.58 2.70 STM 64
+ 268 Adorea 136.35 1.76 STM 83
+ 268 Adorea 140.58 3.18 NEATM 72
+ 283 Emma 148.05 4.59 STM 93
+ 283 Emma 141.00 6.00 NEATM 44
+ 283 Emma 145.69 5.88 NEATM 64
+ 283 Emma 122.06 1.38 STM 83
+ 283 Emma 134.69 2.34 NEATM 72
+ 304 Olga 67.86 2.09 STM 93
+ 304 Olga 69.19 1.79 Occ 95
+ 304 Olga 71.13 2.54 STM 64
+ 304 Olga 77.58 5.36 NEATM 64
+ 304 Olga 71.26 1.29 STM 83
+ 304 Olga 68.87 2.26 NEATM 72
+ 306 Unitas 46.70 2.29 STM 93
+ 306 Unitas 51.59 1.44 Occ 95
+ 306 Unitas 56.00 1.00 TPM 57
+ 306 Unitas 48.24 1.38 STM 64
+ 306 Unitas 55.47 2.80 NEATM 64
+ 306 Unitas 56.00 1.00 LC+ Occ 78
+ 306 Unitas 53.00 5.00 LC+ Occ 78
+ 306 Unitas 51.59 6.32 NEATM 72
+ 322 Phaeo 70.83 4.90 STM 93
+ 322 Phaeo 67.33 4.01 STM 64
+ 322 Phaeo 74.41 3.18 NEATM 64
+ 322 Phaeo 71.98 0.93 STM 83
+ 322 Phaeo 77.08 1.00 NEATM 72
+ 322 Phaeo 65.08 1.45 NEATM 72
+ 324 Bamberga 252.00 25.20 STM 96
+ 324 Bamberga 229.44 7.40 STM 93
+ 324 Bamberga 248.16 8.81 STM 64
+ 324 Bamberga 239.97 7.71 NEATM 64
+ 324 Bamberga 229.69 3.30 STM 83
+ 324 Bamberga 229.00 8.14 NEATM 72
+ 328 Gudrun 122.91 5.19 STM 93
+ 328 Gudrun 126.69 4.38 STM 64
+ 328 Gudrun 119.23 4.90 NEATM 64
+ 328 Gudrun 125.01 1.97 STM 83
+ 328 Gudrun 116.13 4.21 NEATM 72
+ 334 Chicago 174.02 7.11 Occ 95
+ 334 Chicago 158.55 8.89 STM 93
+ 334 Chicago 151.44 12.85 STM 64
+ 334 Chicago 182.25 19.87 NEATM 64
+ 334 Chicago 167.21 2.10 STM 83
+ 334 Chicago 174.10 12.79 NEATM 72
+ 337 Devosa 59.11 2.29 STM 93
+ 337 Devosa 62.22 2.23 STM 64
+ 337 Devosa 66.62 0.98 STM 83
+ 344 Desiderata 132.27 5.50 STM 93
+ 344 Desiderata 132.88 2.05 STM 83
+ 344 Desiderata 125.97 1.38 NEATM 72
+ 345 Tercidina 94.12 4.90 STM 93
+ 345 Tercidina 99.30 1.39 Occ 95
+ 345 Tercidina 93.80 5.88 STM 64
+ 345 Tercidina 106.19 7.80 NEATM 64
+ 345 Tercidina 99.23 0.99 STM 83
+ 345 Tercidina 99.00 11.47 NEATM 72
+ 346 Hermentaria 90.62 2.45 STM 64
+ 346 Hermentaria 101.29 3.32 NEATM 64
+ 346 Hermentaria 93.01 0.89 STM 83
+ 346 Hermentaria 91.80 1.41 NEATM 72
+ 349 Dembowska 145.00 14.50 STM 96
+ 349 Dembowska 139.77 4.30 STM 93
+ 349 Dembowska 121.83 3.17 STM 64
+ 349 Dembowska 135.72 5.07 NEATM 64
+ 349 Dembowska 164.64 1.84 STM 83
+ 354 Eleonora 154.00 15.39 STM 96
+ 354 Eleonora 155.16 8.50 STM 93
+ 354 Eleonora 155.33 5.15 STM 64
+ 354 Eleonora 165.19 7.55 NEATM 64
+ 354 Eleonora 149.61 1.98 STM 83
+ 354 Eleonora 165.00 15.60 NEATM 72
+ 356 Liguria 155.00 15.50 STM 96
+ 356 Liguria 126.59 10.60 Occ 95
+ 356 Liguria 131.30 2.59 STM 93
+ 356 Liguria 135.69 5.07 STM 64
+ 356 Liguria 135.08 7.07 NEATM 64
+ 356 Liguria 136.55 1.88 STM 83
+ 356 Liguria 131.00 9.68 NEATM 72
+ 365 Corduba 105.91 3.00 STM 93
+ 365 Corduba 100.80 3.86 STM 64
+ 365 Corduba 109.44 4.98 NEATM 64
+ 365 Corduba 103.90 1.23 STM 83
+ 372 Palma 188.61 3.20 STM 93
+ 372 Palma 194.00 6.00 Occ 95
+ 372 Palma 192.82 4.73 STM 64
+ 372 Palma 187.00 20.00 LC+ Occ 78
+ 372 Palma 198.00 26.00 LC+ Occ 78
+ 372 Palma 190.36 6.63 NEATM 72
+ 375 Ursula 183.47 10.46 Occ 95
+ 375 Ursula 193.63 2.52 STM 83
+ 379 Huenna 92.33 1.70 STM 93
+ 379 Huenna 98.00 3.00 NEATM 44
+ 379 Huenna 82.01 2.55 STM 64
+ 379 Huenna 82.34 1.08 STM 83
+ 379 Huenna 87.47 2.35 NEATM 72
+ 381 Myrrha 120.58 2.70 STM 93
+ 381 Myrrha 130.58 2.75 Occ 95
+ 381 Myrrha 120.30 3.45 STM 64
+ 381 Myrrha 136.57 7.13 NEATM 64
+ 381 Myrrha 117.12 1.58 STM 83
+ 381 Myrrha 129.00 9.94 NEATM 72
+ 381 Myrrha 129.00 6.01 NEATM 72
+ 386 Siegena 165.00 2.70 STM 93
+ 386 Siegena 173.99 12.89 Occ 95
+ 386 Siegena 186.50 9.51 NEATM 64
+ 387 Aquitania 100.51 2.90 STM 93
+ 387 Aquitania 101.48 5.59 STM 64
+ 387 Aquitania 107.59 16.76 NEATM 64
+ 387 Aquitania 105.05 1.34 STM 83
+ 404 Arsinoe 101.00 10.10 STM 96
+ 404 Arsinoe 97.70 1.50 STM 93
+ 404 Arsinoe 98.75 3.20 Occ 95
+ 404 Arsinoe 98.44 4.17 STM 64
+ 404 Arsinoe 102.30 4.53 NEATM 64
+ 404 Arsinoe 92.98 1.14 STM 83
+ 404 Arsinoe 98.69 3.45 NEATM 72
+ 405 Thia 124.90 2.29 STM 93
+ 405 Thia 129.60 3.97 STM 64
+ 405 Thia 134.89 6.73 NEATM 64
+ 405 Thia 113.31 1.72 STM 83
+ 405 Thia 125.00 17.43 NEATM 72
+ 409 Aspasia 161.61 6.80 STM 93
+ 409 Aspasia 180.00 2.00 Img-TE 54
+ 409 Aspasia 174.52 7.40 NEATM 64
+ 409 Aspasia 173.00 17.00 LC+ Occ 78
+ 409 Aspasia 177.00 0.88 NEATM 72
+ 410 Chloris 135.00 13.50 STM 96
+ 410 Chloris 123.56 5.40 STM 93
+ 410 Chloris 118.01 5.23 STM 64
+ 410 Chloris 124.25 5.48 NEATM 64
+ 410 Chloris 106.68 1.44 STM 83
+ 410 Chloris 118.93 2.85 NEATM 72
+ 416 Vaticana 85.44 5.86 STM 94
+ 416 Vaticana 85.47 1.70 STM 93
+ 416 Vaticana 83.55 3.02 STM 64
+ 416 Vaticana 92.13 4.65 NEATM 64
+ 416 Vaticana 88.80 1.26 STM 83
+ 419 Aurelia 129.00 4.09 STM 93
+ 419 Aurelia 122.37 1.90 STM 83
+ 420 Bertholda 138.85 2.41 STM 94
+ 420 Bertholda 141.25 6.90 STM 93
+ 420 Bertholda 143.97 2.51 Occ 95
+ 420 Bertholda 139.32 6.01 STM 64
+ 420 Bertholda 141.89 2.58 STM 83
+ 420 Bertholda 144.00 5.67 NEATM 72
+ 423 Diotima 208.77 4.90 STM 93
+ 423 Diotima 208.50 6.00 Img 34
+ 423 Diotima 211.02 4.76 STM 64
+ 423 Diotima 229.52 9.97 NEATM 64
+ 423 Diotima 226.91 3.10 STM 83
+ 423 Diotima 177.25 6.30 NEATM 72
+ 433 Eros 16.20 0.16 FlyBy 5
+ 442 Eichsfeldia 66.73 1.39 STM 93
+ 442 Eichsfeldia 68.66 1.98 STM 64
+ 442 Eichsfeldia 65.91 2.56 NEATM 64
+ 442 Eichsfeldia 65.12 0.82 STM 83
+ 442 Eichsfeldia 63.20 1.22 NEATM 72
+ 444 Gyptis 166.00 16.60 STM 96
+ 444 Gyptis 163.08 10.00 STM 93
+ 444 Gyptis 159.33 13.67 STM 64
+ 444 Gyptis 167.72 6.77 NEATM 64
+ 444 Gyptis 166.02 6.65 STM 83
+ 444 Gyptis 163.00 12.60 NEATM 72
+ 444 Gyptis 163.00 22.13 NEATM 72
+ 445 Edna 89.30 4.53 STM 94
+ 445 Edna 87.16 2.09 STM 93
+ 445 Edna 81.40 4.34 STM 64
+ 445 Edna 98.18 5.30 NEATM 64
+ 445 Edna 89.16 1.42 STM 83
+ 449 Hamburga 68.75 2.52 Occ 95
+ 449 Hamburga 76.58 2.86 STM 64
+ 449 Hamburga 63.61 0.75 STM 83
+ 451 Patientia 224.96 4.40 STM 93
+ 451 Patientia 221.52 7.28 STM 64
+ 451 Patientia 242.08 14.11 NEATM 64
+ 451 Patientia 234.91 2.66 STM 83
+ 451 Patientia 251.80 5.44 NEATM 72
+ 455 Bruchsalia 105.00 10.50 STM 96
+ 455 Bruchsalia 84.41 5.00 STM 93
+ 455 Bruchsalia 92.08 3.36 STM 64
+ 455 Bruchsalia 99.65 4.44 NEATM 64
+ 455 Bruchsalia 83.45 1.00 STM 83
+ 469 Argentina 125.56 5.59 STM 93
+ 469 Argentina 131.52 4.00 STM 64
+ 469 Argentina 137.50 8.15 NEATM 64
+ 469 Argentina 123.11 1.65 STM 83
+ 469 Argentina 121.59 4.61 NEATM 72
+ 471 Papagena 144.00 14.39 STM 96
+ 471 Papagena 134.19 5.19 STM 93
+ 471 Papagena 121.45 5.03 Occ 95
+ 471 Papagena 121.83 4.63 STM 64
+ 471 Papagena 138.53 6.23 NEATM 64
+ 471 Papagena 137.00 25.00 LC+ Occ 78
+ 471 Papagena 117.44 1.50 STM 83
+ 481 Emita 113.23 3.07 STM 93
+ 481 Emita 103.52 1.90 STM 83
+ 485 Genua 63.88 2.90 STM 93
+ 485 Genua 70.76 13.10 Occ 95
+ 485 Genua 54.09 1.52 STM 64
+ 485 Genua 54.70 0.72 STM 83
+ 488 Kreusa 150.13 6.40 STM 93
+ 488 Kreusa 155.99 6.94 STM 64
+ 488 Kreusa 161.58 7.38 NEATM 64
+ 488 Kreusa 172.55 2.54 STM 83
+ 488 Kreusa 150.00 11.32 NEATM 72
+ 490 Veritas 108.09 4.59 Occ 95
+ 490 Veritas 115.55 5.50 STM 93
+ 490 Veritas 102.93 5.26 STM 64
+ 490 Veritas 111.98 5.07 NEATM 64
+ 490 Veritas 112.81 1.66 STM 83
+ 491 Carina 97.29 3.79 STM 93
+ 491 Carina 106.05 5.90 NEATM 64
+ 491 Carina 97.15 1.13 STM 83
+ 491 Carina 94.00 2.68 NEATM 72
+ 503 Evelyn 81.68 4.90 STM 93
+ 503 Evelyn 83.36 4.90 STM 64
+ 503 Evelyn 83.56 9.89 NEATM 64
+ 503 Evelyn 90.18 1.04 STM 83
+ 505 Cava 100.55 1.24 TPM 83
+ 505 Cava 105.00 4.48 NEATM 72
+ 508 Princetonia 136.14 5.44 STM 94
+ 508 Princetonia 142.35 2.59 STM 93
+ 508 Princetonia 133.75 5.71 STM 64
+ 508 Princetonia 144.99 6.77 NEATM 64
+ 508 Princetonia 139.42 2.30 STM 83
+ 511 Davida 323.00 32.29 STM 96
+ 511 Davida 316.00 5.00 Img 34
+ 511 Davida 289.00 21.00 Img-TE 39
+ 511 Davida 314.73 12.30 STM 64
+ 511 Davida 290.98 4.19 STM 83
+ 511 Davida 290.44 2.26 NEATM 72
+ 516 Amherstia 64.00 6.40 STM 96
+ 516 Amherstia 73.09 1.70 STM 93
+ 516 Amherstia 76.86 2.32 STM 64
+ 516 Amherstia 66.26 0.62 STM 83
+ 516 Amherstia 74.27 2.49 NEATM 72
+ 532 Herculina 220.00 22.00 STM 96
+ 532 Herculina 222.38 4.19 STM 93
+ 532 Herculina 217.33 9.10 STM 64
+ 532 Herculina 216.77 2.96 STM 83
+ 532 Herculina 203.00 14.23 NEATM 72
+ 536 Merapi 153.77 2.98 Occ 95
+ 536 Merapi 154.50 2.20 STM 94
+ 536 Merapi 151.41 9.00 STM 93
+ 536 Merapi 157.80 8.10 STM 64
+ 536 Merapi 167.21 13.92 NEATM 64
+ 554 Peraga 101.00 10.10 STM 96
+ 554 Peraga 95.87 4.09 STM 93
+ 554 Peraga 93.93 3.41 STM 64
+ 554 Peraga 96.98 1.16 STM 83
+ 582 Olympia 48.93 5.05 STM 94
+ 582 Olympia 43.40 2.59 STM 93
+ 582 Olympia 42.06 2.26 STM 64
+ 582 Olympia 47.36 3.13 NEATM 64
+ 582 Olympia 42.65 0.38 STM 83
+ 582 Olympia 43.49 0.50 NEATM 72
+ 584 Semiramis 51.00 5.09 STM 96
+ 584 Semiramis 54.00 1.39 STM 93
+ 584 Semiramis 47.72 1.76 STM 64
+ 584 Semiramis 52.63 0.52 STM 83
+ 584 Semiramis 48.68 4.26 NEATM 72
+ 602 Marianna 137.00 13.69 STM 96
+ 602 Marianna 124.72 2.20 STM 93
+ 602 Marianna 130.05 5.52 NEATM 64
+ 602 Marianna 129.86 1.92 STM 83
+ 602 Marianna 126.81 2.05 NEATM 72
+ 604 Tekmessa 65.16 4.09 STM 93
+ 604 Tekmessa 64.26 4.01 STM 64
+ 604 Tekmessa 66.19 4.61 NEATM 64
+ 604 Tekmessa 59.75 1.86 STM 83
+ 604 Tekmessa 67.16 1.38 NEATM 72
+ 617 Patroclus 158.00 15.80 STM 96
+ 617 Patroclus 140.91 4.69 STM 93
+ 617 Patroclus 140.60 4.00 NEATM 9
+ 617 Patroclus 137.60 1.90 STM 64
+ 617 Patroclus 164.22 5.77 NEATM 64
+ 617 Patroclus 145.00 15.00 NEATM 68
+ 617 Patroclus 140.85 3.36 STM 83
+ 624 Hektor 233.00 23.29 STM 96
+ 624 Hektor 203.00 3.59 NEATM 9
+ 624 Hektor 239.19 2.40 NEATM 9
+ 624 Hektor 230.99 3.94 TPM 83
+ 626 Notburga 100.73 2.00 STM 93
+ 626 Notburga 95.98 4.15 STM 64
+ 626 Notburga 101.41 3.89 NEATM 64
+ 626 Notburga 90.44 2.20 NEATM 72
+ 654 Zelinda 127.40 3.90 STM 93
+ 654 Zelinda 129.05 3.79 STM 94
+ 654 Zelinda 119.27 17.53 Occ 95
+ 654 Zelinda 138.03 4.63 STM 64
+ 654 Zelinda 134.27 6.28 NEATM 64
+ 654 Zelinda 123.58 1.46 STM 83
+ 654 Zelinda 127.00 20.46 NEATM 72
+ 665 Sabine 51.09 2.40 STM 93
+ 665 Sabine 52.95 1.92 STM 64
+ 665 Sabine 53.25 3.30 NEATM 64
+ 665 Sabine 53.00 0.77 STM 83
+ 675 Ludmilla 67.66 0.94 STM 83
+ 679 Pax 71.00 7.09 STM 96
+ 679 Pax 62.00 4.00 Img 34
+ 679 Pax 68.23 2.86 NEATM 64
+ 679 Pax 60.65 0.64 STM 83
+ 679 Pax 64.77 1.14 NEATM 72
+ 679 Pax 68.81 0.73 NEATM 72
+ 680 Genoveva 83.91 1.39 STM 93
+ 680 Genoveva 87.51 2.58 STM 64
+ 680 Genoveva 82.63 1.58 STM 83
+ 680 Genoveva 85.86 1.51 NEATM 72
+ 690 Wratislavia 134.64 3.79 STM 93
+ 690 Wratislavia 137.08 3.03 STM 64
+ 690 Wratislavia 157.74 9.19 NEATM 64
+ 690 Wratislavia 158.11 2.48 STM 83
+ 702 Alauda 194.72 3.20 STM 93
+ 702 Alauda 175.00 6.00 Img 34
+ 702 Alauda 190.58 2.65 STM 83
+ 702 Alauda 201.96 4.63 NEATM 72
+ 704 Interamnia 338.00 33.79 STM 96
+ 704 Interamnia 316.61 5.19 STM 93
+ 704 Interamnia 319.00 9.00 Img-TE 54
+ 704 Interamnia 316.25 3.24 STM 83
+ 704 Interamnia 312.00 34.52 NEATM 72
+ 704 Interamnia 312.00 19.72 NEATM 72
+ 720 Bohlinia 34.00 3.40 STM 96
+ 720 Bohlinia 33.72 1.39 STM 93
+ 720 Bohlinia 40.20 3.13 NEATM 64
+ 720 Bohlinia 34.18 0.49 STM 83
+ 735 Marghanna 74.31 1.60 STM 93
+ 735 Marghanna 76.90 3.72 NEATM 64
+ 735 Marghanna 70.63 1.23 NEATM 72
+ 735 Marghanna 70.76 1.26 NEATM 72
+ 739 Mandeville 107.52 2.50 STM 93
+ 739 Mandeville 104.87 4.28 STM 64
+ 739 Mandeville 106.87 8.97 NEATM 64
+ 739 Mandeville 103.70 2.28 NEATM 72
+ 747 Winchester 171.71 3.09 STM 93
+ 747 Winchester 159.13 5.15 STM 64
+ 747 Winchester 185.97 10.40 NEATM 64
+ 747 Winchester 171.00 15.00 LC+ Occ 78
+ 747 Winchester 170.08 2.51 STM 83
+ 751 Faina 110.50 4.30 STM 93
+ 751 Faina 109.58 7.90 STM 64
+ 751 Faina 106.80 1.27 STM 83
+ 751 Faina 106.29 1.63 NEATM 72
+ 758 Mancunia 85.48 6.69 STM 93
+ 758 Mancunia 85.45 3.44 STM 64
+ 758 Mancunia 88.08 1.07 STM 83
+ 758 Mancunia 85.00 9.35 NEATM 72
+ 760 Massinga 71.29 1.90 STM 93
+ 760 Massinga 72.65 4.73 NEATM 64
+ 760 Massinga 70.02 1.25 STM 83
+ 762 Pulcova 137.08 3.20 STM 93
+ 762 Pulcova 143.00 2.00 NEATM 47
+ 762 Pulcova 147.75 8.35 NEATM 64
+ 762 Pulcova 129.21 1.78 STM 83
+ 762 Pulcova 141.72 1.53 NEATM 72
+ 769 Tatjana 106.44 2.59 STM 93
+ 769 Tatjana 110.22 1.36 STM 64
+ 769 Tatjana 113.80 4.42 NEATM 64
+ 769 Tatjana 102.30 1.40 STM 83
+ 769 Tatjana 102.79 1.89 NEATM 72
+ 776 Berbericia 151.16 4.00 STM 93
+ 776 Berbericia 155.80 5.13 STM 64
+ 776 Berbericia 165.86 10.38 NEATM 64
+ 776 Berbericia 149.75 1.78 STM 83
+ 776 Berbericia 151.11 4.09 NEATM 72
+ 784 Pickeringia 89.41 3.40 STM 93
+ 784 Pickeringia 84.41 8.64 STM 64
+ 784 Pickeringia 89.66 1.17 NEATM 72
+ 784 Pickeringia 74.88 0.92 STM 83
+ 786 Bredichina 91.59 6.19 STM 93
+ 786 Bredichina 88.48 4.46 NEATM 64
+ 786 Bredichina 98.72 1.00 NEATM 72
+ 786 Bredichina 108.86 3.58 NEATM 72
+ 790 Pretoria 176.00 17.60 STM 96
+ 790 Pretoria 151.47 2.82 Occ 95
+ 790 Pretoria 170.36 2.59 STM 93
+ 790 Pretoria 165.44 9.32 STM 64
+ 790 Pretoria 173.41 7.38 NEATM 64
+ 790 Pretoria 144.85 4.94 STM 83
+ 804 Hispania 141.00 14.10 STM 96
+ 804 Hispania 157.58 5.80 STM 93
+ 804 Hispania 147.72 6.80 STM 64
+ 804 Hispania 147.00 1.92 STM 83
+ 804 Hispania 146.97 3.40 NEATM 72
+ 809 Lundia 10.26 0.07 NEATM 72
+ 854 Frostia 15.19 6.19 PheMu 24
+ 854 Frostia 9.48 0.65 STM 83
+ 854 Frostia 7.84 0.20 NEATM 72
+ 895 Helio 141.89 3.50 STM 93
+ 895 Helio 150.92 2.52 STM 64
+ 895 Helio 155.11 7.63 NEATM 64
+ 914 Palisana 80.45 1.91 STM 94
+ 914 Palisana 76.61 1.70 STM 93
+ 914 Palisana 91.15 2.58 Occ 95
+ 914 Palisana 76.50 5.00 Img 34
+ 914 Palisana 83.63 3.76 NEATM 64
+ 914 Palisana 77.00 13.13 NEATM 72
+ 949 Hel 69.16 1.39 STM 93
+ 949 Hel 58.31 1.70 STM 64
+ 949 Hel 60.97 0.74 STM 83
+ 949 Hel 66.73 1.23 NEATM 72
+ 1013 Tombecka 31.93 1.50 STM 93
+ 1013 Tombecka 37.29 1.78 STM 64
+ 1013 Tombecka 45.20 9.13 NEATM 64
+ 1013 Tombecka 36.61 0.58 STM 83
+ 1013 Tombecka 34.06 0.43 NEATM 72
+ 1015 Christa 96.94 3.59 STM 93
+ 1015 Christa 99.70 3.92 STM 64
+ 1015 Christa 104.06 4.34 NEATM 64
+ 1015 Christa 101.04 1.37 STM 83
+ 1015 Christa 96.58 2.90 NEATM 72
+ 1021 Flammario 99.38 2.29 STM 93
+ 1021 Flammario 107.58 5.05 NEATM 64
+ 1021 Flammario 97.37 1.23 STM 83
+ 1021 Flammario 98.01 8.38 NEATM 72
+ 1036 Ganymed 31.65 2.79 STM 93
+ 1036 Ganymed 35.00 0.78 STM 83
+ 1089 Tama 12.92 0.60 STM 93
+ 1089 Tama 12.10 1.00 PheMu 24
+ 1089 Tama 14.35 0.44 STM 64
+ 1089 Tama 13.85 0.51 NEATM 64
+ 1089 Tama 13.31 0.19 STM 83
+ 1171 Rusthawelia 66.88 3.60 STM 94
+ 1171 Rusthawelia 70.12 2.29 STM 93
+ 1171 Rusthawelia 77.88 6.40 NEATM 64
+ 1171 Rusthawelia 72.08 1.19 STM 83
+ 1171 Rusthawelia 70.22 1.55 NEATM 72
+ 1313 Berna 17.29 7.09 PheMu 24
+ 1313 Berna 14.27 0.36 STM 83
+ 1313 Berna 13.50 0.31 NEATM 72
+ 1669 Dagmar 35.77 2.40 STM 93
+ 1669 Dagmar 41.47 2.85 NEATM 64
+ 1669 Dagmar 43.00 0.77 STM 83
+ 1669 Dagmar 45.18 0.62 NEATM 72
+ 1686 De Sitter 33.09 4.32 STM 94
+ 1686 De Sitter 32.65 0.77 STM 83
+ 1686 De Sitter 29.65 0.29 NEATM 72
+ 3169 Ostro 5.15 0.08 NEATM 72
+ 3671 Dionysus 1.00 0.20 STM 3
+ 3671 Dionysus 0.89 0.11 NEATM 71
+ 3749 Balam 7.00 3.00 H-mag 7
+ 4492 Debussy 10.89 4.40 PheMu 24
+ 4492 Debussy 14.75 0.91 STM 83
+ 4492 Debussy 17.36 0.70 NEATM 72
+ 5381 Sekhmet 1.00 0.10 Radar 10
+ 25143 Itokawa 0.32 0.01 FlyBy 36
+ 26308 1998 SM165 290.00 36.00 NEATM 30
+ 26308 1998 SM165 279.79 29.29 NEATM 51
+ 35107 1991 VH 1.14 0.11 PheMu 31
+ 35107 1991 VH 1.12 0.21 NEATM 71
+ 42355 Typhon 173.80 16.79 NEATM 51
+ 42355 Typhon 185.00 7.00 STM 87
+ 47171 1999 TC36 405.00 55.00 NEATM 29
+ 47171 1999 TC36 414.60 38.59 NEATM 51
+ 47171 1999 TC36 393.10 26.00 STM 86
+ 50000 Quaoar 1260.00 190.00 Img-PSF 13
+ 50000 Quaoar 844.40 198.14 NEATM 51
+ 50000 Quaoar 908.00 115.00 NEATM 53
+ 50000 Quaoar 890.70 70.00 Img-PSF 65
+ 58534 Logos 110.00 40.00 H-mag 14
+ 65489 Ceto 218.00 20.00 NEATM 40
+ 65489 Ceto 229.69 18.39 NEATM 51
+ 65489 Ceto 281.00 11.00 STM 87
+ 65803 Didymos 0.80 0.08 Radar 66
+ 66063 1998 RO1 0.80 0.15 Radar 89
+ 66063 1998 RO1 0.56 0.16 NEATM 43
+ 66391 1999 KW4 1.32 0.03 Radar 37
+ 66652 Borasisi 447.00 90.00 H-mag 16
+ 88611 2001 QT297 225.00 75.00 H-mag 90
+ 90482 Orcus 946.29 73.19 NEATM 51
+ 90482 Orcus 940.00 70.00 NEATM 63
+ 90482 Orcus 850.00 85.00 TPM 60
+ 134340 Pluto 2390.00 10.00 IAU 75
+ 134860 2000 OJ67 190.00 65.00 H-mag 90
+ 136108 Haumea 1350.00 100.00 H-mag 27
+ 136108 Haumea 1151.00 59.90 NEATM 51
+ 136108 Haumea 1313.00 131.00 NEATM 59
+ 136199 Eris 2400.00 100.00 Img-PSF 28
+ 136199 Eris 2657.00 212.35 NEATM 51
+ 136199 Eris 2326.00 12.00 Occ 82
+ 136199 Eris 2454.00 117.00 STM 87
+ 136617 1994 CC 0.62 0.06 Radar 80
+ 153591 2001 SN263 2.59 0.20 H-mag 70
+ 164121 2003 YT1 1.10 0.20 Radar 15
+ 164121 2003 YT1 1.05 0.30 Radar 26
+ 175706 1996 FG3 1.69 0.15 TPM 81
+ 175706 1996 FG3 1.83 0.50 NEATM 71
+ 175706 1996 FG3 1.83 0.28 NEATM 88
+ 185851 2000 DP107 1.63 0.35 Radar 8
+ 276049 2002 CE26 3.46 0.35 Radar 33
+ 311066 2004 DC 0.34 0.03 Radar 50
+ 1999 OJ4 130.00 45.00 H-mag 90
+ 2000 CF105 188.00 38.00 Img-PSF 6
+ 2000 QL251 150.00 50.00 H-mag 90
+ 2000 UG11 0.30 0.10 H-mag 90
+ 2001 QC298 244.00 55.00 H-mag 49
+ 2001 XR254 225.00 75.00 H-mag 90
+ 2001 QW322 128.00 3.00 H-mag 74
+ 2003 QY90 150.00 50.00 H-mag 90
+ 2003 TJ58 75.00 25.00 H-mag 90
+ 2003 UN284 124.00 8.00 H-mag 74
+ 2004 PB108 140.00 50.00 H-mag 90
+ 2005 EO304 152.00 2.00 H-mag 74
+ 2006 BR284 89.80 0.90 H-mag 74
+ 2006 JZ81 122.00 16.00 H-mag 74
+ 2006 CH69 100.00 11.00 H-mag 74
+ 2007 TY430 50.00 20.00 H-mag 85
+ 1P/ Halley 10.39 2.00 FlyBy 56
+ 2P/ Encke 6.00 2.00 H-mag 56
+ 2P/ Encke 4.19 0.80 H-mag 56
+ 6P/ dArest 1.70 0.20 H-mag 32
+ 9P/ Tempel1 6.00 0.20 FlyBy 23
+ 10P/ Tempel2 9.60 1.39 H-mag 56
+ 19P/ Borrely 4.80 0.40 FlyBy 56
+ 22P/ Kop  3.59 0.40 H-mag 32
+ 45P/ H-M-P 0.66 0.20 H-mag 32
+ 46P/ Wirtanen 1.15 0.06 H-mag 32
+ 67P/ C-G 2.96 0.10 TPM 42
+ 81P/ Wild2 2.08 0.06 FlyBy 17
+ SL9 1.79 0.18 BkUp 1
