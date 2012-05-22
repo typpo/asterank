@@ -44,6 +44,7 @@ def populateDb():
   coll.ensure_index('price')
 
   # load mass data
+  print 'Loading mass data...'
   f = open(MASS_PATH, 'r')
   lines = f.readlines()
   f.close()
