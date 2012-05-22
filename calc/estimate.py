@@ -20,38 +20,67 @@ SPECTRA_INDEX = {
   },
   'C': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283,
+    #'nickel-iron': 0.0869229283,
     'platinum': 0.01,
+
+    # lewis estimates
+    'iron': 62.196,
+    'nickel': 1.26,
+    'cobalt': 0.18,
   },
   'Ch': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283,
+    #'nickel-iron': 0.0869229283,
     'platinum': 0.01,
+    # lewis estimates
+    'iron': 62.196,
+    'nickel': 1.26,
+    'cobalt': 0.18,
   },
   'Cg': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283,
+    #'nickel-iron': 0.0869229283,
     'platinum': 0.01,
+    # lewis estimates
+    'iron': 62.196,
+    'nickel': 1.26,
+    'cobalt': 0.18,
   },
   'Cgh': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283,
+    #'nickel-iron': 0.0869229283,
     'platinum': 0.01,
+    # lewis estimates
+    'iron': 62.196,
+    'nickel': 1.26,
+    'cobalt': 0.18,
   },
   'C type': {
     'water': 1.55495461,
-    'nickel-iron': 0.0869229283,
+    #'nickel-iron': 0.0869229283,
     'platinum': 0.01,
+    # lewis estimates
+    'iron': 62.196,
+    'nickel': 1.26,
+    'cobalt': 0.18,
   },
   'Cb': {   # transition object between C and B
     'hydrogen': 0.1175,
-    'iron': 12.5,
+    #'iron': 12.5,
     'water': 0.775,
-    'nickel-iron': 0.0434,
+    #'nickel-iron': 0.0434,
     'platinum': 0.005,
+
+    # lewis estimates
+    'iron': 36,
+    'nickel': 0.63,
+    'cobalt': 0.09,
   },
   'D': {
     'water': 0.000023,
+  },
+  'E': {
+
   },
   'K': {  # cross between S and C
     'water': 0.775,
@@ -128,6 +157,8 @@ SPECTRA_INDEX = {
     'magnesium silicate': 1e-30,
     'iron silicate': 0,
   },
+
+  # TODO use density to decide on what kind of X?
   'X': {  # TODO these vals only apply to M-type within X
     'iron': 88,
     'nickel': 10,
