@@ -7,6 +7,7 @@ import sys
 import urllib
 import re
 import json
+import estimate
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -36,8 +37,6 @@ class Asteroid:
     self.data['EMOID (AU)'] = r.additionalInfoParameter('Earth MOID')
 
     self.data['Close Approaches'] = r.closeApproaches()
-
-    #print self.data
 
 class JPL_Query:
   def __init__(self, query):

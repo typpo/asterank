@@ -62,11 +62,13 @@ $(function() {
           }
         }
       }
+      // orbit link
+      var jplstr = obj;
+      $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=' + jplstr + ';orb=1">link</a></td></tr>');
       // workaround for a glitch on mobile devices
       $("#tbl-container").scroll();
 
       $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
-
     });
   });
   $("#tbl").thfloat({
