@@ -4,6 +4,7 @@ var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 var CLOSE_APPROACHES_FIELD = 'Close Approaches';
 var lastResults = null;
+var tableStretched = false;
 
 $(function() {
   $('.exptip').tooltip();
@@ -67,6 +68,12 @@ $(function() {
       $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=' + jplstr + ';orb=1">link</a></td></tr>');
       // workaround for a glitch on mobile devices
       $("#tbl-container").scroll();
+
+      // stretch the table to match data height
+      if (!tableStretched) {
+        $('#tbl-container').height($(document).height() - $('#tbl-container').offset().top);
+        tableStretched = true;
+      }
 
       $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
     });
