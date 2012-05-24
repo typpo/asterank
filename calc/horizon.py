@@ -5,9 +5,11 @@
 
 import sys
 import csv
+import re
+import json
 import telnetlib
 import scoring
-import re
+import estimate
 from pymongo import Connection
 
 DATA_PATH = 'data/fulldb.csv'
@@ -140,9 +142,13 @@ def populateDb():
     if n % 3000 == 0:
       print n, '...'
 
-
   print 'Loaded', n, 'asteroids'
 
+def compositions():
+  print json.dumps(estimate.SPECTRA_INDEX)
+
+def materials():
+  print json.dumps(estimate.MATERIALS_INDEX)
 
 def telnetLookup():
   t = telnetlib.Telnet()
