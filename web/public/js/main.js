@@ -58,7 +58,7 @@ $(function() {
           else {
             if (typeof(item) === 'number') {
               item = item.toFixed(2);
-              if (item == -1)
+              if (item === -1)
                 continue;
             }
             $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
