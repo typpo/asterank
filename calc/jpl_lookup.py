@@ -7,7 +7,6 @@ import sys
 import urllib
 import re
 import json
-import estimate
 from bs4 import BeautifulSoup
 from datetime import datetime
 
