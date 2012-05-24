@@ -15,6 +15,7 @@ $(function() {
     $('#instructions').hide();
     var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $(this).attr('data-obj');
+    var obj_type = $(this).attr('data-obj_type');
     var fullname = $(this).attr('data-full-name');
     mixpanel.track('info', {
       fullname: fullname
@@ -58,7 +59,7 @@ $(function() {
           else {
             if (typeof(item) === 'number') {
               item = item.toFixed(2);
-              if (item === -1)
+              if (item == -1)
                 continue;
             }
             $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
@@ -68,6 +69,11 @@ $(function() {
       // orbit link
       var jplstr = obj;
       $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=' + jplstr + ';orb=1">link</a></td></tr>');
+
+      // mapping link
+      var composition = _.keys(compositions[obj_type]).join(', ');
+      $tbody.append('<tr><td>Contains</td><td>' + composition + '</td></tr>');
+
       // workaround for a glitch on mobile devices
       $("#tbl-container").scroll();
 
@@ -113,7 +119,7 @@ function doSearch() {
     for (var i=0; i < lastResults.length; i++) {
       var obj = lastResults[i];
       var name = obj.prov_des || obj.full_name;
-      var html = '<tr data-full-name="' + obj.full_name + '" data-obj="' + name + '">';
+      var html = '<tr data-full-name="' + obj.full_name + '" data-obj="' + name + '" data-obj_type="' + obj.spec_B + '">';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
         if (!val)
