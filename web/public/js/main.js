@@ -3,6 +3,7 @@ var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 var CLOSE_APPROACHES_FIELD = 'Close Approaches';
 var lastResults = null;
+var compositions = null;
 var tableStretched = false;
 
 $(function() {
@@ -37,8 +38,8 @@ $(function() {
               var distau = parseFloat(item[i].nom_dist_au);
               var rel_velocity = parseFloat(item[i].v_relative);
               approaches += '<tr><td>' + item[i].date + '</td><td>'
-                + distau.toFixed(5) + '</td><td>'
-                + rel_velocity + '</td></tr>';
+                + distau.toFixed(3) + '</td><td>'
+                + rel_velocity.toFixed(3) + '</td></tr>';
             }
             var $row = $('<tr><td>' + x
               + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
@@ -105,9 +106,10 @@ function doSearch() {
   mixpanel.track('search', searchparams);
 
   $.getJSON('/top', searchparams, function(data) {
-    lastResults = data.results;
-    for (var i=0; i < data.results.length; i++) {
-      var obj = data.results[i];
+    lastResults = data.results.rankings;
+    compositions = data.results.compositions;
+    for (var i=0; i < lastResults.length; i++) {
+      var obj = lastResults[i];
       var name = obj.prov_des || obj.full_name;
       var html = '<tr data-full-name="' + obj.full_name + '" data-obj="' + name + '">';
       for (var j=0; j < HEADERS.length; j++) {
