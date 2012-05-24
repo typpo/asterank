@@ -27,13 +27,30 @@ function topN(num, sort, cb) {
       cb(true, null);
       return;
     }
-    var result = _.map(docs, function(doc) {
+
+    // load asteroid rankings
+    var rankings = _.map(docs, function(doc) {
       return _.pick(doc, 'score', 'saved', 'price', 'profit',
         'closeness', 'GM', 'spec_B', 'full_name',
         'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'q',
         'prov_des');
     });
-    cb(null, result);
+
+    // load composition map
+    var cmd = path.join(__dirname, '../calc/horizon.py') + ' compositions';
+    var child = exec(cmd, function (error, stdout, stderr) {
+      var compositions = null;
+      if (error)
+        console.error(error);
+      else
+        compositions = JSON.parse(stdout);
+
+      // send result to client
+      cb(null, {
+        rankings: rankings,
+        compositions: compositions,
+      });
+    });
   });
 }
 
@@ -62,8 +79,8 @@ function query(query, cb) {
   var coll = db.collection('jpl');
   coll.findOne({tag_name: query}, function(err, doc) {
     if (err || !doc) {
-      var cmd = path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query;
       console.log('Looking up @ JPL:', query, ':', cmd);
+      var cmd = path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query;
       var child = exec(cmd, function (error, stdout, stderr) {
         if (error) {
           console.error(error);
