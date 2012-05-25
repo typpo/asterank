@@ -21,6 +21,10 @@ $(function() {
       fullname: fullname
     });
     $('#details h2').html(fullname);
+    /*
+    var freebase_query = obj.replace(' ', '_').toLowerCase();
+    $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
+    */
     $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
     // workaround for a glitch on mobile devices
