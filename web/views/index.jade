@@ -81,13 +81,20 @@ div#results.row-fluid(style='display:none;')
       h2
       //
         img#details-img
-      div#orbit-viz
       table.table.table-bordered.table-condensed
         thead
           tr
             th Data
             th Value
         tbody
+      div#orbit-viz-container
+        div#orbit-viz
+        div(style='text-align:center')
+          span(style='color:orange') Venus
+          | ,
+          span(style='color:blue') Earth
+          | ,
+          span(style='color:red') Mars
   div#tbl-container.span9(style='height:423px;overflow:scroll;overflow-x:auto;')
     table#tbl.table.table-bordered.table-striped
       thead(style='background-color:#fff')
