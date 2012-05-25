@@ -32,7 +32,7 @@ function topN(num, sort, cb) {
     var rankings = _.map(docs, function(doc) {
       return _.pick(doc, 'score', 'saved', 'price', 'profit',
         'closeness', 'GM', 'spec_B', 'full_name',
-        'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'q',
+        'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
         'prov_des');
     });
 
