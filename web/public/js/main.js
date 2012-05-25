@@ -33,7 +33,10 @@ $(function() {
     // orbital diagram
     var a = parseFloat($(this).attr('data-obj_a'));
     var e = parseFloat($(this).attr('data-obj_e'));
-    renderOrbitalDiagram(a, e);
+    if (supportsSvg()) {
+      $('#orbit-viz-container').show();
+      renderOrbitalDiagram(a, e);
+    }
 
     $.getJSON('/info/' + obj, function(result) {
       $tbody.empty();
@@ -161,10 +164,7 @@ function doSearch() {
     $('.intro').hide();
 
     // really this should be a screen size thing
-    if (navigator && !navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
-      && !($.browser.msie && $.browser.version < 9)) {
-
-      // Exclude mobile devices from the heavy handed stuff :(
+    if (navigator && !navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/) && supportsSvg()) {
       if (num_search <= 9000)
         graphSpectral();
       if (num_search <= 500) {
@@ -389,4 +389,8 @@ function barChart(data, xattr, yattr, selector) {
       attr("transform", "translate(0, 18)").
       attr("class", "yAxis");
   }
+}
+
+function supportsSvg() {
+  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
 }
