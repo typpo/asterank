@@ -30,6 +30,11 @@ $(function() {
     // workaround for a glitch on mobile devices
     $("#tbl-container").scroll();
 
+    // orbital diagram
+    var a = parseFloat($(this).attr('data-obj_a'));
+    var e = parseFloat($(this).attr('data-obj_e'));
+    renderOrbitalDiagram(a, e);
+
     $.getJSON('/info/' + obj, function(result) {
       $tbody.empty();
       for (var x in result.data) {
@@ -123,7 +128,12 @@ function doSearch() {
     for (var i=0; i < lastResults.length; i++) {
       var obj = lastResults[i];
       var name = obj.prov_des || obj.full_name;
-      var html = '<tr data-full-name="' + obj.full_name + '" data-obj="' + name + '" data-obj_type="' + obj.spec_B + '">';
+      var html = '<tr data-full-name="' + obj.full_name
+        + '" data-obj="' + name
+        + '" data-obj_type="' + obj.spec_B
+        + '" data-obj_a="' + obj.a
+        + '" data-obj_e="' + obj.e
+        + '">';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
         if (!val)
