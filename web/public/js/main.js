@@ -9,101 +9,104 @@ var tableStretched = false;
 $(function() {
   $('.exptip').tooltip();
   $('#submit').on('click', doSearch);
-  var $tbody = $('#tbl tbody');
-  $(document).on('click', '#tbl tbody tr', function(e) {
-
-    $('#instructions').hide();
-    var $tbody = $('#details').show().find('tbody').html('Loading...');
-    var obj = $(this).attr('data-obj');
-    var obj_type = $(this).attr('data-obj_type');
-    var fullname = $(this).attr('data-full-name');
-    mixpanel.track('info', {
-      fullname: fullname
-    });
-    $('#details h2').html(fullname);
-    /*
-    var freebase_query = obj.replace(' ', '_').toLowerCase();
-    $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
-    */
-    $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
-
-    // workaround for a glitch on mobile devices
-    $("#tbl-container").scroll();
-
-    // orbital diagram
-    var a = parseFloat($(this).attr('data-obj_a'));
-    var e = parseFloat($(this).attr('data-obj_e'));
-    if (supportsSvg()) {
-      $('#orbit-viz-container').show();
-      renderOrbitalDiagram(a, e);
-    }
-
-    $.getJSON('/info/' + obj, function(result) {
-      $tbody.empty();
-      for (var x in result.data) {
-        if (result.data.hasOwnProperty(x)) {
-          var item = result.data[x];
-          if (!item) continue;
-
-          if (x === CLOSE_APPROACHES_FIELD) {
-            var approaches = '';
-            for (var i=0; i < item.length; i++) {
-              var distau = parseFloat(item[i].nom_dist_au);
-              var rel_velocity = parseFloat(item[i].v_relative);
-              approaches += '<tr><td>' + item[i].date + '</td><td>'
-                + distau.toFixed(3) + '</td><td>'
-                + rel_velocity.toFixed(3) + '</td></tr>';
-            }
-            var $row = $('<tr><td>' + x
-              + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
-              + item.length
-              + ')</span></td></tr>')
-              .on('click', function() {
-                mixpanel.track('approaches', {
-                  fullname: fullname
-                });
-                $('#close-approaches-name').html(obj);
-                $('#approaches-modal tbody').empty().append(approaches);
-                $('#approaches-modal').modal();
-            });
-            $tbody.append($row);
-          }
-          else {
-            if (typeof(item) === 'number') {
-              item = item.toFixed(2);
-              if (item == -1)
-                continue;
-            }
-            $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
-          }
-        }
-      }
-      // orbit link
-      var jplstr = obj;
-      $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=' + jplstr + ';orb=1">link</a></td></tr>');
-
-      // mapping link
-      var composition = _.keys(compositions[obj_type]).join(', ');
-      $tbody.append('<tr><td>Contains</td><td>' + composition + '</td></tr>');
-
-      // workaround for a glitch on mobile devices
-      $("#tbl-container").scroll();
-
-      // stretch the table to match data height
-      if (!tableStretched) {
-        $('#tbl-container').height($(document).height() - $('#tbl-container').offset().top);
-        tableStretched = true;
-      }
-
-      $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
-    });
-  });
+  $(document).on('click', '#tbl tbody tr', onTableClick);
   $("#tbl").thfloat({
     attachment: '#tbl-container'
   });
-
   mixpanel.track('home');
 });
+
+function onTableClick() {
+  $('#instructions').hide();
+  var $tbody = $('#details').show().find('tbody').html('Loading...');
+  var obj = $(this).attr('data-obj');
+  var obj_type = $(this).attr('data-obj_type');
+  var fullname = $(this).attr('data-full-name');
+  mixpanel.track('info', {
+    fullname: fullname
+  });
+  $('#details h2').html(fullname);
+  /*
+  var freebase_query = obj.replace(' ', '_').toLowerCase();
+  $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
+  */
+  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+
+  // workaround for a glitch on mobile devices
+  $("#tbl-container").scroll();
+
+  // orbital diagram
+  var a = parseFloat($(this).attr('data-obj_a'));
+  var e = parseFloat($(this).attr('data-obj_e'));
+  if (supportsSvg()) {
+    $('#orbit-viz-container').show();
+    renderOrbitalDiagram(a, e);
+  }
+
+  $.getJSON('/info/' + obj, function(result) {
+    renderInfoPane(result, $tbody);
+  });
+}
+
+function renderInfoPane(result, $tbody) {
+  $tbody.empty();
+  for (var x in result.data) {
+    if (result.data.hasOwnProperty(x)) {
+      var item = result.data[x];
+      if (!item) continue;
+
+      if (x === CLOSE_APPROACHES_FIELD) {
+        var approaches = '';
+        for (var i=0; i < item.length; i++) {
+          var distau = parseFloat(item[i].nom_dist_au);
+          var rel_velocity = parseFloat(item[i].v_relative);
+          approaches += '<tr><td>' + item[i].date + '</td><td>'
+            + distau.toFixed(3) + '</td><td>'
+            + rel_velocity.toFixed(3) + '</td></tr>';
+        }
+        var $row = $('<tr><td>' + x
+          + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
+          + item.length
+          + ')</span></td></tr>')
+          .on('click', function() {
+            mixpanel.track('approaches', {
+              fullname: fullname
+            });
+            $('#close-approaches-name').html(obj);
+            $('#approaches-modal tbody').empty().append(approaches);
+            $('#approaches-modal').modal();
+        });
+        $tbody.append($row);
+      }
+      else {
+        if (typeof(item) === 'number') {
+          item = item.toFixed(2);
+          if (item == -1)
+            continue;
+        }
+        $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
+      }
+    }
+  }
+  // orbit link
+  var jplstr = obj;
+  $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=' + jplstr + ';orb=1">link</a></td></tr>');
+
+  // mapping link
+  var composition = _.keys(compositions[obj_type]).join(', ');
+  $tbody.append('<tr><td>Contains</td><td>' + composition + '</td></tr>');
+
+  // workaround for a glitch on mobile devices
+  $("#tbl-container").scroll();
+
+  // stretch the table to match data height
+  if (!tableStretched) {
+    $('#tbl-container').height($(document).height() - $('#tbl-container').offset().top);
+    tableStretched = true;
+  }
+
+  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+}
 
 function doSearch() {
   $('#instructions').show();
@@ -120,96 +123,72 @@ function doSearch() {
   $('#profit-graph').empty();
   $('#profit-graph-legend').empty();
 
-  var $tmp = $('tbody').empty();
   var num_search = parseInt($('#top_num').val());
   var searchparams = {sort:$('#top_sort').val(),n:num_search};
   mixpanel.track('search', searchparams);
 
-  $.getJSON('/top', searchparams, function(data) {
-    lastResults = data.results.rankings;
-    compositions = data.results.compositions;
-    for (var i=0; i < lastResults.length; i++) {
-      var obj = lastResults[i];
-      var name = obj.prov_des || obj.full_name;
-      var html = '<tr data-full-name="' + obj.full_name
-        + '" data-obj="' + name
-        + '" data-obj_type="' + obj.spec_B
-        + '" data-obj_a="' + obj.a
-        + '" data-obj_e="' + obj.e
-        + '">';
-      for (var j=0; j < HEADERS.length; j++) {
-        var val = obj[HEADERS[j]];
-        if (!val)
-          val = '';
-        if (typeof (val) === 'number') {
-          if ($.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
-            var suffix = obj['inexact'] ? '*' : '';
-            val = toFuzz(val) + suffix;
-          }
-          else {
-            val = val.toFixed(4);
-          }
-        }
-        else {
-          val = val + '';
-          if (val.length > 20) {
-            val = val.substring(0,17) + '...';
-          }
-        }
-        html += '<td>' + val + '</td>';
-      }
-      html += '</tr>';
-      $tmp.append(html);
-    }
-    $('.intro').hide();
-
-    // really this should be a screen size thing
-    if (navigator && !navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/) && supportsSvg()) {
-      if (num_search <= 9000)
-        graphSpectral();
-      if (num_search <= 500) {
-        $('#chart-title').show();
-        scatterScore();
-      }
-    }
-    $('#submit').removeAttr('disabled').val('Go');
-    $('#tbl tbody').append($tmp.children());
-    $('#results').show();
-    $('#legend').show();
-    $('#tbl-title').show();
-    $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
-    $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
-  });
+  $.getJSON('/top', searchparams, renderMainTable);
   return false;
 }
 
-var fuzzes = [
-  {
-    word: 'trillion',
-    num: 1000000000000
-  },
-  {
-    word: 'billion',
-    num: 1000000000
-  },
-  {
-    word: 'million',
-    num: 1000000
+function renderMainTable(data) {
+  var $tmp = $('tbody').empty();
+  lastResults = data.results.rankings;
+  compositions = data.results.compositions;
+  for (var i=0; i < lastResults.length; i++) {
+    var obj = lastResults[i];
+    var name = obj.prov_des || obj.full_name;
+    var html = '<tr data-full-name="' + obj.full_name
+      + '" data-obj="' + name
+      + '" data-obj_type="' + obj.spec_B
+      + '" data-obj_a="' + obj.a
+      + '" data-obj_e="' + obj.e
+      + '">';
+    for (var j=0; j < HEADERS.length; j++) {
+      var val = obj[HEADERS[j]];
+      if (!val)
+        val = '';
+      if (typeof (val) === 'number') {
+        if ($.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
+          var suffix = obj['inexact'] ? '*' : '';
+          val = toFuzz(val) + suffix;
+        }
+        else {
+          val = val.toFixed(4);
+        }
+      }
+      else {
+        val = val + '';
+        if (val.length > 20) {
+          val = val.substring(0,17) + '...';
+        }
+      }
+      html += '<td>' + val + '</td>';
+    }
+    html += '</tr>';
+    $tmp.append(html);
   }
-];
+  $('.intro').hide();
 
-function toFuzz(n) {
-  for (var i=0; i < fuzzes.length; i++) {
-    var x = fuzzes[i];
-    if (n / x.num >= 1) {
-      var prefix = (n / x.num);
-      if (i==0 && prefix > 100)
-        return '>100 ' + x.word;
-      return prefix.toFixed(2) + ' ' + x.word;
+  // really this should be a screen size thing
+  if (navigator && !navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/) && supportsSvg()) {
+    if (num_search <= 9000)
+      graphSpectral();
+    if (num_search <= 500) {
+      $('#chart-title').show();
+      scatterScore();
     }
   }
-  return n;
+  $('#submit').removeAttr('disabled').val('Go');
+  $('#tbl tbody').append($tmp.children());
+  $('#results').show();
+  $('#legend').show();
+  $('#tbl-title').show();
+  $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
+  $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
 }
+
+/* Graphing */
 
 function graphSpectral() {
   if (lastResults === null) {
@@ -233,7 +212,6 @@ function graphSpectral() {
 }
 
 function scatterScore() {
-
   if (lastResults === null) {
     return;
   }
@@ -266,14 +244,14 @@ function scatterScore() {
   Rickshaw.Series.zeroFill(series);
 
   var chartwidth = $(window).width() - 160;
-  var graph = new Rickshaw.Graph( {
+  var graph = new Rickshaw.Graph({
     element: document.getElementById('profit-graph'),
     width: chartwidth,
     height: 220,
     min: 1,
     renderer: 'scatterplot',
     series: series
-  } );
+  });
 
   graph.renderer.dotSize = 6;
   graph.render();
@@ -283,11 +261,9 @@ function scatterScore() {
   $('#profit-graph-legend').css('top', $('#chart-container').offset().top);
   $('#profit-graph-legend').css('overflow', $('#chart-container').offset().top);
 
-
-  var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+  var hoverDetail = new Rickshaw.Graph.HoverDetail({
     graph: graph,
     formatter: function(series, x, y) {
-
       var key = series.name + ',' + x.toFixed(2) + ',' + y.toFixed(2);
       var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
 
@@ -309,7 +285,7 @@ function scatterScore() {
         + y.toFixed(2);
       return content;
     }
-  } );
+  });
 
   var legend = new Rickshaw.Graph.Legend({
     graph: graph,
@@ -325,15 +301,6 @@ function scatterScore() {
     graph: graph,
     legend: legend
   });
-  /*
-  var yAxis = new Rickshaw.Graph.Axis.Y({
-    title: 'test',
-    graph: graph,
-    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-  });
-  yAxis.render();
-  */
-
 }
 
 function barChart(data, xattr, yattr, selector) {
@@ -389,6 +356,36 @@ function barChart(data, xattr, yattr, selector) {
       attr("transform", "translate(0, 18)").
       attr("class", "yAxis");
   }
+}
+
+/* Utilities */
+
+var fuzzes = [
+  {
+    word: 'trillion',
+    num: 1000000000000
+  },
+  {
+    word: 'billion',
+    num: 1000000000
+  },
+  {
+    word: 'million',
+    num: 1000000
+  }
+];
+
+function toFuzz(n) {
+  for (var i=0; i < fuzzes.length; i++) {
+    var x = fuzzes[i];
+    if (n / x.num >= 1) {
+      var prefix = (n / x.num);
+      if (i==0 && prefix > 100)
+        return '>100 ' + x.word;
+      return prefix.toFixed(2) + ' ' + x.word;
+    }
+  }
+  return n;
 }
 
 function supportsSvg() {
