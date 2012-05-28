@@ -14,7 +14,6 @@ function renderOrbitalDiagram(a, e) {
   plotEarth();
   plotVenus();
   plotMars();
-
   plotOrbit(a, e, 'black');
 }
 
