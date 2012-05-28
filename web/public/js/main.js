@@ -44,11 +44,11 @@ function onTableClick() {
   }
 
   $.getJSON('/info/' + obj, function(result) {
-    renderInfoPane(result, $tbody);
+    renderInfoPane(result, obj, obj_type, fullname, $tbody);
   });
 }
 
-function renderInfoPane(result, $tbody) {
+function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
   $tbody.empty();
   for (var x in result.data) {
     if (result.data.hasOwnProperty(x)) {
@@ -126,12 +126,13 @@ function doSearch() {
   var num_search = parseInt($('#top_num').val());
   var searchparams = {sort:$('#top_sort').val(),n:num_search};
   mixpanel.track('search', searchparams);
-
-  $.getJSON('/top', searchparams, renderMainTable);
+  $.getJSON('/top', searchparams, function(data) {
+    renderMainTable(data, num_search);
+  });
   return false;
 }
 
-function renderMainTable(data) {
+function renderMainTable(data, num_search) {
   var $tmp = $('tbody').empty();
   lastResults = data.results.rankings;
   compositions = data.results.compositions;
