@@ -14,6 +14,7 @@ $(function() {
     attachment: '#tbl-container'
   });
   mixpanel.track('home');
+  _gaq.push(['_trackEvent', 'home', 'arrived', '']);
 });
 
 function onTableClick() {
@@ -25,6 +26,7 @@ function onTableClick() {
   mixpanel.track('info', {
     fullname: fullname
   });
+  _gaq.push(['_trackEvent', 'info', 'clicked', fullname]);
   $('#details h2').html(fullname);
   /*
   var freebase_query = obj.replace(' ', '_').toLowerCase();
@@ -72,6 +74,7 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
             mixpanel.track('approaches', {
               fullname: fullname
             });
+            _gaq.push(['_trackEvent', 'approaches', 'clicked', fullname]);
             $('#close-approaches-name').html(obj);
             $('#approaches-modal tbody').empty().append(approaches);
             $('#approaches-modal').modal();
@@ -126,6 +129,7 @@ function doSearch() {
   var num_search = parseInt($('#top_num').val());
   var searchparams = {sort:$('#top_sort').val(),n:num_search};
   mixpanel.track('search', searchparams);
+  _gaq.push(['_trackEvent', 'search', 'clicked', searchparams.sort]);
   $.getJSON('/top', searchparams, function(data) {
     renderMainTable(data, num_search);
   });
