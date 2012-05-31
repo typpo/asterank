@@ -65,6 +65,12 @@ app.get('/search/:q', function(req, res) {
   res.send('');
 });
 
+app.post('/subscribe', function(req, res) {
+  var email = req.body.email;
+  mailer.mail('subscribe ' + email);
+  res.redirect('/');
+});
+
 var port = process.env.PORT || DEFAULT_PORT;
 app.listen(port);
 
