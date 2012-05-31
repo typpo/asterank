@@ -58,6 +58,7 @@ div.row-fluid
 
         p.spacey The data on these objects are public but very sparse.  It's 2012 and we are just beginning.  Assumptions are made.
 
+
 div#chart-title.row-fluid(style='display:none;text-align:center;')
   h3 Value Score vs. Accessibility
 div.row-fluid
@@ -109,15 +110,24 @@ div#results.row-fluid(style='display:none;')
           th <a class="exptip" ref="tooltip" title="Classified as a Potentially Hazardous Object (Yes/No)">PHA</a>
       tbody(style='cursor:pointer;')
 
-div#footer(style='text-align:right;margin-top:35px;margin-right:100px;')
-  - if (!nosocial)
-    <span class='st_fblike_hcount'></span>
-    <span class='st_twitter_hcount'></span>
-    <span class='st_plusone_hcount'></span>
-    <span class='st_email_hcount'></span>
-    <script type="text/javascript">var switchTo5x=true;</script>
-    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-    <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
+
+div#footer
+  div(style='margin-left: 25px;float:left;')
+    h3 Notifications
+    p No spam, we'll just let you know when something cool has changed on these rankings.
+    form.form-inline(action='/subscribe', method='POST', style='margin-left:20px')
+      input(type='text', name='email', id='email', placeholder='email@gmail.com')
+      input.btn(type='button', value='Ok')
+  div#footer(style='text-align:right;margin-top:35px;margin-right:100px;float:right;')
+
+    - if (!nosocial)
+      <span class='st_fblike_hcount'></span>
+      <span class='st_twitter_hcount'></span>
+      <span class='st_plusone_hcount'></span>
+      <span class='st_email_hcount'></span>
+      <script type="text/javascript">var switchTo5x=true;</script>
+      <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+      <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
 
 div#legend-modal.modal(style='display:none;')
   div.modal-header
