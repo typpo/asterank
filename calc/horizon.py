@@ -89,7 +89,8 @@ def populateDb():
     if row['spec_B'] == '':
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
-        row['spec_B'] = newspec   # TODO should have our own merged spec row
+        # TODO should have our own merged spec row, instead we overwrite spec_B
+        row['spec_B'] = newspec
       else:
         continue # TODO temp
         row['spec_B'] = 'S'

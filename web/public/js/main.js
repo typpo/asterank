@@ -93,7 +93,8 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
   }
   // orbit link
   var jplstr = obj;
-  $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=' + jplstr + ';orb=1">link</a></td></tr>');
+  $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr='
+                + jplstr + ';orb=1">link</a></td></tr>');
 
   // mapping link
   var composition = _.keys(compositions[obj_type]).join(', ');
