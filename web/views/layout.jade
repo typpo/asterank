@@ -9,7 +9,10 @@ html
       - if (false && typeof(nosocial) !== 'undefined' && !nosocial)
         include facebook
     div.container-fluid!= body
-    <script>mixpanel = {track:function(){}}</script>
-    include mixpanel
+    - if (context.production)
+      include mixpanel
+    - else
+      h3(style='color:red') DEVELOPMENT
+      <script>mixpanel = {track:function(){}}</script>
     include ga
     include js
