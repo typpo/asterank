@@ -12,7 +12,7 @@ html
     - if (context.production)
       include mixpanel
     - else
-      h3(style='color:red') DEVELOPMENT
+      h3(style='color:red;text-align:center;') *DEVELOPMENT*
       <script>mixpanel = {track:function(){}}</script>
     include ga
     include js
