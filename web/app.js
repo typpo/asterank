@@ -49,6 +49,13 @@ app.get('/top', function(req, res) {
 
 });
 
+app.get('/summary', function(req, res) {
+  lookup.homepage(function(err, result) {
+    res.send(result);
+  });
+
+});
+
 app.get('/count', function(req, res) {
   lookup.count(num, function(err, result) {
     res.send({n: result});
