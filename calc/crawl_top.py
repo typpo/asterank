@@ -54,12 +54,7 @@ db = connection.asterank
 
 asteroids = db.asteroids
 jpl = db.jpl
-for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(150):
-  """
-  parts = line.split(',')
-  desig = parts[0]
-  count = parts[1]
-  """
+def process(asteroid):
   desig = asteroid['full_name']
   idx = desig.find('(')
   if idx > 0:
@@ -71,5 +66,10 @@ for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(150):
   print 'q:', desig
   a = Asteroid(desig)
   a.load()
-
+  a.data['tag_name'] = desig
   jpl.insert(a.data)
+
+for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(150):
+  process(asteroid)
+for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(150):
+  process(asteroid)
