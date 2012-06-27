@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from jpl_lookup import Asteroid
+from pymongo import Connection
 
 #
 # Crawl top looked at objects
@@ -47,6 +48,9 @@ TOP = """162385 (2000 BM19),1113
 (1998 SD9),6
 """
 
+connection = Connection('localhost', 27017)
+db = connection.asterank
+coll = db.jpl
 for line in TOP.splitlines():
   parts = line.split(',')
   desig = parts[0]
@@ -60,5 +64,7 @@ for line in TOP.splitlines():
     desig = desig[1:-1]
 
   print 'q:', desig
-  a = Asteroid(' '.join(desig))
+  a = Asteroid(desig)
   a.load()
+
+  coll.insert(a.data)

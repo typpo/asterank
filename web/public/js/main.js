@@ -58,8 +58,10 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
       if (!item) continue;
 
       if (x === CLOSE_APPROACHES_FIELD) {
+        // Build approaches table
         var approaches = '';
         for (var i=0; i < item.length; i++) {
+          if (item[i].body !== 'Earth') continue;
           var distau = parseFloat(item[i].nom_dist_au);
           var rel_velocity = parseFloat(item[i].v_relative);
           approaches += '<tr><td>' + item[i].date + '</td><td>'
