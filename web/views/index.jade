@@ -106,12 +106,11 @@ div.row-fluid
     div.intro.welcome-blurb.well
       img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
       h2 Overview
-      p.spacey Asteroid mining has been <a href="http://www.space.com/15395-asteroid-mining-planetary-resources.html" target="_blank">in the news</a> recently. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
 
-      p.spacey(style='font-weight: bold;') We've collected, computed, or inferred important data points such as asteroid mass and composition using scraped data from multiple scientific sources.  With this information, we estimate the costs and rewards of mining rocks in space.
+      p(style='font-weight: bold;') We've collected, computed, or inferred important data such as asteroid mass and composition from multiple scientific sources.  With this information, we estimate the costs and rewards of mining asteroids.
 
       h2 Data
-      p Details on orbits and basic physical parameters are mostly sourced from JPL data.  Composition data is harder to come by.  We make generalizations about asteroids based on their spectral classification and size.  Although scientists know very little about the actual composition of different classes of asteroids, our calculations incorporate conclusions from multiple scientific publications in addition to cross-referencing known meteorite data.
+      p Details on orbits and basic physical parameters are mostly sourced from JPL data.  Composition data is less well known, so we compute generalizations based on spectral classification and size.  Our calculations incorporate conclusions from multiple scientific publications in addition to cross-referencing known meteorite data.
 
       //
         p There are three major factors:
@@ -120,12 +119,15 @@ div.row-fluid
             li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
             li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
 
-      p.spacey The data on these objects are public but very sparse.  It's 2012 and we are just beginning.  Assumptions are made.
+      h2 Why?
+      p Asteroid mining has been <a href="http://www.nytimes.com/2012/04/24/science/space/in-pursuit-of-riches-and-travelers-supplies-in-the-asteroid-belt.html?pagewanted=all" target="_blank">making headlines</a>. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
+
+      p The data on these objects are public but very sparse.  Remember, it's 2012 and we are just beginning!
 
     div#footer
       div(style='margin-left: 25px;float:left;')
         h3 Notifications
-        p No spam, we'll just let you know when something cool has changed on these rankings.
+        p No spam, we'll just let you know if a significant re-ranking occurs.
         form.form-inline(action='/subscribe', method='POST', style='margin-left:20px')
           input(type='text', name='email', id='email', placeholder='email@gmail.com')
           input.btn(type='button', value='Ok')
