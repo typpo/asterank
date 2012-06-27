@@ -103,14 +103,15 @@ function query(query, cb) {
   var coll = db.collection('jpl');
   coll.findOne({tag_name: query}, function(err, doc) {
     if (err || !doc) {
-      console.log('Looking up @ JPL:', query, ':', cmd);
       var cmd = path.join(__dirname, '../calc/jpl_lookup.py') + ' ' + query;
+      console.log('Looking up @ JPL:', query, ':', cmd);
       var child = exec(cmd, function (error, stdout, stderr) {
         if (error) {
           console.error(error);
           cb(true, null);
         }
         else {
+          console.log('start',stdout,'end');
           var result = JSON.parse(stdout);
           cb(null, result);
           // record it in cache
