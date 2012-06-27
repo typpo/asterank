@@ -30,6 +30,16 @@ p .spacey {
   margin-bottom:30px;
 }
 
+.top-rankings h2 {
+  text-align: center;
+}
+
+.top-rankings table {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .detail_swatch { float: right; display: inline-block; width: 10px; height: 10px; margin: 0 4px 0 0 }
 .rickshaw_graph .detail .x_label { display: none }
 
