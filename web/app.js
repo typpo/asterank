@@ -17,8 +17,11 @@ var DEFAULT_PORT = 19590;
 // App
 
 app.get('/', function(req, res) {
-  renderWithContext(res, 'index', {
-    nosocial: req.query.nosocial !== undefined,
+  lookup.homepage(function(err, summary_result) {
+    renderWithContext(res, 'index', {
+      nosocial: req.query.nosocial !== undefined,
+      summary: summary_result,
+    });
   });
 });
 

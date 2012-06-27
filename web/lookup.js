@@ -12,9 +12,11 @@ var VALID_SORT_FIELDS = {
   profit: -1,
 }
 
+var HOMEPAGE_CACHE_ENABLED = false;
+
 var homepage_summary_result;
 function homepage(cb) {
-  if (homepage_summary_result) {
+  if (HOMEPAGE_CACHE_ENABLED && homepage_summary_result) {
     // poor man's cache
     cb(false, homepage_summary_result);
     return;
@@ -49,14 +51,16 @@ function homepage(cb) {
 
 function upcomingPasses(num, cb) {
   var db = new Mongolian('localhost/asterank');
-  var coll = db.collection('asteroids');
-  coll.find().limit(num).sort({'Next Pass': 1}).toArray(function(err, docs) {
-    if (docs) {
-      for (var i in docs) {
-        delete docs[i]._id;
+  var coll = db.collection('jpl');
+  coll.find({'Next Pass': {$exists: true, $ne: null}})
+    .sort({'Next Pass.date_iso': 1})
+    .limit(num).toArray(function(err, docs) {
+      if (docs) {
+        for (var i in docs) {
+          delete docs[i]._id;
+        }
       }
-    }
-    cb(err, docs);
+      cb(err, docs);
   });
 }
 
