@@ -169,7 +169,7 @@ function renderMainTable(data, num_search) {
         }
       }
       else {
-        val = truncateText(val + '');
+        val = truncateText(val + '', 20);
       }
       html += '<td>' + val + '</td>';
     }
@@ -401,9 +401,9 @@ function toFuzz(n) {
   return n;
 }
 
-function truncateText(txt) {
-  if (txt.length > 20) {
-    txt = txt.substring(0,17) + '...';
+function truncateText(txt, len) {
+  if (txt.length > len) {
+    txt = txt.substring(0,len-3) + '...';
   }
   return txt;
 }
