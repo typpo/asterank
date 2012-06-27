@@ -12,6 +12,30 @@ var VALID_SORT_FIELDS = {
   profit: -1,
 }
 
+function homepageContext(cb) {
+  var mv,mce,up;
+  var trigger = _.after(3, function() {
+    cb({
+      most_valuable: mv,
+      most_cost_effective: mce,
+      upcoming_passes: up,
+    });
+  });
+
+  // most valuable
+  topN(4, 'price', function(err, result) {
+    mv = result;
+    trigger();
+  });
+  // most cost effective
+  topN(4, 'score', function(err, result) {
+    mce = result;
+    trigger();
+  });
+  // upcoming passes
+
+}
+
 function topN(num, sort, cb) {
   sort = sort || 'score';
   if (!VALID_SORT_FIELDS[sort]) {

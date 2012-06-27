@@ -7,6 +7,7 @@ import sys
 import urllib
 import re
 import json
+import time
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -39,6 +40,7 @@ class Asteroid:
 
 class JPL_Query:
   def __init__(self, query):
+    print 'Querying', query
     src = urllib.urlopen('http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=%s;cad=1' % query ).read()
     self.soup = BeautifulSoup(src.replace('cellspacing="0"0', ''))
 
@@ -78,7 +80,8 @@ class JPL_Query:
       d = {}
       pydate = datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
       if pydate >= datetime.today():
-        d['date'] = texts[0]
+        d['date'] = pydate.strftime('%b %d, %Y')  #texts[0]
+        d['date_iso'] = pydate
         d['uncertainty'] = texts[1]
         d['body'] = texts[2]
         d['nom_dist_au'] = texts[3]
