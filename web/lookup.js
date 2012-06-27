@@ -12,10 +12,10 @@ var VALID_SORT_FIELDS = {
   profit: -1,
 }
 
-function homepageContext(cb) {
+function homepage(cb) {
   var mv,mce,up;
   var trigger = _.after(3, function() {
-    cb({
+    cb(false, {
       most_valuable: mv,
       most_cost_effective: mce,
       upcoming_passes: up,
@@ -24,15 +24,32 @@ function homepageContext(cb) {
 
   // most valuable
   topN(4, 'price', function(err, result) {
-    mv = result;
+    mv = result.rankings;
     trigger();
   });
   // most cost effective
   topN(4, 'score', function(err, result) {
-    mce = result;
+    mce = result.rankings;
     trigger();
   });
   // upcoming passes
+  upcomingPasses(4, function(err, result) {
+    up = result;
+    trigger();
+  });
+}
+
+function upcomingPasses(num, cb) {
+  var db = new Mongolian('localhost/asterank');
+  var coll = db.collection('asteroids');
+  coll.find().limit(num).sort({'Next Pass': 1}).toArray(function(err, docs) {
+    if (docs) {
+      for (var i in docs) {
+        delete docs[i]._id;
+      }
+    }
+    cb(err, docs);
+  });
 
 }
 
@@ -134,5 +151,5 @@ module.exports = {
   topN: topN,
   count: count,
   query: query,
-
+  homepage: homepage,
 }
