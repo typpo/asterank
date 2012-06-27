@@ -48,18 +48,10 @@ div.row-fluid#landing-page
             th Name
             th $
         tbody
-          tr
-            td ABC 123
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td $12.2 trillion
+          - each asteroid in summary.most_valuable
+            tr
+              td #{asteroid.full_name}
+              td #{asteroid.price}
     div.span2
       h3 Most Cost Effective
       table.table.table-bordered.table-striped.table-condensed
@@ -68,18 +60,10 @@ div.row-fluid#landing-page
             th Name
             th $
         tbody
-          tr
-            td ABC 123
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td $12.2 trillion
+          - each asteroid in summary.most_cost_effective
+            tr
+              td #{asteroid.full_name}
+              td #{asteroid.price}
     div.span2
       h3 Upcoming Passes
       table.table.table-bordered.table-striped.table-condensed
@@ -89,24 +73,11 @@ div.row-fluid#landing-page
             th Time
             th Value
         tbody
-          tr
-            td ABC 123
-            td July 23, 2012
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td July 23, 2012
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td July 23, 2012
-            td $12.2 trillion
-          tr
-            td ABC 123
-            td July 23, 2012
-            td $12.2 trillion
-
-
+          - each jpl_asteroid in summary.upcoming_passes
+            tr
+              td #{jpl_asteroid.tag_name}
+              td #{jpl_asteroid['Next Pass'].date}
+              td not sure
   div.span10
     div.intro.welcome-blurb.well
       img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')

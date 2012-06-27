@@ -169,10 +169,7 @@ function renderMainTable(data, num_search) {
         }
       }
       else {
-        val = val + '';
-        if (val.length > 20) {
-          val = val.substring(0,17) + '...';
-        }
+        val = truncateText(val + '');
       }
       html += '<td>' + val + '</td>';
     }
@@ -372,6 +369,10 @@ function barChart(data, xattr, yattr, selector) {
 
 /* Utilities */
 
+function supportsSvg() {
+  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+}
+
 var fuzzes = [
   {
     word: 'trillion',
@@ -400,6 +401,9 @@ function toFuzz(n) {
   return n;
 }
 
-function supportsSvg() {
-  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+function truncateText(txt) {
+  if (txt.length > 20) {
+    txt = txt.substring(0,17) + '...';
+  }
+  return txt;
 }
