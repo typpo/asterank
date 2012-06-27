@@ -12,14 +12,22 @@ var VALID_SORT_FIELDS = {
   profit: -1,
 }
 
+var homepage_summary_result;
 function homepage(cb) {
+  if (homepage_summary_result) {
+    // poor man's cache
+    cb(false, homepage_summary_result);
+    return;
+  }
+
   var mv,mce,up;
   var trigger = _.after(3, function() {
-    cb(false, {
+    homepage_summary_result = {
       most_valuable: mv,
       most_cost_effective: mce,
       upcoming_passes: up,
-    });
+    };
+    cb(false, homepage_summary_result);
   });
 
   // most valuable
@@ -50,7 +58,6 @@ function upcomingPasses(num, cb) {
     }
     cb(err, docs);
   });
-
 }
 
 function topN(num, sort, cb) {
