@@ -2,7 +2,8 @@ var Mongolian = require('mongolian')
   , _ = require('underscore')
   , sys = require('sys')
   , path = require('path')
-  , exec = require('child_process').exec;
+  , exec = require('child_process').exec
+  , shared_util = require('./shared_util.js')
 
 var VALID_SORT_FIELDS = {
   score: -1,
@@ -60,6 +61,9 @@ function upcomingPasses(num, cb) {
           delete docs[i]._id;
         }
       }
+
+      // Need to pair prices with each jpl entry
+
       cb(err, docs);
   });
 }
@@ -82,10 +86,12 @@ function topN(num, sort, cb) {
 
     // load asteroid rankings
     var rankings = _.map(docs, function(doc) {
-      return _.pick(doc, 'score', 'saved', 'price', 'profit',
+      var ret = _.pick(doc, 'score', 'saved', 'price', 'profit',
         'closeness', 'GM', 'spec_B', 'full_name',
         'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
         'prov_des');
+      ret.fuzzed_price = shared_util.toFuzz(ret.price);
+      return ret;
     });
 
     // load composition map

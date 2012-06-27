@@ -46,24 +46,24 @@ div.row-fluid#landing-page
         thead
           tr
             th Name
-            th $
+            th Value
         tbody
           - each asteroid in summary.most_valuable
             tr
-              td #{asteroid.full_name}
-              td #{asteroid.price}
+              td #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
+              td #{asteroid.fuzzed_price}
     div.span2
       h3 Most Cost Effective
       table.table.table-bordered.table-striped.table-condensed
         thead
           tr
             th Name
-            th $
+            th Value
         tbody
           - each asteroid in summary.most_cost_effective
             tr
-              td #{asteroid.full_name}
-              td #{asteroid.price}
+              td #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
+              td #{asteroid.fuzzed_price}
     div.span2
       h3 Upcoming Passes
       table.table.table-bordered.table-striped.table-condensed
@@ -75,7 +75,7 @@ div.row-fluid#landing-page
         tbody
           - each jpl_asteroid in summary.upcoming_passes
             tr
-              td #{jpl_asteroid.tag_name}
+              td #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
               td #{jpl_asteroid['Next Pass'].date}
               td not sure
   div.span10
