@@ -38,7 +38,7 @@ div.row-fluid
             option(value='closeness') accessibility
           input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
-div.row-fluid
+div.row-fluid#landing-page
   div.span2.top-rankings
     div.span2
       h3 Most Valuable
@@ -148,7 +148,6 @@ div.row-fluid
           <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
 
 
-
 div#chart-title.row-fluid(style='display:none;text-align:center;')
   h3 Value Score vs. Accessibility
 div.row-fluid
@@ -164,14 +163,9 @@ div#results.row-fluid(style='display:none;')
   div.span3
     div#instructions(style='margin-top:35px;')
       h3(style='margin-bottom:25px') Click a row to view details. &rarr;
-      //
-        p
-          strong Spectal distribution of results:
       div.span5#spec-graph
     div#details(style='display:none;')
       h2
-      //
-        img#details-img
       table.table.table-bordered.table-condensed
         thead
           tr
@@ -225,6 +219,8 @@ div#legend.row-fluid(style='margin-left:15px;display:none;')
   div.span10
     span
       a(href='#', onClick="$('#legend-modal').modal();return false;") Explain field names
+
+div#other-footer-container
 
 div#feedback-modal.modal(style='display:none;')
   div.modal-header

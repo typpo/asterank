@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from jpl_lookup import Asteroid
+import pymongo
 from pymongo import Connection
 
 #
@@ -50,12 +51,16 @@ TOP = """162385 (2000 BM19),1113
 
 connection = Connection('localhost', 27017)
 db = connection.asterank
-coll = db.jpl
-for line in TOP.splitlines():
+
+asteroids = db.asteroids
+jpl = db.jpl
+for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(150):
+  """
   parts = line.split(',')
   desig = parts[0]
   count = parts[1]
-
+  """
+  desig = asteroid['full_name']
   idx = desig.find('(')
   if idx > 0:
     desig = desig[idx:]
@@ -67,4 +72,4 @@ for line in TOP.splitlines():
   a = Asteroid(desig)
   a.load()
 
-  coll.insert(a.data)
+  jpl.insert(a.data)
