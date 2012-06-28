@@ -246,14 +246,18 @@ function scatterScore() {
   lastResults = lastResults.sort(function(a,b) {
     return a.closeness - b.closeness;
   });
+  var stype_to_datapoints;
   var series = _.chain(lastResults).map(function(obj) {
     return [
       obj.closeness,
       Math.log(obj.score),
-      obj.spec_B
+      obj.spec_B,
+      obj
     ];
   }).groupBy(function(obj) {
     return obj[2];
+  }).tap(function(value) {
+    stype_to_datapoints = value;
   }).map(function(objs, stype) {
     return {
       data: objs,
@@ -263,16 +267,28 @@ function scatterScore() {
     };
   }).value();
 
-  console.log(series);
-
   // render here
   $('#chart').height(220);
+  $('#chart').width('90%');
 
   graph = Flotr.draw(
-    $('#chart').get(0), series,
-    {
+    $('#chart').get(0), series, {
       legend : { container: $('#chart-legend').get(0) },
-      title : 'Value vs. Ease of Access'
+      title : 'Value vs. Ease of Access',
+      mouse : {
+        track : true,
+        relative : true,
+        trackFormatter: function(obj) {
+          var obj = stype_to_datapoints[obj.series.label][obj.index][3];
+          return obj.full_name
+            + '<br>Type: ' + obj.spec_B
+            + '<br>Value: $' + toFuzz(obj.price)
+            + '<br>Accessibility Score: ' + obj.closeness.toFixed(4);
+        },
+        radius: 5,
+        sensibility: 5
+      },
+
     }
   );
 }
@@ -282,7 +298,7 @@ function barChart(data, xattr, yattr, selector) {
 
   var padding = 30;
 
-  var barWidth = 20;
+  var barWidth = 16;
   var width = (barWidth + 10) * data.length;
   var height = 100;
 
