@@ -40,7 +40,7 @@ div.row-fluid
 
 div.row-fluid#landing-page
   div.span2.top-rankings
-    div.span2
+    div.span2(style='margin-left:0')
       h3 Most Valuable
       table.table.table-bordered.table-striped.table-condensed
         thead
@@ -54,7 +54,7 @@ div.row-fluid#landing-page
                 a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('price');$('#top_num').val(100);doSearch('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
                   #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
               td #{asteroid.fuzzed_price}
-    div.span2
+    div.span2(style='margin-left:0')
       h3 Most Cost Effective
       table.table.table-bordered.table-striped.table-condensed
         thead
@@ -68,7 +68,7 @@ div.row-fluid#landing-page
                 a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('score');$('#top_num').val(100);doSearch('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
                   #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
               td #{asteroid.fuzzed_price}
-    div.span2
+    div.span2(style='margin-left:0')
       h3 Upcoming Passes
       table.table.table-bordered.table-striped.table-condensed
         thead
