@@ -123,7 +123,7 @@ function doSearch(preselect) {
   $('#legend').hide();
   $('#results').hide();
   $('#chart-title').hide();
-  $('#tbl-title').hide();
+  $('#tbl-spacer').hide();
   $('#chart-container').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
 
@@ -142,11 +142,14 @@ function doSearch(preselect) {
       var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
       if (preselect_match.length < 1) {
         // Could be a jpl short name
-        $('#tbl tbody tr[data-obj="' + preselect + '"]').trigger('click');
+        var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
       }
-      else {
-        preselect_match.trigger('click');
-      }
+      preselect_match
+        .css('font-weight', 'bold')
+        .trigger('click');
+      var container = $('#tbl-container');
+      container.scrollTop(preselect_match.position().top - container.offset().top - 50);
+      //preselect_match.get(0).scrollIntoView();
     }
   });
   return false;
@@ -202,7 +205,7 @@ function renderMainTable(data, num_search) {
   $('#tbl tbody').append($tmp.children());
   $('#results').show();
   $('#legend').show();
-  $('#tbl-title').show();
+  $('#tbl-spacer').show();
   $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
   if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
 }
