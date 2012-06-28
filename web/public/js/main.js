@@ -125,7 +125,7 @@ function doSearch(preselect) {
   $('#results').hide();
   $('#chart-title').hide();
   $('#tbl-spacer').hide();
-  $('#chart-container').hide();
+  //$('#chart-container').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
 
   // empty graphs
@@ -194,6 +194,12 @@ function renderMainTable(data, num_search) {
   $('#landing-page').hide();
   $('#footer').detach().appendTo('#other-footer-container').show();
 
+  $('#submit').removeAttr('disabled').val('Go');
+  $('#tbl tbody').append($tmp.children());
+  $('#results').show();
+  $('#legend').show();
+  $('#tbl-spacer').show();
+  //
   // really this should be a screen size thing
   if (navigator && !isMobile && supportsSvg()) {
     if (num_search <= 9000)
@@ -203,11 +209,8 @@ function renderMainTable(data, num_search) {
       scatterScore();
     }
   }
-  $('#submit').removeAttr('disabled').val('Go');
-  $('#tbl tbody').append($tmp.children());
-  $('#results').show();
-  $('#legend').show();
-  $('#tbl-spacer').show();
+
+  // now scroll into place
   $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
   if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
 }
@@ -240,91 +243,55 @@ function scatterScore() {
     return;
   }
 
-  var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
-
   var logscores = {};
   lastResults = lastResults.sort(function(a,b) {
     return a.closeness - b.closeness;
   });
+  var stype_to_datapoints;
   var series = _.chain(lastResults).map(function(obj) {
-    var ret = {
-      x: Math.log(obj.closeness),
-      y: Math.log(obj.score),
-      stype: obj.spec_B
-    };
-    // what an ugly hack
-    logscores[ret.stype + ',' + ret.x.toFixed(2) + ',' + ret.y.toFixed(2)] = obj;
-    return ret;
+    return [
+      obj.closeness,
+      Math.log(obj.score),
+      obj.spec_B,
+      obj
+    ];
   }).groupBy(function(obj) {
-    return obj.stype;
+    return obj[2];
+  }).tap(function(value) {
+    stype_to_datapoints = value;
   }).map(function(objs, stype) {
     return {
       data: objs,
-      color: palette.color(),
-      name: stype
+      color: '#'+Math.floor(Math.random()*16777215).toString(16),
+      label: stype,
+      points: {show: true}
     };
   }).value();
 
-  Rickshaw.Series.zeroFill(series);
+  // render here
+  $('#chart').height(220);
+  $('#chart').width('90%');
 
-  var chartwidth = $(window).width() - 160;
-  var graph = new Rickshaw.Graph({
-    element: document.getElementById('profit-graph'),
-    width: chartwidth,
-    height: 220,
-    min: 1,
-    renderer: 'scatterplot',
-    series: series
-  });
+  graph = Flotr.draw(
+    $('#chart').get(0), series, {
+      legend : { container: $('#chart-legend').get(0) },
+      title : 'Value vs. Ease of Access',
+      mouse : {
+        track : true,
+        relative : true,
+        trackFormatter: function(obj) {
+          var obj = stype_to_datapoints[obj.series.label][obj.index][3];
+          return obj.full_name
+            + '<br>Type: ' + obj.spec_B
+            + '<br>Value: $' + toFuzz(obj.price)
+            + '<br>Accessibility Score: ' + obj.closeness.toFixed(4);
+        },
+        radius: 5,
+        sensibility: 5
+      },
 
-  graph.renderer.dotSize = 6;
-  graph.render();
-
-  $('#chart-container').show();
-  $('#chart-container').css('width', chartwidth);
-  $('#profit-graph-legend').css('top', $('#chart-container').offset().top);
-  $('#profit-graph-legend').css('overflow', $('#chart-container').offset().top);
-
-  var hoverDetail = new Rickshaw.Graph.HoverDetail({
-    graph: graph,
-    formatter: function(series, x, y) {
-      var key = series.name + ',' + x.toFixed(2) + ',' + y.toFixed(2);
-      var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-
-      var name = '';
-      var valuestr = '';
-      var profitstr = '';
-      var obj = logscores[key];
-      if (obj) {
-        name = obj.full_name;
-        valuestr = '<br>Value: $' + toFuzz(obj.price);
-        profitstr = '<br>Profit: $' + toFuzz(obj.profit);
-      }
-      var content = swatch
-        + name
-        + valuestr
-        + profitstr
-        + '<br>Accessibility (log): ' + x.toFixed(2)
-        + ' <br>Score (log): '
-        + y.toFixed(2);
-      return content;
     }
-  });
-
-  var legend = new Rickshaw.Graph.Legend({
-    graph: graph,
-    element: document.getElementById('profit-graph-legend')
-  });
-  $('#profit-graph-legend').prepend('<p style="text-align:center;font-weight:bold;">Asteroid Type</p>');
-
-  var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-    graph: graph,
-    legend: legend
-  });
-  var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-    graph: graph,
-    legend: legend
-  });
+  );
 }
 
 function barChart(data, xattr, yattr, selector) {
@@ -332,7 +299,7 @@ function barChart(data, xattr, yattr, selector) {
 
   var padding = 30;
 
-  var barWidth = 20;
+  var barWidth = 16;
   var width = (barWidth + 10) * data.length;
   var height = 100;
 
