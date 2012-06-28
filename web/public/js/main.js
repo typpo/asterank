@@ -269,7 +269,7 @@ function scatterScore() {
 
   // render here
   $('#chart').height(220);
-  $('#chart').width('90%');
+  $('#chart').width('85%');
 
   graph = Flotr.draw(
     $('#chart').get(0), series, {
