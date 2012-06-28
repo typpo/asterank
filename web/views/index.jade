@@ -123,11 +123,13 @@ div.row-fluid#landing-page
           <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
 
 
-div#chart-title.row-fluid(style='display:none;text-align:center;')
-  h3 Value Score vs. Accessibility
+//
+  div#chart-title.row-fluid(style='display:none;text-align:center;')
+    h3 Value Score vs. Accessibility
 div.row-fluid
-  div#chart-container(style='border: 1px solid #ccc;height:220px;width:100%')
+  div#chart-container(style='height:220px')
     div.span10#chart
+    div#chart-legend.span2(style='height:200px;overflow:hidden;padding-top:10px;')
 
 div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
 

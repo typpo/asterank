@@ -247,20 +247,17 @@ function scatterScore() {
     return a.closeness - b.closeness;
   });
   var series = _.chain(lastResults).map(function(obj) {
-    var ret = {
-      x: Math.log(obj.closeness),
-      y: Math.log(obj.score),
-      stype: obj.spec_B
-    };
-    // what an ugly hack
-    logscores[ret.stype + ',' + ret.x.toFixed(2) + ',' + ret.y.toFixed(2)] = obj;
-    return ret;
+    return [
+      obj.closeness,
+      Math.log(obj.score),
+      obj.spec_B
+    ];
   }).groupBy(function(obj) {
-    return obj.stype;
+    return obj[2];
   }).map(function(objs, stype) {
     return {
       data: objs,
-      color: 'pink',
+      color: '#'+Math.floor(Math.random()*16777215).toString(16),
       label: stype,
       points: {show: true}
     };
@@ -269,13 +266,13 @@ function scatterScore() {
   console.log(series);
 
   // render here
-  $('#chart').height(300);
+  $('#chart').height(220);
 
   graph = Flotr.draw(
     $('#chart').get(0), series,
     {
-      legend : { position : 'se', backgroundColor : '#D2E8FF' },
-      title : 'Negative Values'
+      legend : { container: $('#chart-legend').get(0) },
+      title : 'Value vs. Ease of Access'
     }
   );
 }
