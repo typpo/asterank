@@ -12,7 +12,9 @@ app.use(express.cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
-var DEFAULT_PORT = 19590;
+var DEV_PORT = 19590;
+var PROD_PORT = 9590;
+var IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 // App
 
@@ -84,12 +86,12 @@ app.post('/subscribe', function(req, res) {
 function renderWithContext(res, template, obj) {
   if (!obj) obj = {};
   obj.context = {
-    production: process.env.NODE_ENV === 'production',
+    production: IS_PRODUCTION,
   };
   res.render(template, obj);
 }
 
-var port = process.env.PORT || DEFAULT_PORT;
+var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
 app.listen(port);
 
 console.log('Running in context:', process.env.NODE_ENV);
