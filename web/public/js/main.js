@@ -144,12 +144,13 @@ function doSearch(preselect) {
         // Could be a jpl short name
         var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
       }
-      preselect_match
-        .css('font-weight', 'bold')
-        .trigger('click');
-      var container = $('#tbl-container');
-      container.scrollTop(preselect_match.position().top - container.offset().top - 50);
-      //preselect_match.get(0).scrollIntoView();
+      if (preselect_match.length > 0) {
+        preselect_match
+          .css('font-weight', 'bold')
+          .trigger('click');
+        var container = $('#tbl-container');
+        container.scrollTop(preselect_match.position().top - container.offset().top - 50);
+      }
     }
   });
   return false;
