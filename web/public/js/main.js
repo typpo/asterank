@@ -35,7 +35,7 @@ function onTableClick() {
   var freebase_query = obj.replace(' ', '_').toLowerCase();
   $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
   */
-  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
   // workaround for a glitch on mobile devices
   $("#tbl-container").scroll();
@@ -114,7 +114,7 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
     tableStretched = true;
   }
 
-  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 }
 
 function doSearch(preselect) {
