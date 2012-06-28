@@ -2,11 +2,14 @@ var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
   /*'a', 'q', 'moid',*/ 'dv', 'pha'];
 var FUZZY_FIELDS = ['price', 'saved', 'profit'];
 var CLOSE_APPROACHES_FIELD = 'Close Approaches';
+var NEXT_PASS_FIELD = 'Next Pass';
 var lastResults = null;
 var compositions = null;
 var tableStretched = false;
+var isMobile = false;
 
 $(function() {
+  isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
   $('.exptip').tooltip();
   $('#submit').on('click', doSearch);
   $(document).on('click', '#tbl tbody tr', onTableClick);
@@ -32,7 +35,7 @@ function onTableClick() {
   var freebase_query = obj.replace(' ', '_').toLowerCase();
   $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
   */
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
   // workaround for a glitch on mobile devices
   $("#tbl-container").scroll();
@@ -53,42 +56,45 @@ function onTableClick() {
 function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
   $tbody.empty();
   for (var x in result.data) {
-    if (result.data.hasOwnProperty(x)) {
-      var item = result.data[x];
-      if (!item) continue;
+    if (!result.data.hasOwnProperty(x)) continue;
+    var item = result.data[x];
+    if (!item) continue;
 
-      if (x === CLOSE_APPROACHES_FIELD) {
-        var approaches = '';
-        for (var i=0; i < item.length; i++) {
-          var distau = parseFloat(item[i].nom_dist_au);
-          var rel_velocity = parseFloat(item[i].v_relative);
-          approaches += '<tr><td>' + item[i].date + '</td><td>'
-            + distau.toFixed(3) + '</td><td>'
-            + rel_velocity.toFixed(3) + '</td></tr>';
-        }
-        var $row = $('<tr><td>' + x
-          + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
-          + item.length
-          + ')</span></td></tr>')
-          .on('click', function() {
-            mixpanel.track('approaches', {
-              fullname: fullname
-            });
-            _gaq.push(['_trackEvent', 'approaches', 'clicked', fullname]);
-            $('#close-approaches-name').html(obj);
-            $('#approaches-modal tbody').empty().append(approaches);
-            $('#approaches-modal').modal();
-        });
-        $tbody.append($row);
+    if (x === CLOSE_APPROACHES_FIELD) {
+      // Build approaches table
+      var approaches = '';
+      for (var i=0; i < item.length; i++) {
+        var distau = parseFloat(item[i].nom_dist_au);
+        var rel_velocity = parseFloat(item[i].v_relative);
+        approaches += '<tr><td>' + item[i].date + '</td><td>'
+          + distau.toFixed(3) + '</td><td>'
+          + rel_velocity.toFixed(3) + '</td></tr>';
       }
-      else {
-        if (typeof(item) === 'number') {
-          item = item.toFixed(2);
-          if (item == -1)
-            continue;
-        }
-        $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
+      var $row = $('<tr><td>' + x
+        + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
+        + item.length
+        + ')</span></td></tr>')
+        .on('click', function() {
+          mixpanel.track('approaches', {
+            fullname: fullname
+          });
+          _gaq.push(['_trackEvent', 'approaches', 'clicked', fullname]);
+          $('#close-approaches-name').html(obj);
+          $('#approaches-modal tbody').empty().append(approaches);
+          $('#approaches-modal').modal();
+      });
+      $tbody.append($row);
+    }
+    else if (x === NEXT_PASS_FIELD) {
+      $tbody.append('<tr><td>' + x + '</td><td>' + item.date + '</td></tr>');
+    }
+    else {
+      if (typeof(item) === 'number') {
+        item = item.toFixed(2);
+        if (item == -1)
+          continue;
       }
+      $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
     }
   }
   // orbit link
@@ -109,16 +115,16 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
     tableStretched = true;
   }
 
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 }
 
-function doSearch() {
+function doSearch(preselect) {
   $('#instructions').show();
   $('#details').hide();
   $('#legend').hide();
   $('#results').hide();
   $('#chart-title').hide();
-  $('#tbl-title').hide();
+  $('#tbl-spacer').hide();
   $('#chart-container').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
 
@@ -133,12 +139,25 @@ function doSearch() {
   _gaq.push(['_trackEvent', 'search', 'clicked', searchparams.sort]);
   $.getJSON('/top', searchparams, function(data) {
     renderMainTable(data, num_search);
+    if (preselect) {
+      var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
+      if (preselect_match.length < 1) {
+        // Could be a jpl short name
+        var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
+      }
+      preselect_match
+        .css('font-weight', 'bold')
+        .trigger('click');
+      var container = $('#tbl-container');
+      container.scrollTop(preselect_match.position().top - container.offset().top - 50);
+      //preselect_match.get(0).scrollIntoView();
+    }
   });
   return false;
 }
 
 function renderMainTable(data, num_search) {
-  var $tmp = $('tbody').empty();
+  var $tmp = $('<tbody>');
   lastResults = data.results.rankings;
   compositions = data.results.compositions;
   for (var i=0; i < lastResults.length; i++) {
@@ -164,20 +183,18 @@ function renderMainTable(data, num_search) {
         }
       }
       else {
-        val = val + '';
-        if (val.length > 20) {
-          val = val.substring(0,17) + '...';
-        }
+        val = truncateText(val + '', 20);
       }
       html += '<td>' + val + '</td>';
     }
     html += '</tr>';
     $tmp.append(html);
   }
-  $('.intro').hide();
+  $('#landing-page').hide();
+  $('#footer').detach().appendTo('#other-footer-container').show();
 
   // really this should be a screen size thing
-  if (navigator && !navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/) && supportsSvg()) {
+  if (navigator && !isMobile && supportsSvg()) {
     if (num_search <= 9000)
       graphSpectral();
     if (num_search <= 500) {
@@ -189,9 +206,9 @@ function renderMainTable(data, num_search) {
   $('#tbl tbody').append($tmp.children());
   $('#results').show();
   $('#legend').show();
-  $('#tbl-title').show();
+  $('#tbl-spacer').show();
   $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
-  $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
 }
 
 /* Graphing */
@@ -366,6 +383,10 @@ function barChart(data, xattr, yattr, selector) {
 
 /* Utilities */
 
+function supportsSvg() {
+  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+}
+
 var fuzzes = [
   {
     word: 'trillion',
@@ -394,6 +415,9 @@ function toFuzz(n) {
   return n;
 }
 
-function supportsSvg() {
-  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+function truncateText(txt, len) {
+  if (txt.length > len) {
+    txt = txt.substring(0,len-3) + '...';
+  }
+  return txt;
 }

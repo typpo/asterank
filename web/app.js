@@ -12,22 +12,25 @@ app.use(express.cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
-var DEFAULT_PORT = 9590;
+var DEFAULT_PORT = 19590;
 
 // App
 
 app.get('/', function(req, res) {
-  res.render('index', {
-    nosocial: req.query.nosocial !== undefined,
+  lookup.homepage(function(err, summary_result) {
+    renderWithContext(res, 'index', {
+      nosocial: req.query.nosocial !== undefined,
+      summary: summary_result,
+    });
   });
 });
 
 app.get('/about', function(req, res) {
-  res.render('about');
+  renderWithContext(res, 'about');
 });
 
 app.get('/feedback', function(req, res) {
-  res.render('feedback');
+  renderWithContext(res, 'feedback');
 });
 
 app.post('/feedback', function(req, res) {
@@ -45,6 +48,13 @@ app.get('/top', function(req, res) {
     num = Math.min(num, 10000);
   lookup.topN(num, req.query.sort, function(err, result) {
     res.send({results:result});
+  });
+
+});
+
+app.get('/summary', function(req, res) {
+  lookup.homepage(function(err, result) {
+    res.send(result);
   });
 
 });
@@ -71,7 +81,16 @@ app.post('/subscribe', function(req, res) {
   res.redirect('/');
 });
 
+function renderWithContext(res, template, obj) {
+  if (!obj) obj = {};
+  obj.context = {
+    production: process.env.NODE_ENV === 'production',
+  };
+  res.render(template, obj);
+}
+
 var port = process.env.PORT || DEFAULT_PORT;
 app.listen(port);
 
+console.log('Running in context:', process.env.NODE_ENV);
 console.log('Started listening on port ' + port);

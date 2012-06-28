@@ -7,6 +7,7 @@ import sys
 import urllib
 import re
 import json
+import time
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -35,7 +36,9 @@ class Asteroid:
 
     self.data['EMOID (AU)'] = r.additionalInfoParameter('Earth MOID')
 
-    self.data['Close Approaches'] = r.closeApproaches()
+    close_approaches = r.closeApproaches()
+    if close_approaches:
+      self.data['Next Pass'], self.data['Close Approaches'] = close_approaches
 
 class JPL_Query:
   def __init__(self, query):
@@ -53,7 +56,10 @@ class JPL_Query:
     tag = self.soup.find(text=txt)
     if tag:
       el = tag.find_parent('td').next_sibling.next_sibling.next_sibling.next_sibling.find('font').next
-      return float(el)
+      try:
+        return float(el)
+      except ValueError:
+        return el
     return -1
 
   def additionalInfoParameter(self, txt):
@@ -73,12 +79,14 @@ class JPL_Query:
 
     tag = tag.next_sibling.next_sibling
     results = []
+    soonest = None
     while tag:
       texts = map(lambda x: x.get_text(), tag.find_all('font'))
       d = {}
       pydate = datetime.strptime(texts[0], '%Y-%b-%d %H:%M')
-      if pydate >= datetime.today():
-        d['date'] = texts[0]
+      if pydate >= datetime.today() and texts[2] == 'Earth':
+        d['date'] = pydate.strftime('%b %d, %Y')  #texts[0]
+        d['date_iso'] = pydate.isoformat()
         d['uncertainty'] = texts[1]
         d['body'] = texts[2]
         d['nom_dist_au'] = texts[3]
@@ -97,13 +105,17 @@ class JPL_Query:
         d['ref'] = texts[16]
         d['modified'] = texts[17]
 
+        if not soonest:
+          soonest = d
+
         results.append(d)
 
       tag = tag.next_sibling
       if tag:
         tag = tag.next_sibling
 
-    return results
+
+    return soonest, results
 
 if __name__ == "__main__":
   if len(sys.argv) < 2:
