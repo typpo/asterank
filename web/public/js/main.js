@@ -139,7 +139,14 @@ function doSearch(preselect) {
   $.getJSON('/top', searchparams, function(data) {
     renderMainTable(data, num_search);
     if (preselect) {
-      $('#tbl tbody tr[data-full-name="' + preselect + '"]').trigger('click');
+      var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
+      if (preselect_match.length < 1) {
+        // Could be a jpl short name
+        $('#tbl tbody tr[data-obj="' + preselect + '"]').trigger('click');
+      }
+      else {
+        preselect_match.trigger('click');
+      }
     }
   });
   return false;
@@ -152,7 +159,6 @@ function renderMainTable(data, num_search) {
   for (var i=0; i < lastResults.length; i++) {
     var obj = lastResults[i];
     var name = obj.prov_des || obj.full_name;
-    if (name === '1986 PA') console.log('vish');
     var html = '<tr data-full-name="' + obj.full_name
       + '" data-obj="' + name
       + '" data-obj_type="' + obj.spec_B
