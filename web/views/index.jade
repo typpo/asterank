@@ -51,7 +51,7 @@ div.row-fluid#landing-page
           - each asteroid in summary.most_valuable
             tr
               td
-                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('price');$('#top_num').val(100);doSearch('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
+                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('price');$('#top_num').val(100);mixpanel.track('most valuable click');doSearch('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
                   #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
               td #{asteroid.fuzzed_price}
     div.span2(style='margin-left:0;width:100%')
@@ -65,7 +65,7 @@ div.row-fluid#landing-page
           - each asteroid in summary.most_cost_effective
             tr
               td
-                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('score');$('#top_num').val(100);doSearch('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
+                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('score');$('#top_num').val(100);mixpanel.track('most cost effective click');doSearch('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
                   #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
               td #{asteroid.fuzzed_price}
     div.span2(style='margin-left:0; width:100%;')
@@ -79,7 +79,7 @@ div.row-fluid#landing-page
           - each jpl_asteroid in summary.upcoming_passes
             tr
               td
-                a(href="javascript:$('#top_sort').val('score');$('#top_num').val(150);doSearch('#{jpl_asteroid.tag_name}');$('.exptip').tooltip('hide');")
+                a(href="javascript:$('#top_sort').val('score');$('#top_num').val(150);mixpanel.track('upcoming passes click');doSearch('#{jpl_asteroid.tag_name}');$('.exptip').tooltip('hide');")
                   #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
               td #{jpl_asteroid['Next Pass'].date}
   div.span10
