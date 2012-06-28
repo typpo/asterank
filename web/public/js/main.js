@@ -124,7 +124,7 @@ function doSearch(preselect) {
   $('#results').hide();
   $('#chart-title').hide();
   $('#tbl-spacer').hide();
-  $('#chart-container').hide();
+  //$('#chart-container').hide();
   $('#submit').attr('disabled', 'disabled').val('Loading...');
 
   // empty graphs
@@ -192,6 +192,12 @@ function renderMainTable(data, num_search) {
   $('#landing-page').hide();
   $('#footer').detach().appendTo('#other-footer-container').show();
 
+  $('#submit').removeAttr('disabled').val('Go');
+  $('#tbl tbody').append($tmp.children());
+  $('#results').show();
+  $('#legend').show();
+  $('#tbl-spacer').show();
+  //
   // really this should be a screen size thing
   if (navigator && !isMobile && supportsSvg()) {
     if (num_search <= 9000)
@@ -201,11 +207,8 @@ function renderMainTable(data, num_search) {
       scatterScore();
     }
   }
-  $('#submit').removeAttr('disabled').val('Go');
-  $('#tbl tbody').append($tmp.children());
-  $('#results').show();
-  $('#legend').show();
-  $('#tbl-spacer').show();
+
+  // now scroll into place
   $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
   if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
 }
@@ -238,8 +241,6 @@ function scatterScore() {
     return;
   }
 
-  var palette = new Rickshaw.Color.Palette( { scheme: 'munin' } );
-
   var logscores = {};
   lastResults = lastResults.sort(function(a,b) {
     return a.closeness - b.closeness;
@@ -258,71 +259,24 @@ function scatterScore() {
   }).map(function(objs, stype) {
     return {
       data: objs,
-      color: palette.color(),
-      name: stype
+      color: 'pink',
+      label: stype,
+      points: {show: true}
     };
   }).value();
 
-  Rickshaw.Series.zeroFill(series);
+  console.log(series);
 
-  var chartwidth = $(window).width() - 160;
-  var graph = new Rickshaw.Graph({
-    element: document.getElementById('profit-graph'),
-    width: chartwidth,
-    height: 220,
-    min: 1,
-    renderer: 'scatterplot',
-    series: series
-  });
+  // render here
+  $('#chart').height(300);
 
-  graph.renderer.dotSize = 6;
-  graph.render();
-
-  $('#chart-container').show();
-  $('#chart-container').css('width', chartwidth);
-  $('#profit-graph-legend').css('top', $('#chart-container').offset().top);
-  $('#profit-graph-legend').css('overflow', $('#chart-container').offset().top);
-
-  var hoverDetail = new Rickshaw.Graph.HoverDetail({
-    graph: graph,
-    formatter: function(series, x, y) {
-      var key = series.name + ',' + x.toFixed(2) + ',' + y.toFixed(2);
-      var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-
-      var name = '';
-      var valuestr = '';
-      var profitstr = '';
-      var obj = logscores[key];
-      if (obj) {
-        name = obj.full_name;
-        valuestr = '<br>Value: $' + toFuzz(obj.price);
-        profitstr = '<br>Profit: $' + toFuzz(obj.profit);
-      }
-      var content = swatch
-        + name
-        + valuestr
-        + profitstr
-        + '<br>Accessibility (log): ' + x.toFixed(2)
-        + ' <br>Score (log): '
-        + y.toFixed(2);
-      return content;
+  graph = Flotr.draw(
+    $('#chart').get(0), series,
+    {
+      legend : { position : 'se', backgroundColor : '#D2E8FF' },
+      title : 'Negative Values'
     }
-  });
-
-  var legend = new Rickshaw.Graph.Legend({
-    graph: graph,
-    element: document.getElementById('profit-graph-legend')
-  });
-  $('#profit-graph-legend').prepend('<p style="text-align:center;font-weight:bold;">Asteroid Type</p>');
-
-  var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-    graph: graph,
-    legend: legend
-  });
-  var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-    graph: graph,
-    legend: legend
-  });
+  );
 }
 
 function barChart(data, xattr, yattr, selector) {
