@@ -50,7 +50,9 @@ div.row-fluid#landing-page
         tbody
           - each asteroid in summary.most_valuable
             tr
-              td #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
+              td
+                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('price');$('#top_num').val(100);doSearch();$('.exptip').tooltip('hide');")
+                  #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
               td #{asteroid.fuzzed_price}
     div.span2
       h3 Most Cost Effective
@@ -62,7 +64,9 @@ div.row-fluid#landing-page
         tbody
           - each asteroid in summary.most_cost_effective
             tr
-              td #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
+              td
+                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('score');$('#top_num').val(100);doSearch();$('.exptip').tooltip('hide');")
+                  #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
               td #{asteroid.fuzzed_price}
     div.span2
       h3 Upcoming Passes
@@ -75,7 +79,9 @@ div.row-fluid#landing-page
         tbody
           - each jpl_asteroid in summary.upcoming_passes
             tr
-              td #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
+              td
+                a(href="javascript:$('#top_sort').val('score');$('#top_num').val(100);doSearch();$('.exptip').tooltip('hide');")
+                  #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
               td #{jpl_asteroid['Next Pass'].date}
               td not sure
   div.span10
@@ -103,7 +109,7 @@ div.row-fluid#landing-page
     div#footer
       div(style='margin-left: 25px;float:left;')
         h3 Notifications
-        p No spam, we'll just let you know if a significant re-ranking occurs.
+        p No spam, we'll just let you know if there is a significant algorithm improvement.
         form.form-inline(action='/subscribe', method='POST', style='margin-left:20px')
           input(type='text', name='email', id='email', placeholder='email@gmail.com')
           input.btn(type='button', value='Ok')

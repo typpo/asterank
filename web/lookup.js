@@ -59,10 +59,10 @@ function upcomingPasses(num, cb) {
       if (docs) {
         for (var i in docs) {
           delete docs[i]._id;
+          // Need to pair prices with each jpl entry
+
         }
       }
-
-      // Need to pair prices with each jpl entry
 
       cb(err, docs);
   });

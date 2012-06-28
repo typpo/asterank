@@ -117,7 +117,7 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
   if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 }
 
-function doSearch() {
+function doSearch(preselect) {
   $('#instructions').show();
   $('#details').hide();
   $('#legend').hide();
@@ -138,17 +138,21 @@ function doSearch() {
   _gaq.push(['_trackEvent', 'search', 'clicked', searchparams.sort]);
   $.getJSON('/top', searchparams, function(data) {
     renderMainTable(data, num_search);
+    if (preselect) {
+      $('#tbl tbody tr[data-full-name="' + preselect + '"]').trigger('click');
+    }
   });
   return false;
 }
 
 function renderMainTable(data, num_search) {
-  var $tmp = $('tbody').empty();
+  var $tmp = $('<tbody>');
   lastResults = data.results.rankings;
   compositions = data.results.compositions;
   for (var i=0; i < lastResults.length; i++) {
     var obj = lastResults[i];
     var name = obj.prov_des || obj.full_name;
+    if (name === '1986 PA') console.log('vish');
     var html = '<tr data-full-name="' + obj.full_name
       + '" data-obj="' + name
       + '" data-obj_type="' + obj.spec_B
