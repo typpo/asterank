@@ -123,12 +123,13 @@ div.row-fluid#landing-page
           <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
 
 
-div#chart-title.row-fluid(style='display:none;text-align:center;')
-  h3 Value Score vs. Accessibility
+//
+  div#chart-title.row-fluid(style='display:none;text-align:center;')
+    h3 Value Score vs. Accessibility
 div.row-fluid
-  div#chart-container(style='border: 1px solid #ccc;display:none;height:220px')
-    div.span10#profit-graph
-    div#profit-graph-legend(style='position:absolute;right:0;top:135px;height:200px;overflow:hidden;')
+  div#chart-container
+    div.span11#chart
+    div#chart-legend.span1(style='height:200px;overflow:hidden;padding-top:15px;')
 
 div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
 
@@ -136,7 +137,7 @@ div#results.row-fluid(style='display:none;')
   div.span3
     div#instructions(style='margin-top:35px;')
       h3(style='margin-bottom:25px') Click a row to view details. &rarr;
-      div.span5#spec-graph
+      div.span3#spec-graph
     div#details(style='display:none;')
       h2
       table.table.table-bordered.table-condensed
