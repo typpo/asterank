@@ -75,7 +75,6 @@ div.row-fluid#landing-page
           tr
             th Name
             th Time
-            th Value
         tbody
           - each jpl_asteroid in summary.upcoming_passes
             tr
@@ -83,7 +82,6 @@ div.row-fluid#landing-page
                 a(href="javascript:$('#top_sort').val('score');$('#top_num').val(150);doSearch('#{jpl_asteroid.tag_name}');$('.exptip').tooltip('hide');")
                   #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
               td #{jpl_asteroid['Next Pass'].date}
-              td not sure
   div.span10
     div.intro.welcome-blurb.well
       img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
