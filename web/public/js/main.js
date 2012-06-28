@@ -274,7 +274,7 @@ function scatterScore() {
   graph = Flotr.draw(
     $('#chart').get(0), series, {
       legend : { container: $('#chart-legend').get(0) },
-      title : 'Value vs. Ease of Access',
+      title : 'Value (log) vs. Ease of Access',
       mouse : {
         track : true,
         relative : true,
