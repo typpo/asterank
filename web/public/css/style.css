@@ -19,7 +19,8 @@ body {
 
 
 .search-thing * {
-  font-size:20px;font-weight:900
+  font-size:20px;font-weight:900;
+  vertical-align: middle;
 }
 .search-thing select {
   height: 1.8em;
