@@ -3217,6 +3217,10 @@ table {
 .table-striped tbody tr:nth-child(odd) th {
   background-color: #f9f9f9;
 }
+.table-striped tbody tr:nth-child(even) td,
+.table-striped tbody tr:nth-child(even) th {
+  background-color: transparent;
+}
 .table tbody tr:hover td,
 .table tbody tr:hover th {
   background-color: #f5f5f5;
