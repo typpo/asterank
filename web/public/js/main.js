@@ -289,7 +289,9 @@ function scatterScore() {
         radius: 5,
         sensibility: 5
       },
-
+      grid: {
+        backgroundColor: '#fff'
+      }
     }
   );
 }
