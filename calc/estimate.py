@@ -84,8 +84,13 @@ SPECTRA_INDEX = {
   },
   'K': {  # cross between S and C
     'water': 0.775,
-    'nickel-iron': 0.0434,
+    #'nickel-iron': 0.0434,
     'platinum': 0.005,
+
+    # lewis estimates
+    'iron': 31.098,
+    'nickel': 0.13,
+    'cobalt': 0.09,
   },
   'L': {  # copied from S
     'magnesium silicate': 1e-30,
