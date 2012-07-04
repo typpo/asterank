@@ -195,7 +195,7 @@ function renderMainTable(data, num_search) {
   $('#footer').detach().appendTo('#other-footer-container').show();
 
   $('#submit').removeAttr('disabled').val('Go');
-  $('#tbl tbody').append($tmp.children());
+  $('#tbl tbody').empty().append($tmp.children());
   $('#results').show();
   $('#legend').show();
   $('#tbl-spacer').show();
@@ -244,11 +244,11 @@ function scatterScore() {
   }
 
   var logscores = {};
-  lastResults = lastResults.sort(function(a,b) {
+  var sorted_results = lastResults.sort(function(a,b) {
     return a.closeness - b.closeness;
   });
   var stype_to_datapoints;
-  var series = _.chain(lastResults).map(function(obj) {
+  var series = _.chain(sorted_results).map(function(obj) {
     return [
       obj.closeness,
       Math.log(obj.score),
@@ -377,8 +377,8 @@ function toFuzz(n) {
     var x = fuzzes[i];
     if (n / x.num >= 1) {
       var prefix = (n / x.num);
-      if (i==0 && prefix > 100)
-        return '>100 ' + x.word;
+      if (i==0 && prefix > 150)
+        return '>150 ' + x.word;
       return prefix.toFixed(2) + ' ' + x.word;
     }
   }
