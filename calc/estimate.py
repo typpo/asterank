@@ -95,6 +95,7 @@ SPECTRA_INDEX = {
   'L': {  # copied from S
     'magnesium silicate': 1e-30,
     'iron silicate': 0,
+    'aluminum': 10
   },
   'Ld': {  # copied from S
     'magnesium silicate': 1e-30,
@@ -222,7 +223,7 @@ MATERIALS_INDEX = {
     '$_per_kg': 0.20
   },
   'platinum': {
-    '$_per_kg': 1
+    '$_per_kg': 2
   },
   'magnesium silicate': {
     '$_per_kg': 1e-25,
@@ -230,6 +231,9 @@ MATERIALS_INDEX = {
   'iron silicate': {
     '$_per_kg': 0,
   },
+  'aluminum': {
+    '$_per_kg': 0.5
+  }
 }
 
 def valuePerKg(type):
