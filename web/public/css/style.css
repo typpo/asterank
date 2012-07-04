@@ -1,5 +1,6 @@
 body {
   margin-top: 50px;
+  background-image: url('/images/subtlenet2.png');
 }
 
 .welcome-blurb p, .welcome-blurb li {
