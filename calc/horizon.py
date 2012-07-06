@@ -12,7 +12,7 @@ import scoring
 import estimate
 from pymongo import Connection
 
-DATA_PATH = 'data/fulldb.csv'
+DATA_PATH = 'data/fulldb.20120706.csv'
 DV_PATH = 'data/deltav/db.csv'
 MASS_PATH = 'data/masses.txt'
 G = 6.67300e-20   # km^3 / kgs^2

@@ -43,9 +43,10 @@ function onTableClick() {
   // orbital diagram
   var a = parseFloat($(this).attr('data-obj_a'));
   var e = parseFloat($(this).attr('data-obj_e'));
+  var om = parseFloat($(this).attr('data-obj_om'));
   if (supportsSvg()) {
     $('#orbit-viz-container').show();
-    renderOrbitalDiagram(a, e);
+    renderOrbitalDiagram(a, e, om);
   }
 
   $.getJSON('/info/' + obj, function(result) {
@@ -169,6 +170,7 @@ function renderMainTable(data, num_search) {
       + '" data-obj_type="' + obj.spec_B
       + '" data-obj_a="' + obj.a
       + '" data-obj_e="' + obj.e
+      + '" data-obj_om="' + obj.om
       + '">';
     for (var j=0; j < HEADERS.length; j++) {
       var val = obj[HEADERS[j]];

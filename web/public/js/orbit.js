@@ -1,9 +1,9 @@
 var DIAGRAM_HEIGHT = 170, DIAGRAM_WIDTH = 300;
 var SUN_X = DIAGRAM_WIDTH / 2, SUN_Y = DIAGRAM_HEIGHT / 2 - 10;
-var DIAGRAM_AU_FACTOR = 50;
+var DIAGRAM_AU_FACTOR = 90;
 var orbit_svg;
 
-function renderOrbitalDiagram(a, e) {
+function renderOrbitalDiagram(a, e, om) {
   $('#orbit-viz').empty();
   orbit_svg = d3.select("#orbit-viz")
       .append("svg:svg")
@@ -13,56 +13,78 @@ function renderOrbitalDiagram(a, e) {
   plotSun();
   plotEarth();
   plotVenus();
+  plotMercury();
   plotMars();
-  plotOrbit(a, e, 'black');
+  plotOrbit(a, e, om, 'black');
 }
 
-function plotOrbit(a, e, color) {
+function plotOrbit(a, e, om, color) {
   var b = a * Math.sqrt(1 - e * e);
   var q = a*(1-e);
   var Q = a*(1+e);
   var f = a * e;
-  plotCoords(b * DIAGRAM_AU_FACTOR, a * DIAGRAM_AU_FACTOR, f * DIAGRAM_AU_FACTOR, f * DIAGRAM_AU_FACTOR, color);
+
+  var rx = b * DIAGRAM_AU_FACTOR;
+  var ry = a * DIAGRAM_AU_FACTOR;
+  var foci = f * DIAGRAM_AU_FACTOR;
+
+  /*
+  var rotated_x = rx, rotated_y = ry;
+  if (om && false) {
+    console.log('before', rotated_x);
+    var rad_om = om * Math.PI / 180;
+    rotated_x = rx * Math.cos(rad_om) - ry * Math.sin(rad_om);
+    rotated_y = ry * Math.cos(rad_om) + rx * Math.sin(rad_om);
+    console.log('then', rotated_x);
+  }
+  */
+  plotCoords(rx, ry, foci, om, color);
 }
 
-function plotCoords(rx, ry, dcx, dcy, color) {
+function plotCoords(rx, ry, f, rotate_deg, color) {
   color = color || 'black';
+  var cx = SUN_X;
+  var cy = SUN_Y + f;
+  console.log(rotate_deg);
+  var rotate_back = 2 * Math.PI - ((rotate_deg) * Math.PI / 180);
+  var corrected_cx = cx * Math.cos(rotate_back) - cy * Math.sin(rotate_back);
+  var corrected_cy = cy * Math.cos(rotate_back) + cx * Math.sin(rotate_back);
+  console.log(cx, corrected_cx);
+
   orbit_svg.append("svg:ellipse")
       .style("stroke", color)
       .style("fill", "transparent")
       .attr("rx", rx)
       .attr("ry", ry)
-      .attr("cx", SUN_X)
-      .attr("cy", SUN_Y + dcy);
+      .attr("cx", cx)
+      .attr("cy", cy)
+      .attr("transform", "rotate(" + (rotate_deg*Math.PI/180) + ", " + cx + ", " + cy + ")")
 }
 
 function plotSun() {
   orbit_svg.append("svg:ellipse")
       .style("stroke", "black")
       .style("fill", "black")
-      .attr("rx", 5)
-      .attr("ry", 5)
+      .attr("rx", 2)
+      .attr("ry", 2)
       .attr("cx", SUN_X)
       .attr("cy", SUN_Y);
 }
 
 function plotEarth() {
-  plotOrbit(1.00000011, 0.01671022, 'blue');
-  /*
-  orbit_svg
-      .append('svg:text')
-      .attr("x", 6)
-      .attr("dy", 30)
-      .text(function(d) { return 'yo mama'; })
-      */
+  plotOrbit(1.00000011, 0.01671022, -11.26064, 'blue');
 }
 
 function plotMars() {
-  plotOrbit(1.52366231, 0.0935, 'red');
+  plotOrbit(1.52366231, 0.0935, 49.57854, 'red');
 }
 
 function plotVenus() {
-  plotOrbit(0.72333199, 0.00677323, 'orange');
+  plotOrbit(0.72333199, 0.00677323, 76.68069, 'orange');
+}
+
+function plotMercury() {
+  plotOrbit(0.38709893, 0.20563069, 48.33167, 'purple');
 }
 
 function plotCeres() {
