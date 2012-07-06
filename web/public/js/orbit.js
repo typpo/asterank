@@ -8,14 +8,14 @@ function renderOrbitalDiagram(a, e, om) {
   orbit_svg = d3.select("#orbit-viz")
       .append("svg:svg")
       .attr("width", DIAGRAM_WIDTH)
-      .attr("height", DIAGRAM_HEIGHT);
+      .attr("height", DIAGRAM_HEIGHT)
 
   plotSun();
   plotEarth();
   plotVenus();
   plotMercury();
   plotMars();
-  plotOrbit(a, e, om, 'black');
+  plotOrbit(a, e, om, 'white');
 }
 
 function plotOrbit(a, e, om, color) {
@@ -42,14 +42,9 @@ function plotOrbit(a, e, om, color) {
 }
 
 function plotCoords(rx, ry, f, rotate_deg, color) {
-  color = color || 'black';
+  color = color || 'white';
   var cx = SUN_X;
   var cy = SUN_Y + f;
-  console.log(rotate_deg);
-  var rotate_back = 2 * Math.PI - ((rotate_deg) * Math.PI / 180);
-  var corrected_cx = cx * Math.cos(rotate_back) - cy * Math.sin(rotate_back);
-  var corrected_cy = cy * Math.cos(rotate_back) + cx * Math.sin(rotate_back);
-  console.log(cx, corrected_cx);
 
   orbit_svg.append("svg:ellipse")
       .style("stroke", color)
@@ -63,8 +58,8 @@ function plotCoords(rx, ry, f, rotate_deg, color) {
 
 function plotSun() {
   orbit_svg.append("svg:ellipse")
-      .style("stroke", "black")
-      .style("fill", "black")
+      .style("stroke", "yellow")
+      .style("fill", "yellow")
       .attr("rx", 2)
       .attr("ry", 2)
       .attr("cx", SUN_X)
@@ -72,7 +67,7 @@ function plotSun() {
 }
 
 function plotEarth() {
-  plotOrbit(1.00000011, 0.01671022, -11.26064, 'blue');
+  plotOrbit(1.00000011, 0.01671022, -11.26064, 'cyan');
 }
 
 function plotMars() {
@@ -85,12 +80,4 @@ function plotVenus() {
 
 function plotMercury() {
   plotOrbit(0.38709893, 0.20563069, 48.33167, 'purple');
-}
-
-function plotCeres() {
-  plotOrbit(2.765348506018043, 0.07913825487621974, 'black');
-}
-
-function plotEros() {
-  plotOrbit(1.457930481032983, 0.2225304579974197, 'black');
 }
