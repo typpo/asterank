@@ -148,6 +148,8 @@ div#results.row-fluid(style='display:none;')
       div#orbit-viz-container(style='display:none;')
         div#orbit-viz
         div(style='text-align:center')
+          span(style='color:purple') Mercury
+          | ,
           span(style='color:orange') Venus
           | ,
           span(style='color:blue') Earth
@@ -189,9 +191,8 @@ div#legend-modal.modal(style='display:none;')
     a.btn(data-dismiss='modal') Close
 
 div#legend.row-fluid(style='margin-left:15px;display:none;')
-  div.span10
-    span
-      a(href='#', onClick="$('#legend-modal').modal();return false;") Explain field names
+  span(style='float:right;margin-right:20px;')
+    a(href='#', onClick="$('#legend-modal').modal();return false;") Explain field names
 
 div#other-footer-container
 

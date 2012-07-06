@@ -89,7 +89,7 @@ function topN(num, sort, cb) {
       var ret = _.pick(doc, 'score', 'saved', 'price', 'profit',
         'closeness', 'GM', 'spec_B', 'full_name',
         'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
-        'prov_des');
+        'prov_des', 'om');
       ret.fuzzed_price = shared_util.toFuzz(ret.price);
       return ret;
     });
