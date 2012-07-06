@@ -92,10 +92,10 @@ SPECTRA_INDEX = {
     'nickel': 0.13,
     'cobalt': 0.09,
   },
-  'L': {  # copied from S
+  'L': {
     'magnesium silicate': 1e-30,
     'iron silicate': 0,
-    'aluminum': 10
+    'aluminum': 7
   },
   'Ld': {  # copied from S
     'magnesium silicate': 1e-30,
@@ -232,7 +232,7 @@ MATERIALS_INDEX = {
     '$_per_kg': 0,
   },
   'aluminum': {
-    '$_per_kg': 0.5
+    '$_per_kg': 0.05
   }
 }
 
