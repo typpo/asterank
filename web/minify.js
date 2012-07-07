@@ -27,17 +27,19 @@ function walk(dir, done) {
 
 function minify(cb) {
   walk(path.join(__dirname, 'public/js'), function(err, files) {
+    if (err) {
+      cb(err);
+      return;
+    }
     var all_src = '';
-    var minify = _.filter(files, function(f) {
+    var files_to_minify = _.filter(files, function(f) {
       return (f.indexOf('.js') == f.length - 3 && f != 'bundle.js');
-    }).map(function(f) {
-      console.log(f);
-      return f;
     });
     var exec = require('child_process').exec;
 
     var closurelib = path.join(__dirname, '../lib/compiler.jar');
-    var targets = minify.join(' ');
+    var targets = files_to_minify.join(' ');
+    console.log(files_to_minify);
     var bundlepath = path.join(__dirname, '/public/js/bundle.js');
     var cmd = 'java -jar '
       + closurelib
@@ -52,6 +54,8 @@ function minify(cb) {
 
     console.log('writing new minified js bundle..');
     fs.writeFileSync(path.join(__dirname, 'public/js/bundle.js'), all_src);
+    console.log('bundle written');
+    if (cb) cb(false);
   });
 }
 
