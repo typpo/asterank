@@ -33,7 +33,7 @@ function minify(cb) {
     }
     var all_src = '';
     var files_to_minify = _.filter(files, function(f) {
-      return (f.indexOf('.js') == f.length - 3 && f != 'bundle.js');
+      return (f.indexOf('.js') == f.length - 3 && f.indexOf('/bundle.js') < 0);
     });
     var exec = require('child_process').exec;
 
