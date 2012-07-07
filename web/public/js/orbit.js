@@ -1,6 +1,6 @@
 var DIAGRAM_HEIGHT = 170, DIAGRAM_WIDTH = 300;
 var SUN_X = DIAGRAM_WIDTH / 2, SUN_Y = DIAGRAM_HEIGHT / 2 - 10;
-var DIAGRAM_AU_FACTOR = 90;
+var DIAGRAM_AU_FACTOR = 50;
 var orbit_svg;
 
 function renderOrbitalDiagram(a, e, om) {
