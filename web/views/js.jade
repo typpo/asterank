@@ -2,7 +2,8 @@
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
   script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js')
   script(src='/js/bundle.js')
-  h3(style='color:red;text-align:center;') *BUNDLED*
+  - if (!context.production)
+    h3(style='color:red;text-align:center;') *BUNDLED*
 -else
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
   script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js')
