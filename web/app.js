@@ -16,6 +16,7 @@ app.use(express.bodyParser());
 var DEV_PORT = 19590;
 var PROD_PORT = 9590;
 var IS_PRODUCTION = process.env.NODE_ENV === 'production';
+var js_bundled = false;
 
 // App
 
@@ -84,7 +85,6 @@ app.post('/subscribe', function(req, res) {
   res.redirect('/');
 });
 
-var js_bundled = false;
 function renderWithContext(res, template, obj) {
   if (!obj) obj = {};
   obj.context = {

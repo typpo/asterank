@@ -1,360 +1,364 @@
-var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
-  /*'a', 'q', 'moid',*/ 'dv', 'pha'];
-var FUZZY_FIELDS = ['price', 'saved', 'profit'];
-var CLOSE_APPROACHES_FIELD = 'Close Approaches';
-var NEXT_PASS_FIELD = 'Next Pass';
-var lastResults = null;
-var compositions = null;
-var tableStretched = false;
-var isMobile = false;
+(function(window, $, undefined) {
 
-$(function() {
-  isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
-  $('.exptip').tooltip();
-  $('#submit').on('click', doSearch);
-  $(document).on('click', '#tbl tbody tr', onTableClick);
-  $("#tbl").thfloat({
-    attachment: '#tbl-container'
+  var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
+    /*'a', 'q', 'moid',*/ 'dv', 'pha'];
+  var FUZZY_FIELDS = ['price', 'saved', 'profit'];
+  var CLOSE_APPROACHES_FIELD = 'Close Approaches';
+  var NEXT_PASS_FIELD = 'Next Pass';
+  var lastResults = null;
+  var compositions = null;
+  var tableStretched = false;
+  var isMobile = false;
+
+  $(function() {
+    isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
+    $('.exptip').tooltip();
+    $('#submit').on('click', doSearch);
+    $(document).on('click', '#tbl tbody tr', onTableClick);
+    $("#tbl").thfloat({
+      attachment: '#tbl-container'
+    });
+    mixpanel.track('home');
+    _gaq.push(['_trackEvent', 'home', 'arrived', '']);
   });
-  mixpanel.track('home');
-  _gaq.push(['_trackEvent', 'home', 'arrived', '']);
-});
 
-function onTableClick() {
-  $('#instructions').hide();
-  var $tbody = $('#details').show().find('tbody').html('Loading...');
-  var obj = $(this).attr('data-obj');
-  var obj_type = $(this).attr('data-obj_type');
-  var fullname = $(this).attr('data-full-name');
-  mixpanel.track('info', {
-    fullname: fullname
-  });
-  _gaq.push(['_trackEvent', 'info', 'clicked', fullname]);
-  $('#details h2').html(fullname);
-  /*
-  var freebase_query = obj.replace(' ', '_').toLowerCase();
-  $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
-  */
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  function onTableClick() {
+    $('#instructions').hide();
+    var $tbody = $('#details').show().find('tbody').html('Loading...');
+    var obj = $(this).attr('data-obj');
+    var obj_type = $(this).attr('data-obj_type');
+    var fullname = $(this).attr('data-full-name');
+    mixpanel.track('info', {
+      fullname: fullname
+    });
+    _gaq.push(['_trackEvent', 'info', 'clicked', fullname]);
+    $('#details h2').html(fullname);
+    /*
+    var freebase_query = obj.replace(' ', '_').toLowerCase();
+    $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
+    */
+    $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
-  // workaround for a glitch on mobile devices
-  $("#tbl-container").scroll();
+    // workaround for a glitch on mobile devices
+    $("#tbl-container").scroll();
 
-  // orbital diagram
-  var a = parseFloat($(this).attr('data-obj_a'));
-  var e = parseFloat($(this).attr('data-obj_e'));
-  var om = parseFloat($(this).attr('data-obj_om'));
-  if (supportsSvg()) {
-    $('#orbit-viz-container').show();
-    renderOrbitalDiagram(a, e, om);
+    // orbital diagram
+    var a = parseFloat($(this).attr('data-obj_a'));
+    var e = parseFloat($(this).attr('data-obj_e'));
+    var om = parseFloat($(this).attr('data-obj_om'));
+    if (supportsSvg()) {
+      $('#orbit-viz-container').show();
+      renderOrbitalDiagram(a, e, om);
+    }
+
+    $.getJSON('/info/' + obj, function(result) {
+      renderInfoPane(result, obj, obj_type, fullname, $tbody);
+    });
   }
 
-  $.getJSON('/info/' + obj, function(result) {
-    renderInfoPane(result, obj, obj_type, fullname, $tbody);
-  });
-}
+  function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
+    $tbody.empty();
+    for (var x in result.data) {
+      if (!result.data.hasOwnProperty(x)) continue;
+      var item = result.data[x];
+      if (!item) continue;
 
-function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
-  $tbody.empty();
-  for (var x in result.data) {
-    if (!result.data.hasOwnProperty(x)) continue;
-    var item = result.data[x];
-    if (!item) continue;
-
-    if (x === CLOSE_APPROACHES_FIELD) {
-      // Build approaches table
-      var approaches = '';
-      for (var i=0; i < item.length; i++) {
-        var distau = parseFloat(item[i].nom_dist_au);
-        var rel_velocity = parseFloat(item[i].v_relative);
-        approaches += '<tr><td>' + item[i].date + '</td><td>'
-          + distau.toFixed(3) + '</td><td>'
-          + rel_velocity.toFixed(3) + '</td></tr>';
-      }
-      var $row = $('<tr><td>' + x
-        + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
-        + item.length
-        + ')</span></td></tr>')
-        .on('click', function() {
-          mixpanel.track('approaches', {
-            fullname: fullname
-          });
-          _gaq.push(['_trackEvent', 'approaches', 'clicked', fullname]);
-          $('#close-approaches-name').html(obj);
-          $('#approaches-modal tbody').empty().append(approaches);
-          $('#approaches-modal').modal();
-      });
-      $tbody.append($row);
-    }
-    else if (x === NEXT_PASS_FIELD) {
-      $tbody.append('<tr><td>' + x + '</td><td>' + item.date + '</td></tr>');
-    }
-    else {
-      if (typeof(item) === 'number') {
-        item = item.toFixed(2);
-        if (item == -1)
-          continue;
-      }
-      $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
-    }
-  }
-  // orbit link
-  var jplstr = obj;
-  $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr='
-                + jplstr + ';orb=1">link</a></td></tr>');
-
-  // mapping link
-  var composition = _.keys(compositions[obj_type]).join(', ');
-  $tbody.append('<tr><td>Contains</td><td>' + composition + '</td></tr>');
-
-  // workaround for a glitch on mobile devices
-  $("#tbl-container").scroll();
-
-  // stretch the table to match data height
-  if (!tableStretched) {
-    $('#tbl-container').height($(document).height() - $('#tbl-container').offset().top);
-    tableStretched = true;
-  }
-
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
-}
-
-function doSearch(preselect) {
-  $('#instructions').show();
-  $('#details').hide();
-  $('#legend').hide();
-  $('#results').hide();
-  $('#chart-title').hide();
-  $('#tbl-spacer').hide();
-  //$('#chart-container').hide();
-  $('#submit').attr('disabled', 'disabled').val('Loading...');
-
-  // empty graphs
-  $('#spec-graph').empty();
-  $('#profit-graph').empty();
-  $('#profit-graph-legend').empty();
-
-  var num_search = parseInt($('#top_num').val());
-  var searchparams = {sort:$('#top_sort').val(),n:num_search};
-  mixpanel.track('search', searchparams);
-  _gaq.push(['_trackEvent', 'search', 'clicked', searchparams.sort]);
-  $.getJSON('/top', searchparams, function(data) {
-    renderMainTable(data, num_search);
-    if (preselect) {
-      var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
-      if (preselect_match.length < 1) {
-        // Could be a jpl short name
-        var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
-      }
-      if (preselect_match.length > 0) {
-        preselect_match
-          .css('font-weight', 'bold')
-          .trigger('click');
-        var container = $('#tbl-container');
-        container.scrollTop(preselect_match.position().top - container.offset().top - 50);
-      }
-    }
-  });
-  return false;
-}
-
-function renderMainTable(data, num_search) {
-  var $tmp = $('<tbody>');
-  lastResults = data.results.rankings;
-  compositions = data.results.compositions;
-  for (var i=0; i < lastResults.length; i++) {
-    var obj = lastResults[i];
-    var name = obj.prov_des || obj.full_name;
-    var html = '<tr data-full-name="' + obj.full_name
-      + '" data-obj="' + name
-      + '" data-obj_type="' + obj.spec_B
-      + '" data-obj_a="' + obj.a
-      + '" data-obj_e="' + obj.e
-      + '" data-obj_om="' + obj.om
-      + '">';
-    for (var j=0; j < HEADERS.length; j++) {
-      var val = obj[HEADERS[j]];
-      if (!val)
-        val = '';
-      if (typeof (val) === 'number') {
-        if ($.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
-          var suffix = obj['inexact'] ? '*' : '';
-          val = toFuzz(val) + suffix;
+      if (x === CLOSE_APPROACHES_FIELD) {
+        // Build approaches table
+        var approaches = '';
+        for (var i=0; i < item.length; i++) {
+          var distau = parseFloat(item[i].nom_dist_au);
+          var rel_velocity = parseFloat(item[i].v_relative);
+          approaches += '<tr><td>' + item[i].date + '</td><td>'
+            + distau.toFixed(3) + '</td><td>'
+            + rel_velocity.toFixed(3) + '</td></tr>';
         }
-        else {
-          val = val.toFixed(4);
-        }
+        var $row = $('<tr><td>' + x
+          + '</td><td><span style="text-decoration:underline;color:blue;cursor:pointer;">view ('
+          + item.length
+          + ')</span></td></tr>')
+          .on('click', function() {
+            mixpanel.track('approaches', {
+              fullname: fullname
+            });
+            _gaq.push(['_trackEvent', 'approaches', 'clicked', fullname]);
+            $('#close-approaches-name').html(obj);
+            $('#approaches-modal tbody').empty().append(approaches);
+            $('#approaches-modal').modal();
+        });
+        $tbody.append($row);
+      }
+      else if (x === NEXT_PASS_FIELD) {
+        $tbody.append('<tr><td>' + x + '</td><td>' + item.date + '</td></tr>');
       }
       else {
-        val = truncateText(val + '', 20);
+        if (typeof(item) === 'number') {
+          item = item.toFixed(2);
+          if (item == -1)
+            continue;
+        }
+        $tbody.append('<tr><td>' + x + '</td><td>' + item + '</td></tr>');
       }
-      html += '<td>' + val + '</td>';
     }
-    html += '</tr>';
-    $tmp.append(html);
-  }
-  $('#landing-page').hide();
-  $('#footer').detach().appendTo('#other-footer-container').show();
+    // orbit link
+    var jplstr = obj;
+    $tbody.append('<tr><td>Orbit</td><td><a style="text-decoration:underline;color:blue;" target="_blank" href="http://ssd.jpl.nasa.gov/sbdb.cgi?sstr='
+                  + jplstr + ';orb=1">link</a></td></tr>');
 
-  $('#submit').removeAttr('disabled').val('Go');
-  $('#tbl tbody').empty().append($tmp.children());
-  $('#results').show();
-  $('#legend').show();
-  $('#tbl-spacer').show();
-  //
-  // really this should be a screen size thing
-  if (navigator && !isMobile && supportsSvg()) {
-    if (num_search <= 9000)
-      graphSpectral();
-    if (num_search <= 500) {
-      $('#chart-title').show();
-      scatterScore();
+    // mapping link
+    var composition = _.keys(compositions[obj_type]).join(', ');
+    $tbody.append('<tr><td>Contains</td><td>' + composition + '</td></tr>');
+
+    // workaround for a glitch on mobile devices
+    $("#tbl-container").scroll();
+
+    // stretch the table to match data height
+    if (!tableStretched) {
+      $('#tbl-container').height($(document).height() - $('#tbl-container').offset().top);
+      tableStretched = true;
     }
+
+    $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
   }
 
-  // now scroll into place
-  $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
-  if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
-}
+  function doSearch(preselect) {
+    $('#instructions').show();
+    $('#details').hide();
+    $('#legend').hide();
+    $('#results').hide();
+    $('#chart-title').hide();
+    $('#tbl-spacer').hide();
+    //$('#chart-container').hide();
+    $('#submit').attr('disabled', 'disabled').val('Loading...');
 
-/* Graphing */
+    // empty graphs
+    $('#spec-graph').empty();
+    $('#profit-graph').empty();
+    $('#profit-graph-legend').empty();
 
-function graphSpectral() {
-  if (lastResults === null) {
-    return;
-  }
-
-  var specs_data = [];
-  var spec_grouped = _.chain(lastResults).groupBy(function(obj) {
-    return obj.spec_B;
-  }).map(function(val, key) {
-    specs_data.push({
-      spec_type: key,
-      count: val.length
+    var num_search = parseInt($('#top_num').val());
+    var searchparams = {sort:$('#top_sort').val(),n:num_search};
+    mixpanel.track('search', searchparams);
+    _gaq.push(['_trackEvent', 'search', 'clicked', searchparams.sort]);
+    $.getJSON('/top', searchparams, function(data) {
+      renderMainTable(data, num_search);
+      if (preselect) {
+        var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
+        if (preselect_match.length < 1) {
+          // Could be a jpl short name
+          var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
+        }
+        if (preselect_match.length > 0) {
+          preselect_match
+            .css('font-weight', 'bold')
+            .trigger('click');
+          var container = $('#tbl-container');
+          container.scrollTop(preselect_match.position().top - container.offset().top - 50);
+        }
+      }
     });
-  });
-
-  specs_data = specs_data.sort(function(a, b) {
-    return b.count - a.count;
-  });
-  barChart(specs_data, 'spec_type', 'count', '#spec-graph');
-}
-
-function scatterScore() {
-  if (lastResults === null) {
-    return;
+    return false;
   }
 
-  var logscores = {};
-  var sorted_results = lastResults.sort(function(a,b) {
-    return a.closeness - b.closeness;
-  });
-  var stype_to_datapoints;
-  var series = _.chain(sorted_results).map(function(obj) {
-    return [
-      obj.closeness,
-      Math.log(obj.score),
-      obj.spec_B,
-      obj
-    ];
-  }).groupBy(function(obj) {
-    return obj[2];
-  }).tap(function(value) {
-    stype_to_datapoints = value;
-  }).map(function(objs, stype) {
-    return {
-      data: objs,
-      color: '#'+Math.floor(Math.random()*16777215).toString(16),
-      label: stype,
-      points: {show: true}
-    };
-  }).value();
+  function renderMainTable(data, num_search) {
+    var $tmp = $('<tbody>');
+    lastResults = data.results.rankings;
+    compositions = data.results.compositions;
+    for (var i=0; i < lastResults.length; i++) {
+      var obj = lastResults[i];
+      var name = obj.prov_des || obj.full_name;
+      var html = '<tr data-full-name="' + obj.full_name
+        + '" data-obj="' + name
+        + '" data-obj_type="' + obj.spec_B
+        + '" data-obj_a="' + obj.a
+        + '" data-obj_e="' + obj.e
+        + '" data-obj_om="' + obj.om
+        + '">';
+      for (var j=0; j < HEADERS.length; j++) {
+        var val = obj[HEADERS[j]];
+        if (!val)
+          val = '';
+        if (typeof (val) === 'number') {
+          if ($.inArray(HEADERS[j], FUZZY_FIELDS) > -1) {
+            var suffix = obj['inexact'] ? '*' : '';
+            val = toFuzz(val) + suffix;
+          }
+          else {
+            val = val.toFixed(4);
+          }
+        }
+        else {
+          val = truncateText(val + '', 20);
+        }
+        html += '<td>' + val + '</td>';
+      }
+      html += '</tr>';
+      $tmp.append(html);
+    }
+    $('#landing-page').hide();
+    $('#footer').detach().appendTo('#other-footer-container').show();
 
-  // render here
-  $('#chart').height(220);
-  $('#chart').width('85%');
-
-  graph = Flotr.draw(
-    $('#chart').get(0), series, {
-      legend : { container: $('#chart-legend').get(0) },
-      title : 'Value (log) vs. Ease of Access',
-      mouse : {
-        track : true,
-        relative : true,
-        trackFormatter: function(obj) {
-          var obj = stype_to_datapoints[obj.series.label][obj.index][3];
-          return obj.full_name
-            + '<br>Type: ' + obj.spec_B
-            + '<br>Value: $' + toFuzz(obj.price)
-            + '<br>Accessibility Score: ' + obj.closeness.toFixed(4);
-        },
-        radius: 5,
-        sensibility: 5
-      },
-      grid: {
-        backgroundColor: '#fff'
+    $('#submit').removeAttr('disabled').val('Go');
+    $('#tbl tbody').empty().append($tmp.children());
+    $('#results').show();
+    $('#legend').show();
+    $('#tbl-spacer').show();
+    //
+    // really this should be a screen size thing
+    if (navigator && !isMobile && supportsSvg()) {
+      if (num_search <= 9000)
+        graphSpectral();
+      if (num_search <= 500) {
+        $('#chart-title').show();
+        scatterScore();
       }
     }
-  );
-}
 
-function barChart(data, xattr, yattr, selector) {
-  $(selector).empty();
+    // now scroll into place
+    $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
+    if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
+  }
 
-  var padding = 30;
+  /* Graphing */
 
-  var barWidth = 16;
-  var width = (barWidth + 10) * data.length;
-  var height = 100;
+  function graphSpectral() {
+    if (lastResults === null) {
+      return;
+    }
 
-  var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
-  var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum[yattr]; })]).
-    rangeRound([0, height]);
+    var specs_data = [];
+    var spec_grouped = _.chain(lastResults).groupBy(function(obj) {
+      return obj.spec_B;
+    }).map(function(val, key) {
+      specs_data.push({
+        spec_type: key,
+        count: val.length
+      });
+    });
 
-  var barDemo = d3.select(selector).
-    append("svg:svg").
-    attr("width", width).
-    attr("height", height + padding);
+    specs_data = specs_data.sort(function(a, b) {
+      return b.count - a.count;
+    });
+    barChart(specs_data, 'spec_type', 'count', '#spec-graph');
+  }
 
-  barDemo.selectAll("rect").
-    data(data).
-    enter().
-    append("svg:rect").
-    attr("x", function(datum, index) { return x(index); }).
-    attr("y", function(datum) { return height - y(datum[yattr]); }).
-    attr("height", function(datum) { return y(datum[yattr]); }).
-    attr("width", barWidth).
-    attr("fill", "#2d578b");
+  function scatterScore() {
+    if (lastResults === null) {
+      return;
+    }
 
-  barDemo.selectAll("text").
-    data(data).
-    enter().append("svg:text").
-    attr("x", function(datum, index) { return x(index) + barWidth; }).
-    attr("y", function(datum) { return height - y(datum[yattr]); }).
-    attr("dx", -barWidth/2).
-    attr("dy", "1.2em").
-    attr("text-anchor", "middle").
-    attr("style", "font-size: 12; font-family: Helvetica, sans-serif;").
-    text(function(datum) { return datum[yattr];}).
-    attr("fill", "white");
+    var logscores = {};
+    var sorted_results = lastResults.sort(function(a,b) {
+      return a.closeness - b.closeness;
+    });
+    var stype_to_datapoints;
+    var series = _.chain(sorted_results).map(function(obj) {
+      return [
+        obj.closeness,
+        Math.log(obj.score),
+        obj.spec_B,
+        obj
+      ];
+    }).groupBy(function(obj) {
+      return obj[2];
+    }).tap(function(value) {
+      stype_to_datapoints = value;
+    }).map(function(objs, stype) {
+      return {
+        data: objs,
+        color: '#'+Math.floor(Math.random()*16777215).toString(16),
+        label: stype,
+        points: {show: true}
+      };
+    }).value();
 
-  if (xattr) {
-    barDemo.selectAll("text.yAxis").
+    // render here
+    $('#chart').height(220);
+    $('#chart').width('85%');
+
+    graph = Flotr.draw(
+      $('#chart').get(0), series, {
+        legend : { container: $('#chart-legend').get(0) },
+        title : 'Value (log) vs. Ease of Access',
+        mouse : {
+          track : true,
+          relative : true,
+          trackFormatter: function(obj) {
+            var obj = stype_to_datapoints[obj.series.label][obj.index][3];
+            return obj.full_name
+              + '<br>Type: ' + obj.spec_B
+              + '<br>Value: $' + toFuzz(obj.price)
+              + '<br>Accessibility Score: ' + obj.closeness.toFixed(4);
+          },
+          radius: 5,
+          sensibility: 5
+        },
+        grid: {
+          backgroundColor: '#fff'
+        }
+      }
+    );
+  }
+
+  function barChart(data, xattr, yattr, selector) {
+    $(selector).empty();
+
+    var padding = 30;
+
+    var barWidth = 16;
+    var width = (barWidth + 10) * data.length;
+    var height = 100;
+
+    var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
+    var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum[yattr]; })]).
+      rangeRound([0, height]);
+
+    var barDemo = d3.select(selector).
+      append("svg:svg").
+      attr("width", width).
+      attr("height", height + padding);
+
+    barDemo.selectAll("rect").
+      data(data).
+      enter().
+      append("svg:rect").
+      attr("x", function(datum, index) { return x(index); }).
+      attr("y", function(datum) { return height - y(datum[yattr]); }).
+      attr("height", function(datum) { return y(datum[yattr]); }).
+      attr("width", barWidth).
+      attr("fill", "#2d578b");
+
+    barDemo.selectAll("text").
       data(data).
       enter().append("svg:text").
       attr("x", function(datum, index) { return x(index) + barWidth; }).
-      attr("y", height).
+      attr("y", function(datum) { return height - y(datum[yattr]); }).
       attr("dx", -barWidth/2).
+      attr("dy", "1.2em").
       attr("text-anchor", "middle").
-      attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
-      text(function(datum) { return datum[xattr];}).
-      attr("transform", "translate(0, 18)").
-      attr("class", "yAxis");
+      attr("style", "font-size: 12; font-family: Helvetica, sans-serif;").
+      text(function(datum) { return datum[yattr];}).
+      attr("fill", "white");
+
+    if (xattr) {
+      barDemo.selectAll("text.yAxis").
+        data(data).
+        enter().append("svg:text").
+        attr("x", function(datum, index) { return x(index) + barWidth; }).
+        attr("y", height).
+        attr("dx", -barWidth/2).
+        attr("text-anchor", "middle").
+        attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
+        text(function(datum) { return datum[xattr];}).
+        attr("transform", "translate(0, 18)").
+        attr("class", "yAxis");
+    }
   }
-}
 
-/* Utilities */
+  /* Utilities */
 
-function supportsSvg() {
-  return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
-}
+  function supportsSvg() {
+    return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
+  }
+
+})(window, jQuery);
