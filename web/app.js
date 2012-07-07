@@ -3,6 +3,7 @@ var express = require('express')
   , _ = require('underscore')
   , lookup = require('./lookup.js')
   , mailer = require('./mailer.js')
+  , minify = require('./minify.js')
 
 // Express config
 app.set('views', __dirname + '/views');
@@ -15,6 +16,8 @@ app.use(express.bodyParser());
 var DEV_PORT = 19590;
 var PROD_PORT = 9590;
 var IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+minify.minify();
 
 // App
 
