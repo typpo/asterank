@@ -23,6 +23,7 @@ function homepage(cb) {
     return;
   }
 
+  console.log('Pulling homepage data...');
   var mv,mce,up;
   var trigger = _.after(3, function() {
     homepage_summary_result = {
