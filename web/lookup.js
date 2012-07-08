@@ -13,7 +13,7 @@ var VALID_SORT_FIELDS = {
   profit: -1,
 }
 
-var HOMEPAGE_CACHE_ENABLED = true;
+var HOMEPAGE_CACHE_ENABLED = false;
 
 var homepage_summary_result;
 function homepage(cb) {
@@ -23,7 +23,6 @@ function homepage(cb) {
     return;
   }
 
-  console.log('Pulling homepage data...');
   var mv,mce,up;
   var trigger = _.after(3, function() {
     homepage_summary_result = {
