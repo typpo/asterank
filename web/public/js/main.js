@@ -141,19 +141,7 @@ function doSearch(preselect) {
   $.getJSON('/top', searchparams, function(data) {
     renderMainTable(data, num_search);
     if (preselect) {
-      var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
-      if (preselect_match.length < 1) {
-        // Could be a jpl short name
-        var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
-      }
-      if (preselect_match.length > 0) {
-        // User preselected a specific object
-        preselect_match
-          .css('font-weight', 'bold')
-          .trigger('click');
-        var container = $('#tbl-container');
-        container.scrollTop(preselect_match.position().top - container.offset().top - 50);
-      }
+      selectObject(preselect);
     }
   });
   return false;
@@ -216,6 +204,22 @@ function renderMainTable(data, num_search) {
   // now scroll into place
   $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
   if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
+}
+
+function selectObject(preselect) {
+  // User preselected a specific object
+  var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
+  if (preselect_match.length < 1) {
+    // Could be a jpl short name
+    var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
+  }
+  if (preselect_match.length > 0) {
+    preselect_match
+      .css('font-weight', 'bold')
+      .trigger('click');
+    var container = $('#tbl-container');
+    container.scrollTop(preselect_match.position().top - container.offset().top - 50);
+  }
 }
 
 /* Graphing */

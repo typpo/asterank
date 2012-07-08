@@ -94,14 +94,11 @@ function renderWithContext(res, template, obj) {
   res.render(template, obj);
 }
 
-// Start minification
 minify.minify(function(err) {
-  if (!err)
-    js_bundled = true;
+  js_bundled = true;
+  var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
+  app.listen(port);
+
+  console.log('Running in context:', process.env.NODE_ENV);
+  console.log('Started listening on port ' + port);
 });
-
-var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
-app.listen(port);
-
-console.log('Running in context:', process.env.NODE_ENV);
-console.log('Started listening on port ' + port);
