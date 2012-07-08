@@ -8,11 +8,14 @@ var compositions = null;
 var tableStretched = false;
 var isMobile = false;
 
+var orbit_diagram;
+
 $(function() {
   isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
   $('.exptip').tooltip();
   $('#submit').on('click', doSearch);
   $(document).on('click', '#tbl tbody tr', onTableClick);
+  orbit_diagram = new OrbitDiagram($('#orbit-viz'));
   $("#tbl").thfloat({
     attachment: '#tbl-container'
   });
@@ -46,7 +49,7 @@ function onTableClick() {
   var om = parseFloat($(this).attr('data-obj_om'));
   if (supportsSvg()) {
     $('#orbit-viz-container').show();
-    renderOrbitalDiagram(a, e, om);
+    orbit_diagram.renderOrbitalDiagram(a, e, om);
   }
 
   $.getJSON('/info/' + obj, function(result) {
