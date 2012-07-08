@@ -99,6 +99,7 @@ minify.minify(function(err) {
   js_bundled = true;
 });
 */
+
 var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
 app.listen(port);
 
