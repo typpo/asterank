@@ -7,6 +7,7 @@ var lastResults = null;
 var compositions = null;
 var tableStretched = false;
 var isMobile = false;
+var AsteroidOrbitRenderer = null;
 
 $(function() {
   isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
@@ -16,6 +17,7 @@ $(function() {
   $("#tbl").thfloat({
     attachment: '#tbl-container'
   });
+  AsteroidOrbitRenderer = new OrbitDiagram('#orbit-viz');
   mixpanel.track('home');
   _gaq.push(['_trackEvent', 'home', 'arrived', '']);
 });
@@ -46,7 +48,7 @@ function onTableClick() {
   var om = parseFloat($(this).attr('data-obj_om'));
   if (supportsSvg()) {
     $('#orbit-viz-container').show();
-    renderOrbitalDiagram(a, e, om);
+    AsteroidOrbitRenderer.render(a, e, om);
   }
 
   $.getJSON('/info/' + obj, function(result) {
