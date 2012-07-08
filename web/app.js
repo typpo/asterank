@@ -28,6 +28,12 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/orbits', function(req, res) {
+  renderWithContext(res, 'orbits', {
+    nosocial: req.query.nosocial !== undefined,
+  });
+});
+
 app.get('/about', function(req, res) {
   renderWithContext(res, 'about');
 });
