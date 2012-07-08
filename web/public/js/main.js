@@ -35,7 +35,7 @@ function onTableClick() {
   var freebase_query = obj.replace(' ', '_').toLowerCase();
   $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
   */
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
   // workaround for a glitch on mobile devices
   $("#tbl-container").scroll();
@@ -116,7 +116,7 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
     tableStretched = true;
   }
 
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 }
 
 function doSearch(preselect) {
@@ -141,18 +141,7 @@ function doSearch(preselect) {
   $.getJSON('/top', searchparams, function(data) {
     renderMainTable(data, num_search);
     if (preselect) {
-      var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
-      if (preselect_match.length < 1) {
-        // Could be a jpl short name
-        var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
-      }
-      if (preselect_match.length > 0) {
-        preselect_match
-          .css('font-weight', 'bold')
-          .trigger('click');
-        var container = $('#tbl-container');
-        container.scrollTop(preselect_match.position().top - container.offset().top - 50);
-      }
+      selectObject(preselect);
     }
   });
   return false;
@@ -215,6 +204,22 @@ function renderMainTable(data, num_search) {
   // now scroll into place
   $('#tbl-container').height($(window).height() - $('#tbl-container').offset().top);
   if (isMobile) $('html,body').animate({scrollTop: $('#tbl-container').offset().top-100},500);
+}
+
+function selectObject(preselect) {
+  // User preselected a specific object
+  var preselect_match = $('#tbl tbody tr[data-full-name="' + preselect + '"]');
+  if (preselect_match.length < 1) {
+    // Could be a jpl short name
+    var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
+  }
+  if (preselect_match.length > 0) {
+    preselect_match
+      .css('font-weight', 'bold')
+      .trigger('click');
+    var container = $('#tbl-container');
+    container.scrollTop(preselect_match.position().top - container.offset().top - 50);
+  }
 }
 
 /* Graphing */
@@ -357,39 +362,4 @@ function barChart(data, xattr, yattr, selector) {
 
 function supportsSvg() {
   return !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', "svg").createSVGRect;
-}
-
-var fuzzes = [
-  {
-    word: 'trillion',
-    num: 1000000000000
-  },
-  {
-    word: 'billion',
-    num: 1000000000
-  },
-  {
-    word: 'million',
-    num: 1000000
-  }
-];
-
-function toFuzz(n) {
-  for (var i=0; i < fuzzes.length; i++) {
-    var x = fuzzes[i];
-    if (n / x.num >= 1) {
-      var prefix = (n / x.num);
-      if (i==0 && prefix > 150)
-        return '>150 ' + x.word;
-      return prefix.toFixed(2) + ' ' + x.word;
-    }
-  }
-  return n;
-}
-
-function truncateText(txt, len) {
-  if (txt.length > len) {
-    txt = txt.substring(0,len-3) + '...';
-  }
-  return txt;
 }

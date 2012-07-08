@@ -3,6 +3,7 @@ var express = require('express')
   , _ = require('underscore')
   , lookup = require('./lookup.js')
   , mailer = require('./mailer.js')
+  , minify = require('./minify.js')
 
 // Express config
 app.set('views', __dirname + '/views');
@@ -83,16 +84,21 @@ app.post('/subscribe', function(req, res) {
   res.redirect('/');
 });
 
+var js_bundled = false;
 function renderWithContext(res, template, obj) {
   if (!obj) obj = {};
   obj.context = {
     production: IS_PRODUCTION,
+    js_bundled: js_bundled,
   };
   res.render(template, obj);
 }
 
-var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
-app.listen(port);
+minify.minify(function(err) {
+  js_bundled = true;
+  var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
+  app.listen(port);
 
-console.log('Running in context:', process.env.NODE_ENV);
-console.log('Started listening on port ' + port);
+  console.log('Running in context:', process.env.NODE_ENV);
+  console.log('Started listening on port ' + port);
+});
