@@ -13,7 +13,7 @@ var VALID_SORT_FIELDS = {
   profit: -1,
 }
 
-var HOMEPAGE_CACHE_ENABLED = false;
+var HOMEPAGE_CACHE_ENABLED = true;
 
 var homepage_summary_result;
 function homepage(cb) {
