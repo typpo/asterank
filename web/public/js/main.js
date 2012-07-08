@@ -35,7 +35,7 @@ function onTableClick() {
   var freebase_query = obj.replace(' ', '_').toLowerCase();
   $('#details-img').attr('src', 'https://usercontent.googleapis.com/freebase/v1/image/en/' + freebase_query + '?maxwidth=200');
   */
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 
   // workaround for a glitch on mobile devices
   $("#tbl-container").scroll();
@@ -116,7 +116,7 @@ function renderInfoPane(result, obj, obj_type, fullname, $tbody) {
     tableStretched = true;
   }
 
-  $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
+  if (isMobile) $('html,body').animate({scrollTop: $('#details').offset().top-20},500);
 }
 
 function doSearch(preselect) {
@@ -147,6 +147,7 @@ function doSearch(preselect) {
         var preselect_match = $('#tbl tbody tr[data-obj="' + preselect + '"]')
       }
       if (preselect_match.length > 0) {
+        // User preselected a specific object
         preselect_match
           .css('font-weight', 'bold')
           .trigger('click');
