@@ -1,4 +1,4 @@
-(function(){if (!Date.now) Date.now = function() {
+!(function(){if (!Date.now) Date.now = function() {
   return +new Date;
 };
 try {

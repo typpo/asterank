@@ -1,13 +1,14 @@
 var express = require('express')
   , app = express.createServer()
   , _ = require('underscore')
+  , BundleUp = require('bundle-up')
   , lookup = require('./lookup.js')
   , mailer = require('./mailer.js')
-  , minify = require('./minify.js')
 
 // Express config
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.set('view options', { layout: false });
 
 app.use(express.cookieParser());
 app.use(express.static(__dirname + '/public'));
@@ -16,6 +17,15 @@ app.use(express.bodyParser());
 var DEV_PORT = 19590;
 var PROD_PORT = 9590;
 var IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+// Minification
+BundleUp(app, __dirname + '/assets', {
+  staticRoot: __dirname + '/public/',
+  staticUrlRoot:'/',
+  bundle: false,
+  minifyCss: false,
+  minifyJs:true
+});
 
 // App
 
@@ -88,21 +98,13 @@ app.post('/subscribe', function(req, res) {
   res.redirect('/');
 });
 
-var js_bundled = false;
 function renderWithContext(res, template, obj) {
   if (!obj) obj = {};
   obj.context = {
     production: IS_PRODUCTION,
-    js_bundled: js_bundled,
   };
   res.render(template, obj);
 }
-
-/*
-minify.minify(function(err) {
-  js_bundled = true;
-});
-*/
 
 var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
 app.listen(port);
