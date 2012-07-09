@@ -13,7 +13,7 @@ window.OrbitDiagram = (function() {
     this.DIAGRAM_AU_FACTOR = options.diagram_au_factor || 50;
   }
 
-  OrbitDiagram.prototype.render = function(a, e, om) {
+  OrbitDiagram.prototype.prepareRender = function() {
     this.$e.empty();
     this.orbit_svg = d3.select(this.selector)
         .append("svg:svg")
@@ -25,6 +25,11 @@ window.OrbitDiagram = (function() {
     this.plotVenus();
     this.plotMercury();
     this.plotMars();
+  }
+
+  OrbitDiagram.prototype.render = function(a, e, om) {
+    this.prepareRender();
+
     this.plotOrbit(a, e, om, 'white');
   }
 
