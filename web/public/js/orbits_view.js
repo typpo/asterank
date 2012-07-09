@@ -1,6 +1,5 @@
 window.OrbitsView = (function() {
   "use strict";
-
   var diagram;
 
   function OrbitsView(selector) {
