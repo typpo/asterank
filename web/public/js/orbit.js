@@ -56,12 +56,49 @@ window.OrbitDiagram = (function() {
 
     this.orbit_svg.append("svg:ellipse")
         .style("stroke", color)
+        .style("fill", "clear")
         .style("fill", "transparent")
         .attr("rx", rx)
         .attr("ry", ry)
         .attr("cx", cx)
         .attr("cy", cy)
-        .attr("transform", "rotate(" + (rotate_deg*Math.PI/180) + ", " + cx + ", " + cy + ")")
+        .attr("transform", "rotate(" + rotate_deg + ", " + this.SUN_X + ", " + this.SUN_Y + ")")
+        .on("mouseover", function(){
+          d3.select(this).style('stroke', 'red');
+        })
+        .on("mouseout", function(){
+          d3.select(this).style('stroke', color);
+        })
+
+    /* draw ellipse
+     * x0,y0 = center of the ellipse
+     * a = greater semi-axis
+     * exc = ellipse excentricity (exc = 0 for circle, 0 < exc < 1 for ellipse, exc > 1 for hiperboloid)
+     */
+    function drawEllipse(ctx, x0, y0, a, exc, lineWidth, color)
+    {
+        x0 += a * exc;
+        var r = a * (1 - exc*exc)/(1 + exc),
+            x = x0 + r,
+            y = y0;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        var i = 0.01 * Math.PI;
+        var twoPi = 2 * Math.PI;
+        while (i < twoPi) {
+            r = a * (1 - exc*exc)/(1 + exc * Math.cos(i));
+            x = x0 + r * Math.cos(i);
+            y = y0 + r * Math.sin(i);
+            ctx.lineTo(x, y);
+            i += 0.01;
+        }
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = color;
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+
   }
 
   OrbitDiagram.prototype.plotSun = function() {
