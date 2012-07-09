@@ -12,9 +12,8 @@ window.OrbitsView = (function() {
     });
 
     diagram.prepareRender();
-
-    // Extra stuff
-    diagram.plotJupiter();
+    diagram.renderPlanets();
+    diagram.plotJupiter();  // not included by default
   }
 
   OrbitsView.prototype.addOrbit = function(obj) {
