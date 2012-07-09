@@ -22,7 +22,7 @@ var IS_PRODUCTION = process.env.NODE_ENV === 'production';
 BundleUp(app, __dirname + '/assets', {
   staticRoot: __dirname + '/public/',
   staticUrlRoot:'/',
-  bundle: false,
+  bundle: true,
   minifyCss: false,
   minifyJs:true
 });
