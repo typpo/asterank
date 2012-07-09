@@ -34,16 +34,6 @@ OrbitDiagram.prototype.plotOrbit = function(a, e, om, color) {
   var ry = a * DIAGRAM_AU_FACTOR;
   var foci = f * DIAGRAM_AU_FACTOR;
 
-  /*
-  var rotated_x = rx, rotated_y = ry;
-  if (om && false) {
-    console.log('before', rotated_x);
-    var rad_om = om * Math.PI / 180;
-    rotated_x = rx * Math.cos(rad_om) - ry * Math.sin(rad_om);
-    rotated_y = ry * Math.cos(rad_om) + rx * Math.sin(rad_om);
-    console.log('then', rotated_x);
-  }
-  */
   this.plotCoords(rx, ry, foci, om, color);
 }
 
