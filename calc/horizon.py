@@ -92,7 +92,7 @@ def populateDb():
         # TODO should have our own merged spec row, instead we overwrite spec_B
         row['spec_B'] = newspec
       else:
-        continue # TODO temp
+        #continue # TODO temp
         row['spec_B'] = 'S'
 
     # match it with its delta-v

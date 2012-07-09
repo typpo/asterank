@@ -22,10 +22,13 @@ window.OrbitsView = (function() {
   }
 
   OrbitsView.prototype.addAllOrbits = function() {
-    var lastResults = Asterank.getLastResults();
+    var lastResults = Asterank.getLastResults().sort(function(a, b) {
+      return b.a - a.a;
+    });
+
     for (var i=0; i < lastResults.length; i++) {
       var obj = lastResults[i];
-      console.log(i);
+      console.log(obj.om);
       this.addOrbit(obj.a, obj.e, obj.om);
     }
   }
@@ -35,4 +38,8 @@ window.OrbitsView = (function() {
 
 $(function() {
   window.foo = new OrbitsView('#orbits-view-main');
+  Asterank.search();
+  setTimeout(function() {
+    foo.addAllOrbits();
+  }, 500);
 });
