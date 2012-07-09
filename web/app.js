@@ -101,6 +101,7 @@ app.post('/subscribe', function(req, res) {
 function renderWithContext(res, template, obj) {
   if (!obj) obj = {};
   obj.context = {
+    layout: 'layout',
     production: IS_PRODUCTION,
   };
   res.render(template, obj);

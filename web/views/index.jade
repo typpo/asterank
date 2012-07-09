@@ -1,226 +1,229 @@
-div.navbar.navbar-fixed-top
-  div.navbar-inner
-    div.container
-      div.nav-collapse
-        ul.nav
-          li.active
-            a(href='/') Home
-          li
-            a(href='/about') About
-          li
-            a(href='/feedback') Feedback
+extends layout
 
-div.row-fluid
-  div.span12
-    div.intro(style='padding:15px;margin-bottom:20px;text-align:center')
-      h2 Asterank is an economic and scientific catalog of over 580,000 asteroids in our solar system.
+block content
+  div.navbar.navbar-fixed-top
+    div.navbar-inner
+      div.container
+        div.nav-collapse
+          ul.nav
+            li.active
+              a(href='/') Home
+            li
+              a(href='/about') About
+            li
+              a(href='/feedback') Feedback
 
-    div.well(style='text-align:center;')
-      noscript
-        div(style='margin-bottom:30px;')
-          h3 Sorry, JavaScript is required to perform searches!  I track usage to determine data that I should prioritize when scraping and features that need improvement.  For a version of the homepage with no 3rd-party social content (eg. Facebook, Twitter share), click <a href="/?nosocial">here</a>.
+  div.row-fluid
+    div.span12
+      div.intro(style='padding:15px;margin-bottom:20px;text-align:center')
+        h2 Asterank is an economic and scientific catalog of over 580,000 asteroids in our solar system.
 
-      form.form-inline(style='margin:0')
-        div.search-thing
-          span Show top
-          select#top_num(style='margin:0 5px 0').input-small
-            option(value=100) 100
-            option(value=500) 500
-            option(value=1000) 1,000
-            option(value=5000) 5,000
-            option(value=10000) 10,000+
-          span  asteroids sorted by
-          select#top_sort(style='margin:0 5px 0').input-xlarge
-            option(value='profit') profit
-            option(value='score', selected) most cost effective
-            option(value='price') most valuable
-            option(value='closeness') accessibility
-          input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
+      div.well(style='text-align:center;')
+        noscript
+          div(style='margin-bottom:30px;')
+            h3 Sorry, JavaScript is required to perform searches!  I track usage to determine data that I should prioritize when scraping and features that need improvement.  For a version of the homepage with no 3rd-party social content (eg. Facebook, Twitter share), click <a href="/?nosocial">here</a>.
 
-div.row-fluid#landing-page
-  div.span2.top-rankings
-    div.span2(style='margin-left:0;width:100%')
-      h3 Most Valuable
-      table.table.table-bordered.table-striped.table-condensed
-        thead
+        form.form-inline(style='margin:0')
+          div.search-thing
+            span Show top
+            select#top_num(style='margin:0 5px 0').input-small
+              option(value=100) 100
+              option(value=500) 500
+              option(value=1000) 1,000
+              option(value=5000) 5,000
+              option(value=10000) 10,000+
+            span  asteroids sorted by
+            select#top_sort(style='margin:0 5px 0').input-xlarge
+              option(value='profit') profit
+              option(value='score', selected) most cost effective
+              option(value='price') most valuable
+              option(value='closeness') accessibility
+            input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
+
+  div.row-fluid#landing-page
+    div.span2.top-rankings
+      div.span2(style='margin-left:0;width:100%')
+        h3 Most Valuable
+        table.table.table-bordered.table-striped.table-condensed
+          thead
+            tr
+              th Name
+              th Value
+          tbody
+            - each asteroid in summary.most_valuable
+              tr
+                td
+                  a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('price');$('#top_num').val(100);mixpanel.track('most valuable click');Asterank.search('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
+                    #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
+                td #{asteroid.fuzzed_price}
+      div.span2(style='margin-left:0;width:100%')
+        h3 Most Cost Effective
+        table.table.table-bordered.table-striped.table-condensed
+          thead
+            tr
+              th Name
+              th Value
+          tbody
+            - each asteroid in summary.most_cost_effective
+              tr
+                td
+                  a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('score');$('#top_num').val(100);mixpanel.track('most cost effective click');Asterank.search('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
+                    #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
+                td #{asteroid.fuzzed_price}
+      div.span2(style='margin-left:0; width:100%;')
+        h3 Upcoming Passes
+        table.table.table-bordered.table-striped.table-condensed
+          thead
+            tr
+              th Name
+              th Time
+          tbody
+            - each jpl_asteroid in summary.upcoming_passes
+              tr
+                td
+                  a(href="javascript:$('#top_sort').val('score');$('#top_num').val(150);mixpanel.track('upcoming passes click');Asterank.search('#{jpl_asteroid.tag_name}');$('.exptip').tooltip('hide');")
+                    #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
+                td #{jpl_asteroid['Next Pass'].date}
+    div.span10
+      div.intro.welcome-blurb.well
+        img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
+        h2 Overview
+
+        p(style='font-weight: bold;') We've collected, computed, or inferred important data such as asteroid mass and composition from multiple scientific sources.  With this information, we estimate the costs and rewards of mining asteroids.
+
+        h2 Data
+        p Details on orbits and basic physical parameters are mostly sourced from JPL data.  Composition data is less well known, so we compute generalizations based on spectral classification and size.  Our calculations incorporate conclusions from multiple scientific publications in addition to cross-referencing known meteorite data.
+
+        //
+          p There are three major factors:
+            ol
+              li <strong>Value of Materials</strong> - Many asteroids contain metals, volatile compounds, and water.
+              li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
+              li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
+
+        h2 Why?
+        p Asteroid mining has been <a href="http://www.nytimes.com/2012/04/24/science/space/in-pursuit-of-riches-and-travelers-supplies-in-the-asteroid-belt.html?pagewanted=all" target="_blank">making headlines</a>. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
+
+        p The data on these objects are public but very sparse.  Remember, it's 2012 and we are just beginning!
+
+      div#footer
+        div(style='margin-left: 25px;float:left;')
+          h3 Notifications
+          p No spam, we'll just let you know if there is a significant algorithm improvement.
+          form.form-inline(action='/subscribe', method='POST', style='margin-left:20px')
+            input(type='text', name='email', id='email', placeholder='email@gmail.com')
+            input.btn(type='button', value='Ok')
+        div#footer(style='text-align:right;margin-top:35px;margin-right:100px;float:right;')
+
+          - if (!nosocial)
+            <span class='st_fblike_hcount'></span>
+            <span class='st_twitter_hcount'></span>
+            <span class='st_plusone_hcount'></span>
+            <span class='st_email_hcount'></span>
+            <script type="text/javascript">var switchTo5x=true;</script>
+            <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+            <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
+
+
+  //
+    div#chart-title.row-fluid(style='display:none;text-align:center;')
+      h3 Value Score vs. Accessibility
+  div.row-fluid
+    div#chart-container
+      div.span11#chart
+      div#chart-legend.span1(style='height:200px;overflow:hidden;padding-top:15px;width:8%')
+
+  div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
+
+  div#results.row-fluid(style='display:none;')
+    div.span3
+      div#instructions(style='margin-top:35px;')
+        h3(style='margin-bottom:25px') Click a row to view details. &rarr;
+        div.span3#spec-graph
+      div#details(style='display:none;')
+        h2
+        table.table.table-bordered.table-condensed
+          thead
+            tr
+              th Data
+              th Value
+          tbody
+        div#orbit-viz-container(style='display:none;')
+          div#orbit-viz(style='background-color:#000')
+          div(style='text-align:center;background-color:#000')
+            span(style='color:purple') Mercury
+            | ,
+            span(style='color:orange') Venus
+            | ,
+            span(style='color:cyan') Earth
+            | ,
+            span(style='color:red') Mars
+    div#tbl-container.span9(style='height:423px;overflow:scroll;overflow-x:auto;')
+      table#tbl.table.table-bordered.table-striped
+        thead(style='background-color:#fff')
           tr
             th Name
-            th Value
-        tbody
-          - each asteroid in summary.most_valuable
-            tr
-              td
-                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('price');$('#top_num').val(100);mixpanel.track('most valuable click');Asterank.search('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
-                  #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
-              td #{asteroid.fuzzed_price}
-    div.span2(style='margin-left:0;width:100%')
-      h3 Most Cost Effective
-      table.table.table-bordered.table-striped.table-condensed
+            th <a class="exptip" ref="tooltip" title="An overall score, taking into account the accessibility of the asteroid, its potential value, and the cost of moving material off it.">Score</a>
+            th <a class="exptip" ref="tooltip" title="The estimated value of the raw materials in this object.">Value</a> ($)
+            th <a class="exptip" ref="tooltip" title="The <em>very</em> hypothetical profit to be gained from mining this asteroid, taking into account processing and moving raw material">Est. Profit</a> ($)
+            th <a class="exptip" ref="tooltip" title="An overall score for a number of factors contributing to how difficult it is to get to the object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit. A higher score is better.">Accessibility</a>
+            th <a class="exptip" ref="tooltip" title="Asteroid type, which helps us estimate its composition.">Type</a>
+            th <a class="exptip" ref="tooltip" title="Roughly speaking, the amount of effort required to reach this asteroid from Earth.">&Delta;V</a> (km/s)
+            th <a class="exptip" ref="tooltip" title="Classified as a Potentially Hazardous Object (Yes/No)">PHA</a>
+        tbody(style='cursor:pointer;')
+
+
+  div#legend-modal.modal(style='display:none;')
+    div.modal-header
+      a.close(data-dismiss='modal') ×
+      h2 Column Explanations
+    div.modal-body(style='overflow:auto;height:250px;')
+      p
+        ul
+        li Aphelion - Greatest distance from sun.
+        li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
+        li Accessibility - overall score for a number of factors contributing to how difficult it is to get to the object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit. A higher score is better.
+        li &Delta;v - change in velocity required to rendezvous.
+        li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
+        li Perhelion - Least distance from sun.
+        li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as a potential hazard to Earth.
+        li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
+        li Value - the current value of the raw materials in this object.
+        li * - indicates that mass was estimated, rather than exact.
+    div.modal-footer
+      a.btn(data-dismiss='modal') Close
+
+  div#legend.row-fluid(style='margin-left:15px;display:none;')
+    span(style='float:right;margin-right:20px;')
+      a(href='#', onClick="$('#legend-modal').modal();return false;") Explain field names
+
+  div#other-footer-container
+
+  div#feedback-modal.modal(style='display:none;')
+    div.modal-header
+      a.close(data-dismiss='modal') ×
+      h2 Feedback
+    div.modal-body
+      p
+        textarea.xlarge(rows=5, cols=80, style='width:500px')#feedback
+    div.modal-footer
+      a#submit-feedback.btn.btn-primary(data-dismiss='modal') Submit
+      a.btn(data-dismiss='modal') Close
+
+  div#approaches-modal.modal(style='display:none;')
+    div.modal-header
+      a.close(data-dismiss='modal') ×
+      h2 Close Approaches for <span id="close-approaches-name"></span>
+    div.modal-body(style='overflow:auto;height:250px;')
+      table.table
         thead
           tr
-            th Name
-            th Value
+            th Date
+            th Distance (AU)
+            th Relative Velocity (km/s)
         tbody
-          - each asteroid in summary.most_cost_effective
-            tr
-              td
-                a.exptip(ref='tooltip', title='#{asteroid.full_name}', href="javascript:$('#top_sort').val('score');$('#top_num').val(100);mixpanel.track('most cost effective click');Asterank.search('#{asteroid.full_name}');$('.exptip').tooltip('hide');")
-                  #{asteroid.full_name.length > 12 ? asteroid.full_name.slice(0, 9) + '...' : asteroid.full_name}
-              td #{asteroid.fuzzed_price}
-    div.span2(style='margin-left:0; width:100%;')
-      h3 Upcoming Passes
-      table.table.table-bordered.table-striped.table-condensed
-        thead
-          tr
-            th Name
-            th Time
-        tbody
-          - each jpl_asteroid in summary.upcoming_passes
-            tr
-              td
-                a(href="javascript:$('#top_sort').val('score');$('#top_num').val(150);mixpanel.track('upcoming passes click');Asterank.search('#{jpl_asteroid.tag_name}');$('.exptip').tooltip('hide');")
-                  #{jpl_asteroid.tag_name.length > 12 ? jpl_asteroid.tag_name.slice(0, 9) + '...' : jpl_asteroid.tag_name}
-              td #{jpl_asteroid['Next Pass'].date}
-  div.span10
-    div.intro.welcome-blurb.well
-      img(style='float:right;padding-left:15px;padding-bottom:11px;width:auto;height:200px', src='http://i.imgur.com/vvAjG.jpg')
-      h2 Overview
-
-      p(style='font-weight: bold;') We've collected, computed, or inferred important data such as asteroid mass and composition from multiple scientific sources.  With this information, we estimate the costs and rewards of mining asteroids.
-
-      h2 Data
-      p Details on orbits and basic physical parameters are mostly sourced from JPL data.  Composition data is less well known, so we compute generalizations based on spectral classification and size.  Our calculations incorporate conclusions from multiple scientific publications in addition to cross-referencing known meteorite data.
-
-      //
-        p There are three major factors:
-          ol
-            li <strong>Value of Materials</strong> - Many asteroids contain metals, volatile compounds, and water.
-            li <strong>Cost of Operations</strong> - Getting to an asteroid and moving the raw material isn't easy or cheap (yet).
-            li <strong>Comparative Savings</strong> - The biggest obstacle to the commercialization of space is getting things into orbit.  How much money do we save by mining in space instead of sending material from Earth?
-
-      h2 Why?
-      p Asteroid mining has been <a href="http://www.nytimes.com/2012/04/24/science/space/in-pursuit-of-riches-and-travelers-supplies-in-the-asteroid-belt.html?pagewanted=all" target="_blank">making headlines</a>. Companies like Planetary Resources are an exciting take on the commercial viability of space industry.  But how realistic are the trillion dollar estimates?  How much would it cost to mine an object millions of miles away?
-
-      p The data on these objects are public but very sparse.  Remember, it's 2012 and we are just beginning!
-
-    div#footer
-      div(style='margin-left: 25px;float:left;')
-        h3 Notifications
-        p No spam, we'll just let you know if there is a significant algorithm improvement.
-        form.form-inline(action='/subscribe', method='POST', style='margin-left:20px')
-          input(type='text', name='email', id='email', placeholder='email@gmail.com')
-          input.btn(type='button', value='Ok')
-      div#footer(style='text-align:right;margin-top:35px;margin-right:100px;float:right;')
-
-        - if (!nosocial)
-          <span class='st_fblike_hcount'></span>
-          <span class='st_twitter_hcount'></span>
-          <span class='st_plusone_hcount'></span>
-          <span class='st_email_hcount'></span>
-          <script type="text/javascript">var switchTo5x=true;</script>
-          <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-          <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
-
-
-//
-  div#chart-title.row-fluid(style='display:none;text-align:center;')
-    h3 Value Score vs. Accessibility
-div.row-fluid
-  div#chart-container
-    div.span11#chart
-    div#chart-legend.span1(style='height:200px;overflow:hidden;padding-top:15px;width:8%')
-
-div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
-
-div#results.row-fluid(style='display:none;')
-  div.span3
-    div#instructions(style='margin-top:35px;')
-      h3(style='margin-bottom:25px') Click a row to view details. &rarr;
-      div.span3#spec-graph
-    div#details(style='display:none;')
-      h2
-      table.table.table-bordered.table-condensed
-        thead
-          tr
-            th Data
-            th Value
-        tbody
-      div#orbit-viz-container(style='display:none;')
-        div#orbit-viz(style='background-color:#000')
-        div(style='text-align:center;background-color:#000')
-          span(style='color:purple') Mercury
-          | ,
-          span(style='color:orange') Venus
-          | ,
-          span(style='color:cyan') Earth
-          | ,
-          span(style='color:red') Mars
-  div#tbl-container.span9(style='height:423px;overflow:scroll;overflow-x:auto;')
-    table#tbl.table.table-bordered.table-striped
-      thead(style='background-color:#fff')
-        tr
-          th Name
-          th <a class="exptip" ref="tooltip" title="An overall score, taking into account the accessibility of the asteroid, its potential value, and the cost of moving material off it.">Score</a>
-          th <a class="exptip" ref="tooltip" title="The estimated value of the raw materials in this object.">Value</a> ($)
-          th <a class="exptip" ref="tooltip" title="The <em>very</em> hypothetical profit to be gained from mining this asteroid, taking into account processing and moving raw material">Est. Profit</a> ($)
-          th <a class="exptip" ref="tooltip" title="An overall score for a number of factors contributing to how difficult it is to get to the object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit. A higher score is better.">Accessibility</a>
-          th <a class="exptip" ref="tooltip" title="Asteroid type, which helps us estimate its composition.">Type</a>
-          th <a class="exptip" ref="tooltip" title="Roughly speaking, the amount of effort required to reach this asteroid from Earth.">&Delta;V</a> (km/s)
-          th <a class="exptip" ref="tooltip" title="Classified as a Potentially Hazardous Object (Yes/No)">PHA</a>
-      tbody(style='cursor:pointer;')
-
-
-div#legend-modal.modal(style='display:none;')
-  div.modal-header
-    a.close(data-dismiss='modal') ×
-    h2 Column Explanations
-  div.modal-body(style='overflow:auto;height:250px;')
-    p
-      ul
-      li Aphelion - Greatest distance from sun.
-      li Profit - the <em>very</em> hypothetical profit, taking into account processing and moving raw material.
-      li Accessibility - overall score for a number of factors contributing to how difficult it is to get to the object, including orbital parameters, distance from Earth, and the energy requirements of intersecting its orbit. A higher score is better.
-      li &Delta;v - change in velocity required to rendezvous.
-      li MOID (=EMOID=Earth Minimum Orbit Intersect Distance) - how close the object may come to Earth.
-      li Perhelion - Least distance from sun.
-      li PHA (Potentially Hazardous Object) - whether this object is classified by scientists as a potential hazard to Earth.
-      li Type (Asteroid Spectral Type) - the spectral classification of this object, which lets us guess its composition.
-      li Value - the current value of the raw materials in this object.
-      li * - indicates that mass was estimated, rather than exact.
-  div.modal-footer
-    a.btn(data-dismiss='modal') Close
-
-div#legend.row-fluid(style='margin-left:15px;display:none;')
-  span(style='float:right;margin-right:20px;')
-    a(href='#', onClick="$('#legend-modal').modal();return false;") Explain field names
-
-div#other-footer-container
-
-div#feedback-modal.modal(style='display:none;')
-  div.modal-header
-    a.close(data-dismiss='modal') ×
-    h2 Feedback
-  div.modal-body
-    p
-      textarea.xlarge(rows=5, cols=80, style='width:500px')#feedback
-  div.modal-footer
-    a#submit-feedback.btn.btn-primary(data-dismiss='modal') Submit
-    a.btn(data-dismiss='modal') Close
-
-div#approaches-modal.modal(style='display:none;')
-  div.modal-header
-    a.close(data-dismiss='modal') ×
-    h2 Close Approaches for <span id="close-approaches-name"></span>
-  div.modal-body(style='overflow:auto;height:250px;')
-    table.table
-      thead
-        tr
-          th Date
-          th Distance (AU)
-          th Relative Velocity (km/s)
-      tbody
-  div.modal-footer
-    a.btn(data-dismiss='modal') Close
+    div.modal-footer
+      a.btn(data-dismiss='modal') Close
 
 block page_js
   != renderJs('main')
