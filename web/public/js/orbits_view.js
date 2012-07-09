@@ -17,8 +17,16 @@ window.OrbitsView = (function() {
     diagram.plotJupiter();
   }
 
-  OrbitsView.prototype.addOrbit = function() {
-    diagram.renderAnother.apply(diagram, arguments);
+  OrbitsView.prototype.addOrbit = function(obj) {
+    diagram.renderAnother(obj.a, obj.e, obj.om)
+      .on("mouseover", function(){
+        d3.select(this).style('stroke', 'red');
+        $('#orbits-view-info-text').html(obj.full_name + ': $' + obj.fuzzed_price);
+      })
+      .on("mouseout", function(){
+        d3.select(this).style('stroke', 'white');
+        $('#orbits-view-info-text').empty();
+      })
   }
 
   OrbitsView.prototype.addAllOrbits = function() {
@@ -28,8 +36,7 @@ window.OrbitsView = (function() {
 
     for (var i=0; i < lastResults.length; i++) {
       var obj = lastResults[i];
-      console.log(obj.om);
-      this.addOrbit(obj.a, obj.e, obj.om);
+      this.addOrbit(obj)
     }
   }
 

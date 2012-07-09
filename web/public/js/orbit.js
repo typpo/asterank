@@ -29,11 +29,11 @@ window.OrbitDiagram = (function() {
 
   OrbitDiagram.prototype.render = function(a, e, om) {
     this.prepareRender();
-    this.renderAnother(a, e, om);
+    return this.renderAnother(a, e, om);
   }
 
   OrbitDiagram.prototype.renderAnother = function(a, e, om) {
-    this.plotOrbit(a, e, om, 'white');
+    return this.plotOrbit(a, e, om, 'white');
   }
 
   OrbitDiagram.prototype.plotOrbit = function(a, e, om, color) {
@@ -46,7 +46,7 @@ window.OrbitDiagram = (function() {
     var ry = a * this.DIAGRAM_AU_FACTOR;
     var foci = f * this.DIAGRAM_AU_FACTOR;
 
-    this.plotCoords(rx, ry, foci, om, color);
+    return this.plotCoords(rx, ry, foci, om, color);
   }
 
   OrbitDiagram.prototype.plotCoords = function(rx, ry, f, rotate_deg, color) {
@@ -54,27 +54,21 @@ window.OrbitDiagram = (function() {
     var cx = this.SUN_X;
     var cy = this.SUN_Y + f;
 
-    this.orbit_svg.append("svg:ellipse")
+    return this.orbit_svg.append("svg:ellipse")
         .style("stroke", color)
-        .style("fill", "clear")
         .style("fill", "transparent")
         .attr("rx", rx)
         .attr("ry", ry)
         .attr("cx", cx)
         .attr("cy", cy)
         .attr("transform", "rotate(" + rotate_deg + ", " + this.SUN_X + ", " + this.SUN_Y + ")")
-        .on("mouseover", function(){
-          d3.select(this).style('stroke', 'red');
-        })
-        .on("mouseout", function(){
-          d3.select(this).style('stroke', color);
-        })
 
     /* draw ellipse
      * x0,y0 = center of the ellipse
      * a = greater semi-axis
      * exc = ellipse excentricity (exc = 0 for circle, 0 < exc < 1 for ellipse, exc > 1 for hiperboloid)
      */
+        /*
     function drawEllipse(ctx, x0, y0, a, exc, lineWidth, color)
     {
         x0 += a * exc;
@@ -97,8 +91,7 @@ window.OrbitDiagram = (function() {
         ctx.closePath();
         ctx.stroke();
     }
-
-
+    */
   }
 
   OrbitDiagram.prototype.plotSun = function() {
