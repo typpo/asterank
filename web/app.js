@@ -21,13 +21,13 @@ var IS_PRODUCTION = process.env.NODE_ENV === 'production';
 // Minification
 BundleUp(app, __dirname + '/assets', {
   staticRoot: __dirname + '/public/',
-  staticUrlRoot:'/',
+  staticUrlRoot: '/',
   bundle: true,
   minifyCss: false,
   minifyJs:true
 });
 
-// App
+// Routing
 
 app.get('/', function(req, res) {
   lookup.homepage(function(err, summary_result) {
@@ -107,6 +107,7 @@ function renderWithContext(res, template, obj) {
   res.render(template, obj);
 }
 
+// Start server
 var port = process.env.PORT || (IS_PRODUCTION ? PROD_PORT : DEV_PORT);
 app.listen(port);
 
