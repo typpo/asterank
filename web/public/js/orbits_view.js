@@ -13,11 +13,20 @@ window.OrbitsView = (function() {
 
     diagram.prepareRender();
 
-    diagram.plotSun();
+    // Extra stuff
+    diagram.plotJupiter();
   }
 
   OrbitsView.prototype.addOrbit = function() {
     diagram.render.apply(diagram, arguments);
+  }
+
+  OrbitsView.prototype.addAllOrbits = function() {
+    var lastResults = Asterank.getLastResults();
+    for (var i=0; i < lastResults.length; i++) {
+      var obj = lastResults[i];
+      this.addOrbit(obj.a, obj.e, obj.om);
+    }
   }
 
   return OrbitsView;

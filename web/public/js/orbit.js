@@ -75,6 +75,10 @@ window.OrbitDiagram = (function() {
     this.plotOrbit(1.00000011, 0.01671022, -11.26064, 'cyan');
   }
 
+  OrbitDiagram.prototype.plotJupiter = function() {
+    this.plotOrbit(5.20336301, 0.04839266, 100.55615, 'orange');
+  }
+
   OrbitDiagram.prototype.plotMars = function() {
     this.plotOrbit(1.52366231, 0.0935, 49.57854, 'red');
   }
