@@ -17,7 +17,9 @@ window.Asterank = (function() {
     $(function() {
       isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
       $('.exptip').tooltip();
-      $('#submit').on('click', me.search);
+      $('#submit').on('click', function() {
+        me.search();
+      });
       $(document).on('click', '#tbl tbody tr', function() {
         me.handleTableClick($(this));
       });
