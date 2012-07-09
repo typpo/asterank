@@ -18,13 +18,14 @@ window.OrbitsView = (function() {
   }
 
   OrbitsView.prototype.addOrbit = function() {
-    diagram.render.apply(diagram, arguments);
+    diagram.renderAnother.apply(diagram, arguments);
   }
 
   OrbitsView.prototype.addAllOrbits = function() {
     var lastResults = Asterank.getLastResults();
     for (var i=0; i < lastResults.length; i++) {
       var obj = lastResults[i];
+      console.log(i);
       this.addOrbit(obj.a, obj.e, obj.om);
     }
   }
