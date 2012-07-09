@@ -41,12 +41,11 @@ window.OrbitsView = (function() {
   return OrbitsView;
 })();
 
-/*
 $(function() {
+  console.log('orbits view');
   window.foo = new OrbitsView('#orbits-view-main');
   Asterank.search();
   setTimeout(function() {
     foo.addAllOrbits();
   }, 500);
 });
-*/

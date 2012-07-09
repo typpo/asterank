@@ -5,14 +5,13 @@ html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     include styles
   body
-    //
-      - if (false && typeof(nosocial) !== 'undefined' && !nosocial)
-        include facebook
     div.container-fluid!= body
+    include js
+    block page_js
+
     - if (context.production)
       include mixpanel
     - else
       h3(style='color:red;text-align:center;') *DEVELOPMENT*
       <script>mixpanel = {track:function(){}}</script>
     include ga
-    include js
