@@ -42,6 +42,7 @@ window.OrbitsView = (function() {
   return OrbitsView;
 })();
 
+/*
 $(function() {
   window.foo = new OrbitsView('#orbits-view-main');
   Asterank.search();
@@ -49,3 +50,4 @@ $(function() {
     foo.addAllOrbits();
   }, 500);
 });
+*/
