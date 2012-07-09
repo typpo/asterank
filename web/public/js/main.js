@@ -153,6 +153,8 @@ window.Asterank = (function() {
     mixpanel.track('search', searchparams);
     _gaq.push(['_trackEvent', 'search', 'clicked', searchparams.sort]);
     $.getJSON('/top', searchparams, function(data) {
+      lastResults = data.results.rankings;
+      compositions = data.results.compositions;
       me.renderMainTable(data, num_search);
       if (preselect) {
         me.selectObject(preselect);
@@ -163,8 +165,6 @@ window.Asterank = (function() {
 
   Asterank.prototype.renderMainTable = function(data, num_search) {
     var $tmp = $('<tbody>');
-    lastResults = data.results.rankings;
-    compositions = data.results.compositions;
     for (var i=0; i < lastResults.length; i++) {
       var obj = lastResults[i];
       var name = obj.prov_des || obj.full_name;

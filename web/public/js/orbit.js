@@ -29,7 +29,10 @@ window.OrbitDiagram = (function() {
 
   OrbitDiagram.prototype.render = function(a, e, om) {
     this.prepareRender();
+    this.renderAnother(a, e, om);
+  }
 
+  OrbitDiagram.prototype.renderAnother = function(a, e, om) {
     this.plotOrbit(a, e, om, 'white');
   }
 
