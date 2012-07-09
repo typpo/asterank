@@ -5,6 +5,8 @@
 *.log
 *.rdb
 
+public/generated
+
 node_modules
 build
 pip-log.txt
