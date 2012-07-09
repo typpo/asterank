@@ -21,6 +21,9 @@ window.OrbitDiagram = (function() {
         .attr("height", this.DIAGRAM_HEIGHT)
 
     this.plotSun();
+  }
+
+  OrbitDiagram.prototype.renderPlanets = function() {
     this.plotEarth();
     this.plotVenus();
     this.plotMercury();
@@ -29,6 +32,7 @@ window.OrbitDiagram = (function() {
 
   OrbitDiagram.prototype.render = function(a, e, om) {
     this.prepareRender();
+    this.renderPlanets();
     return this.renderAnother(a, e, om);
   }
 
