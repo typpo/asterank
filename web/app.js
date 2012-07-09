@@ -28,6 +28,10 @@ app.get('/', function(req, res) {
   });
 });
 
+app.get('/orbits', function(req, res) {
+  renderWithContext(res, 'orbits');
+});
+
 app.get('/about', function(req, res) {
   renderWithContext(res, 'about');
 });
