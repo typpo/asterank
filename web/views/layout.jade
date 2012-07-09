@@ -5,7 +5,8 @@ html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     include styles
   body
-    div.container-fluid!= body
+    div.container-fluid
+      block content
     include js
     block page_js
 
