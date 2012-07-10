@@ -61,3 +61,7 @@ background:transparent;}
 background-color: #333;}
 ::-webkit-scrollbar-thumb:hover {
 background-color: #555;}
+
+ellipse {
+  fill: none !important;
+}

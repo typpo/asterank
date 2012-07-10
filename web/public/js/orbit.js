@@ -42,8 +42,8 @@ window.OrbitDiagram = (function() {
 
   OrbitDiagram.prototype.plotOrbit = function(a, e, om, color) {
     var b = a * Math.sqrt(1 - e * e);
-    var q = a*(1-e);
-    var Q = a*(1+e);
+    //var q = a*(1-e);
+    //var Q = a*(1+e);
     var f = a * e;
 
     var rx = b * this.DIAGRAM_AU_FACTOR;
@@ -60,7 +60,7 @@ window.OrbitDiagram = (function() {
 
     return this.orbit_svg.append("svg:ellipse")
         .style("stroke", color)
-        .style("fill", "transparent")
+        .style("fill", 'none')
         .attr("rx", rx)
         .attr("ry", ry)
         .attr("cx", cx)
