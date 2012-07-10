@@ -128,6 +128,16 @@
         var mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
       })();
+
+      // foo
+      (function() {
+        var geometry = new THREE.EllipseCurve(0,0,100,100,90,90,true)
+        var mesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [ new THREE.MeshLambertMaterial( { color: 0x00ffff } ), new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } ) ] );
+        mesh.position.set( x, y, z - 75 );
+        mesh.rotation.set( rx, ry, rz );
+        mesh.scale.set( s, s, s );
+        scene.add(mesh)
+      })();
 		}
 
 		// animation loop
