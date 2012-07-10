@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Boilerplate testing</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+
+		<script src="vendor/three.js/Three.js"></script>
+		<script src="vendor/three.js/Detector.js"></script>
+		<script src="vendor/three.js/Stats.js"></script>
+
+		<script src="vendor/threex/THREEx.screenshot.js"></script>
+		<script src="vendor/threex/THREEx.FullScreen.js"></script>
+		<script src="vendor/threex/THREEx.WindowResize.js"></script>
+		<script src="vendor/threex.dragpancontrols.js"></script>
+
+		<link  href="css/main.css" rel="stylesheet"/>
+    <style>
+      body {
+        background-color: #000;
+      }
+    </style>
+	</head>
+<body>
+	<!-- three.js container -->
+    	<div id="container"></div>
+	<!-- info on screen display -->
+	<div id="info">
+		<div class="top">
+      test
+		</div>
+		<div class="bottom" id="inlineDoc" >
+			- <i>p</i> for screenshot
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var stats, scene, renderer, composer;
+		var camera, cameraControl;
+
+		if(!init())	animate();
+
+		// init the scene
+		function init(){
+
+			if(Detector.webgl){
+				renderer = new THREE.WebGLRenderer({
+					antialias		: true,	// to get smoother output
+					preserveDrawingBuffer	: true	// to allow screenshot
+				});
+				renderer.setClearColorHex(0xBBBBBB, 1);
+			}else{
+				renderer	= new THREE.CanvasRenderer();
+			}
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.getElementById('container').appendChild(renderer.domElement);
+
+			// add Stats.js - https://github.com/mrdoob/stats.js
+			stats = new Stats();
+			stats.domElement.style.position	= 'absolute';
+			stats.domElement.style.bottom	= '0px';
+			document.body.appendChild(stats.domElement);
+
+			// create a scene
+			scene = new THREE.Scene();
+
+			// put a camera in the scene
+			var cameraH	= 3;
+			var cameraW	= cameraH / window.innerHeight * window.innerWidth;
+			//camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+			//camera.position.set(0, 0, 100);
+      camera.position.z = 100;
+			scene.add(camera);
+
+			// create a camera contol
+			cameraControls	= new THREE.TrackballControls(camera)
+
+			// transparently support window resize
+			THREEx.WindowResize.bind(renderer, camera);
+			// allow 'p' to make screenshot
+			THREEx.Screenshot.bindKey(renderer);
+			// allow 'f' to go fullscreen where this feature is supported
+			if(THREEx.FullScreen.available()){
+				THREEx.FullScreen.bindKey();
+				document.getElementById('inlineDoc').innerHTML	+= "- <i>f</i> for fullscreen";
+			}
+
+      // my stuff
+      var PI2 = Math.PI * 2;
+
+      (function() {
+        var material = new THREE.ParticleCanvasMaterial({
+          color: 0xffff00,
+          program: function (context) {
+            context.beginPath();
+            context.arc(0, 0, 1, 0, PI2, true);
+            context.closePath();
+            context.fill();
+          }
+        });
+
+        var geometry = new THREE.Geometry();
+
+        for (var i = 0; i < 100; i++) {
+
+          particle = new THREE.Particle(material);
+          particle.position.x = Math.random() * 2 - 1;
+          particle.position.y = Math.random() * 2 - 1;
+          particle.position.z = Math.random() * 2 - 1;
+          particle.position.normalize();
+          particle.position.multiplyScalar(Math.random() * 450);
+          particle.scale.x = particle.scale.y = 5;
+          scene.add(particle);
+
+          geometry.vertices.push(particle.position);
+        }
+
+        // lines
+        var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.5 }));
+        scene.add(line);
+      })();
+
+
+      // "sun"
+      (function() {
+        var geometry= new THREE.SphereGeometry( 1, 0.42 );
+        var material= new THREE.MeshNormalMaterial();
+        var mesh = new THREE.Mesh( geometry, material );
+        scene.add(mesh);
+      })();
+		}
+
+		// animation loop
+		function animate() {
+			// loop on request animation loop
+			// - it has to be at the begining of the function
+			// - see details at http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+			requestAnimationFrame(animate);
+
+			// do the render
+			render();
+
+			// update stats
+			stats.update();
+		}
+
+		// render the scene
+		function render() {
+			// variable which is increase by Math.PI every seconds - usefull for animation
+			var PIseconds	= Date.now() * Math.PI;
+
+			// update camera controls
+			cameraControls.update();
+
+
+			// actually render the scene
+			renderer.render(scene, camera);
+		}
+	</script>
+</body>
+</html>
