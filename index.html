@@ -44,6 +44,7 @@
 		// init the scene
 		function init(){
 
+      /*
 			if(Detector.webgl){
 				renderer = new THREE.WebGLRenderer({
 					antialias		: true,	// to get smoother output
@@ -51,8 +52,9 @@
 				});
 				renderer.setClearColorHex(0xBBBBBB, 1);
 			}else{
+        */
 				renderer	= new THREE.CanvasRenderer();
-			}
+			//}
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			document.getElementById('container').appendChild(renderer.domElement);
 
@@ -111,15 +113,11 @@
           particle.position.z = Math.random() * 2 - 1;
           particle.position.normalize();
           particle.position.multiplyScalar(Math.random() * 450);
-          particle.scale.x = particle.scale.y = 5;
+          particle.scale.x = particle.scale.y = 1;
           scene.add(particle);
 
           geometry.vertices.push(particle.position);
         }
-
-        // lines
-        var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.5 }));
-        scene.add(line);
       })();
 
 
