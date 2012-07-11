@@ -61,4 +61,5 @@ background-color: #555;}
 
 ellipse {
   fill: none !important;
+  stroke-width: 2;
 }

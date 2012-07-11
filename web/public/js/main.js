@@ -206,12 +206,15 @@ window.Asterank = (function() {
     $('#tbl-spacer').show();
 
     if (navigator && !isMobile && supportsSvg()) {
-      if (num_search <= 9000)
+      if (num_search <= 9000) {
         graphSpectral();
+      }
       if (num_search <= 500) {
         $('#chart-title').show();
         scatterScore();
       }
+
+      new OrbitsView('#orbits-view-main', '#orbits-view-info-text').addAllOrbits();
     }
 
     // now scroll into place
@@ -245,9 +248,7 @@ window.Asterank = (function() {
 /* Graphing */
 function graphSpectral() {
   var lastResults = Asterank.getLastResults();
-  if (lastResults === null) {
-    return;
-  }
+  if (lastResults === null) return;
 
   var specs_data = [];
   var spec_grouped = _.chain(lastResults).groupBy(function(obj) {
@@ -267,9 +268,7 @@ function graphSpectral() {
 
 function scatterScore() {
   var lastResults = Asterank.getLastResults();
-  if (lastResults === null) {
-    return;
-  }
+  if (lastResults === null) return;
 
   var logscores = {};
   var sorted_results = lastResults.sort(function(a,b) {
@@ -298,7 +297,6 @@ function scatterScore() {
 
   // render here
   $('#chart').height(220);
-  $('#chart').width('85%');
 
   graph = Flotr.draw(
     $('#chart').get(0), series, {

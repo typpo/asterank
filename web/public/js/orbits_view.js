@@ -41,10 +41,10 @@ window.OrbitsView = (function() {
       this.addOrbit(obj)
     }
   }
-
   return OrbitsView;
 })();
 
+/*
 $(function() {
   console.log('orbits view');
   window.foo = new OrbitsView('#orbits-view-main', '#orbits-view-info-text');
@@ -53,3 +53,4 @@ $(function() {
     foo.addAllOrbits();
   }, 1000);
 });
+*/
