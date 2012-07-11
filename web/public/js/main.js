@@ -206,6 +206,7 @@ window.Asterank = (function() {
     $('#tbl-spacer').show();
 
     if (navigator && !isMobile && supportsSvg()) {
+      $('#chart-container').show();
       if (num_search <= 9000) {
         graphSpectral();
       }
@@ -213,7 +214,6 @@ window.Asterank = (function() {
         $('#chart-title').show();
         scatterScore();
       }
-
       new OrbitsView('#orbits-view-main', '#orbits-view-info-text').addAllOrbits();
     }
 
