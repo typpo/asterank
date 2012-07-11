@@ -3713,7 +3713,7 @@ table {
 
 .table-striped tbody tr:nth-child(even) td,
 .table-striped tbody tr:nth-child(even) th {
-  background-color: transparent;
+  background-color: #fff;
 }
 
 .table tbody tr:hover td,
