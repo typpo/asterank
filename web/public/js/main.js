@@ -296,12 +296,13 @@ function scatterScore() {
   }).value();
 
   // render here
-  $('#chart').height(220);
+  //$('#chart').height();
 
   graph = Flotr.draw(
     $('#chart').get(0), series, {
       legend : { container: $('#chart-legend').get(0) },
       title : 'Value (log) vs. Ease of Access',
+      fontColor: '#fff',
       mouse : {
         track : true,
         relative : true,
@@ -316,7 +317,8 @@ function scatterScore() {
         sensibility: 5
       },
       grid: {
-        backgroundColor: '#fff'
+        backgroundColor: '#404040',
+        tickColor: '#fff'
       }
     }
   );

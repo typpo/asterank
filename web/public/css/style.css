@@ -63,3 +63,6 @@ ellipse {
   fill: none !important;
   stroke-width: 2;
 }
+.flotr-title, .flotr-grid-label, .flotr-legend-label {
+  color: #fff;
+}
