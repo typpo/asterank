@@ -2,28 +2,32 @@ window.OrbitsView = (function() {
   "use strict";
   var diagram;
 
-  function OrbitsView(selector) {
-    if ($(selector).length < 1) return;
+  function OrbitsView(main_selector, description_selector) {
+    if ($(main_selector).length < 1) return;
 
-    diagram = new OrbitDiagram(selector, {
-      diagram_width: $(selector).width(),
-      diagram_height: $(selector).height(),
+    this.$div = $(main_selector);
+    diagram = new OrbitDiagram(main_selector, {
+      diagram_width: this.$div.width(),
+      diagram_height: this.$div.height(),
     });
 
     diagram.prepareRender();
     diagram.renderPlanets();
     diagram.plotJupiter();  // not included by default
+
+    this.$description = $(description_selector);
   }
 
   OrbitsView.prototype.addOrbit = function(obj) {
+    var me = this;
     diagram.renderAnother(obj.a, obj.e, obj.om)
       .on("mouseover", function(){
         d3.select(this).style('stroke', 'red');
-        $('#orbits-view-info-text').html(obj.full_name + ': $' + obj.fuzzed_price);
+        me.$description.html(obj.full_name + ': $' + obj.fuzzed_price);
       })
       .on("mouseout", function(){
         d3.select(this).style('stroke', 'white');
-        $('#orbits-view-info-text').empty();
+        me.$description.empty();
       })
   }
 
@@ -43,9 +47,9 @@ window.OrbitsView = (function() {
 
 $(function() {
   console.log('orbits view');
-  window.foo = new OrbitsView('#orbits-view-main');
+  window.foo = new OrbitsView('#orbits-view-main', '#orbits-view-info-text');
   Asterank.search();
   setTimeout(function() {
     foo.addAllOrbits();
-  }, 500);
+  }, 1000);
 });
