@@ -206,15 +206,15 @@ window.Asterank = (function() {
     $('#tbl-spacer').show();
 
     if (navigator && !isMobile && supportsSvg()) {
-      $('#chart-container').show();
       if (num_search <= 9000) {
         graphSpectral();
       }
       if (num_search <= 500) {
+        $('#chart-container').show();
         $('#chart-title').show();
         scatterScore();
+        new OrbitsView('#orbits-view-main', '#orbits-view-info-text').addAllOrbits();
       }
-      new OrbitsView('#orbits-view-main', '#orbits-view-info-text').addAllOrbits();
     }
 
     // now scroll into place
