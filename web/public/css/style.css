@@ -65,3 +65,7 @@ ellipse {
 .flotr-title, .flotr-grid-label, .flotr-legend-label {
   color: #fff;
 }
+
+#chart-legend table {
+  background-color: #545454;
+}
