@@ -82,6 +82,7 @@ def populateDb():
     deltav_map[des] = dv
 
   print 'Loading small body data...this may take a while'
+  print DATA_PATH
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   designation_regex = re.compile('.*\(([^\)]*)\)')
   n = 0
