@@ -28,7 +28,7 @@ class Asteroid:
     self.data['Albedo'] = r.physicalParameter('geometric albedo')
 
     self.data['Inclination (deg)'] = r.orbitalParameter('i')
-    self.data['Passage (JED)'] = r.orbitalParameter('t')
+    #self.data['Passage (JED)'] = r.orbitalParameter('t')
     self.data['Perhilion (AU)'] = r.orbitalParameter('q')
     self.data['Aphelion (AU)'] = r.orbitalParameter('Q')
     self.data['Semi-major Axis (AU)'] = r.orbitalParameter('a')
