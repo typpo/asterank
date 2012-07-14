@@ -71,7 +71,6 @@
 			var cameraW	= cameraH / window.innerHeight * window.innerWidth;
 			//camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-			//camera.position.set(0, 0, 100);
       camera.position.z = 100;
 			scene.add(camera);
 
@@ -121,139 +120,44 @@
 
 
       // "sun"
-      /*
       (function() {
         var geometry= new THREE.SphereGeometry(1, 0.42);
         var material= new THREE.MeshNormalMaterial();
         var mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
       })();
-      */
 
-        function addGeometry( geometry, points, spacedPoints, color, x, y, z, rx, ry, rz, s ) {
+      function addGeometry( points, color, x, y, z, rx, ry, rz, s ) {
+        var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
+        line.position.set( x, y, z);
+        line.rotation.set( rx, ry, rz );
+        line.scale.set( s, s, s );
+        scene.add( line );
+      }
 
-var parent = scene;
-          // 3d shape
+      function drawEllipse(ctx, x, y, w, h) {
+        var kappa = .5522848;
+            ox = (w / 2) * kappa, // control point offset horizontal
+            oy = (h / 2) * kappa, // control point offset vertical
+            xe = x + w,           // x-end
+            ye = y + h,           // y-end
+            xm = x + w / 2,       // x-middle
+            ym = y + h / 2;       // y-middle
 
-          var mesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [ new THREE.MeshLambertMaterial( { color: color } ), new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } ) ] );
-          mesh.position.set( x, y, z - 75 );
-          mesh.rotation.set( rx, ry, rz );
-          mesh.scale.set( s, s, s );
-          parent.add( mesh );
-
-          // solid line
-
-          var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
-          line.position.set( x, y, z + 25 );
-          line.rotation.set( rx, ry, rz );
-          line.scale.set( s, s, s );
-          parent.add( line );
-
-          // transparent line from real points
-
-          var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, opacity: 0.5 } ) );
-          line.position.set( x, y, z + 75 );
-          line.rotation.set( rx, ry, rz );
-          line.scale.set( s, s, s );
-          parent.add( line );
-
-          // vertices from real points
-
-          var pgeo = THREE.GeometryUtils.clone( points );
-          var particles = new THREE.ParticleSystem( pgeo, new THREE.ParticleBasicMaterial( { color: color, size: 2, opacity: 0.75 } ) );
-          particles.position.set( x, y, z + 75 );
-          particles.rotation.set( rx, ry, rz );
-          particles.scale.set( s, s, s );
-          parent.add( particles );
-
-          // transparent line from equidistance sampled points
-
-          var line = new THREE.Line( spacedPoints, new THREE.LineBasicMaterial( { color: color, opacity: 0.2 } ) );
-          line.position.set( x, y, z + 100 );
-          line.rotation.set( rx, ry, rz );
-          line.scale.set( s, s, s );
-          parent.add( line );
-
-          // equidistance sampled points
-
-          var pgeo = THREE.GeometryUtils.clone( spacedPoints );
-          var particles2 = new THREE.ParticleSystem( pgeo, new THREE.ParticleBasicMaterial( { color: color, size: 2, opacity: 0.5 } ) );
-          particles2.position.set( x, y, z + 100 );
-          particles2.rotation.set( rx, ry, rz );
-          particles2.scale.set( s, s, s );
-          parent.add( particles2 );
-
-        }
-
-function drawEllipse(ctx, x, y, w, h) {
-  var kappa = .5522848;
-      ox = (w / 2) * kappa, // control point offset horizontal
-      oy = (h / 2) * kappa, // control point offset vertical
-      xe = x + w,           // x-end
-      ye = y + h,           // y-end
-      xm = x + w / 2,       // x-middle
-      ym = y + h / 2;       // y-middle
-
-  ctx.moveTo(x, ym);
-  ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-  ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-  ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-  ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-}
+        ctx.moveTo(x, ym);
+        ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
+        ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
+        ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+        ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+      }
 
       // foo
       (function() {
-        var lipse = new THREE.EllipseCurve(0,0,100,100,50,10,true)
-        var pts = lipse.getPoints();
-  var starShape = new THREE.Shape();
-drawEllipse(starShape, 0, 0, 100, 200);
-/*
-starShape.moveTo(0,0);
-for (x in pts) {
-  starShape.bezierCurveTo(pts[x].x, pts[x].y);
-}
-*/
+        var shape = new THREE.Shape();
+        drawEllipse(shape, 0, 0, 100, 200);
 
-  var extrudeSettings = extrusionSettings = {
-    size: 1, height: 1, curveSegments: 3,
-    bevelThickness: 1, bevelSize: 1, bevelEnabled: false,
-    material: 0, extrudeMaterial: 1,
-amount: 1,
-  };
-
-/*
-  var star3d = starShape.extrude( extrudeSettings );
-var starPoints = starShape.createPointsGeometry();
-var starSpacedPoints = starShape.createSpacedPointsGeometry();
-        addGeometry( star3d, starPoints, starSpacedPoints,      0xffee00, -180,    0, 0,     0, 0, 0, 1 );
-
-*/
-
-  var starGeometry = new THREE.ExtrudeGeometry( starShape, extrusionSettings );
-
-  var materialFront = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-  var materialSide = new THREE.MeshBasicMaterial( { color: 0xff8800 } );
-  var materialArray = [ materialFront, materialSide ];
-  starGeometry.materials = materialArray;
-
-  var star = new THREE.Mesh( starGeometry, new THREE.MeshFaceMaterial() );
-  //scene.add(star);
-
-  // add a wireframe to model
-  var wireframeTexture = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } );
-  var star = new THREE.Mesh( starGeometry, wireframeTexture );
-  scene.add(star);
-        /*
-        //var geom = new THREE.ExtrudeGeometry(pts, { amount: 20} );
-        var mesh = new THREE.Mesh( new THREE.LatheGeometry(pts, 12), new THREE.MeshLambertMaterial( { color: 0x000000, wireframe: true, shading: THREE.FlatShading } ));
-        //lipse.position.set(0,0,0);
-        //lipse.rotation.set(0,0,0);
-        mesh.scale.set(450,450,450);
-        //scene.add(lipse)
-        mesh.overdraw = true;
-        mesh.doubleSided = true;
-        scene.add(mesh);
-        */
+        var shapePoints = shape.createPointsGeometry();
+        addGeometry(shapePoints, 0xffee00, 0,0,0,0, 0, 0, 1);
       })();
 		}
 
@@ -273,13 +177,8 @@ var starSpacedPoints = starShape.createSpacedPointsGeometry();
 
 		// render the scene
 		function render() {
-			// variable which is increase by Math.PI every seconds - usefull for animation
-			var PIseconds	= Date.now() * Math.PI;
-
 			// update camera controls
 			cameraControls.update();
-
-
 			// actually render the scene
 			renderer.render(scene, camera);
 		}
