@@ -49,7 +49,7 @@
       document.getElementById('inlineDoc').innerHTML	+= "- <i>f</i> for fullscreen";
     }
 
-    // my stuff
+    // Rendering stuff
     var PI2 = Math.PI * 2;
 
     (function() {
@@ -80,7 +80,6 @@
       }
     });
 
-
     // "sun" - 0,0 marker
     (function() {
       var geometry= new THREE.SphereGeometry(1);
@@ -88,6 +87,8 @@
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
     })();
+
+    // Ellipses
 
     function addGeometry( points, color, x, y, z, rx, ry, rz, s ) {
       var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
@@ -97,29 +98,18 @@
       scene.add( line );
     }
 
-    function drawEllipse(ctx, x, y, w, h) {
-      var kappa = .5522848
-       , ox = (w / 2) * kappa // control point offset horizontal
-       , oy = (h / 2) * kappa // control point offset vertical
-       , xe = x + w           // x-end
-       , ye = y + h           // y-end
-       , xm = x + w / 2       // x-middle
-       , ym = y + h / 2       // y-middle
-
-      ctx.moveTo(x, ym);
-      ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-      ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-      ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-      ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-    }
-
-    // foo
+    // ellipse!
     (function() {
+      //var shape = new THREE.Shape();
+      //drawEllipse(shape, 0, 0, 100, 200);
+
+      var ecurve = new THREE.EllipseCurve(0, 0, 50, 50, 0, 2 * Math.PI, true);
+
       var shape = new THREE.Shape();
-      drawEllipse(shape, 0, 0, 100, 200);
+      shape.fromPoints(ecurve.getPoints(100));
 
       var shapePoints = shape.createPointsGeometry();
-      addGeometry(shapePoints, 0xffee00, 0,0,0,0, 0, 0, 1);
+      addGeometry(shapePoints, 0xffee00, 0,0,0, 90,90,90, 1);
     })();
   }
 
