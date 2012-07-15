@@ -39,15 +39,21 @@
     camera.position.z = 100;
     scene.add(camera);
 
-    cameraControls	= new THREE.TrackballControls(camera)
+    //cameraControls	= new THREE.TrackballControls(camera)
+    // Camera and movement object
+    cameraControls = new THREE.ButtControls(camera);
+    //cameraControls.movementSpeed = 600;
+    //cameraControls.dragToLook = true;
 
     // Other setup
+    /*
     THREEx.WindowResize.bind(renderer, camera);
     THREEx.Screenshot.bindKey(renderer);
     if(THREEx.FullScreen.available()){
       THREEx.FullScreen.bindKey();
       document.getElementById('inlineDoc').innerHTML	+= "- <i>f</i> for fullscreen";
     }
+    */
 
     // Rendering stuff
     var PI2 = Math.PI * 2;
@@ -81,12 +87,14 @@
     });
 
     // "sun" - 0,0 marker
+    /*
     (function() {
       var geometry= new THREE.SphereGeometry(1);
       var material= new THREE.MeshNormalMaterial();
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
     })();
+    */
 
     // Ellipses
 
@@ -130,7 +138,7 @@
   // render the scene
   function render() {
     // update camera controls
-    cameraControls.update();
+    cameraControls.update(2);
     // actually render the scene
     renderer.render(scene, camera);
   }
