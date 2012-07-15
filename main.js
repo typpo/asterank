@@ -37,13 +37,21 @@
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.z = 100;
+    camera.position.x = -100;
     scene.add(camera);
 
-    //cameraControls	= new THREE.TrackballControls(camera)
+    cameraControls	= new THREE.TrackballControls(camera)
+      cameraControls.staticMoving = true;
+
     // Camera and movement object
-    cameraControls = new THREE.ButtControls(camera);
-    //cameraControls.movementSpeed = 600;
-    //cameraControls.dragToLook = true;
+    //cameraControls = new THREE.ButtControls(camera);
+    /*
+    cameraControls = new THREE.FirstPersonControls(camera);
+cameraControls.movementSpeed = 1;
+cameraControls.lookSpeed = 0.0005;
+cameraControls.noFly = true;
+cameraControls.lookVertical = false;
+*/
 
     // Other setup
     /*
@@ -87,14 +95,19 @@
     });
 
     // "sun" - 0,0 marker
-    /*
     (function() {
       var geometry= new THREE.SphereGeometry(1);
       var material= new THREE.MeshNormalMaterial();
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
+
+      // sun plane
+      var plane = new THREE.Mesh(new THREE.PlaneGeometry(3000, 3000), new THREE.MeshBasicMaterial({
+        color: 0x0000ff
+      }));
+      plane.position.set(0,0,0);
+      scene.add(plane);
     })();
-    */
 
     // Ellipses
 
@@ -117,7 +130,7 @@
       shape.fromPoints(ecurve.getPoints(100));
 
       var shapePoints = shape.createPointsGeometry();
-      addGeometry(shapePoints, 0xffee00, 0,0,0, 90,90,90, 1);
+      addGeometry(shapePoints, 0xffee00, 0,0,0, 0,0,0, 1);
     })();
   }
 
@@ -138,7 +151,7 @@
   // render the scene
   function render() {
     // update camera controls
-    cameraControls.update(2);
+    cameraControls.update(1.5);
     // actually render the scene
     renderer.render(scene, camera);
   }
