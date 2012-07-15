@@ -36,32 +36,13 @@
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.z = 100;
-    camera.position.x = -100;
+    camera.position.x = 100;
+
+    window.cam = camera;
     scene.add(camera);
 
     cameraControls	= new THREE.TrackballControls(camera)
-      cameraControls.staticMoving = true;
-
-    // Camera and movement object
-    //cameraControls = new THREE.ButtControls(camera);
-    /*
-    cameraControls = new THREE.FirstPersonControls(camera);
-cameraControls.movementSpeed = 1;
-cameraControls.lookSpeed = 0.0005;
-cameraControls.noFly = true;
-cameraControls.lookVertical = false;
-*/
-
-    // Other setup
-    /*
-    THREEx.WindowResize.bind(renderer, camera);
-    THREEx.Screenshot.bindKey(renderer);
-    if(THREEx.FullScreen.available()){
-      THREEx.FullScreen.bindKey();
-      document.getElementById('inlineDoc').innerHTML	+= "- <i>f</i> for fullscreen";
-    }
-    */
+    cameraControls.staticMoving = true;
 
     // Rendering stuff
     var PI2 = Math.PI * 2;
@@ -111,10 +92,17 @@ cameraControls.lookVertical = false;
 
     // Ellipses
 
-    function addGeometry( points, color, x, y, z, rx, ry, rz, s ) {
+    function addGeometry(points, color, x, y, z, rx, ry, rz, s) {
       var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
       line.position.set( x, y, z);
-      line.rotation.set( rx, ry, rz );
+
+      // from 0,0,100:
+      // view head on from above (Math.PI, Math.PI / 4, 0)
+      // view from side, vertically (Math.PI * 2, Math.PI / 4, 0)
+      //line.rotation.set( rx, ry, rz );
+      // TODO rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
+
+      var pi = Math.PI;
       line.scale.set( s, s, s );
       scene.add( line );
     }
