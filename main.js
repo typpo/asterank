@@ -36,7 +36,7 @@
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.x = 100;
+    camera.position.z = 100;
 
     window.cam = camera;
     scene.add(camera);
@@ -83,7 +83,7 @@
       scene.add(mesh);
 
       // sun plane
-      var plane = new THREE.Mesh(new THREE.PlaneGeometry(3000, 3000), new THREE.MeshBasicMaterial({
+      var plane = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshBasicMaterial({
         color: 0x0000ff
       }));
       plane.position.set(0,0,0);
