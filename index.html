@@ -38,6 +38,17 @@
 		var stats, scene, renderer, composer;
 		var camera, cameraControl;
 
+            window.requestAnimFrame = (function(){
+              return  window.requestAnimationFrame       ||
+                      window.webkitRequestAnimationFrame ||
+                      window.mozRequestAnimationFrame    ||
+                      window.oRequestAnimationFrame      ||
+                      window.msRequestAnimationFrame     ||
+                      function( callback ){
+                        window.setTimeout(callback, 1000 / 60);
+                      };
+            })();
+
 		if(!init())	animate();
 
 		// init the scene
@@ -71,11 +82,20 @@
 			var cameraW	= cameraH / window.innerHeight * window.innerWidth;
 			//camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+      //camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 10000);
       camera.position.z = 100;
 			scene.add(camera);
 
 			// create a camera contol
-			cameraControls	= new THREE.TrackballControls(camera)
+      var dummy = new THREE.Object3D();
+      scene.add(dummy);
+			cameraControls	= new THREE.FlyControls(camera)
+                cameraControls.movementSpeed = 1;
+                cameraControls.domElement = document.getElementById('container');
+                cameraControls.rollSpeed = 0.01;
+                cameraControls.autoForward = false;
+                cameraControls.dragToLook = true;
+      //cameraControls.target.set(0,0,0);
 
 			// transparently support window resize
 			THREEx.WindowResize.bind(renderer, camera);
@@ -130,7 +150,7 @@
       function addGeometry( points, color, x, y, z, rx, ry, rz, s ) {
         var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
         line.position.set( x, y, z);
-        line.rotation.set( rx, ry, rz );
+        //line.rotation.set( rx, ry, rz );
         line.scale.set( s, s, s );
         scene.add( line );
       }
@@ -152,34 +172,27 @@
       }
 
       // foo
-      (function() {
+      function addEllipse(rx, ry) {
         var shape = new THREE.Shape();
-        drawEllipse(shape, 0, 0, 100, 200);
-
+        drawEllipse(shape, 0, 0, rx, ry);
         var shapePoints = shape.createPointsGeometry();
         addGeometry(shapePoints, 0xffee00, 0,0,0,0, 0, 0, 1);
-      })();
+      }
+
+      addEllipse(100, 200);
+      addEllipse(50, 200);
 		}
 
-		// animation loop
 		function animate() {
-			// loop on request animation loop
-			// - it has to be at the begining of the function
-			// - see details at http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-			requestAnimationFrame(animate);
-
-			// do the render
+			//requestAnimationFrame(animate);
+      window.requestAnimFrame(animate);
+cameraControls.update(1);
 			render();
-
-			// update stats
-			stats.update();
+			stats.update();  // update stats
 		}
 
-		// render the scene
 		function render() {
-			// update camera controls
 			cameraControls.update();
-			// actually render the scene
 			renderer.render(scene, camera);
 		}
 	</script>
