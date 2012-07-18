@@ -73,7 +73,6 @@
       var geometry = new THREE.Geometry();
 
       for (var i = 0; i < 100; i++) {
-
         particle = new THREE.Particle(material);
         particle.position.x = Math.random() * 2 - 1;
         particle.position.y = Math.random() * 2 - 1;
@@ -132,6 +131,7 @@
 
     // Ellipses
 
+    /*
     function addGeometry(points, color, x, y, z, rx, ry, rz, s) {
       var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
       line.position.set( x, y, z);
@@ -160,6 +160,11 @@
       var shapePoints = shape.createPointsGeometry();
       addGeometry(shapePoints, 0xffee00, 0,0,0, 0,0,0, 1);
     })();
+    */
+
+    // ycibndzchg3
+    var orb = new Orbit3D(Ephemeris.mars);
+    scene.add(orb.getObject());
   }
 
   // animation loop
