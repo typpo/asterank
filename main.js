@@ -15,6 +15,7 @@
   var WEB_GL_ENABLED = false;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
+  var pi = Math.PI;
 
   if(!init())	animate();
 
@@ -94,12 +95,40 @@
       scene.add(mesh);
 
       // sun plane
+      /*
       var plane = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshBasicMaterial({
         color: 0x0000ff
       }));
       plane.position.set(0,0,0);
+      plane.overdraw = true;
       scene.add(plane);
+      */
     })();
+
+    function axes() {
+      var  cylinder = new THREE.CylinderGeometry(30, .5, .5, 200);
+
+      var xMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+      var yMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      var zMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+
+      var xMesh     = new THREE.Mesh(cylinder, xMaterial);
+      var yMesh     = new THREE.Mesh(cylinder, yMaterial);
+      var zMesh     = new THREE.Mesh(cylinder, zMaterial);
+
+      //xMesh.rotation.y = Math.PI / 2;
+      //xMesh.position.x = 100;
+
+      //yMesh.rotation.x = Math.PI / 2;
+      //yMesh.position.y = 100;
+
+      //zMesh.position.z = 100;
+
+      //scene.add(xMesh);
+      //scene.add(yMesh);
+      scene.add(zMesh);
+    }
+    axes();
 
     // Ellipses
 
@@ -111,9 +140,9 @@
       // view head on from above (Math.PI, Math.PI / 4, 0)
       // view from side, vertically (Math.PI * 2, Math.PI / 4, 0)
       //line.rotation.set( rx, ry, rz );
+      line.rotation.x = pi/2;
       // TODO rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
 
-      var pi = Math.PI;
       line.scale.set( s, s, s );
       scene.add( line );
     }
@@ -123,7 +152,7 @@
       //var shape = new THREE.Shape();
       //drawEllipse(shape, 0, 0, 100, 200);
 
-      var ecurve = new THREE.EllipseCurve(0, 0, 50, 50, 0, 2 * Math.PI, true);
+      var ecurve = new THREE.EllipseCurve(0, 0, 50, 80, 0, 2 * Math.PI, true);
 
       var shape = new THREE.Shape();
       shape.fromPoints(ecurve.getPoints(100));
