@@ -20,7 +20,7 @@ window.OrbitsView = (function() {
 
   OrbitsView.prototype.addOrbit = function(obj) {
     var me = this;
-    diagram.renderAnother(obj.a, obj.e, obj.om)
+    diagram.renderAnother(obj.a, obj.e, obj.w)
       .on("mouseover", function(){
         d3.select(this).style('stroke', 'red');
         me.$description.html(obj.full_name + ': $' + obj.fuzzed_price);
