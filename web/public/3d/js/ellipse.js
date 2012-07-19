@@ -2,7 +2,10 @@
   var pi = Math.PI;
   var PIXELS_PER_AU = 50;
 
-  var Orbit3D = function(eph) {
+  var Orbit3D = function(eph, opts) {
+    opts = opts || {};
+    opts.color = opts.color || 0xffee00;
+    opts.width = opts.width || 1;
 
     eph.b = eph.a * Math.sqrt(1 - eph.e * eph.e);
     var rx = eph.a * PIXELS_PER_AU;
@@ -14,7 +17,8 @@
     shape.fromPoints(ecurve.getPoints(100));
 
     var points = shape.createPointsGeometry();
-    var line = new THREE.Line(points, new THREE.LineBasicMaterial({color: 0xffee00, linewidth: 1}));
+    var line = new THREE.Line(points,
+      new THREE.LineBasicMaterial({color: opts.color, linewidth: opts.width}));
     line.position.set(0,0,0);
 
     // from 0,0,100:

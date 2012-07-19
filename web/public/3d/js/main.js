@@ -13,6 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = false;
+  var MAX_NUM_ORBITS = 50;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -129,11 +130,25 @@
     // Ellipses
 
     // ycibndzchg3
-    scene.add(new Orbit3D(Ephemeris.mercury).getObject());
-    scene.add(new Orbit3D(Ephemeris.venus).getObject());
-    scene.add(new Orbit3D(Ephemeris.mars).getObject());
-    scene.add(new Orbit3D(Ephemeris.earth).getObject());
-    scene.add(new Orbit3D(Ephemeris.jupiter).getObject());
+    scene.add(new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3}).getObject());
+    scene.add(new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3}).getObject());
+    scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
+    scene.add(new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3}).getObject());
+    scene.add(new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3}).getObject());
+
+    $.getJSON('/top?sort=score&n=100', function(data) {
+      for (var i=0; i < data.results.rankings.length; i++) {
+        if (i > MAX_NUM_ORBITS) return;
+        var roid = data.results.rankings[i];
+        var eph = {
+          a: roid.a,
+          e: roid.e,
+          w: roid.w,
+          i: roid.i
+        };
+        scene.add(new Orbit3D(eph).getObject());
+      }
+    });
   }
 
   // animation loop
