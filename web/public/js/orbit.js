@@ -30,17 +30,17 @@ window.OrbitDiagram = (function() {
     this.plotMars();
   }
 
-  OrbitDiagram.prototype.render = function(a, e, om) {
+  OrbitDiagram.prototype.render = function(a, e, w) {
     this.prepareRender();
     this.renderPlanets();
-    return this.renderAnother(a, e, om);
+    return this.renderAnother(a, e, w);
   }
 
-  OrbitDiagram.prototype.renderAnother = function(a, e, om) {
-    return this.plotOrbit(a, e, om, 'white');
+  OrbitDiagram.prototype.renderAnother = function(a, e, w) {
+    return this.plotOrbit(a, e, w, 'white');
   }
 
-  OrbitDiagram.prototype.plotOrbit = function(a, e, om, color) {
+  OrbitDiagram.prototype.plotOrbit = function(a, e, w, color) {
     var b = a * Math.sqrt(1 - e * e);
     //var q = a*(1-e);
     //var Q = a*(1+e);
@@ -50,7 +50,7 @@ window.OrbitDiagram = (function() {
     var ry = a * this.DIAGRAM_AU_FACTOR;
     var foci = f * this.DIAGRAM_AU_FACTOR;
 
-    return this.plotCoords(rx, ry, foci, om, color);
+    return this.plotCoords(rx, ry, foci, w, color);
   }
 
   OrbitDiagram.prototype.plotCoords = function(rx, ry, f, rotate_deg, color) {
@@ -109,23 +109,23 @@ window.OrbitDiagram = (function() {
   }
 
   OrbitDiagram.prototype.plotEarth = function() {
-    this.plotOrbit(1.00000011, 0.01671022, -11.26064, 'cyan');
+    this.plotOrbit(1.00000011, 0.01671022, 102.93768193, 'cyan');
   }
 
   OrbitDiagram.prototype.plotJupiter = function() {
-    this.plotOrbit(5.20336301, 0.04839266, 100.55615, 'orange');
+    this.plotOrbit(5.20336301, 0.04839266, 14.72847983, 'orange');
   }
 
   OrbitDiagram.prototype.plotMars = function() {
-    this.plotOrbit(1.52366231, 0.0935, 49.57854, 'red');
+    this.plotOrbit(1.52366231, 0.0935, 336.04084, 'red');
   }
 
   OrbitDiagram.prototype.plotVenus = function() {
-    this.plotOrbit(0.72333199, 0.00677323, 76.68069, 'orange');
+    this.plotOrbit(0.72333199, 0.00677323, 131.60246718, 'orange');
   }
 
   OrbitDiagram.prototype.plotMercury = function() {
-    this.plotOrbit(0.38709893, 0.20563069, 48.33167, 'purple');
+    this.plotOrbit(0.38709893, 0.20563069, 77.45779628, 'purple');
   }
 
   return OrbitDiagram;

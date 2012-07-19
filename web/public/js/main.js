@@ -56,10 +56,10 @@ window.Asterank = (function() {
     // orbital diagram
     var a = parseFloat($e.attr('data-obj_a'));
     var e = parseFloat($e.attr('data-obj_e'));
-    var om = parseFloat($e.attr('data-obj_om'));
+    var w = parseFloat($e.attr('data-obj_w'));
     if (supportsSvg()) {
       $('#orbit-viz-container').show();
-      AsteroidOrbitRenderer.render(a, e, om);
+      AsteroidOrbitRenderer.render(a, e, w);
     }
 
     $.getJSON('/info/' + obj, function(result) {
@@ -173,7 +173,7 @@ window.Asterank = (function() {
         + '" data-obj_type="' + obj.spec_B
         + '" data-obj_a="' + obj.a
         + '" data-obj_e="' + obj.e
-        + '" data-obj_om="' + obj.om
+        + '" data-obj_w="' + obj.w
         + '">';
       for (var j=0; j < HEADERS.length; j++) {
         var val = obj[HEADERS[j]];
