@@ -56,6 +56,13 @@
     cameraControls	= new THREE.TrackballControls(camera)
     cameraControls.staticMoving = true;
 
+    // Fullscreen & screenshots
+    THREEx.Screenshot.bindKey(renderer);
+    if(THREEx.FullScreen.available()){
+      THREEx.FullScreen.bindKey();
+      document.getElementById('inlineDoc').innerHTML  += "- <i>f</i> for fullscreen";
+    }
+
     // Rendering stuff
     var PI2 = Math.PI * 2;
 
