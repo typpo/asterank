@@ -99,16 +99,6 @@
       var material= new THREE.MeshNormalMaterial();
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
-
-      // sun plane
-      /*
-      var plane = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshBasicMaterial({
-        color: 0x0000ff
-      }));
-      plane.position.set(0,0,0);
-      plane.overdraw = true;
-      scene.add(plane);
-      */
     })();
 
     function axes() {
@@ -137,37 +127,6 @@
     //axes();
 
     // Ellipses
-
-    /*
-    function addGeometry(points, color, x, y, z, rx, ry, rz, s) {
-      var line = new THREE.Line( points, new THREE.LineBasicMaterial( { color: color, linewidth: 2 } ) );
-      line.position.set( x, y, z);
-
-      // from 0,0,100:
-      // view head on from above (Math.PI, Math.PI / 4, 0)
-      // view from side, vertically (Math.PI * 2, Math.PI / 4, 0)
-      //line.rotation.set( rx, ry, rz );
-      line.rotation.x = pi/2;
-      // TODO rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
-
-      line.scale.set( s, s, s );
-      scene.add( line );
-    }
-
-    // ellipse!
-    (function() {
-      //var shape = new THREE.Shape();
-      //drawEllipse(shape, 0, 0, 100, 200);
-
-      var ecurve = new THREE.EllipseCurve(0, 0, 50, 80, 0, 2 * Math.PI, true);
-
-      var shape = new THREE.Shape();
-      shape.fromPoints(ecurve.getPoints(100));
-
-      var shapePoints = shape.createPointsGeometry();
-      addGeometry(shapePoints, 0xffee00, 0,0,0, 0,0,0, 1);
-    })();
-    */
 
     // ycibndzchg3
     scene.add(new Orbit3D(Ephemeris.mercury).getObject());
