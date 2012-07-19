@@ -127,7 +127,7 @@
       //scene.add(yMesh);
       scene.add(zMesh);
     }
-    axes();
+    //axes();
 
     // Ellipses
 
@@ -163,8 +163,11 @@
     */
 
     // ycibndzchg3
-    var orb = new Orbit3D(Ephemeris.mars);
-    scene.add(orb.getObject());
+    scene.add(new Orbit3D(Ephemeris.mercury).getObject());
+    scene.add(new Orbit3D(Ephemeris.venus).getObject());
+    scene.add(new Orbit3D(Ephemeris.mars).getObject());
+    scene.add(new Orbit3D(Ephemeris.earth).getObject());
+    scene.add(new Orbit3D(Ephemeris.jupiter).getObject());
   }
 
   // animation loop

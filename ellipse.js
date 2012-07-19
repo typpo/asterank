@@ -14,7 +14,7 @@
     shape.fromPoints(ecurve.getPoints(100));
 
     var points = shape.createPointsGeometry();
-    var line = new THREE.Line(points, new THREE.LineBasicMaterial({color: 0xffee00, linewidth: 2}));
+    var line = new THREE.Line(points, new THREE.LineBasicMaterial({color: 0xffee00, linewidth: 1}));
     line.position.set(0,0,0);
 
     // from 0,0,100:
