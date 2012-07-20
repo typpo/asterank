@@ -21,62 +21,37 @@
       new THREE.LineBasicMaterial({color: opts.color, linewidth: opts.width}));
     line.position.set(0,0,0);
 
-    // Mesh at the same plane as the orbit for detecting mouseover
-    /*
-    var orbit_cylinder = new THREE.CylinderGeometry(eph.a*PIXELS_PER_AU, .5, .5, 200);
-    var orbit_mesh = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    var orbit_plane = new THREE.Mesh(orbit_cylinder, orbit_mesh);
-    orbit_plane.visible = false;
-    */
-    var extrusionSettings = {
-      size: 1, height: 1, curveSegments: 3,
-      bevelThickness: 1, bevelSize: 1, bevelEnabled: false,
-      material: 0, extrudeMaterial: 1,
-      amount: 0.2,
-    };
-    var extruded = shape.extrude(extrusionSettings);//new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    /*
-    var orbit_plane = THREE.SceneUtils.createMultiMaterialObject(extruded, [
-      new THREE.MeshLambertMaterial({ color: 0xffee00 }),
-      new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true })
-    ]);
-    */
-    var orbit_plane = new THREE.Mesh(extruded, new THREE.MeshBasicMaterial({ color: 0x0000ff, wireframe: true, transparent: true }));
+    line.rotation.x = pi/2;
+    line.rotation.z = eph.w * pi / 180;
+    line.rotation.y = eph.i * pi / 180;
 
-    // mini ellipse
-    var ecurve2 = new THREE.EllipseCurve(0, 0, rx*0.5, ry*0.5, 0, 2*pi, true);
-    var shape2 = new THREE.Shape();
-    shape2.fromPoints(ecurve2.getPoints(100));
-    var miniextrude = shape.extrude(extrusionSettings);
-    var mini_orbit_plane = new THREE.Mesh(miniextrude, new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true, transparent: true }));
+    var material = new THREE.ParticleCanvasMaterial({
+      color: 0xffee00,
+      program: function (context) {
+        context.beginPath();
+        context.arc(0, 0, 1, 0, 2*pi, true);
+        context.closePath();
+        context.fill();
+      }
+    });
+    var particle = new THREE.Particle(material);
+    particle.position.x = rx;
+    particle.position.y = ry;
+    particle.position.z = 1;
+    particle.rotation.x = pi/2;
+    particle.rotation.z = eph.w * pi / 180;
+    particle.rotation.y = eph.i * pi / 180;
 
-    if (scene) scene.add(orbit_plane);
-    if (scene) scene.add(mini_orbit_plane);
-
-    //var finalgeo = THREE.CSG.fromCSG(THREE.CSG.toCSG(extruded).subtract(THREE.CSG.toCSG(miniextrude)));
-    var finalgeo = new ThreeBSP(orbit_plane).subtract(new ThreeBSP(mini_orbit_plane));
-    var ff = finalgeo.toGeometry();
-    console.log(ff.faces);
-    orbit_plane = new THREE.Mesh(ff, new THREE.MeshNormalMaterial());
-
-    orbit_plane.foo = line;
-
-    orbit_plane.rotation.x = line.rotation.x = pi/2;
-    orbit_plane.rotation.z = line.rotation.z = eph.w * pi / 180;
-    orbit_plane.rotation.y = line.rotation.y = eph.i * pi / 180;
-    //orbit_plane.visible = false;
-    //if (scene) scene.add(orbit_plane);
-    // rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
     this.object3D = line;
-    this.plane = orbit_plane;
+    this.particle = particle;
   }
 
   Orbit3D.prototype.getObject = function() {
     return this.object3D;
   }
 
-  Orbit3D.prototype.getPlane = function() {
-    return this.plane;
+  Orbit3D.prototype.getParticle = function() {
+    return this.particle;
   }
 
   window.Orbit3D = Orbit3D;
