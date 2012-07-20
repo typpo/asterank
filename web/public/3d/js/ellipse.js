@@ -41,12 +41,24 @@
       new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true })
     ]);
     */
-    var orbit_plane = new THREE.Mesh(extruded, new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true }));
+    var orbit_plane = new THREE.Mesh(extruded, new THREE.MeshBasicMaterial({ color: 0x0000ff, wireframe: true, transparent: true }));
+
+    // mini ellipse
+    var ecurve2 = new THREE.EllipseCurve(0, 0, rx*0.9, ry*0.9, 0, 2*pi, true);
+    var shape2 = new THREE.Shape();
+    shape2.fromPoints(ecurve2.getPoints(100));
+    var miniextrude = shape.extrude(extrusionSettings);
+    var mini_orbit_plane = new THREE.Mesh(miniextrude, new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true, transparent: true }));
+
+    var finalgeo = THREE.CSG.fromCSG(THREE.CSG.toCSG(extruded).subtract(THREE.CSG.toCSG(miniextrude)));
+    orbit_plane = new THREE.Mesh(finalgeo, new THREE.MeshNormalMaterial());
+
+    orbit_plane.foo = line;
 
     orbit_plane.rotation.x = line.rotation.x = pi/2;
     orbit_plane.rotation.z = line.rotation.z = eph.w * pi / 180;
     orbit_plane.rotation.y = line.rotation.y = eph.i * pi / 180;
-    orbit_plane.visible = false;
+    //orbit_plane.visible = false;
     //if (scene) scene.add(orbit_plane);
     // rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
     this.object3D = line;
