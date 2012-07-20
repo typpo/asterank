@@ -56,7 +56,7 @@
     camera.position.y = 100;
 
     window.cam = camera;
-    THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+    //THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
 
     scene.add(camera);
 
@@ -163,7 +163,7 @@
   function animate() {
     requestAnimationFrame(animate);
     render();
-    //update();
+    update();
   }
 
   function update() {
@@ -174,9 +174,13 @@
 
     // create a Ray with origin at the mouse position
     //   and direction into the scene (camera direction)
-    var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+    var vector = new THREE.Vector3(mouse.x, mouse.y, 1);
     projector.unprojectVector( vector, camera );
-    var ray = new THREE.Ray( camera.position, vector.subSelf( camera.position ).normalize() );
+    var ray = new THREE.Ray({
+      x: camera.position.x,
+      y: camera.position.y,
+      z: camera.position.z
+    }, vector.subSelf( camera.position ).normalize() );
 
     // create an array containing all objects in the scene with which the ray intersects
     var intersects = ray.intersectObjects( scene.children );
@@ -199,14 +203,22 @@
         INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
         // set a new color for closest object
         INTERSECTED.material.color.setHex( 0xffff00 );
+        //INTERSECTED.visible = true;
+
+        if (INTERSECTED.foo) {
+          INTERSECTED.foo.material.color.setHex(0x0000ff);
+
+        }
       }
       console.log('intersected');
     }
     else // there are no intersections
     {
       // restore previous intersection object (if it exists) to its original color
-      if ( INTERSECTED )
-        INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+      if ( INTERSECTED ) {
+        //INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+        //INTERSECTED.visible = false;
+      }
       // remove previous intersection object reference
       //     by setting current intersection object to "nothing"
       INTERSECTED = null;
@@ -246,10 +258,12 @@
         //console.log(scene);
         var orbit = new Orbit3D(eph, null, scene);
         //console.log(orbit.getPlane());
+        /*
         orbit.getPlane().addEventListener('mouseover', function(e) {
           console.log('adddqw3');
           $('#info .top').html(roid.full_name);
         });
+        */
         rendered_asteroids.push(orbit);
         scene.add(orbit.getObject());
         scene.add(orbit.getPlane());
