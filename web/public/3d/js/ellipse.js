@@ -44,14 +44,20 @@
     var orbit_plane = new THREE.Mesh(extruded, new THREE.MeshBasicMaterial({ color: 0x0000ff, wireframe: true, transparent: true }));
 
     // mini ellipse
-    var ecurve2 = new THREE.EllipseCurve(0, 0, rx*0.9, ry*0.9, 0, 2*pi, true);
+    var ecurve2 = new THREE.EllipseCurve(0, 0, rx*0.5, ry*0.5, 0, 2*pi, true);
     var shape2 = new THREE.Shape();
     shape2.fromPoints(ecurve2.getPoints(100));
     var miniextrude = shape.extrude(extrusionSettings);
     var mini_orbit_plane = new THREE.Mesh(miniextrude, new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true, transparent: true }));
 
-    var finalgeo = THREE.CSG.fromCSG(THREE.CSG.toCSG(extruded).subtract(THREE.CSG.toCSG(miniextrude)));
-    orbit_plane = new THREE.Mesh(finalgeo, new THREE.MeshNormalMaterial());
+    if (scene) scene.add(orbit_plane);
+    if (scene) scene.add(mini_orbit_plane);
+
+    //var finalgeo = THREE.CSG.fromCSG(THREE.CSG.toCSG(extruded).subtract(THREE.CSG.toCSG(miniextrude)));
+    var finalgeo = new ThreeBSP(orbit_plane).subtract(new ThreeBSP(mini_orbit_plane));
+    var ff = finalgeo.toGeometry();
+    console.log(ff.faces);
+    orbit_plane = new THREE.Mesh(ff, new THREE.MeshNormalMaterial());
 
     orbit_plane.foo = line;
 
