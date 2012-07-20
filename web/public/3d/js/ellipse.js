@@ -40,8 +40,6 @@
       new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true })
     ]);
 
-    console.log(orbit_plane);
-
     orbit_plane.rotation.x = line.rotation.x = pi/2;
     orbit_plane.rotation.z = line.rotation.z = eph.w * pi / 180;
     orbit_plane.rotation.y = line.rotation.y = eph.i * pi / 180;
