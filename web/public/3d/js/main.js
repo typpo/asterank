@@ -57,19 +57,12 @@
     cameraControls	= new THREE.TrackballControls(camera)
     cameraControls.staticMoving = true;
 
-    // Fullscreen & screenshots
-    THREEx.Screenshot.bindKey(renderer);
-    if(THREEx.FullScreen.available()){
-      THREEx.FullScreen.bindKey();
-      document.getElementById('inlineDoc').innerHTML  += "- <i>f</i> for fullscreen";
-    }
-
     // Rendering stuff
     var PI2 = Math.PI * 2;
 
     (function() {
       var material = new THREE.ParticleCanvasMaterial({
-        color: 0x000000,
+        color: 0xffee00,
         program: function (context) {
           context.beginPath();
           context.arc(0, 0, 1, 0, PI2, true);
@@ -81,13 +74,13 @@
       var geometry = new THREE.Geometry();
 
       for (var i = 0; i < 100; i++) {
-        particle = new THREE.Particle(material);
+        var particle = new THREE.Particle(material);
         particle.position.x = Math.random() * 2 - 1;
         particle.position.y = Math.random() * 2 - 1;
         particle.position.z = Math.random() * 2 - 1;
         particle.position.normalize();
         particle.position.multiplyScalar(Math.random() * 450);
-        particle.scale.x = particle.scale.y = 1;
+        //particle.scale.x = particle.scale.y = 1;
         scene.add(particle);
 
         geometry.vertices.push(particle.position);
@@ -132,8 +125,8 @@
     // ycibndzchg3
     scene.add(new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3}).getObject());
     scene.add(new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
     scene.add(new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3}).getObject());
+    scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
     scene.add(new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3}).getObject());
 
     $.getJSON('/top?sort=score&n=100', function(data) {
