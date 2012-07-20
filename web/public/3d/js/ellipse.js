@@ -35,15 +35,18 @@
       amount: 0.2,
     };
     var extruded = shape.extrude(extrusionSettings);//new THREE.ExtrudeGeometry(shape, extrudeSettings);
+    /*
     var orbit_plane = THREE.SceneUtils.createMultiMaterialObject(extruded, [
       new THREE.MeshLambertMaterial({ color: 0xffee00 }),
       new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true })
     ]);
+    */
+    var orbit_plane = new THREE.Mesh(extruded, new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true }));
 
     orbit_plane.rotation.x = line.rotation.x = pi/2;
     orbit_plane.rotation.z = line.rotation.z = eph.w * pi / 180;
     orbit_plane.rotation.y = line.rotation.y = eph.i * pi / 180;
-    //orbit_plane.visible = false;
+    orbit_plane.visible = false;
     //if (scene) scene.add(orbit_plane);
     // rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
     this.object3D = line;

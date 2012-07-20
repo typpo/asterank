@@ -154,7 +154,6 @@
   }
 
   function onDocumentMouseMove(event) {
-    console.log('monce');
     mouseonce = true;
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
@@ -255,7 +254,7 @@
         */
         rendered_asteroids.push(orbit);
         scene.add(orbit.getObject());
-        //scene.add(orbit.getPlane());
+        scene.add(orbit.getPlane());
       }
     });
   }
