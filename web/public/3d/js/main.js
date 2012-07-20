@@ -17,6 +17,7 @@
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
+  var rendered_asteroids = [];
 
   if(!init())	animate();
 
@@ -52,6 +53,8 @@
     camera.position.z = 100;
 
     window.cam = camera;
+    THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+
     scene.add(camera);
 
     cameraControls	= new THREE.TrackballControls(camera)
@@ -128,20 +131,7 @@
     scene.add(new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3}).getObject());
     scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
     scene.add(new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3}).getObject());
-
-    $.getJSON('/top?sort=score&n=100', function(data) {
-      for (var i=0; i < data.results.rankings.length; i++) {
-        if (i > MAX_NUM_ORBITS) return;
-        var roid = data.results.rankings[i];
-        var eph = {
-          a: roid.a,
-          e: roid.e,
-          w: roid.w,
-          i: roid.i
-        };
-        scene.add(new Orbit3D(eph).getObject());
-      }
-    });
+    runQuery();
   }
 
   // animation loop
@@ -164,5 +154,33 @@
     cameraControls.update(1.5);
     // actually render the scene
     renderer.render(scene, camera);
+  }
+
+  function runQuery(sort) {
+    sort = sort || 'score';
+    for (var i=0; i < rendered_asteroids.length; i++) {
+      scene.remove(rendered_asteroids[i].getObject());
+    }
+    $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
+      for (var i=0; i < data.results.rankings.length; i++) {
+        if (i > MAX_NUM_ORBITS) return;
+        var roid = data.results.rankings[i];
+        var eph = {
+          a: roid.a,
+          e: roid.e,
+          w: roid.w,
+          i: roid.i
+        };
+        console.log(scene);
+        var orbit = new Orbit3D(eph, null, scene);
+        console.log(orbit.getPlane());
+        orbit.getPlane().addEventListener('mouseover', function(e) {
+          $('#info .top').html(roid.full_name);
+        });
+        rendered_asteroids.push(orbit);
+        scene.add(orbit.getObject());
+        //scene.add(orbit.getPlane());
+      }
+    });
   }
 })();
