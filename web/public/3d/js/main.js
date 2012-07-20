@@ -13,7 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 1;
+  var MAX_NUM_ORBITS = 50;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -56,7 +56,7 @@
     camera.position.y = 100;
 
     window.cam = camera;
-    //THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+    THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
 
     scene.add(camera);
 
@@ -163,7 +163,7 @@
   function animate() {
     requestAnimationFrame(animate);
     render();
-    update();
+    //update();
   }
 
   function update() {
@@ -246,12 +246,10 @@
         //console.log(scene);
         var orbit = new Orbit3D(eph, null, scene);
         //console.log(orbit.getPlane());
-        /*
         orbit.getPlane().addEventListener('mouseover', function(e) {
           console.log('adddqw3');
           $('#info .top').html(roid.full_name);
         });
-        */
         rendered_asteroids.push(orbit);
         scene.add(orbit.getObject());
         scene.add(orbit.getPlane());
