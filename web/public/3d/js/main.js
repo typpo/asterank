@@ -13,7 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 25;
+  var MAX_NUM_ORBITS = 1;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -132,6 +132,19 @@
     scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
     scene.add(new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3}).getObject());
     runQuery();
+
+    // Sky
+    var materialArray = [];
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+    var skyboxGeom = new THREE.CubeGeometry(9000, 9000, 9000, 1, 1, 1, materialArray);
+    var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial() );
+    skybox.flipSided = true;
+    scene.add(skybox);
   }
 
   // animation loop
@@ -162,8 +175,7 @@
       scene.remove(rendered_asteroids[i].getObject());
     }
     $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
-      for (var i=0; i < data.results.rankings.length; i++) {
-        if (i > MAX_NUM_ORBITS) return;
+      for (var i=0; i < data.results.rankings.length && i < MAX_NUM_ORBITS; i++) {
         var roid = data.results.rankings[i];
         var eph = {
           a: roid.a,
@@ -174,12 +186,13 @@
         //console.log(scene);
         var orbit = new Orbit3D(eph, null, scene);
         //console.log(orbit.getPlane());
-        orbit.getObject().addEventListener('mouseover', function(e) {
+        orbit.getPlane().addEventListener('mouseover', function(e) {
+          console.log('adddqw3');
           $('#info .top').html(roid.full_name);
         });
         rendered_asteroids.push(orbit);
-        scene.add(orbit.getObject());
-        //scene.add(orbit.getPlane());
+        //scene.add(orbit.getObject());
+        scene.add(orbit.getPlane());
       }
     });
   }
