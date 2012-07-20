@@ -14,15 +14,27 @@
     var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
 
     var shape = new THREE.Shape();
-    shape.fromPoints(ecurve.getPoints(100));
+    shape.fromPoints(ecurve.getPoints(50));
 
-    var points = shape.createPointsGeometry();
     /*
+    var points = shape.createPointsGeometry();
     var line = new THREE.Line(points,
       new THREE.LineBasicMaterial({color: opts.color, linewidth: opts.width}));
       */
-    var extrudeSettings = { amount: 20,  bevelEnabled: true, bevelSegments: 2, steps: 2 }; // bevelSegments: 2, steps: 2 , bevelSegments: 5, bevelSize: 8, bevelThickness:5,
-    var mesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [ new THREE.MeshLambertMaterial( { color: color } ), new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true, transparent: true } ) ] );
+    //var extrudeSettings = {amount: 2,  bevelEnabled: true, bevelSegments: 2, steps: 20, height: 1, size: 1};
+    //var extruded = shape.extrude(extrudeSettings);
+    var extrusionSettings = {
+      size: 1, height: 1, curveSegments: 3,
+      bevelThickness: 1, bevelSize: 1, bevelEnabled: false,
+      material: 0, extrudeMaterial: 1,
+      amount: 0.2,
+    };
+    var extruded = shape.extrude(extrusionSettings);//new THREE.ExtrudeGeometry(shape, extrudeSettings);
+    var mesh = THREE.SceneUtils.createMultiMaterialObject(extruded, [
+        new THREE.MeshLambertMaterial({ color: 0xffee00 }),
+        new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true })
+        ]);
+    var line = mesh;
     line.position.set(0,0,0);
 
     // Mesh at the same plane as the orbit for detecting mouseover
@@ -38,7 +50,7 @@
     orbit_plane.x = line.rotation.x = pi/2;
     orbit_plane.y = line.rotation.z = eph.w * pi / 180;
     orbit_plane.z = line.rotation.y = eph.i * pi / 180;
-    if (scene) scene.add(orbit_plane);
+    //if (scene) scene.add(orbit_plane);
     // rotate with respect to window, not camera: https://github.com/mrdoob/three.js/issues/910
     //line.scale.set(1,1,1);
     this.object3D = line;

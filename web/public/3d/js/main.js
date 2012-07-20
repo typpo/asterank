@@ -171,10 +171,10 @@
           w: roid.w,
           i: roid.i
         };
-        console.log(scene);
+        //console.log(scene);
         var orbit = new Orbit3D(eph, null, scene);
-        console.log(orbit.getPlane());
-        orbit.getPlane().addEventListener('mouseover', function(e) {
+        //console.log(orbit.getPlane());
+        orbit.getObject().addEventListener('mouseover', function(e) {
           $('#info .top').html(roid.full_name);
         });
         rendered_asteroids.push(orbit);
