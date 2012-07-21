@@ -36,6 +36,8 @@
   }
 
   Orbit3D.prototype.CreateParticle = function() {
+    // http://www.davidcolarusso.com/astro/
+    // http://www.stargazing.net/kepler/ellipse.html#twig02a
 
     console.log(this.eph);
     var w=this.eph.w-this.eph.O;
@@ -58,9 +60,10 @@
     var cs=cw*sO;
     var ci=Math.cos(I);
     var si=Math.sin(I);
-    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y;
-    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y;
-    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y;
+    var foo = 50;
+    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y*foo;
+    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y*foo;
+    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y*foo;
     console.log(X, Y, Z);
 
     var material = new THREE.ParticleCanvasMaterial({
