@@ -10,11 +10,11 @@
     this.opts = opts;
     this.eph = eph;
     this.CreateOrbit();
-    this.createParticle();
+    this.CreateParticle();
   }
 
-  Orbit3D.prototype.createOrbit = function() {
-    this.eph.b = this.eph.a * Math.sqrt(1 - eph.e * eph.e);
+  Orbit3D.prototype.CreateOrbit = function() {
+    this.eph.b = this.eph.a * Math.sqrt(1 - this.eph.e * this.eph.e);
     var rx = this.eph.a * PIXELS_PER_AU;
     var ry = this.eph.b * PIXELS_PER_AU;
 
@@ -35,20 +35,21 @@
     this.object3D = line;
   }
 
-  Orbit3D.prototype.createParticle = function() {
+  Orbit3D.prototype.CreateParticle = function() {
 
-    var w=eph.w-eph.O;
-    var M=eph.L-eph.w;
-    var I=eph.I;
+    console.log(this.eph);
+    var w=this.eph.w-this.eph.O;
+    var M=this.eph.L-this.eph.w;
+    var I=this.eph.i;
     var m=(M+pi)/(2*pi);
     M=(m-Math.floor(m))*2*pi-pi;
 
     var E=M;
-    E=M+eph.e*Math.sin(E);
-    var x=eph.a*(Math.cos(E)-eph.e);
-    var y=eph.a*Math.sqrt(1-eph.e*eph.e)*Math.sin(E);
-    var sO=Math.sin(eph.O);
-    var cO=Math.cos(eph.O);
+    E=M+this.eph.e*Math.sin(E);
+    var x=this.eph.a*(Math.cos(E)-this.eph.e);
+    var y=this.eph.a*Math.sqrt(1-this.eph.e*this.eph.e)*Math.sin(E);
+    var sO=Math.sin(this.eph.O);
+    var cO=Math.cos(this.eph.O);
     var sw=Math.sin(w);
     var cw=Math.cos(w);
     var cc=cw*cO;
@@ -57,9 +58,10 @@
     var cs=cw*sO;
     var ci=Math.cos(I);
     var si=Math.sin(I);
-    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y;
-    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y;
-    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y;
+    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y * PIXELS_PER_AU;
+    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y * PIXELS_PER_AU;
+    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y * PIXELS_PER_AU;
+    console.log(X,Y,Z);
 
     var material = new THREE.ParticleCanvasMaterial({
       color: 0xffee00,
@@ -71,12 +73,12 @@
       }
     });
     var particle = new THREE.Particle(material);
-    particle.position.x = rx;
-    particle.position.y = ry;
-    particle.position.z = 1;
-    particle.rotation.x = pi/2;
-    particle.rotation.z = eph.w * pi / 180;
-    particle.rotation.y = eph.i * pi / 180;
+    particle.position.x = X;
+    particle.position.y = Y;
+    particle.position.z = Z;
+    //particle.rotation.x = pi/2;
+    //particle.rotation.z = this.eph.w * pi / 180;
+    //particle.rotation.y = eph.i * pi / 180;
 
     this.particle = particle;
 
