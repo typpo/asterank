@@ -37,7 +37,29 @@
 
   Orbit3D.prototype.createParticle = function() {
 
-    var w =
+    var w=eph.w-eph.O;
+    var M=eph.L-eph.w;
+    var I=eph.I;
+    var m=(M+pi)/(2*pi);
+    M=(m-Math.floor(m))*2*pi-pi;
+
+    var E=M;
+    E=M+eph.e*Math.sin(E);
+    var x=eph.a*(Math.cos(E)-eph.e);
+    var y=eph.a*Math.sqrt(1-eph.e*eph.e)*Math.sin(E);
+    var sO=Math.sin(eph.O);
+    var cO=Math.cos(eph.O);
+    var sw=Math.sin(w);
+    var cw=Math.cos(w);
+    var cc=cw*cO;
+    var ss=sw*sO;
+    var sc=sw*cO;
+    var cs=cw*sO;
+    var ci=Math.cos(I);
+    var si=Math.sin(I);
+    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y;
+    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y;
+    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y;
 
     var material = new THREE.ParticleCanvasMaterial({
       color: 0xffee00,
