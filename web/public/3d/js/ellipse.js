@@ -58,10 +58,10 @@
     var cs=cw*sO;
     var ci=Math.cos(I);
     var si=Math.sin(I);
-    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y * PIXELS_PER_AU;
-    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y * PIXELS_PER_AU;
-    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y * PIXELS_PER_AU;
-    console.log(X,Y,Z);
+    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y;
+    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y;
+    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y;
+    console.log(X, Y, Z);
 
     var material = new THREE.ParticleCanvasMaterial({
       color: 0xffee00,
@@ -81,7 +81,6 @@
     //particle.rotation.y = eph.i * pi / 180;
 
     this.particle = particle;
-
   }
 
   Orbit3D.prototype.getObject = function() {
