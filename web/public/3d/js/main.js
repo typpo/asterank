@@ -51,7 +51,7 @@
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
     camera.position.z = 100;
-    camera.position.y = 100;
+    //camera.position.y = 100;
 
     window.cam = camera;
     //THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
@@ -127,11 +127,21 @@
     // Ellipses
 
     // ycibndzchg3
-    scene.add(new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3}).getObject());
+    var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
+    scene.add(mercury.getObject());
+    scene.add(mercury.getParticle());
+    var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
+    scene.add(venus.getObject());
+    scene.add(venus.getParticle());
+    var earth = new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3});
+    scene.add(earth.getObject());
+    scene.add(earth.getParticle());
+    var mars = new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3});
+    scene.add(mars.getObject());
+    scene.add(mars.getParticle());
+    var jupiter = new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3});
+    scene.add(jupiter.getObject());
+    scene.add(jupiter.getParticle());
     runQuery();
 
     // Sky
