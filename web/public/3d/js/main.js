@@ -145,6 +145,7 @@
     runQuery();
 
     // Sky
+    /*
     var materialArray = [];
     materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
     materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
@@ -156,6 +157,7 @@
     var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial() );
     skybox.flipSided = true;
     //scene.add(skybox);
+    */
   }
 
   // animation loop
@@ -179,6 +181,7 @@
 
   function runQuery(sort) {
     sort = sort || 'score';
+    return;
     for (var i=0; i < rendered_asteroids.length; i++) {
       scene.remove(rendered_asteroids[i].getObject());
     }
@@ -199,8 +202,8 @@
         });
         */
         rendered_asteroids.push(orbit);
-        scene.add(orbit.getObject());
-        scene.add(orbit.getParticle());
+        //scene.add(orbit.getObject());
+        //scene.add(orbit.getParticle());
       }
     });
   }
