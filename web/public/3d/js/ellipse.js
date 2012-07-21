@@ -39,31 +39,30 @@
     // http://www.davidcolarusso.com/astro/
     // http://www.stargazing.net/kepler/ellipse.html#twig02a
 
-    console.log(this.eph);
-    var w=this.eph.w-this.eph.O;
-    var M=this.eph.L-this.eph.w;
-    var I=this.eph.i;
-    var m=(M+pi)/(2*pi);
-    M=(m-Math.floor(m))*2*pi-pi;
+    var M = this.eph.M;
+    var e = this.eph.e;
+    var a = this.eph.a;
+    var i = this.eph.i;
+    var o = this.eph.O; // longitude of ascending node
+    var p = this.eph.w; // longitude of perihelion
 
-    var E=M;
-    E=M+this.eph.e*Math.sin(E);
-    var x=this.eph.a*(Math.cos(E)-this.eph.e);
-    var y=this.eph.a*Math.sqrt(1-this.eph.e*this.eph.e)*Math.sin(E);
-    var sO=Math.sin(this.eph.O);
-    var cO=Math.cos(this.eph.O);
-    var sw=Math.sin(w);
-    var cw=Math.cos(w);
-    var cc=cw*cO;
-    var ss=sw*sO;
-    var sc=sw*cO;
-    var cs=cw*sO;
-    var ci=Math.cos(I);
-    var si=Math.sin(I);
-    var foo = 50;
-    var X=(cc-ss*ci)*x+(-sc-cs*ci)*y*foo;
-    var Y=(cs+sc*ci)*x+(-ss+cc*ci)*y*foo;
-    var Z=(Math.sin(w)*si)*x+(Math.cos(w)*si)*y*foo;
+    var sin = Math.sin, cos = Math.cos;
+
+    // true anomaly
+    var v = M + 180/pi * ( (2 * e - e*e*e/4) * sin(M)
+                                 + 5/4 * e*e * sin(2*M)
+                                 + 13/12 * e*e*e * sin(3*M));
+
+    // radius vector, in AU
+    var r = a * (1 - e*e) / (1 + e * cos(v)) * PIXELS_PER_AU;
+
+    // heliocentric coords
+    var X = r * [cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) *
+    cos(i)]
+    var Y = r * [sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) *
+    cos(i)]
+    var Z = r * [sin(v + p - o) * sin(i)]
+
     console.log(X, Y, Z);
 
     var material = new THREE.ParticleCanvasMaterial({
