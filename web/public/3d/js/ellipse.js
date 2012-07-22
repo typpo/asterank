@@ -39,12 +39,14 @@
     // http://www.davidcolarusso.com/astro/
     // http://www.stargazing.net/kepler/ellipse.html#twig02a
 
-    var M = this.eph.M;
+    //var M = this.eph.M;
     var e = this.eph.e;
     var a = this.eph.a;
     var i = this.eph.i;
     var o = this.eph.O; // longitude of ascending node
     var p = this.eph.w; // longitude of perihelion
+    var L = this.eph.L; // mean longitude
+    var M =  L - p; // mean anomaly on date of elements
 
     var sin = Math.sin, cos = Math.cos;
 
@@ -52,6 +54,7 @@
     var v = M + 180/pi * ( (2 * e - e*e*e/4) * sin(M)
                                  + 5/4 * e*e * sin(2*M)
                                  + 13/12 * e*e*e * sin(3*M));
+    console.log(v);
 
     // radius vector, in AU
     var r = a * (1 - e*e) / (1 + e * cos(v)) * PIXELS_PER_AU;
@@ -63,10 +66,10 @@
     cos(i)]
     var Z = r * [sin(v + p - o) * sin(i)]
 
-    console.log(X, Y, Z);
+    //console.log(X, Y, Z);
 
     var material = new THREE.ParticleCanvasMaterial({
-      color: 0xffee00,
+      color: this.opts.color,
       program: function (context) {
         context.beginPath();
         context.arc(0, 0, 1, 0, 2*pi, true);
