@@ -13,7 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 3;
+  var MAX_NUM_ORBITS = 30;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
