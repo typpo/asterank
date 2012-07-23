@@ -13,7 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 50;
+  var MAX_NUM_ORBITS = 25;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -189,13 +189,11 @@
     $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
       for (var i=0; i < data.results.rankings.length && i < MAX_NUM_ORBITS; i++) {
         var roid = data.results.rankings[i];
-        var eph = {
-          a: roid.a,
-          e: roid.e,
-          w: roid.w,
-          i: roid.i
-        };
-        var orbit = new Orbit3D(eph, null, scene);
+        console.log(roid);
+        var orbit = new Orbit3D(roid, {
+          object_size:1
+
+        }, scene);
         /*
         orbit.getPlane().addEventListener('mouseover', function(e) {
           console.log('adddqw3');
@@ -203,7 +201,7 @@
         });
         */
         rendered_asteroids.push(orbit);
-        scene.add(orbit.getObject());
+        //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
     });
