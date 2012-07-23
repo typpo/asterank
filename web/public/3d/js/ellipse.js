@@ -65,10 +65,9 @@
     var M;
     if (ma) {
       // Calculate mean anomaly at J2000
-      ma *= pi/180;
+      ma = ma * pi/180;
       var n = this.eph.n * pi/180; // mean motion
       var epoch = this.eph.epoch;
-      console.log(epoch);
       var d = epoch - 2451545.0; // 2000 Jan 1.5
       //L = ma + p;
       //M =  n * -d + L - p;
@@ -80,13 +79,8 @@
       var L = this.eph.L * pi/180; // mean longitude
       M = L - p;
     }
-    // TODO do this smarter
-    while (M < 0) {
-      M += 2*pi;
-    }
-    while (M > 2*pi) {
-      M -= 2*pi;
-    }
+    M %= 2*pi;
+
     console.log('M:', M*180/pi, M);
 
     var sin = Math.sin, cos = Math.cos;

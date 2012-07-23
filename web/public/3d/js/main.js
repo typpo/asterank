@@ -12,8 +12,8 @@
             };
   })();
 
-  var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 25;
+  var WEB_GL_ENABLED = true;
+  var MAX_NUM_ORBITS = 3;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -28,7 +28,7 @@
         antialias		: true,	// to get smoother output
         preserveDrawingBuffer	: true	// to allow screenshot
       });
-      renderer.setClearColorHex(0xBBBBBB, 1);
+      renderer.setClearColorHex(0x000000, 1);
     }
     else{
       renderer	= new THREE.CanvasRenderer();
@@ -206,7 +206,7 @@
           });
         })(roid, orbit);
         rendered_asteroids.push(orbit);
-        //scene.add(orbit.getObject());
+        scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
     });
