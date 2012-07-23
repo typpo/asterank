@@ -6,6 +6,7 @@
     opts = opts || {};
     opts.color = opts.color || 0xffee00;
     opts.width = opts.width || 1;
+    opts.object_size = opts.object_size || 3;
 
     this.opts = opts;
     this.eph = eph;
@@ -41,11 +42,10 @@
     //rotateAroundWorldAxis(line, new THREE.Vector3(0, 1, 0), (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180));
     //rotateAroundWorldAxis(line, new THREE.Vector3(0, 0, 1), this.eph.w * pi/180);
 
-    // dummy for rotating around 0,0 even though we've moved the object
+    // dummy for rotating around 0,0,0 even though we've moved the object
     var dummy = new THREE.Object3D();
-    console.log(dummy);
     dummy.add(line);
-    dummy.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
+    dummy.rotation.y = (this.eph.i - Ephemeris.earth.i) * pi / 180;
     dummy.rotation.z = this.eph.w * pi / 180;
 
     this.object3D = dummy;
@@ -102,7 +102,7 @@
     });
     var particle = new THREE.Particle(material);
     */
-    var geometry= new THREE.SphereGeometry(1);
+    var geometry= new THREE.SphereGeometry(3);
     var material= new THREE.MeshBasicMaterial({color: this.opts.color});
     var particle = new THREE.Mesh(geometry, material);
     particle.position.x = x;

@@ -60,6 +60,8 @@
 
     cameraControls	= new THREE.TrackballControls(camera)
     cameraControls.staticMoving = true;
+    cameraControls.panSpeed = 2;
+    cameraControls.zoomSpeed = 3;
 
     // Rendering stuff
     var PI2 = Math.PI * 2;
@@ -181,7 +183,6 @@
 
   function runQuery(sort) {
     sort = sort || 'score';
-    return;
     for (var i=0; i < rendered_asteroids.length; i++) {
       scene.remove(rendered_asteroids[i].getObject());
     }
@@ -202,8 +203,8 @@
         });
         */
         rendered_asteroids.push(orbit);
-        //scene.add(orbit.getObject());
-        //scene.add(orbit.getParticle());
+        scene.add(orbit.getObject());
+        scene.add(orbit.getParticle());
       }
     });
   }
