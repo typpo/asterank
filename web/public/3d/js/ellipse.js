@@ -1,6 +1,7 @@
 (function() {
   var pi = Math.PI;
   var PIXELS_PER_AU = 50;
+  var USE_REAL_ELLIPSE = true;
 
   var Orbit3D = function(eph, opts, scene) {
     opts = opts || {};
@@ -10,11 +11,12 @@
 
     this.opts = opts;
     this.eph = eph;
-    this.CreateOrbit();
+    this.object3D = this.CreateOrbit(true);
+    this.object3D_fuzzy = this.CreateOrbit(false);
     this.CreateParticle();
   }
 
-  Orbit3D.prototype.CreateOrbit = function() {
+  Orbit3D.prototype.CreateOrbit = function(using_real_ellipse) {
     var a = this.eph.a;
     var e = this.eph.e;
     var b = a * Math.sqrt(1 - e*e);
@@ -26,8 +28,8 @@
     var shape = new THREE.Shape();
     var pts;
     var points;
-    var USE_REAL_ELLIPSE = true;
-    if (USE_REAL_ELLIPSE) { // draw ellipse ourselves
+    //var using_real_ellipse = true//this.eph.P;
+    if (using_real_ellipse) { // draw ellipse ourselves
       var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
       pts = (ecurve.getPoints(100));
       shape.fromPoints(ecurve.getPoints(100));
@@ -36,18 +38,25 @@
     else {
       var time = 2451545.0
       var pts = []
-      var limit = this.eph.P+1;
-      var delta = Math.min(limit / 30, 31);
-      //var record = {};
+      var limit = this.eph.P ? this.eph.P+1 : 365*2;
+      var delta = 5;
+      var record = {};
+      var consechits = 0;
       for (var i=0; i < limit; i++, time+=delta) {
         // months
         var pos = this.getPosAtTime(time);
-        //var key = this.getPositionKey(pos);
-        //if (key in record) break;
+        var key = this.getPositionKey(pos);
+        if (key in record) {
+          if (consechits++ > 2) {
+            console.log(key);
+            break;
+          }
+          consechits = 0;
+        }
         var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
         vector.multiplyScalar(PIXELS_PER_AU);
         pts.push(vector);
-        //record[key] = true;
+        record[key] = true;
       }
       //shape.fromPoints(pts);
       points = new THREE.Geometry();
@@ -58,8 +67,8 @@
 
     var line = new THREE.Line(points,
       new THREE.LineBasicMaterial({color: this.opts.color, linewidth: this.opts.width}));
-    if (USE_REAL_ELLIPSE) {
-      line.position.x = -rf;
+    if (using_real_ellipse) {
+      line.position.x = rf;
       line.position.y = 0;
       line.position.z = 0;
 
@@ -72,18 +81,23 @@
       // dummy for rotating around 0,0,0 even though we've moved the object
       var dummy = new THREE.Object3D();
       dummy.add(line);
+      dummy.rotation.x = 0//-pi;
       dummy.rotation.y = (this.eph.i - Ephemeris.earth.i) * pi / 180;
-      dummy.rotation.z = this.eph.w * pi / 180;
-      this.object3D = dummy;
+      //dummy.rotation.z = -(this.eph.w * pi / 180 + pi);
+      dummy.rotation.z = (this.eph.O * pi / 180);
+      //this.object3D = dummy;
+      return dummy;
     }
     else {
-      this.object3D = line;
+      //this.object3D = line;
+      return line;
     }
   }
 
   Orbit3D.prototype.CreateParticle = function() {
     // http://www.davidcolarusso.com/astro/
     // http://www.stargazing.net/kepler/ellipse.html#twig02a
+    // http://www.stjarnhimlen.se/comp/ppcomp.html
 
     //console.log(X, Y, Z);
 
@@ -174,6 +188,12 @@
     var y = Y//Y * cos(i) - Z * sin(i);
     var z = Z//Y * sin(i) + Z * cos(i);
 
+    /*
+    x = Math.round(x*100)/100;
+    y = Math.round(y*100)/100;
+    z = Math.round(z*100)/100;
+    */
+
     return [x, y, z];
   }
 
@@ -181,14 +201,18 @@
     return this.object3D;
   }
 
+  Orbit3D.prototype.getObjectFuzzy = function() {
+    return this.object3D_fuzzy;
+  }
+
   Orbit3D.prototype.getParticle = function() {
     return this.particle;
   }
 
   Orbit3D.prototype.getPositionKey = function(pos) {
-    var x = Math.round(pos[0]*10)/10;
-    var y = Math.round(pos[1]*10)/10;
-    var z = Math.round(pos[2]*10)/10;
+    var x = Math.round(pos[0]*100)/100;
+    var y = Math.round(pos[1]*100)/100;
+    var z = Math.round(pos[2]*100)/100;
     var key = x + '_' + y + '_' + z;
     return key;
   }

@@ -13,7 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 30;
+  var MAX_NUM_ORBITS = 2;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -114,16 +114,16 @@
       var yMesh     = new THREE.Mesh(cylinder, yMaterial);
       var zMesh     = new THREE.Mesh(cylinder, zMaterial);
 
-      //xMesh.rotation.y = Math.PI / 2;
+      xMesh.rotation.y = Math.PI / 2;
       //xMesh.position.x = 100;
 
-      //yMesh.rotation.x = Math.PI / 2;
+      yMesh.rotation.x = Math.PI / 2;
       //yMesh.position.y = 100;
 
       //zMesh.position.z = 100;
 
-      //scene.add(xMesh);
-      //scene.add(yMesh);
+      scene.add(xMesh);
+      scene.add(yMesh);
       scene.add(zMesh);
     }
     //axes();
@@ -188,7 +188,7 @@
     for (var i=0; i < rendered_asteroids.length; i++) {
       scene.remove(rendered_asteroids[i].getObject());
     }
-    var lastHovered;
+    var lastHovered, lastHovered2;
     $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
       for (var i=0; i < data.results.rankings.length && i < MAX_NUM_ORBITS; i++) {
         var roid = data.results.rankings[i];
@@ -200,8 +200,11 @@
         (function(roid, orbit) {
           orbit.getParticle().on('click', function(e) {
             if (lastHovered) scene.remove(lastHovered);
+            //if (lastHovered2) scene.remove(lastHovered2);
             lastHovered = orbit.getObject();
+            //lastHovered2 = orbit.getObjectFuzzy();
             scene.add(lastHovered);
+            //scene.add(lastHovered2);
             $('#info .top').html(roid.full_name);
           });
         })(roid, orbit);
