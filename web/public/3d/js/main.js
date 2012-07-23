@@ -50,8 +50,10 @@
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.z = 100;
-    //camera.position.y = 100;
+    //camera.position.z = 100;
+    camera.position.x = -35.8346763641627;
+    camera.position.y = -93.35239802694304;
+    camera.position.z = 1.0980676185536646;
 
     window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
@@ -186,6 +188,7 @@
     for (var i=0; i < rendered_asteroids.length; i++) {
       scene.remove(rendered_asteroids[i].getObject());
     }
+    var lastHovered;
     $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
       for (var i=0; i < data.results.rankings.length && i < MAX_NUM_ORBITS; i++) {
         var roid = data.results.rankings[i];
@@ -195,13 +198,11 @@
           object_size:1
         }, scene);
         (function(roid, orbit) {
-          orbit.getParticle().on('mouseover', function(e) {
-            scene.add(orbit.getObject());
+          orbit.getParticle().on('click', function(e) {
+            if (lastHovered) scene.remove(lastHovered);
+            lastHovered = orbit.getObject();
+            scene.add(lastHovered);
             $('#info .top').html(roid.full_name);
-          });
-          orbit.getParticle().on('mouseout', function(e) {
-            scene.remove(orbit.getObject());
-            $('#info .top').html('');
           });
         })(roid, orbit);
         rendered_asteroids.push(orbit);
