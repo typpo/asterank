@@ -54,15 +54,13 @@
   Orbit3D.prototype.CreateParticle = function() {
     // http://www.davidcolarusso.com/astro/
     // http://www.stargazing.net/kepler/ellipse.html#twig02a
-
     console.log(this.eph.full_name);
-    //var M = this.eph.M;
+
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
     var o = this.eph.om * pi/180; // longitude of ascending node
     var p = this.eph.w * pi/180; // longitude of perihelion
-    var L = this.eph.L * pi/180; // mean longitude
     var ma = this.eph.ma;
     var M;
     if (ma) {
@@ -70,18 +68,26 @@
       ma *= pi/180;
       var n = this.eph.n * pi/180; // mean motion
       var epoch = this.eph.epoch;
-      console.log(this.eph);
-      var d = this.eph.epoch - 2451545.0; // 2000 Jan 1.5
-      M =  ma + n * d;
+      console.log(epoch);
+      var d = epoch - 2451545.0; // 2000 Jan 1.5
+      //L = ma + p;
+      //M =  n * -d + L - p;
+      M = ma + n * -d;
     }
     else {
-      // Assume that date of elements is J2000
+      // Assume that date of elements is J2000, and that we are given
+      // mean longitude.
+      var L = this.eph.L * pi/180; // mean longitude
       M = L - p;
     }
-    //M = (M + pi) / 2*pi;
-    //M = (M - Math.floor(M)) * 2*pi - pi; // modulo pi
-    M = M % pi;
-    console.log('M:', M*180/pi);
+    // TODO do this smarter
+    while (M < 0) {
+      M += 2*pi;
+    }
+    while (M > 2*pi) {
+      M -= 2*pi;
+    }
+    console.log('M:', M*180/pi, M);
 
     var sin = Math.sin, cos = Math.cos;
 
