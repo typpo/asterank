@@ -55,19 +55,19 @@
     // http://www.davidcolarusso.com/astro/
     // http://www.stargazing.net/kepler/ellipse.html#twig02a
 
-    console.log(this.eph.name);
+    console.log(this.eph.full_name);
     //var M = this.eph.M;
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
-    var o = this.eph.O * pi/180; // longitude of ascending node
+    var o = this.eph.om * pi/180; // longitude of ascending node
     var p = this.eph.w * pi/180; // longitude of perihelion
     var L = this.eph.L * pi/180; // mean longitude
-    var M =  L - p; // mean anomaly on date of elements
-    console.log(M*180/pi);
+    var M =  this.eph.ma || L - p; // mean anomaly on date of elements
     //M = (M + pi) / 2*pi;
     //M = (M - Math.floor(M)) * 2*pi - pi; // modulo pi
-    console.log(M*180/pi);
+    M = M % pi;
+    console.log('M:', M*180/pi);
 
     var sin = Math.sin, cos = Math.cos;
 
@@ -102,7 +102,7 @@
     });
     var particle = new THREE.Particle(material);
     */
-    var geometry= new THREE.SphereGeometry(3);
+    var geometry= new THREE.SphereGeometry(this.opts.object_size);
     var material= new THREE.MeshBasicMaterial({color: this.opts.color});
     var particle = new THREE.Mesh(geometry, material);
     particle.position.x = x;
