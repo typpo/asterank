@@ -43,11 +43,11 @@
     //var M = this.eph.M;
     var e = this.eph.e;
     var a = this.eph.a;
-    var i = this.eph.i;
-    var o = this.eph.O; // longitude of ascending node
-    var p = this.eph.w; // longitude of perihelion
-    var L = this.eph.L; // mean longitude
-    var M =  pi/180 * (L - p); // mean anomaly on date of elements
+    var i = this.eph.i * pi/180;
+    var o = this.eph.O * pi/180; // longitude of ascending node
+    var p = this.eph.w * pi/180; // longitude of perihelion
+    var L = this.eph.L * pi/180; // mean longitude
+    var M =  L - p; // mean anomaly on date of elements
     M = (M + pi) / 2*pi;
     M = (M - Math.floor(M)) * 2*pi - pi; // modulo 180
     //M = 180/pi * (2 * pi) / Math.pow(a, 3/2);
@@ -61,8 +61,6 @@
     var v = M + (2 * e - e*e*e/4) * sin(M)
          + 5/4 * e*e * sin(2*M)
          + 13/12 * e*e*e * sin(3*M);
-    console.log('M=', M, 'v=', v*180/pi);
-    console.log(v*pi/180, '=?', 2*e*sin(M*pi/180)*60);
 
     // radius vector, in AU
     var r = a * (1 - e*e) / (1 + e * cos(v));
