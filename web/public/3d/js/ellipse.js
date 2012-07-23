@@ -6,7 +6,7 @@
     opts = opts || {};
     opts.color = opts.color || 0xffee00;
     opts.width = opts.width || 1;
-    opts.object_size = opts.object_size || 3;
+    opts.object_size = opts.object_size || 2;
 
     this.opts = opts;
     this.eph = eph;
@@ -26,7 +26,7 @@
     var shape = new THREE.Shape();
     var pts;
     var points;
-    var USE_REAL_ELLIPSE = false;
+    var USE_REAL_ELLIPSE = true;
     if (USE_REAL_ELLIPSE) { // draw ellipse ourselves
       var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
       pts = (ecurve.getPoints(100));
@@ -35,17 +35,24 @@
     }
     else {
       var time = 2451545.0
-        var pts = []
-        for (var i=0; i < 100; i++, time+=31) {
-          // months
-          var pos = this.getPosAtTime(time);
-          var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-          vector.multiplyScalar(PIXELS_PER_AU);
-          pts.push(vector);
-        }
+      var pts = []
+      var limit = this.eph.P+1;
+      var delta = Math.min(limit / 30, 31);
+      //var record = {};
+      for (var i=0; i < limit; i++, time+=delta) {
+        // months
+        var pos = this.getPosAtTime(time);
+        //var key = this.getPositionKey(pos);
+        //if (key in record) break;
+        var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
+        vector.multiplyScalar(PIXELS_PER_AU);
+        pts.push(vector);
+        //record[key] = true;
+      }
       //shape.fromPoints(pts);
       points = new THREE.Geometry();
       points.vertices = pts;
+      points.mergeVertices();
       console.log(points);
     }
 
@@ -122,7 +129,12 @@
     if (ma) {
       // Calculate mean anomaly at J2000
       ma = ma * pi/180;
-      var n = this.eph.n * pi/180; // mean motion
+      var n;
+      if (this.eph.n)
+        n = this.eph.n * pi/180; // mean motion
+      else {
+        n = 2*pi / this.eph.P;
+      }
       var epoch = this.eph.epoch;
       var d = epoch - jed;
       //L = ma + p;
@@ -171,6 +183,14 @@
 
   Orbit3D.prototype.getParticle = function() {
     return this.particle;
+  }
+
+  Orbit3D.prototype.getPositionKey = function(pos) {
+    var x = Math.round(pos[0]*10)/10;
+    var y = Math.round(pos[1]*10)/10;
+    var z = Math.round(pos[2]*10)/10;
+    var key = x + '_' + y + '_' + z;
+    return key;
   }
 
   window.Orbit3D = Orbit3D;
