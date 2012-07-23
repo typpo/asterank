@@ -58,10 +58,10 @@
     // true anomaly approximation, using Equation of Center
     M=254.895962*pi/180;
     e = 0.0934231
-    var v = M + 180/pi * ( (2 * e - e*e*e/4) * sin(M)
+    var v = M + (2 * e - e*e*e/4) * sin(M)
          + 5/4 * e*e * sin(2*M)
-         + 13/12 * e*e*e * sin(3*M));
-    console.log('M=', M, 'v=', v);
+         + 13/12 * e*e*e * sin(3*M);
+    console.log('M=', M, 'v=', v*180/pi);
     console.log(v*pi/180, '=?', 2*e*sin(M*pi/180)*60);
 
     // radius vector, in AU
