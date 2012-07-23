@@ -54,7 +54,7 @@
     //camera.position.y = 100;
 
     window.cam = camera;
-    //THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+    THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
 
     scene.add(camera);
 
@@ -191,15 +191,19 @@
         var roid = data.results.rankings[i];
         console.log(roid);
         var orbit = new Orbit3D(roid, {
+          color: 0xffffff,
           object_size:1
-
         }, scene);
-        /*
-        orbit.getPlane().addEventListener('mouseover', function(e) {
-          console.log('adddqw3');
-          $('#info .top').html(roid.full_name);
-        });
-        */
+        (function(roid, orbit) {
+          orbit.getParticle().on('mouseover', function(e) {
+            scene.add(orbit.getObject());
+            $('#info .top').html(roid.full_name);
+          });
+          orbit.getParticle().on('mouseout', function(e) {
+            scene.remove(orbit.getObject());
+            $('#info .top').html('');
+          });
+        })(roid, orbit);
         rendered_asteroids.push(orbit);
         //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
