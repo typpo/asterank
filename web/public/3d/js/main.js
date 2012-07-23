@@ -206,7 +206,7 @@
           });
         })(roid, orbit);
         rendered_asteroids.push(orbit);
-        scene.add(orbit.getObject());
+        //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
     });

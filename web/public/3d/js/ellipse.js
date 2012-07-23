@@ -23,10 +23,25 @@
     var ry = b * PIXELS_PER_AU;
     var rf = f * PIXELS_PER_AU;
 
+    /*
     var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
 
     var shape = new THREE.Shape();
     shape.fromPoints(ecurve.getPoints(100));
+    */
+
+    var shape = new THREE.Shape();
+    var time = 2451545.0
+    var pts = []
+    for (var i=0; i < 100; i++, time++) {
+      // months
+      var pos = this.getPosAtTime(time);
+      var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
+      vector.multiplyScalar(PIXELS_PER_AU);
+      pts.push(vector);
+    }
+    console.log(pts);
+    shape.fromPoints(pts);
 
     var points = shape.createPointsGeometry();
     var line = new THREE.Line(points,
@@ -54,53 +69,6 @@
   Orbit3D.prototype.CreateParticle = function() {
     // http://www.davidcolarusso.com/astro/
     // http://www.stargazing.net/kepler/ellipse.html#twig02a
-    console.log(this.eph.full_name);
-
-    var e = this.eph.e;
-    var a = this.eph.a;
-    var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
-    var o = this.eph.om * pi/180; // longitude of ascending node
-    var p = this.eph.w * pi/180; // longitude of perihelion
-    var ma = this.eph.ma;
-    var M;
-    if (ma) {
-      // Calculate mean anomaly at J2000
-      ma = ma * pi/180;
-      var n = this.eph.n * pi/180; // mean motion
-      var epoch = this.eph.epoch;
-      var d = epoch - 2451545.0; // 2000 Jan 1.5
-      //L = ma + p;
-      //M =  n * -d + L - p;
-      M = ma + n * -d;
-    }
-    else {
-      // Assume that date of elements is J2000, and that we are given
-      // mean longitude.
-      var L = this.eph.L * pi/180; // mean longitude
-      M = L - p;
-    }
-    M %= 2*pi;
-
-    console.log('M:', M*180/pi, M);
-
-    var sin = Math.sin, cos = Math.cos;
-
-    // true anomaly approximation, using Equation of Center
-    var v = M + (2 * e - e*e*e/4) * sin(M)
-         + 5/4 * e*e * sin(2*M)
-         + 13/12 * e*e*e * sin(3*M);
-
-    // radius vector, in AU
-    var r = a * (1 - e*e) / (1 + e * cos(v));
-
-    // heliocentric coords
-    var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
-    var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
-    var Z = r * (sin(v + p - o) * sin(i))
-
-    var x = X;
-    var y = Y //Y * cos(i) - Z * sin(i);
-    var z = Z //Y * sin(i) + Z * cos(i);
 
     //console.log(X, Y, Z);
 
@@ -119,9 +87,10 @@
     var geometry= new THREE.SphereGeometry(this.opts.object_size);
     var material= new THREE.MeshBasicMaterial({color: this.opts.color});
     var particle = new THREE.Mesh(geometry, material);
-    particle.position.x = x;
-    particle.position.y = y;
-    particle.position.z = z;
+    var pos = this.getPosAtTime();  // position at epoch
+    particle.position.x = pos[0];
+    particle.position.y = pos[1];
+    particle.position.z = pos[2];
     particle.position.multiplyScalar(PIXELS_PER_AU);
 
     /*
@@ -131,6 +100,62 @@
     */
 
     this.particle = particle;
+  }
+
+  Orbit3D.prototype.getPosAtTime = function(jed) {
+    jed = jed || 2451545.0; // 2000 Jan 1.5
+    var e = this.eph.e;
+    var a = this.eph.a;
+    var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
+    var o = this.eph.om * pi/180; // longitude of ascending node
+    var p = this.eph.w * pi/180; // longitude of perihelion
+    var ma = this.eph.ma;
+    var M;
+    if (ma) {
+      // Calculate mean anomaly at J2000
+      ma = ma * pi/180;
+      var n = this.eph.n * pi/180; // mean motion
+      var epoch = this.eph.epoch;
+      var d = epoch - jed;
+      console.log(d);
+      //L = ma + p;
+      //M =  n * -d + L - p;
+      M = ma + n * -d;
+    }
+    else {
+      // Assume that date of elements is J2000, and that we are given
+      // mean longitude.
+      var L = this.eph.L * pi/180; // mean longitude
+      M = L - p;
+    }
+    // TODO do this smarter
+    while (M < 0) {
+      M += 2*pi;
+    }
+    while (M > 2*pi) {
+      M -= 2*pi;
+    }
+
+    var sin = Math.sin, cos = Math.cos;
+
+    // true anomaly approximation, using Equation of Center
+    var v = M + (2 * e - e*e*e/4) * sin(M)
+         + 5/4 * e*e * sin(2*M)
+         + 13/12 * e*e*e * sin(3*M);
+
+    // radius vector, in AU
+    var r = a * (1 - e*e) / (1 + e * cos(v));
+
+    // heliocentric coords
+    var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
+    var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
+    var Z = r * (sin(v + p - o) * sin(i))
+
+    var x = X;
+    var y = Y//Y * cos(i) - Z * sin(i);
+    var z = Z//Y * sin(i) + Z * cos(i);
+
+    return [x, y, z];
   }
 
   Orbit3D.prototype.getObject = function() {
