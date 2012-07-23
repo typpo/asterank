@@ -28,7 +28,7 @@
       new THREE.LineBasicMaterial({color: this.opts.color, linewidth: this.opts.width}));
     line.position.set(0,0,0);
 
-    line.rotation.x = pi/2;
+    //line.rotation.x = pi/2;
     line.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
     line.rotation.z = this.eph.w * pi / 180;
 
@@ -43,21 +43,19 @@
     //var M = this.eph.M;
     var e = this.eph.e;
     var a = this.eph.a;
-    var i = this.eph.i * pi/180;
+    var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
     var o = this.eph.O * pi/180; // longitude of ascending node
     var p = this.eph.w * pi/180; // longitude of perihelion
     var L = this.eph.L * pi/180; // mean longitude
     var M =  L - p; // mean anomaly on date of elements
-    M = (M + pi) / 2*pi;
-    M = (M - Math.floor(M)) * 2*pi - pi; // modulo 180
-    //M = 180/pi * (2 * pi) / Math.pow(a, 3/2);
-    //console.log('M2', M);
+    console.log(M*180/pi);
+    //M = (M + pi) / 2*pi;
+    //M = (M - Math.floor(M)) * 2*pi - pi; // modulo pi
+    console.log(M*180/pi);
 
     var sin = Math.sin, cos = Math.cos;
 
     // true anomaly approximation, using Equation of Center
-    M=254.895962*pi/180;
-    e = 0.0934231
     var v = M + (2 * e - e*e*e/4) * sin(M)
          + 5/4 * e*e * sin(2*M)
          + 13/12 * e*e*e * sin(3*M);
@@ -71,8 +69,8 @@
     var Z = r * (sin(v + p - o) * sin(i))
 
     var x = X;
-    var y = Z //Y * cos(i) - Z * sin(i);
-    var z = Y //Y * sin(i) + Z * cos(i);
+    var y = Y //Y * cos(i) - Z * sin(i);
+    var z = Z //Y * sin(i) + Z * cos(i);
 
     //console.log(X, Y, Z);
 
