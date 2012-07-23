@@ -14,9 +14,13 @@
   }
 
   Orbit3D.prototype.CreateOrbit = function() {
-    this.eph.b = this.eph.a * Math.sqrt(1 - this.eph.e * this.eph.e);
-    var rx = this.eph.a * PIXELS_PER_AU;
-    var ry = this.eph.b * PIXELS_PER_AU;
+    var a = this.eph.a;
+    var e = this.eph.e;
+    var b = a * Math.sqrt(1 - e*e);
+    var f = a * e;
+    var rx = a * PIXELS_PER_AU;
+    var ry = b * PIXELS_PER_AU;
+    var rf = f * PIXELS_PER_AU;
 
     var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
 
@@ -26,13 +30,25 @@
     var points = shape.createPointsGeometry();
     var line = new THREE.Line(points,
       new THREE.LineBasicMaterial({color: this.opts.color, linewidth: this.opts.width}));
-    line.position.set(0,0,0);
+    //line.position.set(0,0,0);
+    line.position.x = -rf;
+    line.position.y = 0;
+    line.position.z = 0;
 
     //line.rotation.x = pi/2;
-    line.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
-    line.rotation.z = this.eph.w * pi / 180;
+    //line.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
+    //line.rotation.z = this.eph.w * pi / 180;
+    //rotateAroundWorldAxis(line, new THREE.Vector3(0, 1, 0), (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180));
+    //rotateAroundWorldAxis(line, new THREE.Vector3(0, 0, 1), this.eph.w * pi/180);
 
-    this.object3D = line;
+    // dummy for rotating around 0,0 even though we've moved the object
+    var dummy = new THREE.Object3D();
+    console.log(dummy);
+    dummy.add(line);
+    dummy.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
+    dummy.rotation.z = this.eph.w * pi / 180;
+
+    this.object3D = dummy;
   }
 
   Orbit3D.prototype.CreateParticle = function() {
@@ -113,3 +129,22 @@
 
   window.Orbit3D = Orbit3D;
 })();
+
+// Rotate an object around an axis in object space
+function rotateAroundObjectAxis( object, axis, radians ) {
+  var rotationMatrix = new THREE.Matrix4();
+  console.log(rotationMatrix);
+  rotationMatrix.setRotationAxis( axis.normalize(), radians );
+  object.matrix.multiplySelf( rotationMatrix );                       // post-multiply
+  object.rotation.setRotationFromMatrix( object.matrix );
+}
+
+// Rotate an object around an axis in world space (the axis passes through the object's position)
+function rotateAroundWorldAxis( object, axis, radians ) {
+  var rotationMatrix = new THREE.Matrix4();
+  rotationMatrix.rotateByAxis( axis.normalize(), radians );
+  rotationMatrix.multiplySelf( object.matrix );                       // pre-multiply
+  object.matrix = rotationMatrix;
+console.log(object.rotation);
+  object.rotation.setEulerFromRotationMatrix( object.matrix );
+}
