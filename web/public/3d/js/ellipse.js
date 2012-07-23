@@ -195,8 +195,8 @@
     var r = a * (1 - e*e) / (1 + e * cos(v));
 
     // heliocentric coords
-    var Y = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
-    var X = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
+    var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
+    var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
 
     var x = X;

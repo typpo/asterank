@@ -128,6 +128,7 @@
     }
     //axes();
 
+    /*
     var plane = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshBasicMaterial({
         color: 0x0000ff
     }));
@@ -135,11 +136,11 @@
     plane.doubleSided = true;
     plane.rotation.x = pi/2;
     scene.add(plane);
+    */
 
     // Ellipses
 
     // ycibndzchg3
-    /*
     var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
     scene.add(mercury.getObject());
     console.log(mercury.getObject());
@@ -147,7 +148,6 @@
     var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
     scene.add(venus.getObject());
     scene.add(venus.getParticle());
-    */
     var earth = new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3});
     scene.add(earth.getObject());
     scene.add(earth.getParticle());
