@@ -12,7 +12,7 @@
             };
   })();
 
-  var WEB_GL_ENABLED = true;
+  var WEB_GL_ENABLED = false;
   var MAX_NUM_ORBITS = 30;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
@@ -50,10 +50,10 @@
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    //camera.position.z = 100;
-    camera.position.x = -35.8346763641627;
-    camera.position.y = -93.35239802694304;
-    camera.position.z = 1.0980676185536646;
+    camera.position.z = 100;
+    //camera.position.x = -35.8346763641627;
+    //camera.position.y = -93.35239802694304;
+    //camera.position.z = 1.0980676185536646;
 
     window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
