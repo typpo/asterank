@@ -84,7 +84,8 @@
       dummy.rotation.x = 0//-pi;
       dummy.rotation.y = (this.eph.i - Ephemeris.earth.i) * pi / 180;
       //dummy.rotation.z = -(this.eph.w * pi / 180 + pi);
-      dummy.rotation.z = (this.eph.O * pi / 180);
+      dummy.rotation.z = (this.eph.w * pi / 180);
+      //dummy.position.y += rf;
       //this.object3D = dummy;
       return dummy;
     }
@@ -176,12 +177,26 @@
          + 5/4 * e*e * sin(2*M)
          + 13/12 * e*e*e * sin(3*M);
 
+    /*
+    var v;
+    var E = M + e * sin(M) * (1 + e*cos(M));
+    var E0;
+    var c = 0;
+    do {
+      E0 = E;
+      E = (E0 - e * sin(E0) - M) / (1 - e * cos(E0));
+      c++;
+    } while (Math.abs(E - E0) > 1 && c < 100000);
+
+    v = 2 * Math.atan(Math.sqrt((1+e)/(1-e)) * Math.tan(E/2));
+    */
+
     // radius vector, in AU
     var r = a * (1 - e*e) / (1 + e * cos(v));
 
     // heliocentric coords
-    var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
-    var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
+    var Y = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
+    var X = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
 
     var x = X;
