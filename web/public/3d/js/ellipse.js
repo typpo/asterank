@@ -23,47 +23,55 @@
     var ry = b * PIXELS_PER_AU;
     var rf = f * PIXELS_PER_AU;
 
-    /*
-    var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
-
     var shape = new THREE.Shape();
-    shape.fromPoints(ecurve.getPoints(100));
-    */
-
-    var shape = new THREE.Shape();
-    var time = 2451545.0
-    var pts = []
-    for (var i=0; i < 100; i++, time++) {
-      // months
-      var pos = this.getPosAtTime(time);
-      var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      vector.multiplyScalar(PIXELS_PER_AU);
-      pts.push(vector);
+    var pts;
+    var points;
+    var USE_REAL_ELLIPSE = false;
+    if (USE_REAL_ELLIPSE) { // draw ellipse ourselves
+      var ecurve = new THREE.EllipseCurve(0, 0, rx, ry, 0, 2*pi, true);
+      pts = (ecurve.getPoints(100));
+      shape.fromPoints(ecurve.getPoints(100));
+      points = shape.createPointsGeometry();
     }
-    console.log(pts);
-    shape.fromPoints(pts);
+    else {
+      var time = 2451545.0
+        var pts = []
+        for (var i=0; i < 100; i++, time+=31) {
+          // months
+          var pos = this.getPosAtTime(time);
+          var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
+          vector.multiplyScalar(PIXELS_PER_AU);
+          pts.push(vector);
+        }
+      //shape.fromPoints(pts);
+      points = new THREE.Geometry();
+      points.vertices = pts;
+      console.log(points);
+    }
 
-    var points = shape.createPointsGeometry();
     var line = new THREE.Line(points,
       new THREE.LineBasicMaterial({color: this.opts.color, linewidth: this.opts.width}));
-    //line.position.set(0,0,0);
-    line.position.x = -rf;
-    line.position.y = 0;
-    line.position.z = 0;
+    if (USE_REAL_ELLIPSE) {
+      line.position.x = -rf;
+      line.position.y = 0;
+      line.position.z = 0;
 
-    //line.rotation.x = pi/2;
-    //line.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
-    //line.rotation.z = this.eph.w * pi / 180;
-    //rotateAroundWorldAxis(line, new THREE.Vector3(0, 1, 0), (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180));
-    //rotateAroundWorldAxis(line, new THREE.Vector3(0, 0, 1), this.eph.w * pi/180);
+      //line.rotation.x = pi/2;
+      //line.rotation.y = (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180);
+      //line.rotation.z = this.eph.w * pi / 180;
+      //rotateAroundWorldAxis(line, new THREE.Vector3(0, 1, 0), (this.eph.i * pi / 180) - (Ephemeris.earth.i * pi/180));
+      //rotateAroundWorldAxis(line, new THREE.Vector3(0, 0, 1), this.eph.w * pi/180);
 
-    // dummy for rotating around 0,0,0 even though we've moved the object
-    var dummy = new THREE.Object3D();
-    dummy.add(line);
-    dummy.rotation.y = (this.eph.i - Ephemeris.earth.i) * pi / 180;
-    dummy.rotation.z = this.eph.w * pi / 180;
-
-    this.object3D = dummy;
+      // dummy for rotating around 0,0,0 even though we've moved the object
+      var dummy = new THREE.Object3D();
+      dummy.add(line);
+      dummy.rotation.y = (this.eph.i - Ephemeris.earth.i) * pi / 180;
+      dummy.rotation.z = this.eph.w * pi / 180;
+      this.object3D = dummy;
+    }
+    else {
+      this.object3D = line;
+    }
   }
 
   Orbit3D.prototype.CreateParticle = function() {
@@ -117,7 +125,6 @@
       var n = this.eph.n * pi/180; // mean motion
       var epoch = this.eph.epoch;
       var d = epoch - jed;
-      console.log(d);
       //L = ma + p;
       //M =  n * -d + L - p;
       M = ma + n * -d;
