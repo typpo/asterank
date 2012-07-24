@@ -5,15 +5,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-		<script src="vendor/three.js/Three.js"></script>
-		<script src="vendor/three.js/Detector.js"></script>
-		<script src="vendor/three.js/Stats.js"></script>
-
-		<script src="vendor/threex/THREEx.screenshot.js"></script>
-		<script src="vendor/threex/THREEx.FullScreen.js"></script>
-		<script src="vendor/threex/THREEx.WindowResize.js"></script>
-    <!--<script src="vendor/threex.dragpancontrols.js"></script>-->
-
 		<link  href="css/main.css" rel="stylesheet"/>
     <style>
       body {
@@ -26,13 +17,28 @@
     	<div id="container"></div>
 	<!-- info on screen display -->
 	<div id="info">
-		<div class="top">
-      test
+		<div id="main-caption" class="top">
+		</div>
+		<div id="other-caption" class="top">
 		</div>
 		<div class="bottom" id="inlineDoc" >
-			- <i>p</i> for screenshot
+      <span style="font-size:12px;margin-right:10px;color:#fff">left click + drag to rotate, right click + drag to pan, middle click + drag to zoom</span>
+      <span style="background-color:#913CEE;color:#000">Mercury</span>
+      <span style="background-color:#ff7733;color:#000">Venus</span>
+      <span style="background-color:#009acd;color:#000">Earth</span>
+      <span style="background-color:#a63a3a;color:#000">Mars</span>
+      <span style="background-color:#ff7f50;color:#000">Jupiter</span>
+      <span style="background-color:#fff;color:#000">Asteroids</span>
 		</div>
 	</div>
+  <script src="vendor/three.js/Three.js"></script>
+  <script src="vendor/three.js/Detector.js"></script>
+  <script src="vendor/three.js/Stats.js"></script>
+
+  <script src="vendor/threex/THREEx.WindowResize.js"></script>
+  <script src="vendor/threex/threex.domevent.js"></script>
+  <script src="vendor/threex/threex.domevent.object3d.js"></script>
+  <!--<script src="vendor/threex.dragpancontrols.js"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
   <script src="js/ephemeris.js"></script>
   <script src="js/ellipse.js"></script>

@@ -12,11 +12,12 @@
             };
   })();
 
-  var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 25;
+  var WEB_GL_ENABLED = true;
+  var MAX_NUM_ORBITS = 40;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
+  var using_webgl = false;
 
   if(!init())	animate();
 
@@ -27,7 +28,8 @@
         antialias		: true,	// to get smoother output
         preserveDrawingBuffer	: true	// to allow screenshot
       });
-      renderer.setClearColorHex(0xBBBBBB, 1);
+      renderer.setClearColorHex(0x000000, 1);
+      using_webgl = true;
     }
     else{
       renderer	= new THREE.CanvasRenderer();
@@ -48,28 +50,32 @@
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.z = 100;
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
+    //camera.position.z = 100;
+    //camera.position.x = -35.8346763641627;
+    //camera.position.y = -93.35239802694304;
+    //camera.position.z = 1.0980676185536646;
+    camera.position.set(0, -80, 85.60706096322108);
+    //camera.rotation.set(1.2190004044210283, -0.6885792940795312, -0.2171914191688959);
+
 
     window.cam = camera;
+    THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+
     scene.add(camera);
 
     cameraControls	= new THREE.TrackballControls(camera)
     cameraControls.staticMoving = true;
-
-    // Fullscreen & screenshots
-    THREEx.Screenshot.bindKey(renderer);
-    if(THREEx.FullScreen.available()){
-      THREEx.FullScreen.bindKey();
-      document.getElementById('inlineDoc').innerHTML  += "- <i>f</i> for fullscreen";
-    }
+    cameraControls.panSpeed = 2;
+    cameraControls.zoomSpeed = 3;
+    cameraControls.maxDistance = 1300;
 
     // Rendering stuff
     var PI2 = Math.PI * 2;
 
     (function() {
       var material = new THREE.ParticleCanvasMaterial({
-        color: 0x000000,
+        color: 0xffee00,
         program: function (context) {
           context.beginPath();
           context.arc(0, 0, 1, 0, PI2, true);
@@ -81,13 +87,13 @@
       var geometry = new THREE.Geometry();
 
       for (var i = 0; i < 100; i++) {
-        particle = new THREE.Particle(material);
+        var particle = new THREE.Particle(material);
         particle.position.x = Math.random() * 2 - 1;
         particle.position.y = Math.random() * 2 - 1;
         particle.position.z = Math.random() * 2 - 1;
         particle.position.normalize();
         particle.position.multiplyScalar(Math.random() * 450);
-        particle.scale.x = particle.scale.y = 1;
+        //particle.scale.x = particle.scale.y = 1;
         scene.add(particle);
 
         geometry.vertices.push(particle.position);
@@ -97,7 +103,7 @@
     // "sun" - 0,0 marker
     (function() {
       var geometry= new THREE.SphereGeometry(1);
-      var material= new THREE.MeshNormalMaterial();
+      var material= new THREE.MeshBasicMaterial({color: 0xffee00});
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
     })();
@@ -113,55 +119,75 @@
       var yMesh     = new THREE.Mesh(cylinder, yMaterial);
       var zMesh     = new THREE.Mesh(cylinder, zMaterial);
 
-      //xMesh.rotation.y = Math.PI / 2;
+      xMesh.rotation.y = Math.PI / 2;
       //xMesh.position.x = 100;
 
-      //yMesh.rotation.x = Math.PI / 2;
+      yMesh.rotation.x = Math.PI / 2;
       //yMesh.position.y = 100;
 
       //zMesh.position.z = 100;
 
-      //scene.add(xMesh);
-      //scene.add(yMesh);
+      scene.add(xMesh);
+      scene.add(yMesh);
       scene.add(zMesh);
     }
     //axes();
 
+    /*
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshBasicMaterial({
+        color: 0x0000ff
+    }));
+    plane.overdraw = true;
+    plane.doubleSided = true;
+    plane.rotation.x = pi/2;
+    scene.add(plane);
+    */
+
     // Ellipses
 
     // ycibndzchg3
-    scene.add(new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3}).getObject());
-    scene.add(new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3}).getObject());
+    var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
+    scene.add(mercury.getObjectFuzzy());
+    scene.add(mercury.getParticle());
+    var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
+    scene.add(venus.getObjectFuzzy());
+    scene.add(venus.getParticle());
+    var earth = new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3});
+    scene.add(earth.getObjectFuzzy());
+    scene.add(earth.getParticle());
+    var mars = new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3});
+    scene.add(mars.getObjectFuzzy());
+    scene.add(mars.getParticle());
+    var jupiter = new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3});
+    scene.add(jupiter.getObjectFuzzy());
+    scene.add(jupiter.getParticle());
 
-    $.getJSON('/top?sort=score&n=100', function(data) {
-      for (var i=0; i < data.results.rankings.length; i++) {
-        if (i > MAX_NUM_ORBITS) return;
-        var roid = data.results.rankings[i];
-        var eph = {
-          a: roid.a,
-          e: roid.e,
-          w: roid.w,
-          i: roid.i
-        };
-        scene.add(new Orbit3D(eph).getObject());
-      }
-    });
+    runQuery();
+
+    // Sky
+    if (using_webgl) {
+      var materialArray = [];
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      var skyboxGeom = new THREE.CubeGeometry(5000, 5000, 5000, 1, 1, 1, materialArray);
+      var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial() );
+      skybox.flipSided = true;
+      scene.add(skybox);
+    }
   }
 
   // animation loop
   function animate() {
-    // loop on request animation loop
-    // - it has to be at the begining of the function
-    // - see details at http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
     requestAnimationFrame(animate);
-
-    // do the render
     render();
+    update();
+  }
 
-    // update stats
+  function update() {
     stats.update();
   }
 
@@ -171,5 +197,35 @@
     cameraControls.update(1.5);
     // actually render the scene
     renderer.render(scene, camera);
+  }
+
+  function runQuery(sort) {
+    sort = sort || 'score';
+    var lastHovered, lastHovered2;
+    $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
+      var n = data.results.rankings.length;
+      for (var i=0; i < n; i++) {
+        var roid = data.results.rankings[i];
+        var orbit = new Orbit3D(roid, {
+          color: 0xffffff,
+          width:2,
+          object_size:1
+        }, scene);
+        (function(roid, orbit) {
+          orbit.getParticle().on('mouseover', function(e) {
+            if (lastHovered) scene.remove(lastHovered);
+            if (lastHovered2) scene.remove(lastHovered2);
+            //lastHovered = orbit.getObject();
+            lastHovered2 = orbit.getObjectFuzzy();
+            //scene.add(lastHovered);
+            scene.add(lastHovered2);
+            $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
+            $('#other-caption').html('(ranked #' + (i+1) + ')');
+          });
+        })(roid, orbit);
+        //scene.add(orbit.getObject());
+        scene.add(orbit.getParticle());
+      }
+    });
   }
 })();

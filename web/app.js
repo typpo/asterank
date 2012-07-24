@@ -63,10 +63,11 @@ app.get('/top', function(req, res) {
     num = 100;
   else
     num = Math.min(num, 10000);
-  lookup.topN(num, req.query.sort, function(err, result) {
-    res.send({results:result});
+  var include_3d_vars = req.query.use3d ? true : false;
+  lookup.topN({n: num, sort: req.query.sort, include_3d_vars: include_3d_vars},
+    function(err, result) {
+      res.send({results:result});
   });
-
 });
 
 app.get('/summary', function(req, res) {

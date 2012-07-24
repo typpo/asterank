@@ -3,17 +3,28 @@ body {
 	padding		: 0;
 	margin		: 0;
 
-	color		: #222;
-	background-color: #BBB;
+	color		: #fff;
+	background-color: #000;
 	font-family	: arial;
 	font-size	: 100%;
+
+  background-image: url('/images/universe.jpg');
 }
-#info .top {
+#main-caption {
 	position	: absolute;
 	top		: 0px;
 	width		: 100%;
 	padding		: 5px;
 	text-align	: center;
+  background-color: #000;
+}
+#other-caption {
+	position	: absolute;
+	top		: 1.5em;
+	width		: 100%;
+	padding		: 5px;
+	text-align	: center;
+  background-color: #000;
 }
 #info a {
 	color		: #66F;
