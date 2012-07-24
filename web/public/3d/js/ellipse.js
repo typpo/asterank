@@ -39,17 +39,16 @@
       var time = 2451545.0
       var pts = []
       var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
-      var delta = 5;
+      var parts = 100;
+      var delta = Math.ceil(limit / parts);
       var record = {};
       var consechits = 0;
-      var n = 0;
-      for (var i=0; i < limit; i++, time+=delta) {
+      for (var i=0; i <= parts; i++, time+=delta) {
         // months
         var pos = this.getPosAtTime(time);
         var key = this.getPositionKey(pos);
         if (key in record) {
           if (consechits++ > 2) {
-            console.log(key);
             break;
           }
           consechits = 0;
@@ -58,14 +57,12 @@
         vector.multiplyScalar(PIXELS_PER_AU);
         pts.push(vector);
         record[key] = true;
-        n++;
       }
       //shape.fromPoints(pts);
-      console.log(n);
       points = new THREE.Geometry();
       points.vertices = pts;
       points.mergeVertices();
-      console.log(points);
+      console.log(pts.length);
     }
 
     var line = new THREE.Line(points,
@@ -258,3 +255,4 @@ function rotateAroundWorldAxis( object, axis, radians ) {
 console.log(object.rotation);
   object.rotation.setEulerFromRotationMatrix( object.matrix );
 }
+

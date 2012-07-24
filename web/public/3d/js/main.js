@@ -143,7 +143,6 @@
     // ycibndzchg3
     var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
     scene.add(mercury.getObjectFuzzy());
-    console.log(mercury.getObjectFuzzy());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
     scene.add(venus.getObjectFuzzy());
@@ -214,9 +213,9 @@
             if (lastHovered) scene.remove(lastHovered);
             if (lastHovered2) scene.remove(lastHovered2);
             lastHovered = orbit.getObject();
-            //lastHovered2 = orbit.getObjectFuzzy();
+            lastHovered2 = orbit.getObjectFuzzy();
             scene.add(lastHovered);
-            //scene.add(lastHovered2);
+            scene.add(lastHovered2);
             $('#info .top').html(roid.full_name);
           });
         })(roid, orbit);
