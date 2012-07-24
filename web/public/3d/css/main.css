@@ -8,7 +8,7 @@ body {
 	font-family	: arial;
 	font-size	: 100%;
 
-  /*background-image: url('/images/universe.jpg');*/
+  background-image: url('/images/universe.jpg');
 }
 #main-caption {
 	position	: absolute;

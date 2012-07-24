@@ -17,7 +17,7 @@
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
-  var rendered_asteroids = [];
+  var using_webgl = false;
 
   if(!init())	animate();
 
@@ -29,6 +29,7 @@
         preserveDrawingBuffer	: true	// to allow screenshot
       });
       renderer.setClearColorHex(0x000000, 1);
+      using_webgl = true;
     }
     else{
       renderer	= new THREE.CanvasRenderer();
@@ -67,6 +68,7 @@
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
+    cameraControls.maxDistance = 1300;
 
     // Rendering stuff
     var PI2 = Math.PI * 2;
@@ -163,19 +165,19 @@
     runQuery();
 
     // Sky
-    /*
-    var materialArray = [];
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-    var skyboxGeom = new THREE.CubeGeometry(9000, 9000, 9000, 1, 1, 1, materialArray);
-    var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial() );
-    skybox.flipSided = true;
-    //scene.add(skybox);
-    */
+    if (using_webgl) {
+      var materialArray = [];
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
+      var skyboxGeom = new THREE.CubeGeometry(5000, 5000, 5000, 1, 1, 1, materialArray);
+      var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial() );
+      skybox.flipSided = true;
+      scene.add(skybox);
+    }
   }
 
   // animation loop
@@ -199,9 +201,6 @@
 
   function runQuery(sort) {
     sort = sort || 'score';
-    for (var i=0; i < rendered_asteroids.length; i++) {
-      scene.remove(rendered_asteroids[i].getObject());
-    }
     var lastHovered, lastHovered2;
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
       var n = data.results.rankings.length;
@@ -224,7 +223,6 @@
             $('#other-caption').html('(ranked #' + (i+1) + ')');
           });
         })(roid, orbit);
-        rendered_asteroids.push(orbit);
         //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
