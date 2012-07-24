@@ -142,23 +142,21 @@
 
     // ycibndzchg3
     var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
-    scene.add(mercury.getObject());
-    console.log(mercury.getObject());
+    scene.add(mercury.getObjectFuzzy());
+    console.log(mercury.getObjectFuzzy());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
-    scene.add(venus.getObject());
+    scene.add(venus.getObjectFuzzy());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3});
-    scene.add(earth.getObject());
+    scene.add(earth.getObjectFuzzy());
     scene.add(earth.getParticle());
-    /*
     var mars = new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3});
-    scene.add(mars.getObject());
+    scene.add(mars.getObjectFuzzy());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3});
-    scene.add(jupiter.getObject());
+    scene.add(jupiter.getObjectFuzzy());
     scene.add(jupiter.getParticle());
-    */
 
     runQuery();
 
@@ -216,9 +214,9 @@
             if (lastHovered) scene.remove(lastHovered);
             if (lastHovered2) scene.remove(lastHovered2);
             lastHovered = orbit.getObject();
-            lastHovered2 = orbit.getObjectFuzzy();
+            //lastHovered2 = orbit.getObjectFuzzy();
             scene.add(lastHovered);
-            scene.add(lastHovered2);
+            //scene.add(lastHovered2);
             $('#info .top').html(roid.full_name);
           });
         })(roid, orbit);
