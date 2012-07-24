@@ -203,9 +203,9 @@
       scene.remove(rendered_asteroids[i].getObject());
     }
     var lastHovered, lastHovered2;
-    $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
+    $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
       var n = data.results.rankings.length;
-      for (var i=0; i < n && i < MAX_NUM_ORBITS; i++) {
+      for (var i=0; i < n; i++) {
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,

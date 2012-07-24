@@ -35,12 +35,12 @@ function homepage(cb) {
   });
 
   // most valuable
-  topN(4, 'price', function(err, result) {
+  topN({n: 4, sort: 'price'}, function(err, result) {
     mv = result.rankings;
     trigger();
   });
   // most cost effective
-  topN(4, 'score', function(err, result) {
+  topN({n: 4, sort: 'score'}, function(err, result) {
     mce = result.rankings;
     trigger();
   });
@@ -69,17 +69,21 @@ function upcomingPasses(num, cb) {
   });
 }
 
-function topN(num, sort, cb) {
-  sort = sort || 'score';
-  if (!VALID_SORT_FIELDS[sort]) {
+function topN(opts, cb) {
+  opts = opts || {};
+  opts.sort = opts.sort || 'score';
+  opts.n = opts.n || 10;
+  opts.include_3d_vars = opts.include_3d_vars || false;
+
+  if (!VALID_SORT_FIELDS[opts.sort]) {
     cb(true, null);
     return;
   }
   var db = new Mongolian('localhost/asterank');
   var coll = db.collection('asteroids');
   var sortobj = {};
-  sortobj[sort] = VALID_SORT_FIELDS[sort];
-  coll.find().limit(num).sort(sortobj).toArray(function(err, docs) {
+  sortobj[opts.sort] = VALID_SORT_FIELDS[opts.sort];
+  coll.find().limit(opts.n).sort(sortobj).toArray(function(err, docs) {
     if (err) {
       cb(true, null);
       return;
@@ -87,10 +91,14 @@ function topN(num, sort, cb) {
 
     // load asteroid rankings
     var rankings = _.map(docs, function(doc) {
-      var ret = _.pick(doc, 'score', 'saved', 'price', 'profit',
+      var args = [doc, 'score', 'saved', 'price', 'profit',
         'closeness', 'GM', 'spec_B', 'full_name',
         'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
-        'prov_des', 'om', 'w', 'i', 'om', 'ma', 'n', 'epoch','tp', 'per');
+        'prov_des', 'w', ];
+      if (opts.include_3d_vars) {
+        args.push.apply(args, ['i', 'om', 'ma', 'n', 'epoch','tp', 'per']);
+      }
+      var ret = _.pick.apply(this, args);
       ret.fuzzed_price = shared_util.toFuzz(ret.price);
       return ret;
     });
