@@ -12,7 +12,7 @@
             };
   })();
 
-  var WEB_GL_ENABLED = false;
+  var WEB_GL_ENABLED = true;
   var MAX_NUM_ORBITS = 40;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
@@ -101,7 +101,7 @@
     // "sun" - 0,0 marker
     (function() {
       var geometry= new THREE.SphereGeometry(1);
-      var material= new THREE.MeshLambertMaterial({color: 0xffee00});
+      var material= new THREE.MeshBasicMaterial({color: 0xffee00});
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
     })();
