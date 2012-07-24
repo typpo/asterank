@@ -211,7 +211,7 @@
           width:2,
           object_size:1
         }, scene);
-        (function(roid, orbit) {
+        (function(roid, orbit, i) {
           orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
             if (lastHovered2) scene.remove(lastHovered2);
@@ -222,7 +222,7 @@
             $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
             $('#other-caption').html('(ranked #' + (i+1) + ')');
           });
-        })(roid, orbit);
+        })(roid, orbit, i);
         //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
