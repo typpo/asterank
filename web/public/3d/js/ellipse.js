@@ -38,10 +38,11 @@
     else {
       var time = 2451545.0
       var pts = []
-      var limit = this.eph.P ? this.eph.P+1 : 365*2;
+      var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
       var delta = 5;
       var record = {};
       var consechits = 0;
+      var n = 0;
       for (var i=0; i < limit; i++, time+=delta) {
         // months
         var pos = this.getPosAtTime(time);
@@ -57,8 +58,10 @@
         vector.multiplyScalar(PIXELS_PER_AU);
         pts.push(vector);
         record[key] = true;
+        n++;
       }
       //shape.fromPoints(pts);
+      console.log(n);
       points = new THREE.Geometry();
       points.vertices = pts;
       points.mergeVertices();
@@ -137,11 +140,11 @@
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
-    var o = this.eph.om * pi/180; // longitude of ascending node
+    var o = (this.eph.om-Ephemeris.earth.om) * pi/180; // longitude of ascending node
     var p = this.eph.w * pi/180; // longitude of perihelion
     var ma = this.eph.ma;
     var M;
-    if (ma) {
+    //if (ma) {
       // Calculate mean anomaly at J2000
       ma = ma * pi/180;
       var n;
@@ -155,6 +158,7 @@
       //L = ma + p;
       //M =  n * -d + L - p;
       M = ma + n * -d;
+      /*
     }
     else {
       // Assume that date of elements is J2000, and that we are given
@@ -162,6 +166,7 @@
       var L = this.eph.L * pi/180; // mean longitude
       M = L - p;
     }
+    */
     // TODO do this smarter
     while (M < 0) {
       M += 2*pi;
@@ -195,8 +200,8 @@
     var r = a * (1 - e*e) / (1 + e * cos(v));
 
     // heliocentric coords
-    var Y = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
-    var X = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
+    var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
+    var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
 
     var x = X;
