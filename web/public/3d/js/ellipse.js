@@ -41,28 +41,17 @@
       var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
       var parts = 100;
       var delta = Math.ceil(limit / parts);
-      var record = {};
-      var consechits = 0;
       for (var i=0; i <= parts; i++, time+=delta) {
         // months
         var pos = this.getPosAtTime(time);
-        var key = this.getPositionKey(pos);
-        if (key in record) {
-          if (consechits++ > 2) {
-            break;
-          }
-          consechits = 0;
-        }
         var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
         vector.multiplyScalar(PIXELS_PER_AU);
         pts.push(vector);
-        record[key] = true;
       }
       //shape.fromPoints(pts);
       points = new THREE.Geometry();
       points.vertices = pts;
       points.mergeVertices();
-      console.log(pts.length);
     }
 
     var line = new THREE.Line(points,
@@ -226,33 +215,5 @@
     return this.particle;
   }
 
-  Orbit3D.prototype.getPositionKey = function(pos) {
-    var x = Math.round(pos[0]*100)/100;
-    var y = Math.round(pos[1]*100)/100;
-    var z = Math.round(pos[2]*100)/100;
-    var key = x + '_' + y + '_' + z;
-    return key;
-  }
-
   window.Orbit3D = Orbit3D;
 })();
-
-// Rotate an object around an axis in object space
-function rotateAroundObjectAxis( object, axis, radians ) {
-  var rotationMatrix = new THREE.Matrix4();
-  console.log(rotationMatrix);
-  rotationMatrix.setRotationAxis( axis.normalize(), radians );
-  object.matrix.multiplySelf( rotationMatrix );                       // post-multiply
-  object.rotation.setRotationFromMatrix( object.matrix );
-}
-
-// Rotate an object around an axis in world space (the axis passes through the object's position)
-function rotateAroundWorldAxis( object, axis, radians ) {
-  var rotationMatrix = new THREE.Matrix4();
-  rotationMatrix.rotateByAxis( axis.normalize(), radians );
-  rotationMatrix.multiplySelf( object.matrix );                       // pre-multiply
-  object.matrix = rotationMatrix;
-console.log(object.rotation);
-  object.rotation.setEulerFromRotationMatrix( object.matrix );
-}
-

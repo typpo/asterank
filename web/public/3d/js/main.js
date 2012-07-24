@@ -13,7 +13,7 @@
   })();
 
   var WEB_GL_ENABLED = false;
-  var MAX_NUM_ORBITS = 2;
+  var MAX_NUM_ORBITS = 40;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -50,10 +50,13 @@
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.z = 100;
+    //camera.position.z = 100;
     //camera.position.x = -35.8346763641627;
     //camera.position.y = -93.35239802694304;
     //camera.position.z = 1.0980676185536646;
+    camera.position.set(0, -80, 85.60706096322108);
+    //camera.rotation.set(1.2190004044210283, -0.6885792940795312, -0.2171914191688959);
+
 
     window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
@@ -201,22 +204,24 @@
     }
     var lastHovered, lastHovered2;
     $.getJSON('/top?sort=' + sort + '&n=100', function(data) {
-      for (var i=0; i < data.results.rankings.length && i < MAX_NUM_ORBITS; i++) {
+      var n = data.results.rankings.length;
+      for (var i=0; i < n && i < MAX_NUM_ORBITS; i++) {
         var roid = data.results.rankings[i];
-        console.log(roid);
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
+          width:2,
           object_size:1
         }, scene);
         (function(roid, orbit) {
-          orbit.getParticle().on('click', function(e) {
+          orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
             if (lastHovered2) scene.remove(lastHovered2);
-            lastHovered = orbit.getObject();
+            //lastHovered = orbit.getObject();
             lastHovered2 = orbit.getObjectFuzzy();
-            scene.add(lastHovered);
+            //scene.add(lastHovered);
             scene.add(lastHovered2);
-            $('#info .top').html(roid.full_name);
+            $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
+            $('#other-caption').html('(ranked #' + (i+1) + ')');
           });
         })(roid, orbit);
         rendered_asteroids.push(orbit);
