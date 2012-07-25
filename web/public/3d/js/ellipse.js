@@ -16,14 +16,6 @@
   }
 
   Orbit3D.prototype.CreateOrbit = function() {
-    var a = this.eph.a;
-    var e = this.eph.e;
-    var b = a * Math.sqrt(1 - e*e);
-    var f = a * e;
-    var rx = a * PIXELS_PER_AU;
-    var ry = b * PIXELS_PER_AU;
-    var rf = f * PIXELS_PER_AU;
-
     var shape = new THREE.Shape();
     var pts;
     var points;
