@@ -38,7 +38,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/solar-system', function(req, res) {
+app.get('/universe', function(req, res) {
   renderWithContext(res, '3d');
 });
 
