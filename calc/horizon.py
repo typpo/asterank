@@ -38,12 +38,12 @@ def populateDb():
   db = conn.asterank
   coll = db.asteroids
   #coll.drop()
-  coll.ensure_index('full_name', unique=True)
-  coll.ensure_index('score')
-  coll.ensure_index('profit')
-  coll.ensure_index('prov_des')
-  coll.ensure_index('closeness')
-  coll.ensure_index('price')
+  coll.ensure_index('full_name', unique=True, background=True)
+  coll.ensure_index('score', background=True)
+  coll.ensure_index('profit', background=True)
+  coll.ensure_index('prov_des', background=True)
+  coll.ensure_index('closeness', background=True)
+  coll.ensure_index('price', background=True)
 
   # load mass data
   print 'Loading mass data...'
@@ -93,8 +93,8 @@ def populateDb():
         # TODO should have our own merged spec row, instead we overwrite spec_B
         row['spec_B'] = newspec
       else:
-        #continue # TODO temp
-        row['spec_B'] = 'S'
+        continue # TODO temp
+        #row['spec_B'] = 'S'
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
