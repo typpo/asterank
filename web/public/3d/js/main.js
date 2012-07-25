@@ -49,14 +49,8 @@
     // put a camera in the scene
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
-    //camera	= new THREE.OrthographicCamera(-cameraW/2, +cameraW/2, cameraH/2, -cameraH/2, 1, 10000);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    //camera.position.z = 100;
-    //camera.position.x = -35.8346763641627;
-    //camera.position.y = -93.35239802694304;
-    //camera.position.z = 1.0980676185536646;
     camera.position.set(0, -80, 85.60706096322108);
-    //camera.rotation.set(1.2190004044210283, -0.6885792940795312, -0.2171914191688959);
 
 
     window.cam = camera;
@@ -71,34 +65,6 @@
     cameraControls.maxDistance = 1300;
 
     // Rendering stuff
-    var PI2 = Math.PI * 2;
-
-    (function() {
-      var material = new THREE.ParticleCanvasMaterial({
-        color: 0xffee00,
-        program: function (context) {
-          context.beginPath();
-          context.arc(0, 0, 1, 0, PI2, true);
-          context.closePath();
-          context.fill();
-        }
-      });
-
-      var geometry = new THREE.Geometry();
-
-      for (var i = 0; i < 100; i++) {
-        var particle = new THREE.Particle(material);
-        particle.position.x = Math.random() * 2 - 1;
-        particle.position.y = Math.random() * 2 - 1;
-        particle.position.z = Math.random() * 2 - 1;
-        particle.position.normalize();
-        particle.position.multiplyScalar(Math.random() * 450);
-        //particle.scale.x = particle.scale.y = 1;
-        scene.add(particle);
-
-        geometry.vertices.push(particle.position);
-      }
-    });
 
     // "sun" - 0,0 marker
     (function() {
@@ -107,31 +73,6 @@
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
     })();
-
-    function axes() {
-      var  cylinder = new THREE.CylinderGeometry(30, .5, .5, 200);
-
-      var xMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-      var yMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-      var zMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
-
-      var xMesh     = new THREE.Mesh(cylinder, xMaterial);
-      var yMesh     = new THREE.Mesh(cylinder, yMaterial);
-      var zMesh     = new THREE.Mesh(cylinder, zMaterial);
-
-      xMesh.rotation.y = Math.PI / 2;
-      //xMesh.position.x = 100;
-
-      yMesh.rotation.x = Math.PI / 2;
-      //yMesh.position.y = 100;
-
-      //zMesh.position.z = 100;
-
-      scene.add(xMesh);
-      scene.add(yMesh);
-      scene.add(zMesh);
-    }
-    //axes();
 
     /*
     var plane = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshBasicMaterial({
@@ -144,25 +85,22 @@
     */
 
     // Ellipses
-
-    // ycibndzchg3
+    runAsteroidQuery();
     var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
-    scene.add(mercury.getObjectFuzzy());
+    scene.add(mercury.getObject());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
-    scene.add(venus.getObjectFuzzy());
+    scene.add(venus.getObject());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3});
-    scene.add(earth.getObjectFuzzy());
+    scene.add(earth.getObject());
     scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3});
-    scene.add(mars.getObjectFuzzy());
+    scene.add(mars.getObject());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3});
-    scene.add(jupiter.getObjectFuzzy());
+    scene.add(jupiter.getObject());
     scene.add(jupiter.getParticle());
-
-    runQuery();
 
     // Sky
     if (using_webgl) {
@@ -199,9 +137,9 @@
     renderer.render(scene, camera);
   }
 
-  function runQuery(sort) {
+  function runAsteroidQuery(sort) {
     sort = sort || 'score';
-    var lastHovered, lastHovered2;
+    var lastHovered;
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
       var n = data.results.rankings.length;
       for (var i=0; i < n; i++) {
@@ -214,16 +152,12 @@
         (function(roid, orbit, i) {
           orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
-            if (lastHovered2) scene.remove(lastHovered2);
-            //lastHovered = orbit.getObject();
-            lastHovered2 = orbit.getObjectFuzzy();
-            //scene.add(lastHovered);
-            scene.add(lastHovered2);
+            lastHovered = orbit.getObject();
+            scene.add(lastHovered);
             $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
             $('#other-caption').html('(ranked #' + (i+1) + ')');
           });
         })(roid, orbit, i);
-        //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
       $('#loading').hide();
