@@ -38,8 +38,8 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/orbits', function(req, res) {
-  renderWithContext(res, 'orbits');
+app.get('/solar-system', function(req, res) {
+  renderWithContext(res, '3d');
 });
 
 app.get('/about', function(req, res) {

@@ -17,4 +17,16 @@ module.exports = function(assets) {
 
   /* Orbits assets */
   assets.addJs('/public/js/orbits_view.js', 'orbits-view');
+
+  /* 3d orbits assets */
+  assets.addJs('/public/3d/vendor/three.js/Three.js', 'orbits-3d');
+  assets.addJs('/public/3d/vendor/three.js/Detector.js', 'orbits-3d');
+  assets.addJs('/public/3d/vendor/three.js/Stats.js', 'orbits-3d');
+
+  assets.addJs('/public/3d/vendor/threex/THREEx.WindowResize.js', 'orbits-3d');
+  assets.addJs('/public/3d/vendor/threex/threex.domevent.js', 'orbits-3d');
+  assets.addJs('/public/3d/vendor/threex/threex.domevent.object3d.js', 'orbits-3d');
+  assets.addJs('/public/3d/js/ephemeris.js', 'orbits-3d');
+  assets.addJs('/public/3d/js/ellipse.js', 'orbits-3d');
+  assets.addJs('/public/3d/js/main.js', 'orbits-3d');
 }
