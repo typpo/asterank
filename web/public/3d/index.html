@@ -4,18 +4,15 @@
 		<title>Asterank - 3D Asteroid Orbits</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
 		<link  href="css/main.css" rel="stylesheet"/>
-    <style>
-      body {
-        background-color: #000;
-      }
-    </style>
 	</head>
 <body>
 	<!-- three.js container -->
-    	<div id="container"></div>
+  <div id="container"></div>
 	<!-- info on screen display -->
+  <div id="loading">
+    <img src="/images/loader.gif"/> Loading...
+  </div>
 	<div id="info">
 		<div id="main-caption" class="top">
 		</div>
@@ -43,5 +40,12 @@
   <script src="js/ephemeris.js"></script>
   <script src="js/ellipse.js"></script>
   <script src="js/main.js"></script>
+<!--
+<script type="text/javascript">(function() {
+(function(d,c){var a,b,g,e;a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===d.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';b=d.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);c._i=[];c.init=function(a,d,f){var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";g="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config".split(" ");
+for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
+})();
+mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");mixpanel.track('3d');</script>
+-->
 </body>
 </html>

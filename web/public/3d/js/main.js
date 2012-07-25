@@ -226,6 +226,7 @@
         //scene.add(orbit.getObject());
         scene.add(orbit.getParticle());
       }
+      $('#loading').hide();
     });
   }
 })();

@@ -11,7 +11,7 @@
 
     this.opts = opts;
     this.eph = eph;
-    this.object3D = this.CreateOrbit(true);
+    //this.object3D = this.CreateOrbit(true);
     this.object3D_fuzzy = this.CreateOrbit(false);
     this.CreateParticle();
   }
@@ -203,9 +203,11 @@
     return [x, y, z];
   }
 
+  /*
   Orbit3D.prototype.getObject = function() {
     return this.object3D;
   }
+  */
 
   Orbit3D.prototype.getObjectFuzzy = function() {
     return this.object3D_fuzzy;
