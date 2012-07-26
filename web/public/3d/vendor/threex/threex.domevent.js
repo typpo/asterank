@@ -216,6 +216,7 @@ THREEx.DomEvent.prototype._onScroll = function(e) {
     // W3C
     delta = -e.detail / 2;
   }
+  // TODO adjust normal vector instead of z
   if (this._camera.position.z > 0) delta = -delta;
   if (Math.floor(this._camera.position.z / 5) === 0) delta *= -15;
   this._camera.position.z += delta*5;

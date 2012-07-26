@@ -140,25 +140,6 @@
   // animation loop
   function animate() {
     update();
-
-    //var timer = new Date().getTime() * 0.00025;
-    //cam.position.x = Math.floor((Math.sin(timer) + Math.cos(timer)) * 125);
-    //cam.position.y = Math.floor(Math.sin(timer) * 100);
-    //cam.position.z = Math.floor(Math.cos(timer) * 100);
-    /*
-    cam.position.x = 30 + Math.sin(timer) * 60;
-    cam.position.y = 30 + Math.abs(Math.cos(timer)) * 60;
-    cam.position.z = 30 - Math.abs(Math.sin(timer)) * 60;
-    */
-    //cam.position.x += ( /*mouseX -*/ camera.position.x ) * 0.05;
-    //cam.position.y += ( /*- mouseY*/ - camera.position.y ) * 0.05;
-    /*
-    //cam.lookAt( scene.position );
-    console.log(Math.sin(cam.rotation.y%pi)*10);
-    cam.position.y = 0;
-    cam.position.x += Math.cos(cam.rotation.y/(2*pi))*10;
-    cam.position.z += Math.sin(cam.rotation.y/(2*pi))*10;
-    */
     if (fly_around) {
       var timer = 0.0001 * Date.now();
       cam.position.x = Math.cos( timer ) * 50;
