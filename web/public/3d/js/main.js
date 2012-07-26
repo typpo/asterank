@@ -132,9 +132,6 @@
       scene.add(skybox);
     }
 
-    $(document).scroll(function() {
-      fly_around = false;
-    });
     $('#container').on('mousedown', function() {
       fly_around = false;
     });
