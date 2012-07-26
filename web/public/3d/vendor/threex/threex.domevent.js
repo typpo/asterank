@@ -18,7 +18,7 @@
 // # use the object oriented api
 //
 // You bind an event like this
-// 
+//
 // ```mesh.on('click', function(object3d){ ... })```
 //
 // To unbind an event, just do
@@ -50,7 +50,7 @@
 // First, you instanciate the object
 //
 // ```var domEvent = new THREEx.DomEvent();```
-// 
+//
 // Then you bind an event like this
 //
 // ```domEvent.bind(mesh, 'click', function(object3d){ object3d.scale.x *= 2; });```
@@ -59,7 +59,7 @@
 //
 // ```domEvent.unbind(mesh, 'click', callback);```
 //
-// 
+//
 // # Code
 
 //
@@ -86,6 +86,7 @@ THREEx.DomEvent	= function(camera, domElement)
 	this._$onTouchMove	= function(){ _this._onTouchMove.apply(_this, arguments);	};
 	this._$onTouchStart	= function(){ _this._onTouchStart.apply(_this, arguments);	};
 	this._$onTouchEnd	= function(){ _this._onTouchEnd.apply(_this, arguments);	};
+	this._$onScroll = function(){ _this._onScroll.apply(_this, arguments);	};
 	this._domElement.addEventListener( 'click'	, this._$onClick	, false );
 	this._domElement.addEventListener( 'dblclick'	, this._$onDblClick	, false );
 	this._domElement.addEventListener( 'mousemove'	, this._$onMouseMove	, false );
@@ -94,6 +95,13 @@ THREEx.DomEvent	= function(camera, domElement)
 	this._domElement.addEventListener( 'touchmove'	, this._$onTouchMove	, false );
 	this._domElement.addEventListener( 'touchstart'	, this._$onTouchStart	, false );
 	this._domElement.addEventListener( 'touchend'	, this._$onTouchEnd	, false );
+
+    //adding the event listerner for Mozilla
+    if(window.addEventListener)
+        this._domElement.addEventListener('DOMMouseScroll', this._$onScroll, false);
+
+    //for IE/OPERA etc
+    this._domElement.onmousewheel = this._$onScroll;
 }
 
 // # Destructor
@@ -156,14 +164,14 @@ THREEx.DomEvent.prototype.bind	= function(object3d, eventName, callback, useCapt
 	console.assert( THREEx.DomEvent.eventNames.indexOf(eventName) !== -1, "not available events:"+eventName );
 
 	if( !this._objectCtxIsInit(object3d) )	this._objectCtxInit(object3d);
-	var objectCtx	= this._objectCtxGet(object3d);	
+	var objectCtx	= this._objectCtxGet(object3d);
 	if( !objectCtx[eventName+'Handlers'] )	objectCtx[eventName+'Handlers']	= [];
 
 	objectCtx[eventName+'Handlers'].push({
 		callback	: callback,
 		useCapture	: useCapture
 	});
-	
+
 	// add this object in this._boundObjs
 	this._boundObjs.push(object3d);
 }
@@ -198,6 +206,22 @@ THREEx.DomEvent.prototype._bound	= function(eventName, object3d)
 	return objectCtx[eventName+'Handlers'] ? true : false;
 }
 
+THREEx.DomEvent.prototype._onScroll = function(e) {
+  // normalize the delta
+  var delta;
+  if (e.wheelDelta) {
+    // IE and Opera
+    delta = e.wheelDelta / 60;
+  } else if (e.detail) {
+    // W3C
+    delta = -e.detail / 2;
+  }
+  if (this._camera.position.z > 0) delta = -delta;
+  if (Math.floor(this._camera.position.z / 5) === 0) delta *= -15;
+  this._camera.position.z += delta*5;
+  return true;
+}
+
 /********************************************************************************/
 /*		onMove								*/
 /********************************************************************************/
@@ -211,14 +235,14 @@ THREEx.DomEvent.prototype._onMove	= function(mouseX, mouseY, origDomEvent)
 
 	var ray		= new THREE.Ray( this._camera.position, vector.subSelf( this._camera.position ).normalize() );
 	var intersects = ray.intersectObjects( this._boundObjs );
-	
+
 	var oldSelected	= this._selected;
 
 	if( intersects.length > 0 ){
 		var intersect	= intersects[ 0 ];
 		var newSelected	= intersect.object;
 		this._selected	= newSelected;
-	
+
 		var notifyOver, notifyOut;
 		if( oldSelected != newSelected ){
 			// if newSelected bound mouseenter, notify it
@@ -277,7 +301,7 @@ THREEx.DomEvent.prototype._notify	= function(eventName, object3d, origDomEvent)
 		object3d.parent && this._notify(eventName, object3d.parent);
 		return;
 	}
-	
+
 	// notify all handlers
 	var handlers	= objectCtx[eventName+'Handlers'];
 	for(var i = 0; i < handlers.length; i++){
@@ -361,6 +385,6 @@ THREEx.DomEvent.prototype._onTouchEvent	= function(eventName, domEvent)
 
 	var mouseX	= +(domEvent.touches[ 0 ].pageX / window.innerWidth ) * 2 - 1;
 	var mouseY	= -(domEvent.touches[ 0 ].pageY / window.innerHeight) * 2 + 1;
-	return this._onEvent(eventName, mouseX, mouseY, domEvent);	
+	return this._onEvent(eventName, mouseX, mouseY, domEvent);
 }
 
