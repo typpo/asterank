@@ -25,13 +25,11 @@
     var parts = 100;
     var delta = Math.ceil(limit / parts);
     for (var i=0; i <= parts; i++, time+=delta) {
-      // months
       var pos = this.getPosAtTime(time);
       var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
       vector.multiplyScalar(PIXELS_PER_AU);
       pts.push(vector);
     }
-    //shape.fromPoints(pts);
     points = new THREE.Geometry();
     points.vertices = pts;
     points.mergeVertices();
@@ -84,9 +82,7 @@
       M -= 2*pi;
     }
 
-    // http://www.stargazing.net/kepler/ellipse.html#twig02a
     var sin = Math.sin, cos = Math.cos;
-
     // true anomaly approximation, using Equation of Center
     var v = M + (2 * e - e*e*e/4) * sin(M)
          + 5/4 * e*e * sin(2*M)
