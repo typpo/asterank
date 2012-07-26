@@ -19,6 +19,7 @@
   var pi = Math.PI;
   var using_webgl = false;
   //var clock = new THREE.Clock();
+  var fly_around = true;
 
   if(!init())	animate();
 
@@ -130,6 +131,10 @@
       skybox.flipSided = true;
       scene.add(skybox);
     }
+
+    $('#container').on('mousedown', function() {
+      fly_around = false;
+    });
   }
 
   // animation loop
@@ -154,11 +159,12 @@
     cam.position.x += Math.cos(cam.rotation.y/(2*pi))*10;
     cam.position.z += Math.sin(cam.rotation.y/(2*pi))*10;
     */
-    var timer = 0.0001 * Date.now();
-
-    cam.position.x = Math.cos( timer ) * 50;
-    //cam.position.y = Math.sin( timer ) * 100;
-    cam.position.z = -100 + Math.sin( timer ) * 40;
+    if (fly_around) {
+      var timer = 0.0001 * Date.now();
+      cam.position.x = Math.cos( timer ) * 50;
+      //cam.position.y = Math.sin( timer ) * 100;
+      cam.position.z = -100 + Math.sin( timer ) * 40;
+    }
     render();
     requestAnimationFrame(animate);
   }
