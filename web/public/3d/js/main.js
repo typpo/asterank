@@ -18,6 +18,7 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
+  //var clock = new THREE.Clock();
 
   if(!init())	animate();
 
@@ -50,7 +51,9 @@
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(0, -80, 85.60706096322108);
+    //camera.position.set(0, -80, 85.60706096322108);
+    //camera.position.set(14.92119498929974, -70.76590667539001, -52.278328402168306);
+    camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
 
 
     window.cam = camera;
@@ -59,6 +62,7 @@
     scene.add(camera);
 
     cameraControls	= new THREE.TrackballControls(camera)
+    //cameraControls	= new THREE.RollControls(camera)
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
@@ -70,6 +74,16 @@
     (function() {
       var geometry= new THREE.SphereGeometry(1);
       var material= new THREE.MeshBasicMaterial({color: 0xffee00});
+/*
+      var sprite = sprite = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
+      var material = new THREE.ParticleBasicMaterial({
+        map: sprite,
+          blending: THREE.AdditiveBlending,
+          depthTest: false,
+          sizeAttenuation: false,
+          vertexColors: true
+      });
+*/
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
     })();
@@ -120,9 +134,33 @@
 
   // animation loop
   function animate() {
-    requestAnimationFrame(animate);
-    render();
     update();
+
+    //var timer = new Date().getTime() * 0.00025;
+    //cam.position.x = Math.floor((Math.sin(timer) + Math.cos(timer)) * 125);
+    //cam.position.y = Math.floor(Math.sin(timer) * 100);
+    //cam.position.z = Math.floor(Math.cos(timer) * 100);
+    /*
+    cam.position.x = 30 + Math.sin(timer) * 60;
+    cam.position.y = 30 + Math.abs(Math.cos(timer)) * 60;
+    cam.position.z = 30 - Math.abs(Math.sin(timer)) * 60;
+    */
+    //cam.position.x += ( /*mouseX -*/ camera.position.x ) * 0.05;
+    //cam.position.y += ( /*- mouseY*/ - camera.position.y ) * 0.05;
+    /*
+    //cam.lookAt( scene.position );
+    console.log(Math.sin(cam.rotation.y%pi)*10);
+    cam.position.y = 0;
+    cam.position.x += Math.cos(cam.rotation.y/(2*pi))*10;
+    cam.position.z += Math.sin(cam.rotation.y/(2*pi))*10;
+    */
+    var timer = 0.0001 * Date.now();
+
+    cam.position.x = Math.cos( timer ) * 50;
+    //cam.position.y = Math.sin( timer ) * 100;
+    cam.position.z = -100 + Math.sin( timer ) * 40;
+    render();
+    requestAnimationFrame(animate);
   }
 
   function update() {
@@ -132,7 +170,9 @@
   // render the scene
   function render() {
     // update camera controls
-    cameraControls.update(1.5);
+    //cameraControls.update(clock.getDelta());
+    cameraControls.update();
+
     // actually render the scene
     renderer.render(scene, camera);
   }
