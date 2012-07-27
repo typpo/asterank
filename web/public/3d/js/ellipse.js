@@ -13,7 +13,7 @@
     this.opts = opts;
     this.eph = eph;
     this.ellipse = this.CreateOrbit(opts.jed);
-    this.CreateParticle(opts.jed);
+    this.particle = this.CreateParticle(opts.jed);
   }
 
   Orbit3D.prototype.CreateOrbit = function(jed) {
@@ -48,7 +48,7 @@
     particle.position.set(pos[0], pos[1], pos[2]);
     //particle.position.multiplyScalar(PIXELS_PER_AU);
 
-    this.particle = particle;
+    return particle;
   }
 
   Orbit3D.prototype.MoveParticle = function(time_jed) {
