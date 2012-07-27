@@ -28,7 +28,7 @@
     for (var i=0; i <= parts; i++, time+=delta) {
       var pos = this.getPosAtTime(time);
       var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      vector.multiplyScalar(PIXELS_PER_AU);
+      //vector.multiplyScalar(PIXELS_PER_AU);
       pts.push(vector);
     }
     points = new THREE.Geometry();
@@ -46,7 +46,7 @@
     var particle = new THREE.Mesh(geometry, material);
     var pos = this.getPosAtTime(jed);
     particle.position.set(pos[0], pos[1], pos[2]);
-    particle.position.multiplyScalar(PIXELS_PER_AU);
+    //particle.position.multiplyScalar(PIXELS_PER_AU);
 
     this.particle = particle;
   }
@@ -54,7 +54,7 @@
   Orbit3D.prototype.MoveParticle = function(time_jed) {
     var pos = this.getPosAtTime(time_jed);
     this.particle.position.set(pos[0], pos[1], pos[2]);
-    this.particle.position.multiplyScalar(PIXELS_PER_AU);
+    //this.particle.position.multiplyScalar(PIXELS_PER_AU);
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
@@ -94,7 +94,7 @@
          + 13/12 * e*e*e * sin(3*M);
 
     // radius vector, in AU
-    var r = a * (1 - e*e) / (1 + e * cos(v));
+    var r = a * (1 - e*e) / (1 + e * cos(v)) * PIXELS_PER_AU;
 
     // heliocentric coords
     var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))

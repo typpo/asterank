@@ -195,7 +195,6 @@
           object_size:1,
           jed: jed
         }, scene);
-        console.log(roid);
         (function(roid, orbit, i) {
           orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
