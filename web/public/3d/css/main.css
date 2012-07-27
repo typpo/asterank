@@ -16,7 +16,6 @@ body {
 	width		: 100%;
 	padding		: 5px;
 	text-align	: center;
-  background-color: #000;
 }
 #other-caption {
 	position	: absolute;
@@ -24,6 +23,8 @@ body {
 	width		: 100%;
 	padding		: 5px;
 	text-align	: center;
+}
+#caption-container {
   background-color: #000;
 }
 #info a {
