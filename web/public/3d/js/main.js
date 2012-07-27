@@ -18,7 +18,6 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  //var clock = new THREE.Clock();
   var fly_around = true;
   var rendered_particles = [];
   var planets = [];
@@ -55,8 +54,6 @@
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    //camera.position.set(0, -80, 85.60706096322108);
-    //camera.position.set(14.92119498929974, -70.76590667539001, -52.278328402168306);
     camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
 
 
@@ -66,7 +63,6 @@
     scene.add(camera);
 
     cameraControls	= new THREE.TrackballControls(camera)
-    //cameraControls	= new THREE.RollControls(camera)
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
@@ -174,7 +170,6 @@
   // render the scene
   function render() {
     // update camera controls
-    //cameraControls.update(clock.getDelta());
     cameraControls.update();
 
     // actually render the scene
