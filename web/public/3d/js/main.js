@@ -67,7 +67,7 @@
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
-    cameraControls.maxDistance = 1300;
+    cameraControls.maxDistance = 1100;
 
     // Rendering stuff
 
