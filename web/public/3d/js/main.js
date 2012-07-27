@@ -20,6 +20,9 @@
   var using_webgl = false;
   //var clock = new THREE.Clock();
   var fly_around = true;
+  var rendered_particles = [];
+  var planets = [];
+  var jed = 2451545.0;
 
   if(!init())	animate();
 
@@ -101,21 +104,28 @@
 
     // Ellipses
     runAsteroidQuery();
-    var mercury = new Orbit3D(Ephemeris.mercury, {color: 0x913CEE, width: 3});
+    var mercury = new Orbit3D(Ephemeris.mercury,
+        {color: 0x913CEE, width: 3, jed: jed});
     scene.add(mercury.getObject());
     scene.add(mercury.getParticle());
-    var venus = new Orbit3D(Ephemeris.venus, {color: 0xFF7733, width: 3});
+    var venus = new Orbit3D(Ephemeris.venus,
+        {color: 0xFF7733, width: 3, jed: jed});
     scene.add(venus.getObject());
     scene.add(venus.getParticle());
-    var earth = new Orbit3D(Ephemeris.earth, {color: 0x009ACD, width: 3});
+    var earth = new Orbit3D(Ephemeris.earth,
+        {color: 0x009ACD, width: 3, jed: jed});
     scene.add(earth.getObject());
     scene.add(earth.getParticle());
-    var mars = new Orbit3D(Ephemeris.mars, {color: 0xA63A3A, width: 3});
+    var mars = new Orbit3D(Ephemeris.mars,
+        {color: 0xA63A3A, width: 3, jed: jed});
     scene.add(mars.getObject());
     scene.add(mars.getParticle());
-    var jupiter = new Orbit3D(Ephemeris.jupiter, {color: 0xFF7F50, width: 3});
+    var jupiter = new Orbit3D(Ephemeris.jupiter,
+        {color: 0xFF7F50, width: 3, jed: jed});
     scene.add(jupiter.getObject());
     scene.add(jupiter.getParticle());
+
+    planets.push.apply(planets, [mercury, venus, earth, mars, jupiter]);
 
     // Sky
     if (using_webgl) {
@@ -146,6 +156,13 @@
       //cam.position.y = Math.sin( timer ) * 100;
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
+    jed += 1;
+    for (var i=0; i < planets.length; i++) {
+      planets[i].MoveParticle(jed);
+    }
+    for (var i=0; i < rendered_particles.length; i++) {
+      rendered_particles[i].MoveParticle(jed);
+    }
     render();
     requestAnimationFrame(animate);
   }
@@ -169,13 +186,16 @@
     var lastHovered;
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
       var n = data.results.rankings.length;
+      rendered_particles = [];
       for (var i=0; i < n; i++) {
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
           width:2,
-          object_size:1
+          object_size:1,
+          jed: jed
         }, scene);
+        console.log(roid);
         (function(roid, orbit, i) {
           orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
@@ -186,8 +206,11 @@
           });
         })(roid, orbit, i);
         scene.add(orbit.getParticle());
+        rendered_particles.push(orbit);
       }
       $('#loading').hide();
     });
   }
 })();
+
+if (!window.console) window.console = {log: function() {}};

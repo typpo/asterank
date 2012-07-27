@@ -8,18 +8,19 @@
     opts.color = opts.color || 0xffee00;
     opts.width = opts.width || 1;
     opts.object_size = opts.object_size || 2;
+    opts.jed =  opts.jed || 2451545.0;
 
     this.opts = opts;
     this.eph = eph;
-    this.ellipse = this.CreateOrbit();
-    this.CreateParticle();
+    this.ellipse = this.CreateOrbit(opts.jed);
+    this.CreateParticle(opts.jed);
   }
 
-  Orbit3D.prototype.CreateOrbit = function() {
+  Orbit3D.prototype.CreateOrbit = function(jed) {
     var shape = new THREE.Shape();
     var pts;
     var points;
-    var time = 2451545.0
+    var time = jed;
     var pts = []
     var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
     var parts = 100;
@@ -39,21 +40,25 @@
     return line;
   }
 
-  Orbit3D.prototype.CreateParticle = function() {
+  Orbit3D.prototype.CreateParticle = function(jed) {
     var geometry= new THREE.SphereGeometry(this.opts.object_size);
     var material= new THREE.MeshBasicMaterial({color: this.opts.color});
     var particle = new THREE.Mesh(geometry, material);
-    var pos = this.getPosAtTime();  // position at epoch
-    particle.position.x = pos[0];
-    particle.position.y = pos[1];
-    particle.position.z = pos[2];
+    var pos = this.getPosAtTime(jed);
+    particle.position.set(pos[0], pos[1], pos[2]);
     particle.position.multiplyScalar(PIXELS_PER_AU);
 
     this.particle = particle;
   }
 
+  Orbit3D.prototype.MoveParticle = function(time_jed) {
+    var pos = this.getPosAtTime(time_jed);
+    this.particle.position.set(pos[0], pos[1], pos[2]);
+    this.particle.position.multiplyScalar(PIXELS_PER_AU);
+  }
+
   Orbit3D.prototype.getPosAtTime = function(jed) {
-    jed = jed || 2451545.0; // 2000 Jan 1.5
+    //jed = jed || 2451545.0; // 2000 Jan 1.5
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
