@@ -24,6 +24,13 @@ body {
 	padding		: 5px;
 	text-align	: center;
 }
+#controls {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 5px 10px;
+  font-size: 13px;
+}
 #caption-container {
   background-color: #000;
 }
