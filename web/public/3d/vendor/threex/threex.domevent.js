@@ -207,19 +207,12 @@ THREEx.DomEvent.prototype._bound	= function(eventName, object3d)
 }
 
 THREEx.DomEvent.prototype._onScroll = function(e) {
-  // normalize the delta
-  var delta;
-  if (e.wheelDelta) {
-    // IE and Opera
-    delta = e.wheelDelta / 60;
-  } else if (e.detail) {
-    // W3C
-    delta = -e.detail / 2;
-  }
-  // TODO adjust normal vector instead of z
-  if (this._camera.position.z > 0) delta = -delta;
-  if (Math.floor(this._camera.position.z / 5) === 0) delta *= -15;
-  this._camera.position.z += delta*5;
+  var fovMAX = 500;
+  var fovMIN = 1;
+  this._camera.fov -= e.wheelDeltaY * 0.05;
+  this._camera.fov = Math.max( Math.min(this._camera.fov, fovMAX ), fovMIN );
+  this._camera.projectionMatrix = new THREE.Matrix4().makePerspective(this._camera.fov, window.innerWidth / window.innerHeight, this._camera.near, this._camera.far);
+
   return true;
 }
 

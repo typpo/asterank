@@ -5,7 +5,7 @@ import pymongo
 from pymongo import Connection
 
 #
-# Crawl top looked at objects
+# Top looked at objects
 #
 TOP = """162385 (2000 BM19),1113
 253 Mathilde,578
