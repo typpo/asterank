@@ -18,7 +18,8 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var fly_around = true;
+  var camera_fly_around = false;
+  var object_movement_on = false;
   var rendered_particles = [];
   var planets = [];
   var jed = 2451545.0;
@@ -139,25 +140,27 @@
     }
 
     $('#container').on('mousedown', function() {
-      fly_around = false;
+      camera_fly_around = false;
     });
   }
 
   // animation loop
   function animate() {
     update();
-    if (fly_around) {
+    if (camera_fly_around) {
       var timer = 0.0001 * Date.now();
       cam.position.x = Math.cos( timer ) * 50;
       //cam.position.y = Math.sin( timer ) * 100;
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
-    jed += 1;
-    for (var i=0; i < planets.length; i++) {
-      planets[i].MoveParticle(jed);
-    }
-    for (var i=0; i < rendered_particles.length; i++) {
-      rendered_particles[i].MoveParticle(jed);
+    if (object_movement_on) {
+      jed += 1;
+      for (var i=0; i < planets.length; i++) {
+        planets[i].MoveParticle(jed);
+      }
+      for (var i=0; i < rendered_particles.length; i++) {
+        rendered_particles[i].MoveParticle(jed);
+      }
     }
     render();
     requestAnimationFrame(animate);

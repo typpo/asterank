@@ -18,6 +18,7 @@ THREEx.DomEvent.noConflict.symbols.forEach(function(symbol){
 // begin the actual patching of THREE.Object3D
 
 // create the global instance of THREEx.DomEvent
+//THREE.Object3D._threexDomEvent	= new THREEx.DomEvent(null, document.getElementById('container'));
 THREE.Object3D._threexDomEvent	= new THREEx.DomEvent();
 
 // # wrap mouseevents.bind()

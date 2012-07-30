@@ -25,6 +25,8 @@ body {
 	text-align	: center;
 }
 #controls {
+  width: 100%;
+  background-color: #fff;
   position: absolute;
   left: 0;
   top: 0;

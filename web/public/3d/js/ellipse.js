@@ -25,11 +25,23 @@
     var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
     var parts = 100;
     var delta = Math.ceil(limit / parts);
+    var prev;
+    var phae = (this.eph.full_name.indexOf('Phaethon') > -1);
     for (var i=0; i <= parts; i++, time+=delta) {
       var pos = this.getPosAtTime(time);
       var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      //vector.multiplyScalar(PIXELS_PER_AU);
+      if (phae && prev) {
+        var x = vector.x - prev.x;
+        var y = vector.y - prev.y;
+        var z = vector.z - prev.z;
+        var dist = Math.sqrt(x*x + y*y + z*z);
+        console.log(dist);
+      }
+      prev = vector;
       pts.push(vector);
+    }
+    if (phae) {
+      console.log(pts);
     }
     points = new THREE.Geometry();
     points.vertices = pts;
