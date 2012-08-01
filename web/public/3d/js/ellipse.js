@@ -25,69 +25,17 @@
     var parts = 100;
     var delta = Math.ceil(limit / parts);
     var prev;
-    var phae = (this.eph.full_name.indexOf('Phaethon') > -1);
     var group = new THREE.Object3D();
-    var colors = [0xff0000, 0x00ff00, 0x0000ff];
     for (var i=0; i <= parts; i++, time+=delta) {
-      var pos = this.getPosAtTime(time, phae);
+      var pos = this.getPosAtTime(time);
       var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      this.opts.color = colors[Math.floor(parts/i)];
       group.add(this.CreateParticle(time));
-      /*
-      if (phae && prev) {
-        var x = vector.x - prev.x;
-        var y = vector.y - prev.y;
-        var z = vector.z - prev.z;
-        var dist = Math.sqrt(x*x + y*y + z*z);
-      }
-      */
       prev = vector;
       pts.push(vector);
     }
-    if (phae) {
-      console.log(pts);
-    }
-
-    var dumb_pts = [];
-    for (var i=0; i < pts.length; i++) {
-      var pt = pts[i];
-      if (!pt) continue;
-      dumb_pts.push(pt);
-      var min = Number.MAX_VALUE;
-      var winner = null;
-      var winner_idx = -1;
-      for (var j=i+1; j < pts.length; j++) {
-        var pt2 = pts[j];
-        if (!pt2) continue;
-        var x = pt.x - pt2.x;
-        var y = pt.y - pt2.y;
-        var z = pt.z - pt2.z;
-        var dist = Math.sqrt(x*x + y*y + z*z);
-        if (dist < min) {
-          min = dist;
-          winner_idx = j;
-          winner = pt2;
-        }
-      }
-      if (winner) {
-        dumb_pts.push(winner);
-        pts[winner_idx] = null;
-      }
-      pts[i] = null;
-    }
-    console.log(dumb_pts);
-
-    // Put pts near closest counterpart
-    /*
-    pts = pts.sort(function(a, b) {
-      return Math.random() > .5 ? 1 : -1;
-    });
-    */
-
-    //return group;
 
     points = new THREE.Geometry();
-    points.vertices = dumb_pts;
+    points.vertices = pts;
     //points.mergeVertices();
 
     var line = new THREE.Line(points,
@@ -112,7 +60,7 @@
     //this.particle.position.multiplyScalar(PIXELS_PER_AU);
   }
 
-  Orbit3D.prototype.getPosAtTime = function(jed, phae) {
+  Orbit3D.prototype.getPosAtTime = function(jed) {
     //jed = jed || 2451545.0; // 2000 Jan 1.5
     var e = this.eph.e;
     var a = this.eph.a;
@@ -149,8 +97,7 @@
          + 5/4 * e*e * sin(2*M)
          + 13/12 * e*e*e * sin(3*M);
          */
-    //var v = TrueAnom(e, ma*180/pi, 5);
-    // Estimate eccentric anom using iterative procedure
+    // Estimate eccentric and true anom using iterative approx
     var E0 = M;
     var lastdiff;
     do {
@@ -158,11 +105,8 @@
       lastdiff = Math.abs(E1-E0);
       E0 = E1;
     } while(lastdiff > 0.0000001);
-    console.log(E0);
     var E = E0;
     var v = 2 * Math.atan(Math.sqrt((1+e)/(1-e)) * Math.tan(E/2));
-
-    if (phae) console.log(180/pi*v);
 
     // radius vector, in AU
     var r = a * (1 - e*e) / (1 + e * cos(v)) * PIXELS_PER_AU;
@@ -172,16 +116,6 @@
     var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
     return [X, Y, Z];
-  }
-
-  Orbit3D.prototype.approxEccentricAnomaly = function(guess, ma, e, acc) {
-    var delta = guess - (e * Math.sin(guess)) - ma;
-    if (Math.abs(delta) > acc) {
-      //var deltaE = delta / (1 - (e * Math.cos(
-
-    }
-    else
-      return guess;
   }
 
   Orbit3D.prototype.getObject = function() {
