@@ -29,7 +29,7 @@
     var group = new THREE.Object3D();
     var colors = [0xff0000, 0x00ff00, 0x0000ff];
     for (var i=0; i <= parts; i++, time+=delta) {
-      var pos = this.getPosAtTime(time);
+      var pos = this.getPosAtTime(time, phae);
       var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
       this.opts.color = colors[Math.floor(parts/i)];
       group.add(this.CreateParticle(time));
@@ -112,7 +112,7 @@
     //this.particle.position.multiplyScalar(PIXELS_PER_AU);
   }
 
-  Orbit3D.prototype.getPosAtTime = function(jed) {
+  Orbit3D.prototype.getPosAtTime = function(jed, phae) {
     //jed = jed || 2451545.0; // 2000 Jan 1.5
     var e = this.eph.e;
     var a = this.eph.a;
@@ -144,9 +144,25 @@
 
     var sin = Math.sin, cos = Math.cos;
     // true anomaly approximation, using Equation of Center
+    /*
     var v = M + (2 * e - e*e*e/4) * sin(M)
          + 5/4 * e*e * sin(2*M)
          + 13/12 * e*e*e * sin(3*M);
+         */
+    //var v = TrueAnom(e, ma*180/pi, 5);
+    // Estimate eccentric anom using iterative procedure
+    var E0 = M;
+    var lastdiff;
+    do {
+      var E1 = M + e * sin(E0);
+      lastdiff = Math.abs(E1-E0);
+      E0 = E1;
+    } while(lastdiff > 0.0000001);
+    console.log(E0);
+    var E = E0;
+    var v = 2 * Math.atan(Math.sqrt((1+e)/(1-e)) * Math.tan(E/2));
+
+    if (phae) console.log(180/pi*v);
 
     // radius vector, in AU
     var r = a * (1 - e*e) / (1 + e * cos(v)) * PIXELS_PER_AU;
@@ -156,6 +172,16 @@
     var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
     return [X, Y, Z];
+  }
+
+  Orbit3D.prototype.approxEccentricAnomaly = function(guess, ma, e, acc) {
+    var delta = guess - (e * Math.sin(guess)) - ma;
+    if (Math.abs(delta) > acc) {
+      //var deltaE = delta / (1 - (e * Math.cos(
+
+    }
+    else
+      return guess;
   }
 
   Orbit3D.prototype.getObject = function() {
