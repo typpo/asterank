@@ -101,6 +101,7 @@
 
     // Ellipses
     runAsteroidQuery();
+    /*
     var mercury = new Orbit3D(Ephemeris.mercury,
         {color: 0x913CEE, width: 3, jed: jed});
     scene.add(mercury.getObject());
@@ -123,6 +124,7 @@
     scene.add(jupiter.getParticle());
 
     planets.push.apply(planets, [mercury, venus, earth, mars, jupiter]);
+    */
 
     // Sky
     if (using_webgl) {
@@ -187,6 +189,7 @@
       rendered_particles = [];
       for (var i=0; i < n; i++) {
         var roid = data.results.rankings[i];
+        if (roid.full_name.indexOf('Phaethon') < 0) continue;
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
           width:2,
@@ -203,6 +206,7 @@
           });
         })(roid, orbit, i);
         scene.add(orbit.getParticle());
+        scene.add(orbit.getObject());  // remove me
         rendered_particles.push(orbit);
       }
       $('#loading').hide();
