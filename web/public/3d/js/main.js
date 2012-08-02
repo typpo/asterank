@@ -191,7 +191,7 @@
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
     if (object_movement_on) {
-      jed += 1;
+      jed += .5;
       for (var i=0; i < planets.length; i++) {
         planets[i].MoveParticle(jed);
       }
