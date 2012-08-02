@@ -20,11 +20,48 @@
   var using_webgl = false;
   var camera_fly_around = false;
   var object_movement_on = true;
-  var rendered_particles = [];
+  var lastHovered;
+  var added_objects = [];
   var planets = [];
   var jed = 2451545.0;
 
   if(!init())	animate();
+  initGUI();
+
+  $('#btn-toggle-movement').on('click', function() {
+    object_movement_on = !object_movement_on;
+  });
+  $('#controls .js-sort').on('click', function() {
+    runAsteroidQuery($(this).data('sort'));
+    $('#controls .js-sort').css('font-weight', 'normal');
+    $(this).css('font-weight', 'bold');
+  });
+
+  function initGUI() {
+    var ViewUI = function() {
+      this['Most cost effective'] = function() {
+        runAsteroidQuery('score');
+      };
+      this['Most valuable'] = function() {
+        runAsteroidQuery('price');
+      };
+      this['Most accessible'] = function() {
+        runAsteroidQuery('closeness');
+      };
+      this.movement = object_movement_on;
+    };
+
+    window.onload = function() {
+      var text = new ViewUI();
+      var gui = new dat.GUI();
+      gui.add(text, 'Most cost effective');
+      gui.add(text, 'Most valuable');
+      gui.add(text, 'Most accessible');
+      gui.add(text, 'movement').onChange(function() {
+        object_movement_on = !object_movement_on;
+      });
+    };
+  }
 
   // init the scene
   function init(){
@@ -158,8 +195,8 @@
       for (var i=0; i < planets.length; i++) {
         planets[i].MoveParticle(jed);
       }
-      for (var i=0; i < rendered_particles.length; i++) {
-        rendered_particles[i].MoveParticle(jed);
+      for (var i=0; i < added_objects.length; i++) {
+        added_objects[i].MoveParticle(jed);
       }
     }
     render();
@@ -181,10 +218,18 @@
 
   function runAsteroidQuery(sort) {
     sort = sort || 'score';
-    var lastHovered;
+    $('#loading').show();
+
+    // Remove any old setup
+    for (var i=0; i < added_objects.length; i++) {
+      scene.remove(added_objects[i].getParticle());
+    }
+    if (lastHovered) scene.remove(lastHovered);
+
+    // Get new data points
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
       var n = data.results.rankings.length;
-      rendered_particles = [];
+      added_objects = [];
       for (var i=0; i < n; i++) {
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
@@ -203,7 +248,7 @@
           });
         })(roid, orbit, i);
         scene.add(orbit.getParticle());
-        rendered_particles.push(orbit);
+        added_objects.push(orbit);
       }
       $('#loading').hide();
     });

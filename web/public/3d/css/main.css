@@ -27,7 +27,7 @@ body {
 #controls {
   width: 100%;
   background-color: #fff;
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   padding: 5px 10px;

@@ -22,7 +22,7 @@
     var time = jed;
     var pts = []
     var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
-    var parts = 100;
+    var parts = this.eph.e > .20 ? 300 : 100;   // extra precision for high eccentricity
     var delta = Math.ceil(limit / parts);
     var prev;
     var group = new THREE.Object3D();

@@ -7,16 +7,20 @@
 		<link  href="css/main.css" rel="stylesheet"/>
 	</head>
 <body>
+    <!--
   <div id="controls">
-    Showing
     <select id="search-type">
       <option value="score">Most cost effective</option>
       <option value="price">Most valuable</option>
       <option value="closeness">Most accessible</option>
     </select>
     <input type="button" value="Update"/>
-    <input type="button" value="Toggle Movement"/>
+    <a href="#" class="js-sort" data-sort="score" style="font-weight:bold;">Most cost effective</a>
+    <a href="#" class="js-sort" data-sort="price">Most valuable</a>
+    <a href="#" class="js-sort" data-sort="closeness">Most accessible</a>
+    <input id="btn-toggle-movement" type="button" value="Toggle Movement"/>
   </div>
+    -->
 	<!-- three.js container -->
   <div id="container"></div>
 	<!-- info on screen display -->
@@ -47,6 +51,7 @@
   <script src="vendor/threex/THREEx.WindowResize.js"></script>
   <script src="vendor/threex/threex.domevent.js"></script>
   <script src="vendor/threex/threex.domevent.object3d.js"></script>
+  <script src="vendor/dat.gui.min.js"></script>
   <!--<script src="vendor/threex.dragpancontrols.js"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
   <script src="js/ephemeris.js"></script>
