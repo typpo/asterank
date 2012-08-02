@@ -12,7 +12,6 @@
 
     this.opts = opts;
     this.eph = eph;
-    this.ellipse = this.CreateOrbit(opts.jed);
     this.particle = this.CreateParticle(opts.jed);
   }
 
@@ -119,6 +118,8 @@
   }
 
   Orbit3D.prototype.getObject = function() {
+    if (!this.ellipse)
+      this.ellipse = this.CreateOrbit(this.opts.jed);
     return this.ellipse;
   }
 
