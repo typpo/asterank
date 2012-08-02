@@ -40,8 +40,10 @@ body {
   top: 0;
   padding: 5px 10px;
   font-size: 15px;
-  background-color: #fff;
+  background-color: #ccc;
   width: 75px;
+  -moz-border-radius-bottomright: 15px;
+  border-bottom-right-radius: 15px;
 }
 #caption-container {
   background-color: #000;
