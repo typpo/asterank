@@ -209,7 +209,18 @@ THREEx.DomEvent.prototype._bound	= function(eventName, object3d)
 THREEx.DomEvent.prototype._onScroll = function(e) {
   var fovMAX = 500;
   var fovMIN = 1;
-  this._camera.fov -= e.wheelDeltaY * 0.05;
+  console.log(e);
+  var delta;
+  if (!e) /* For IE. */
+    e = window.event;
+  if (e.wheelDelta) { /* IE/Opera. */
+    delta = e.wheelDelta;
+  } else if (e.detail) { /** Mozilla case. */
+    /** In Mozilla, sign of delta is different than in IE.
+     */
+    delta = -e.detail*20;
+  }
+  this._camera.fov -= delta * 0.05;
   this._camera.fov = Math.max( Math.min(this._camera.fov, fovMAX ), fovMIN );
   this._camera.projectionMatrix = new THREE.Matrix4().makePerspective(this._camera.fov, window.innerWidth / window.innerHeight, this._camera.near, this._camera.far);
 
