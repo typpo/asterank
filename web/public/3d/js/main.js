@@ -142,23 +142,23 @@
     runAsteroidQuery();
     var mercury = new Orbit3D(Ephemeris.mercury,
         {color: 0x913CEE, width: 3, jed: jed});
-    scene.add(mercury.getObject());
+    scene.add(mercury.getEllipse());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
         {color: 0xFF7733, width: 3, jed: jed});
-    scene.add(venus.getObject());
+    scene.add(venus.getEllipse());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
         {color: 0x009ACD, width: 3, jed: jed});
-    scene.add(earth.getObject());
+    scene.add(earth.getEllipse());
     scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
         {color: 0xA63A3A, width: 3, jed: jed});
-    scene.add(mars.getObject());
+    scene.add(mars.getEllipse());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {color: 0xFF7F50, width: 3, jed: jed});
-    scene.add(jupiter.getObject());
+    scene.add(jupiter.getEllipse());
     scene.add(jupiter.getParticle());
 
     planets.push.apply(planets, [mercury, venus, earth, mars, jupiter]);
@@ -243,7 +243,7 @@
         (function(roid, orbit, i) {
           orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
-            lastHovered = orbit.getObject();
+            lastHovered = orbit.getEllipse();
             scene.add(lastHovered);
             $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
             $('#other-caption').html('(ranked #' + (i+1) + ')');

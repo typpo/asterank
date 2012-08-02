@@ -35,7 +35,6 @@
 
     points = new THREE.Geometry();
     points.vertices = pts;
-    //points.mergeVertices();
 
     var line = new THREE.Line(points,
       new THREE.LineBasicMaterial({color: this.opts.color, linewidth: this.opts.width}));
@@ -48,7 +47,6 @@
     var particle = new THREE.Mesh(geometry, material);
     var pos = this.getPosAtTime(jed);
     particle.position.set(pos[0], pos[1], pos[2]);
-    //particle.position.multiplyScalar(PIXELS_PER_AU);
 
     return particle;
   }
@@ -56,7 +54,6 @@
   Orbit3D.prototype.MoveParticle = function(time_jed) {
     var pos = this.getPosAtTime(time_jed);
     this.particle.position.set(pos[0], pos[1], pos[2]);
-    //this.particle.position.multiplyScalar(PIXELS_PER_AU);
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
@@ -81,21 +78,8 @@
     //L = ma + p;
     //M =  n * -d + L - p;
     M = ma + n * -d;
-    // TODO do this smarter
-    while (M < 0) {
-      M += 2*pi;
-    }
-    while (M > 2*pi) {
-      M -= 2*pi;
-    }
 
     var sin = Math.sin, cos = Math.cos;
-    // true anomaly approximation, using Equation of Center
-    /*
-    var v = M + (2 * e - e*e*e/4) * sin(M)
-         + 5/4 * e*e * sin(2*M)
-         + 13/12 * e*e*e * sin(3*M);
-         */
     // Estimate eccentric and true anom using iterative approx
     var E0 = M;
     var lastdiff;
@@ -117,7 +101,7 @@
     return [X, Y, Z];
   }
 
-  Orbit3D.prototype.getObject = function() {
+  Orbit3D.prototype.getEllipse = function() {
     if (!this.ellipse)
       this.ellipse = this.CreateOrbit(this.opts.jed);
     return this.ellipse;
