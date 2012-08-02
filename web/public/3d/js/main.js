@@ -80,10 +80,12 @@
     document.getElementById('container').appendChild(renderer.domElement);
 
     // Set up stats
+    /*
     stats = new Stats();
     stats.domElement.style.position	= 'absolute';
     stats.domElement.style.bottom	= '0px';
     document.body.appendChild(stats.domElement);
+    */
 
     // create a scene
     scene = new THREE.Scene();
@@ -204,7 +206,7 @@
   }
 
   function update() {
-    stats.update();
+    //stats.update();
   }
 
   // render the scene
