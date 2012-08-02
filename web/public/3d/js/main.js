@@ -18,7 +18,7 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = false;
+  var camera_fly_around = true;
   var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
