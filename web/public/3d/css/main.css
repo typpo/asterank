@@ -33,6 +33,15 @@ body {
   padding: 5px 10px;
   font-size: 13px;
 }
+#backhome {
+  position: relative;
+  left: 0;
+  top: 0;
+  padding: 5px 10px;
+  font-size: 15px;
+  background-color: #fff;
+  width: 75px;
+}
 #caption-container {
   background-color: #000;
 }
