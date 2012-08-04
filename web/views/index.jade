@@ -109,7 +109,7 @@ block content
       div#footer
         div(style='margin-left: 25px;float:left;')
           h3 Notifications
-          p No spam, we'll just let you know if there is a significant algorithm improvement.
+          p No spam, we'll just let you know if significant new information is added.
           form.form-inline(action='/subscribe', method='POST', style='margin-left:20px')
             input(type='text', name='email', id='email', placeholder='email@gmail.com')
             input.btn(type='button', value='Ok')
@@ -125,9 +125,6 @@ block content
             <script type="text/javascript">stLight.options({publisher: "9fe4ccfb-848f-41c5-b33a-021a597b49bd"}); </script>
 
 
-  //
-    div#chart-title.row-fluid(style='display:none;text-align:center;')
-      h3 Value Score vs. Accessibility
   div.row-fluid(style='background-color:#000')
     div#chart-container(style='display:none;background-color:#000;padding-left:8px')
       div.span7#chart(style='height:285px;')
@@ -135,6 +132,7 @@ block content
       div#orbits-view-container(style='margin:0;position:relative')
         div.span4#orbits-view-main(style='background-color:#000;height:285px;')
         div#orbits-view-info-text(style='float:right;color:red;position:absolute;right:10px;font-weight:bold;background-color:#000;padding:0 5px 0')
+        a.btn.btn-large(style='float:right;position:absolute;right:10px;top:245px;', href='/3d') View in 3D
 
   div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
 
