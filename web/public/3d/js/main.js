@@ -39,7 +39,7 @@
 
   function initGUI() {
     var ViewUI = function() {
-      this['Most cost effective'] = function() {
+      this['Cost effective'] = function() {
         runAsteroidQuery('score');
       };
       this['Most valuable'] = function() {
@@ -54,7 +54,7 @@
     window.onload = function() {
       var text = new ViewUI();
       var gui = new dat.GUI();
-      gui.add(text, 'Most cost effective');
+      gui.add(text, 'Cost effective');
       gui.add(text, 'Most valuable');
       gui.add(text, 'Most accessible');
       gui.add(text, 'movement').onChange(function() {
