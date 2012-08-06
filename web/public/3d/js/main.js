@@ -23,6 +23,7 @@
   var lastHovered;
   var added_objects = [];
   var planets = [];
+  var planet_orbits_visible = true;
   var jed = 2451545.0;
 
   if(!init())	animate();
@@ -49,6 +50,7 @@
         runAsteroidQuery('closeness');
       };
       this.movement = object_movement_on;
+      this['planet orbits'] = planet_orbits_visible;
     };
 
     window.onload = function() {
@@ -60,7 +62,25 @@
       gui.add(text, 'movement').onChange(function() {
         object_movement_on = !object_movement_on;
       });
+      gui.add(text, 'planet orbits').onChange(function() {
+        //planet_orbits_visible = !planet_orbits_visible;
+        togglePlanetOrbits();
+      });
     };
+  }
+
+  function togglePlanetOrbits() {
+    if (planet_orbits_visible) {
+      for (var i=0; i < planets.length; i++) {
+        scene.remove(planets[i].getEllipse());
+      }
+    }
+    else {
+      for (var i=0; i < planets.length; i++) {
+        scene.add(planets[i].getEllipse());
+      }
+    }
+    planet_orbits_visible = !planet_orbits_visible;
   }
 
   // init the scene
