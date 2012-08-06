@@ -119,6 +119,7 @@
 
     window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+    THREEx.WindowResize(renderer, camera);    // handle window resize
 
     scene.add(camera);
 
