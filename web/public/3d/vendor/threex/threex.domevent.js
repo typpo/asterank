@@ -209,7 +209,6 @@ THREEx.DomEvent.prototype._bound	= function(eventName, object3d)
 THREEx.DomEvent.prototype._onScroll = function(e) {
   var fovMAX = 500;
   var fovMIN = 1;
-  console.log(e);
   var delta;
   if (!e) /* For IE. */
     e = window.event;
