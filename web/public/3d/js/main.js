@@ -139,7 +139,7 @@
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
       */
-      var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( generateSunTexture(0xfff2a1,1) ), blending: THREE.AdditiveBlending } );
+      var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( starTexture(0xfff2a1,1) ), blending: THREE.AdditiveBlending } );
       var particle = new THREE.Particle( material );
       particle.isClickable = false;
       scene.add(particle);
@@ -273,27 +273,19 @@
     });
   }
 
-  function generateSunTexture(color, size) {
+  function starTexture(color, size) {
     var size = (size) ? parseInt(size*24) : 24;
     var canvas = document.createElement( 'canvas' );
     canvas.width = size;
     canvas.height = size;
     var col = new THREE.Color(color);
-    console.log(col);
 
     var context = canvas.getContext( '2d' );
     var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
     var rgbaString = 'rgba(' + ~~ ( col.r * 255 ) + ',' + ~~ ( col.g * 255 ) + ',' + ~~ ( col.b * 255 ) + ',' + (1) + ')';
-    console.log(rgbaString);
     gradient.addColorStop( 0, rgbaString);
     gradient.addColorStop( 0.1, rgbaString);
     gradient.addColorStop( 0.6, 'rgba(125, 20, 0, 0.2)' );
-    /*
-    if (showShell) {
-      gradient.addColorStop( 0.88, 'rgba(0, 20, 0, 1)' );
-      gradient.addColorStop( 0.9, 'rgba(255, 255, 255, 0.2)' );
-    }
-    */
     gradient.addColorStop( .92, 'rgba(0,0,0,0)' );
     context.fillStyle = gradient;
     context.fillRect( 0, 0, canvas.width, canvas.height );
