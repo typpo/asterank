@@ -118,6 +118,7 @@
 
     window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
+    THREEx.WindowResize(renderer, camera);    // handle window resize
 
     scene.add(camera);
 
@@ -133,18 +134,14 @@
     (function() {
       var geometry= new THREE.SphereGeometry(1);
       var material= new THREE.MeshBasicMaterial({color: 0xffee00});
-/*
-      var sprite = sprite = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
-      var material = new THREE.ParticleBasicMaterial({
-        map: sprite,
-          blending: THREE.AdditiveBlending,
-          depthTest: false,
-          sizeAttenuation: false,
-          vertexColors: true
-      });
-*/
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
+      /*
+      var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( starTexture(0xfff2a1,1) ), blending: THREE.AdditiveBlending } );
+      var particle = new THREE.Particle( material );
+      particle.isClickable = false;
+      scene.add(particle);
+      */
     })();
 
     /*
@@ -160,23 +157,23 @@
     // Ellipses
     runAsteroidQuery();
     var mercury = new Orbit3D(Ephemeris.mercury,
-        {color: 0x913CEE, width: 3, jed: jed});
+        {color: 0x913CEE, width: 1, jed: jed});
     scene.add(mercury.getEllipse());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
-        {color: 0xFF7733, width: 3, jed: jed});
+        {color: 0xFF7733, width: 1, jed: jed});
     scene.add(venus.getEllipse());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
-        {color: 0x009ACD, width: 3, jed: jed});
+        {color: 0x009ACD, width: 1, jed: jed});
     scene.add(earth.getEllipse());
     scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
-        {color: 0xA63A3A, width: 3, jed: jed});
+        {color: 0xA63A3A, width: 1, jed: jed});
     scene.add(mars.getEllipse());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
-        {color: 0xFF7F50, width: 3, jed: jed});
+        {color: 0xFF7F50, width: 1, jed: jed});
     scene.add(jupiter.getEllipse());
     scene.add(jupiter.getParticle());
 
@@ -273,6 +270,25 @@
       }
       $('#loading').hide();
     });
+  }
+
+  function starTexture(color, size) {
+    var size = (size) ? parseInt(size*24) : 24;
+    var canvas = document.createElement( 'canvas' );
+    canvas.width = size;
+    canvas.height = size;
+    var col = new THREE.Color(color);
+
+    var context = canvas.getContext( '2d' );
+    var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
+    var rgbaString = 'rgba(' + ~~ ( col.r * 255 ) + ',' + ~~ ( col.g * 255 ) + ',' + ~~ ( col.b * 255 ) + ',' + (1) + ')';
+    gradient.addColorStop( 0, rgbaString);
+    gradient.addColorStop( 0.1, rgbaString);
+    gradient.addColorStop( 0.6, 'rgba(125, 20, 0, 0.2)' );
+    gradient.addColorStop( .92, 'rgba(0,0,0,0)' );
+    context.fillStyle = gradient;
+    context.fillRect( 0, 0, canvas.width, canvas.height );
+    return canvas;
   }
 })();
 
