@@ -133,16 +133,16 @@
 
     // "sun" - 0,0 marker
     (function() {
-      /*
       var geometry= new THREE.SphereGeometry(1);
       var material= new THREE.MeshBasicMaterial({color: 0xffee00});
       var mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
-      */
+      /*
       var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( starTexture(0xfff2a1,1) ), blending: THREE.AdditiveBlending } );
       var particle = new THREE.Particle( material );
       particle.isClickable = false;
       scene.add(particle);
+      */
     })();
 
     /*
