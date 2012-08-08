@@ -122,7 +122,7 @@
 
     scene.add(camera);
 
-    cameraControls	= new THREE.TrackballControls(camera)
+    cameraControls	= new THREE.TrackballControlsX(camera)
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;

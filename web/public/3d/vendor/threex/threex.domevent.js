@@ -86,7 +86,7 @@ THREEx.DomEvent	= function(camera, domElement)
 	this._$onTouchMove	= function(){ _this._onTouchMove.apply(_this, arguments);	};
 	this._$onTouchStart	= function(){ _this._onTouchStart.apply(_this, arguments);	};
 	this._$onTouchEnd	= function(){ _this._onTouchEnd.apply(_this, arguments);	};
-	this._$onScroll = function(){ _this._onScroll.apply(_this, arguments);	};
+	//this._$onScroll = function(){ _this._onScroll.apply(_this, arguments);	};
 	this._domElement.addEventListener( 'click'	, this._$onClick	, false );
 	this._domElement.addEventListener( 'dblclick'	, this._$onDblClick	, false );
 	this._domElement.addEventListener( 'mousemove'	, this._$onMouseMove	, false );
@@ -96,12 +96,14 @@ THREEx.DomEvent	= function(camera, domElement)
 	this._domElement.addEventListener( 'touchstart'	, this._$onTouchStart	, false );
 	this._domElement.addEventListener( 'touchend'	, this._$onTouchEnd	, false );
 
+  /*
     //adding the event listerner for Mozilla
     if(window.addEventListener)
         this._domElement.addEventListener('DOMMouseScroll', this._$onScroll, false);
 
     //for IE/OPERA etc
     this._domElement.onmousewheel = this._$onScroll;
+    */
 }
 
 // # Destructor
@@ -207,8 +209,8 @@ THREEx.DomEvent.prototype._bound	= function(eventName, object3d)
 }
 
 THREEx.DomEvent.prototype._onScroll = function(e) {
-  var fovMAX = 500;
-  var fovMIN = 1;
+  var fovMAX = 300;
+  var fovMIN = 40;
   var delta;
   if (!e) /* For IE. */
     e = window.event;
@@ -219,9 +221,12 @@ THREEx.DomEvent.prototype._onScroll = function(e) {
      */
     delta = -e.detail*20;
   }
-  this._camera.fov -= delta * 0.05;
-  this._camera.fov = Math.max( Math.min(this._camera.fov, fovMAX ), fovMIN );
-  this._camera.projectionMatrix = new THREE.Matrix4().makePerspective(this._camera.fov, window.innerWidth / window.innerHeight, this._camera.near, this._camera.far);
+  //this._camera.fov -= delta * 0.05;
+  //this._camera.fov = Math.max( Math.min(this._camera.fov, fovMAX ), fovMIN );
+  //this._camera.projectionMatrix = new THREE.Matrix4().makePerspective(this._camera.fov, window.innerWidth / window.innerHeight, this._camera.near, this._camera.far);
+
+  //this._camera.multiplyScalar(delta);
+
 
   return true;
 }
