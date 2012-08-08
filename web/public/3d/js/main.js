@@ -63,7 +63,6 @@
         object_movement_on = !object_movement_on;
       });
       gui.add(text, 'planet orbits').onChange(function() {
-        //planet_orbits_visible = !planet_orbits_visible;
         togglePlanetOrbits();
       });
     };
