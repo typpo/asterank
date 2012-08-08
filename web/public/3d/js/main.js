@@ -132,16 +132,38 @@
 
     // "sun" - 0,0 marker
     (function() {
-      var geometry= new THREE.SphereGeometry(1);
-      var material= new THREE.MeshBasicMaterial({color: 0xffee00});
-      var mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-      /*
-      var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture( starTexture(0xfff2a1,1) ), blending: THREE.AdditiveBlending } );
-      var particle = new THREE.Particle( material );
-      particle.isClickable = false;
-      scene.add(particle);
-      */
+
+      if (using_webgl) {
+        /*
+           var geometry= new THREE.SphereGeometry(1);
+           var material= new THREE.MeshBasicMaterial({color: 0xffee00});
+           var mesh = new THREE.Mesh(geometry, material);
+           scene.add(mesh);
+           */
+        var sun = new THREE.Object3D();
+        var texture = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
+        var sprite = new THREE.Sprite({
+          map: texture,
+            useScreenCoordinates: false,
+            color: 0xffffff
+        });
+        sprite.scale.x = .1;
+        sprite.scale.y = .1;
+        sprite.scale.z = .1;
+        sprite.color.setHSV(1.0, 0.0, 1.0);
+        sprite.blending = THREE.AdditiveBlending;
+        sun.add(sprite);
+        scene.add(sun);
+      }
+      else {
+        var material = new THREE.ParticleBasicMaterial({
+          map: new THREE.Texture( starTexture(0xfff2a1,1) ),
+          blending: THREE.AdditiveBlending
+        });
+        var particle = new THREE.Particle(material);
+        particle.isClickable = false;
+        scene.add(particle);
+      }
     })();
 
     /*
