@@ -19,6 +19,7 @@ window.Asterank = (function() {
       $('.exptip').tooltip();
       $('#submit').on('click', function() {
         me.search();
+        return false;
       });
       $(document).on('click', '#tbl tbody tr', function() {
         me.handleTableClick($(this));
