@@ -1,5 +1,8 @@
 var sendmail = require('sendmail').sendmail;
 
+/**
+ * Sends mail to me!
+ */
 function mail(text) {
   sendmail({
       from: 'feedback@asterank.com',
