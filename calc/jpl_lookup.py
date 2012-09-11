@@ -29,7 +29,7 @@ class Asteroid:
 
     self.data['Inclination (deg)'] = r.orbitalParameter('i')
     #self.data['Passage (JED)'] = r.orbitalParameter('t')
-    self.data['Perhilion (AU)'] = r.orbitalParameter('q')
+    self.data['Perihelion (AU)'] = r.orbitalParameter('q')
     self.data['Aphelion (AU)'] = r.orbitalParameter('Q')
     self.data['Semi-major Axis (AU)'] = r.orbitalParameter('a')
     self.data['Period (days)'] = r.orbitalParameter('period')
