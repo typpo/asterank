@@ -202,6 +202,38 @@ block content
 
   div#other-footer-container
 
+  div#custom-sort-modal.modal(style='display:none;')
+    div.modal-header
+      a.close(data-dismiss='modal') ×
+      h2 Custom Sort
+    div.modal-body
+      p Enter your custom sorting algorithm.  This weighting function is applied to every asteroid in a result set.  You may code in JavaScript, which will allow you to debug your algorithm user your browser's built-in console.
+      p Variables at your disposal are:
+        ul
+          li spec - spectral type
+          li GM - standard gravitational parameter (m<sup>3</sup>s<sup>−2</sup>)
+          li moid - minimum earth intersect distance (AU)
+          li neo
+          li pha
+          li diameter
+          li dv
+          li a
+          li e
+          li q
+          li w
+          li i
+          li om
+          li ma
+          li n
+          li epoch
+          li tp
+          li per
+      p
+        textarea#algo.xlarge(rows=5, cols=80, style='width:500px')
+    div.modal-footer
+      a#submit-custom-sort.btn.btn-primary(data-dismiss='modal') Submit
+      a.btn(data-dismiss='modal') Close
+
   div#feedback-modal.modal(style='display:none;')
     div.modal-header
       a.close(data-dismiss='modal') ×

@@ -13,6 +13,7 @@ window.Asterank = (function() {
   var AsteroidOrbitRenderer = null;
 
   function Asterank() {
+    $('#custom-sort-modal').modal();
     var me = this;
     $(function() {
       isMobile = $(window).width() < 800; //!navigator.userAgent.match(/(iPhone|iPod|Android|BlackBerry)/)
