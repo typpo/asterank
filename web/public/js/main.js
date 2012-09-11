@@ -2,7 +2,7 @@ window.Asterank = (function() {
   "use strict";
 
   var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
-    /*'a', 'q', 'moid',*/ 'dv', 'pha'];
+    'dv', 'pha'];
   var FUZZY_FIELDS = ['price', 'saved', 'profit'];
   var CLOSE_APPROACHES_FIELD = 'Close Approaches';
   var NEXT_PASS_FIELD = 'Next Pass';
