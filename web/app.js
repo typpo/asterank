@@ -30,6 +30,7 @@ BundleUp(app, __dirname + '/assets', {
 // Routing
 
 app.get('/', function(req, res) {
+  // homepage with special args and top ranking data
   lookup.homepage(function(err, summary_result) {
     renderWithContext(res, 'index', {
       nosocial: req.query.nosocial !== undefined,
@@ -38,19 +39,18 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/universe', function(req, res) {
-  renderWithContext(res, '3d');
-});
-
 app.get('/about', function(req, res) {
+  // about page
   renderWithContext(res, 'about');
 });
 
 app.get('/feedback', function(req, res) {
+  // serve feedback form
   renderWithContext(res, 'feedback');
 });
 
 app.post('/feedback', function(req, res) {
+  // process feedback form
   var email = req.body.email;
   var feedback = req.body.feedback;
   mailer.mail(email + ':\r\n' + feedback);
@@ -58,6 +58,7 @@ app.post('/feedback', function(req, res) {
 });
 
 app.get('/top', function(req, res) {
+  // gets top n asteroids for a given sort system
   var num = parseInt(req.query.n);
   if (isNaN(num) || typeof num !== 'number')
     num = 100;
@@ -71,6 +72,7 @@ app.get('/top', function(req, res) {
 });
 
 app.get('/summary', function(req, res) {
+  // Homepage result summary
   lookup.homepage(function(err, result) {
     res.send(result);
   });
@@ -78,28 +80,33 @@ app.get('/summary', function(req, res) {
 });
 
 app.get('/count', function(req, res) {
+  // Number of 'roids in the db
   lookup.count(num, function(err, result) {
     res.send({n: result});
   });
 });
 
 app.get('/info/:query', function(req, res) {
+  // Query info on a specific asteroid
   lookup.query(req.params.query, function(err, result) {
     res.send({data: result});
   });
 });
 
 app.get('/search/:q', function(req, res) {
+  // Placeholder: search database for any asteroid
   res.send('');
 });
 
 app.post('/subscribe', function(req, res) {
+  // Mail me to subscribe
   var email = req.body.email;
   mailer.mail('subscribe ' + email);
   res.redirect('/');
 });
 
 function renderWithContext(res, template, obj) {
+  // Add a global context to all templates
   if (!obj) obj = {};
   obj.context = {
     layout: 'layout',

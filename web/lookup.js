@@ -5,6 +5,9 @@ var Mongolian = require('mongolian')
   , exec = require('child_process').exec
   , shared_util = require('./shared_util.js')
 
+/**
+* Accepted sort fields for top N rankings
+*/
 var VALID_SORT_FIELDS = {
   score: -1,
   price: -1,
@@ -15,7 +18,14 @@ var VALID_SORT_FIELDS = {
 
 var HOMEPAGE_CACHE_ENABLED = true;
 
-var homepage_summary_result;
+var homepage_summary_result;  // cache of summary results
+
+/**
+ * Grabs the 'top rankings' data for display on the homepage.
+ * Lazily cache.
+ *
+ * @param {function} callback passed err, results
+ */
 function homepage(cb) {
   if (HOMEPAGE_CACHE_ENABLED && homepage_summary_result) {
     // poor man's cache
@@ -51,6 +61,12 @@ function homepage(cb) {
   });
 }
 
+/**
+ * Returns upcoming passes
+ *
+ * @param {number} number of results to return
+ * @param {function} callback
+ */
 function upcomingPasses(num, cb) {
   var db = new Mongolian('localhost/asterank');
   var coll = db.collection('jpl');
@@ -69,6 +85,13 @@ function upcomingPasses(num, cb) {
   });
 }
 
+/**
+ * Returns the top results based on given ranking parameters.
+ *
+ * @param {object} parameters for search.
+ *  Valid parameters: sort, n, include_3d_vars
+ * @param {function} callback
+ */
 function topN(opts, cb) {
   opts = opts || {};
   opts.sort = opts.sort || 'score';
@@ -121,6 +144,11 @@ function topN(opts, cb) {
   });
 }
 
+/**
+ * Total number of asteroids
+ *
+ * @param {function} callback
+ */
 function count(cb) {
   var db = new Mongolian('localhost/asterank');
   var coll = db.collection('asteroids');
@@ -133,8 +161,15 @@ function count(cb) {
   });
 }
 
+/**
+ * JPL query.  Checks the JPL cache and scrapes JPL if necessary.
+ *
+ * @param {string} query to search for
+ * @param {function} callback
+ */
 function query(query, cb) {
-  // Validate - this stuff will be exec'ed. Should switch to spawn.
+  // Validate - this stuff will be exec'ed. This is probably a bad idea.
+  // TODO Should switch to using spawn.
   if (!/^[A-Za-z0-9 ]+$/.test(query)) {
     cb(true, null);
     return;
