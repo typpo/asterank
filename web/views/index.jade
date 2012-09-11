@@ -136,7 +136,8 @@ block content
         div#orbits-view-info-text(style='float:right;color:red;position:absolute;right:10px;font-weight:bold;background-color:#000;padding:0 5px 0')
         a.btn.btn-large(style='float:right;position:absolute;right:10px;top:245px;', href='/3d') View in 3D
 
-  div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
+  div#tbl-spacer.row-fluid(style='display:none;text-align:right;height:30px;padding-top:4px;')
+    a#show-custom-sort-modal(href='#') Customize ranking algorithm
 
   div#results.row-fluid(style='display:none;')
     div.span3
@@ -207,13 +208,10 @@ block content
       a.close(data-dismiss='modal') ×
       h2 Custom Sort
     div.modal-body
-      p Enter your custom sorting algorithm.  This weighting function is applied to every asteroid in a result set.  You may code in JavaScript, which will allow you to debug your algorithm using your browser's built-in console.
+      p Enter your custom sorting algorithm.  This weighting function is applied to every asteroid in a result set.
       p
-        textarea#algo.xlarge(rows=5, cols=80, style='width:500px')
-          | var result = moid * dv * a;
-          | if (i > 0.2)
-          |   result *= 0.5;
-          | return result;
+        textarea#custom-expr.xlarge(rows=5, cols=80, style='width:500px')
+          | sqrt(moid * dv * a^2)
       p Variables at your disposal are:
         ul
           li spec - spectral type
