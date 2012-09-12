@@ -258,10 +258,11 @@ window.Asterank = (function() {
     console.log(lastResults[0]);
     var results = _.map(lastResults, function(a) {
       a.score = Parser.evaluate(expr, {
-        GM: a.GM,
+        GM: a.GM == "" ? 0 : a.GM,
         a: a.a,
         diameter: a.diameter,
         e: a.e,
+        i: a.i,
         moid: a.moid,
         neo: a.neo === 'Y' ? 1 : 0,
         pha: a.pha === 'Y' ? 1 : 0,
