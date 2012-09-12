@@ -13,18 +13,20 @@
   })();
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 40;
+  var MAX_NUM_ORBITS = 100;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = true;
+  var camera_fly_around = false;
   var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
   var planets = [];
   var planet_orbits_visible = true;
   var jed = 2451545.0;
+  var particle_system_geometry = null;
+  var asteroids_loaded = false;
 
   if(!init())	animate();
   initGUI();
@@ -222,8 +224,16 @@
   }
 
   // animation loop
+  var works = [];
+  var worker_path = '/3d/js/position_worker.js';
+  var workers = [
+    new Worker(worker_path)
+    , new Worker(worker_path)
+    , new Worker(worker_path)
+    , new Worker(worker_path)
+  ];
+  var workers_initialized = false;
   function animate() {
-    update();
     if (camera_fly_around) {
       var timer = 0.0001 * Date.now();
       cam.position.x = Math.cos( timer ) * 50;
@@ -231,20 +241,44 @@
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
     if (object_movement_on) {
-      jed += .5;
+      jed += 1.5//.5;
       for (var i=0; i < planets.length; i++) {
         planets[i].MoveParticle(jed);
       }
+
+      if (!asteroids_loaded) return;
+
+      if (!workers_initialized) {
+        var l = added_objects.length;
+        works[0] = added_objects.slice(0, l / 4)
+          , works[1] = added_objects.slice(l / 4, l / 2)
+          , works[2] = added_objects.slice(l / 2, l * 3 / 4)
+          , works[3] = added_objects.slice(l * 3 / 4)
+        workers_initialized = true;
+      }
+
+      for (var i=0; i < workers.length; i++) {
+        // trigger work
+        workers[i].postMessage({
+          particles: works[i],
+          jed: jed
+        });
+      }
+
+      /*
       for (var i=0; i < added_objects.length; i++) {
         added_objects[i].MoveParticle(jed);
       }
+      */
+
+      if (jed >= 2451910.25) {
+        jed = 2451545.0;
+      }
     }
+    if (particle_system_geometry)
+      particle_system_geometry.__dirtyVertices = true;
     render();
     requestAnimationFrame(animate);
-  }
-
-  function update() {
-    //stats.update();
   }
 
   // render the scene
@@ -270,14 +304,18 @@
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
       var n = data.results.rankings.length;
       added_objects = [];
+      particle_system_geometry = new THREE.Geometry();
+
       for (var i=0; i < n; i++) {
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
           width:2,
-          object_size:1,
-          jed: jed
+          object_size: 0.75,
+          jed: jed,
+          particle_geometry: particle_system_geometry
         }, scene);
+        /*
         (function(roid, orbit, i) {
           orbit.getParticle().on('mouseover', function(e) {
             if (lastHovered) scene.remove(lastHovered);
@@ -287,9 +325,26 @@
             $('#other-caption').html('(ranked #' + (i+1) + ')');
           });
         })(roid, orbit, i);
-        scene.add(orbit.getParticle());
+        */
+        //scene.add(orbit.getParticle());
         added_objects.push(orbit);
       }
+
+      // done loading
+      var particle_system_material = new THREE.ParticleBasicMaterial({
+          color: 0xffffff,
+          size: 1
+        });
+      var particleSystem = new THREE.ParticleSystem(
+        particle_system_geometry,
+        particle_system_material
+      );
+
+      // add it to the scene
+      particleSystem.sortParticles = true;
+      scene.add(particleSystem);
+      asteroids_loaded = true;
+
       $('#loading').hide();
     });
   }

@@ -12,6 +12,8 @@
 
     this.opts = opts;
     this.eph = eph;
+    this.particle_geometry = opts.particle_geometry;
+    this.pos_cache = {};
     this.particle = this.CreateParticle(opts.jed);
   }
 
@@ -42,22 +44,42 @@
   }
 
   Orbit3D.prototype.CreateParticle = function(jed) {
+    var pos = this.getPosAtTime(jed);
+    /*
     var geometry= new THREE.SphereGeometry(this.opts.object_size);
     var material= new THREE.MeshBasicMaterial({color: this.opts.color});
     var particle = new THREE.Mesh(geometry, material);
-    var pos = this.getPosAtTime(jed);
     particle.position.set(pos[0], pos[1], pos[2]);
+    */
 
-    return particle;
+    if (this.particle_geometry) {
+      this.farticle = new THREE.Vector3(
+        pos[0], pos[1], pos[2]
+      );
+      // add it to the geometry
+      this.vertex_pos = this.particle_geometry.vertices.length;
+      this.particle_geometry.vertices.push(this.farticle);
+    }
+
+    //return particle;
   }
 
   Orbit3D.prototype.MoveParticle = function(time_jed) {
     var pos = this.getPosAtTime(time_jed);
-    this.particle.position.set(pos[0], pos[1], pos[2]);
+    //this.particle.position.set(pos[0], pos[1], pos[2]);
+    if (this.farticle) {
+      var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
+      vertex_particle.x = pos[0];
+      vertex_particle.y = pos[1];
+      vertex_particle.z = pos[2];
+    }
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
-    //jed = jed || 2451545.0; // 2000 Jan 1.5
+    if (jed in this.pos_cache) {
+      return this.pos_cache[jed];
+    }
+
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
@@ -98,7 +120,9 @@
     var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
     var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
-    return [X, Y, Z];
+    var ret = [X, Y, Z];
+    this.pos_cache[jed] = ret;
+    return ret;
   }
 
   Orbit3D.prototype.getEllipse = function() {
