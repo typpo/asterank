@@ -12,6 +12,7 @@
             };
   })();
 
+
   var WEB_GL_ENABLED = true;
   var MAX_NUM_ORBITS = 100;
   var stats, scene, renderer, composer;
@@ -226,12 +227,14 @@
   // animation loop
   var works = [];
   var worker_path = '/3d/js/position_worker.js';
+  /*
   var workers = [
     new Worker(worker_path)
     , new Worker(worker_path)
     , new Worker(worker_path)
     , new Worker(worker_path)
   ];
+  */
   var workers_initialized = false;
   function animate() {
     if (camera_fly_around) {
@@ -274,11 +277,11 @@
       if (jed >= 2451910.25) {
         jed = 2451545.0;
       }
+      if (particle_system_geometry)
+        particle_system_geometry.__dirtyVertices = true;
     }
-    if (particle_system_geometry)
-      particle_system_geometry.__dirtyVertices = true;
     render();
-    requestAnimationFrame(animate);
+    requestAnim(animate);
   }
 
   // render the scene
