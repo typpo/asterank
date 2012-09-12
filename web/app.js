@@ -24,7 +24,7 @@ BundleUp(app, __dirname + '/assets', {
   staticUrlRoot: '/',
   bundle: IS_PRODUCTION,
   minifyCss: false,
-  minifyJs:true
+  minifyJs: true,
 });
 
 // Routing

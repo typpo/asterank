@@ -2,7 +2,7 @@ window.Asterank = (function() {
   "use strict";
 
   var HEADERS = ['full_name', 'score', 'price', 'profit', 'closeness', 'spec_B',
-    /*'a', 'q', 'moid',*/ 'dv', 'pha'];
+    'dv', 'pha'];
   var FUZZY_FIELDS = ['price', 'saved', 'profit'];
   var CLOSE_APPROACHES_FIELD = 'Close Approaches';
   var NEXT_PASS_FIELD = 'Next Pass';
@@ -20,6 +20,17 @@ window.Asterank = (function() {
       $('#submit').on('click', function() {
         me.search();
         return false;
+      });
+      $('#show-custom-sort-modal').on('click', function() {
+        $('#custom-sort-modal').modal();
+        return false;
+      })
+      $('#custom-sort-modal').on('hidden', function() {
+        var expr = $('#custom-expr').val();
+        lastResults = me.applyCustomSort(expr);
+        // rerender with newly sorted results
+        me.renderMainTable(null, lastResults.length);
+
       });
       $(document).on('click', '#tbl tbody tr', function() {
         me.handleTableClick($(this));
