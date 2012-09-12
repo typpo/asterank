@@ -32,8 +32,7 @@ block content
               option(value=100) 100
               option(value=500) 500
               option(value=1000) 1,000
-              option(value=5000) 5,000
-              option(value=10000) 10,000+
+              option(value=5000) 5,000+
             span  asteroids sorted by
             select#top_sort(style='margin:0 5px 0').input-xlarge
               option(value='profit') profit
@@ -208,10 +207,10 @@ block content
       a.close(data-dismiss='modal') ×
       h2 Custom Sort
     div.modal-body
-      p Enter your custom sorting algorithm.  This weighting function is used to compute the score of asteroids in your result set.
+      p Enter your custom sorting algorithm.  This weighting function is used to compute the score of asteroids in your result set.  Note that in order to update the graph, your function should return values high enough to be shown on a log scale.
       p
         textarea#custom-expr.xlarge(rows=5, cols=80, style='width:500px')
-          | sqrt(moid * dv * a^2)
+          | sqrt(moid * dv * a^2) + 42
       p Variables at your disposal are:
         ul
           li a - semi-major axis (AU)
@@ -228,9 +227,11 @@ block content
           li dv - delta-v, earth to asteroid (km/s)
           li epoch - epoch (JED)
           li per - period (days)
-          li neo - near earth object?  (true/false)
-          li pha - potentially hazardous object?  (true/false)
-          li tp - ?
+          li neo - near earth object?  (0/1)
+          li pha - potentially hazardous object?  (0/1)
+          li closeness - closeness/accessibility score
+          li profit - profit score
+          li price - price score
     div.modal-footer
       a#submit-custom-sort.btn.btn-primary(data-dismiss='modal') Submit
       a.btn(data-dismiss='modal') Close

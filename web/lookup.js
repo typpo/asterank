@@ -118,9 +118,10 @@ function topN(opts, cb) {
         'closeness', 'GM', 'spec_B', 'full_name',
         'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
         'prov_des', 'w', ];
-      if (opts.include_3d_vars) {
+      //if (opts.include_3d_vars) {
+      // Always include, now
         args.push.apply(args, ['i', 'om', 'ma', 'n', 'epoch','tp', 'per']);
-      }
+      //}
       var ret = _.pick.apply(this, args);
       ret.fuzzed_price = shared_util.toFuzz(ret.price);
       return ret;

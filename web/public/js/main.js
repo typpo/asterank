@@ -270,6 +270,13 @@ window.Asterank = (function() {
         price: a.price,
         profit: a.profit,
         closeness: a.closeness,
+        om: a.om,
+        ma: a.ma,
+        n: a.n,
+        per: a.per,
+        dv: a.dv || 6.5, // default dv
+        eopch: a.epoch
+        // tp?
       });
       return a;
     });
