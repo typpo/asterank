@@ -255,7 +255,7 @@ window.Asterank = (function() {
   }
 
   Asterank.prototype.applyCustomSort = function(expr) {
-    console.log(lastResults[0]);
+    mixpanel.track('custom sort', {expr: expr});
     var results = _.map(lastResults, function(a) {
       a.score = Parser.evaluate(expr, {
         GM: a.GM == "" ? 0 : a.GM,
