@@ -14,6 +14,7 @@ module.exports = function(assets) {
   assets.addJs('/public/js/orbits_view.js', 'main');
   assets.addJs('/public/js/lib/jquery.thfloat.min.js', 'main');
   assets.addJs('/public/js/lib/flotr2.js', 'main');
+  assets.addJs('/public/js/lib/parser.js', 'main');
 
   /* Orbits assets */
   assets.addJs('/public/js/orbits_view.js', 'orbits-view');

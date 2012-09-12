@@ -32,8 +32,7 @@ block content
               option(value=100) 100
               option(value=500) 500
               option(value=1000) 1,000
-              option(value=5000) 5,000
-              option(value=10000) 10,000+
+              option(value=5000) 5,000+
             span  asteroids sorted by
             select#top_sort(style='margin:0 5px 0').input-xlarge
               option(value='profit') profit
@@ -136,7 +135,8 @@ block content
         div#orbits-view-info-text(style='float:right;color:red;position:absolute;right:10px;font-weight:bold;background-color:#000;padding:0 5px 0')
         a.btn.btn-large(style='float:right;position:absolute;right:10px;top:245px;', href='/3d') View in 3D
 
-  div#tbl-spacer.row-fluid(style='display:none;text-align:center;height:30px')
+  div#tbl-spacer.row-fluid(style='display:none;text-align:right;height:30px;padding-top:4px;')
+    a#show-custom-sort-modal(href='#') Customize ranking algorithm
 
   div#results.row-fluid(style='display:none;')
     div.span3
@@ -201,6 +201,40 @@ block content
       a(href='#', onClick="$('#legend-modal').modal();return false;") Explain field names
 
   div#other-footer-container
+
+  div#custom-sort-modal.modal(style='display:none;')
+    div.modal-header
+      a.close(data-dismiss='modal') ×
+      h2 Custom Sort
+    div.modal-body
+      p Enter your custom sorting algorithm.  This weighting function is used to compute the score of asteroids in your result set.  Note that in order to update the graph, your function should return values high enough to be shown on a log scale.
+      p
+        textarea#custom-expr.xlarge(rows=5, cols=80, style='width:500px')
+          | sqrt(moid * dv * a^2) + 42
+      p Variables at your disposal are:
+        ul
+          li a - semi-major axis (AU)
+          li e - orbital eccentricity
+          li q - perhelion (AU)
+          li w - longitude of perihelion (deg)
+          li i - inclination (deg)
+          li om - longitude of ascending node (deg)
+          li ma - mean anomaly (at epoch)
+          li n - mean motion (deg)
+          li moid - minimum earth intersect distance (AU)
+          li GM - standard gravitational parameter (m<sup>3</sup>s<sup>−2</sup>)
+          li diameter - diameter (km)
+          li dv - delta-v, earth to asteroid (km/s)
+          li epoch - epoch (JED)
+          li per - period (days)
+          li neo - near earth object?  (0/1)
+          li pha - potentially hazardous object?  (0/1)
+          li closeness - closeness/accessibility score
+          li profit - profit score
+          li price - price score
+    div.modal-footer
+      a#submit-custom-sort.btn.btn-primary(data-dismiss='modal') Submit
+      a.btn(data-dismiss='modal') Close
 
   div#feedback-modal.modal(style='display:none;')
     div.modal-header
