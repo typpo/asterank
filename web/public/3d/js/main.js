@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 100;
+  var MAX_NUM_ORBITS = 10;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -249,39 +249,41 @@
         planets[i].MoveParticle(jed);
       }
 
-      if (!asteroids_loaded) return;
+      if (asteroids_loaded) {
+        if (!workers_initialized) {
+          var l = added_objects.length;
+          works[0] = added_objects.slice(0, l / 4)
+            , works[1] = added_objects.slice(l / 4, l / 2)
+            , works[2] = added_objects.slice(l / 2, l * 3 / 4)
+            , works[3] = added_objects.slice(l * 3 / 4)
+          workers_initialized = true;
+        }
 
-      if (!workers_initialized) {
-        var l = added_objects.length;
-        works[0] = added_objects.slice(0, l / 4)
-          , works[1] = added_objects.slice(l / 4, l / 2)
-          , works[2] = added_objects.slice(l / 2, l * 3 / 4)
-          , works[3] = added_objects.slice(l * 3 / 4)
-        workers_initialized = true;
-      }
+          /*
+        for (var i=0; i < workers.length; i++) {
+          // trigger work
+          workers[i].postMessage({
+            particles: works[i],
+            jed: jed
+          });
+        }
+          */
 
-      for (var i=0; i < workers.length; i++) {
-        // trigger work
-        workers[i].postMessage({
-          particles: works[i],
-          jed: jed
-        });
-      }
+        /*
+        for (var i=0; i < added_objects.length; i++) {
+          added_objects[i].MoveParticle(jed);
+        }
+        */
 
-      /*
-      for (var i=0; i < added_objects.length; i++) {
-        added_objects[i].MoveParticle(jed);
+        if (jed >= 2451910.25) {
+          jed = 2451545.0;
+        }
+        if (particle_system_geometry)
+          particle_system_geometry.__dirtyVertices = true;
       }
-      */
-
-      if (jed >= 2451910.25) {
-        jed = 2451545.0;
-      }
-      if (particle_system_geometry)
-        particle_system_geometry.__dirtyVertices = true;
     }
     render();
-    requestAnim(animate);
+    requestAnimFrame(animate);
   }
 
   // render the scene
@@ -345,6 +347,7 @@
 
       // add it to the scene
       particleSystem.sortParticles = true;
+      console.log(particleSystem);
       scene.add(particleSystem);
       asteroids_loaded = true;
 
