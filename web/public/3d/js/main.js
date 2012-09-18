@@ -227,14 +227,7 @@
   // animation loop
   var works = [];
   var worker_path = '/3d/js/position_worker.js';
-  /*
-  var workers = [
-    new Worker(worker_path)
-    , new Worker(worker_path)
-    , new Worker(worker_path)
-    , new Worker(worker_path)
-  ];
-  */
+  var workers = null;
   var workers_initialized = false;
   function animate() {
     if (camera_fly_around) {
@@ -256,18 +249,33 @@
             , works[1] = added_objects.slice(l / 4, l / 2)
             , works[2] = added_objects.slice(l / 2, l * 3 / 4)
             , works[3] = added_objects.slice(l * 3 / 4)
+
+          workers = [new Worker(worker_path)
+            , new Worker(worker_path)
+            , new Worker(worker_path)
+            , new Worker(worker_path)
+          ];
+
+          for (var i=0; i < workers.length; i++) {
+            workers[i].onmessage = function(e) {
+              var data = e.data;
+              if (data.type === 'debug') {
+                console.log(data.value);
+              }
+            }
+          }
+
           workers_initialized = true;
         }
 
-          /*
         for (var i=0; i < workers.length; i++) {
           // trigger work
+          console.log('werk', works[i]);
           workers[i].postMessage({
             particles: works[i],
             jed: jed
           });
         }
-          */
 
         /*
         for (var i=0; i < added_objects.length; i++) {
