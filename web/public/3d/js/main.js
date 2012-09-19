@@ -29,6 +29,13 @@
   var particle_system_geometry = null;
   var asteroids_loaded = false;
 
+  // workers stuff
+  var works = [];
+  var workers = [];
+  var NUM_WORKERS = 1;
+  var worker_path = '/3d/js/position_worker.js';
+  var workers_initialized = false;
+
   if(!init())	animate();
   initGUI();
 
@@ -225,11 +232,6 @@
   }
 
   // animation loop
-  var works = [];
-  var workers = [];
-  var NUM_WORKERS = 10;
-  var worker_path = '/3d/js/position_worker.js';
-  var workers_initialized = false;
   function animate() {
     if (camera_fly_around) {
       var timer = 0.0001 * Date.now();
@@ -238,76 +240,27 @@
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
     if (object_movement_on) {
-      jed += 1.5//.5;
-      for (var i=0; i < planets.length; i++) {
-        planets[i].MoveParticle(jed);
-      }
+    /*
+    jed += .5;
+    for (var i=0; i < planets.length; i++) {
+      planets[i].MoveParticle(jed);
+    }
+    */
 
-      if (asteroids_loaded) {
-        if (!workers_initialized) {
-          var l = added_objects.length;
+    /*
+    for (var i=0; i < added_objects.length; i++) {
+      added_objects[i].MoveParticle(jed);
+    }
+    */
 
-          var objects_per_worker = Math.floor(l / NUM_WORKERS);
-          var remainder = l % NUM_WORKERS;
-          for (var i=0; i < NUM_WORKERS; i++) {
-            workers[i] = new Worker(worker_path);
-            works[i] = added_objects.slice(i*objects_per_worker, i*objects_per_worker+objects_per_worker);
-          }
-          // TODO remainder
-          // TODO synchronization, and don't need to call for each jed - the workers should do that themselves
-
-          for (var i=0; i < workers.length; i++) {
-            (function() {
-              var worker_index = i;
-              workers[i].onmessage = function(e) {
-                var data = e.data;
-                switch(data.type) {
-                  case 'result':
-                    var particle_index = data.value.particle_index;
-                    var pos = data.value.position;
-                    works[worker_index][particle_index].MoveParticleToPosition(pos);
-                    break;
-                  case 'debug':
-                    console.log(data.value);
-                    break;
-                  default:
-                    console.log('Invalid data type', data.type);
-                }
-              }
-            })();
-          }
-          workers_initialized = true;
-        }
-
-        for (var i=0; i < workers.length; i++) {
-          // trigger work
-          var particles = works[i];
-          var obj_ephs = [];
-          for (var j=0; j < particles.length; j++) {
-            obj_ephs.push(particles[j].eph);
-          }
-          workers[i].postMessage({
-            particle_ephemeris: obj_ephs,
-            jed: jed,
-            ephemeris: Ephemeris
-          });
-        }
-
-        /*
-        for (var i=0; i < added_objects.length; i++) {
-          added_objects[i].MoveParticle(jed);
-        }
-        */
-
-        if (jed >= 2451910.25) {
-          jed = 2451545.0;
-        }
-        /*
-        if (particle_system_geometry) {
-          particle_system_geometry.__dirtyVertices = true;
-        }
-        */
-      }
+    if (jed >= 2451910.25) {
+      jed = 2451545.0;
+    }
+    /*
+    if (particle_system_geometry) {
+      particle_system_geometry.__dirtyVertices = true;
+    }
+    */
     }
     render();
     requestAnimFrame(animate);
@@ -320,6 +273,69 @@
 
     // actually render the scene
     renderer.render(scene, camera);
+  }
+
+  function startSimulation() {
+    if (!asteroids_loaded) {
+      throw "couldn't start simulation: asteroids not loaded";
+    }
+    if (!workers_initialized) {
+      throw "couldn't start simulation: simulation not initialized";
+    }
+
+    for (var i=0; i < workers.length; i++) {
+      // trigger work
+      var particles = works[i];
+      var obj_ephs = [];
+      for (var j=0; j < particles.length; j++) {
+        obj_ephs.push(particles[j].eph);
+      }
+      workers[i].postMessage({
+        particle_ephemeris: obj_ephs,
+        start_jed: jed
+      });
+    }
+  }
+
+  function initSimulation() {
+    var l = added_objects.length;
+    var objects_per_worker = Math.ceil(l / NUM_WORKERS);
+    var remainder = l % NUM_WORKERS;
+    for (var i=0; i < NUM_WORKERS; i++) {
+      workers[i] = new Worker(worker_path);
+      var start = i*objects_per_worker;
+      works[i] = added_objects.slice(start, Math.min(start + objects_per_worker, l));
+    }
+    // TODO synchronization, and don't need to call for each jed - the workers should do that themselves
+
+    for (var i=0; i < NUM_WORKERS; i++) {
+      (function() {
+        var worker_index = i;
+        workers[worker_index].onmessage = function(e) {
+          handleSimulationResults(e, worker_index);
+        }
+      })();
+    }
+    workers_initialized = true;
+  }
+
+  function handleSimulationResults(e, worker_index) {
+    var data = e.data;
+    switch(data.type) {
+      case 'result':
+        var positions = data.value.positions;
+        var particles = works[worker_index];
+        for (var j=0; j < positions.length; j++) {
+          particles[j].MoveParticleToPosition(positions[j]);
+        }
+        particle_system_geometry.__dirtyVertices = true;
+        break;
+      case 'debug':
+        console.log(data.value);
+        break;
+      default:
+        console.log('Invalid data type', data.type);
+    }
   }
 
   function runAsteroidQuery(sort) {
@@ -378,8 +394,13 @@
 
       // add it to the scene
       particleSystem.sortParticles = true;
+      particleSystem.frustumCulled = true;
       scene.add(particleSystem);
       asteroids_loaded = true;
+
+      console.log('Starting with', NUM_WORKERS, 'worker');
+      initSimulation();
+      startSimulation();
 
       $('#loading').hide();
     });

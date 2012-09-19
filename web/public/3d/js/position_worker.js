@@ -1,21 +1,34 @@
-var Ephemeris;
+var Ephemeris = getEphemeris();
 var pi = Math.PI;
 var PIXELS_PER_AU = 50;
 
 self.addEventListener('message', function(e) {
   var data = e.data;
-  var jed = data.jed;
-  Ephemeris = data.ephemeris;
-  var l = data.particle_ephemeris.length;
-  for (var i=0; i < l; i++) {
-    //data.particles[i].MoveParticle(jed);
-    var pos = getPosAtTime(data.particle_ephemeris[i], jed);
-    sendResult({
-      particle_index: i,
-      position: pos
-    });
-  }
 }, false);
+
+function runSimulation(e) {
+  var start_jed = data.start_jed;
+  var jed_threshold = start_jed + 365.25;
+  var l = data.particle_ephemeris.length;
+  var jed = start_jed;
+  var particle_ephemeris = data.particle_ephemeris;
+  (function step() {
+    var positions = [];
+    for (var i=0; i < l; i++) {
+      //data.particles[i].MoveParticle(jed);
+      var pos = getPosAtTime(particle_ephemeris[i], jed);
+      positions.push(pos);
+    }
+    sendResult({
+      positions: positions
+    });
+    jed += .5;
+    if (jed >= jed_threshold) {
+      jed = start_jed;
+    }
+    setTimeout(step, 60);
+  })();
+}
 
 function log(s) {
   self.postMessage({
@@ -62,6 +75,7 @@ function getPosAtTime(eph, jed) {
     lastdiff = Math.abs(E1-E0);
     E0 = E1;
   } while(lastdiff > 0.0000001);
+  //} while(lastdiff > 0.00001);
   var E = E0;
   var v = 2 * Math.atan(Math.sqrt((1+e)/(1-e)) * Math.tan(E/2));
 
@@ -74,4 +88,70 @@ function getPosAtTime(eph, jed) {
   var Z = r * (sin(v + p - o) * sin(i))
   var ret = [X, Y, Z];
   return ret;
+}
+
+function getEphemeris() {
+  return {
+    mercury: {
+      full_name: 'Mercury',
+      ma: 174.79439,
+      epoch: 2451545.0,
+      a: 0.38709893,
+      e: 0.20563069,
+      i: 7.00487,
+      w: 77.45645,
+      L: 252.25084,
+      om: 48.33167,
+      P: 87.969
+    },
+    venus: {
+      full_name: 'Venus',
+      ma: 50.37663231999999,
+      epoch: 2451545.0,
+      a:0.72333566,
+      e:0.00677672,
+      i:3.39467605,
+      w:131.60246718,
+      L:181.97909950,
+      om:76.67984255,
+      P: 224.701
+    },
+    earth: {
+      full_name: 'Earth',
+      ma: -2.4731102699999905,
+      epoch: 2451545.0,
+      a:1.00000261,
+      e:0.01671123,
+      i:-0.00001531,
+      w:102.93768193,
+      L:100.46457166,
+      //om:-11.26064,
+      om: 0,
+      P: 365.256
+    },
+    mars:{
+      full_name: 'Mars',
+      ma: 19.412479999999945,
+      epoch: 2451545.0,
+      a: 1.52366231,
+      e: 0.09341233,
+      i: 1.85061,
+      w: 336.04084,
+      L:355.45332,
+      om:49.57854,
+      P: 686.980
+    },
+    jupiter: {
+      full_name: 'Jupiter',
+      ma: 19.66796068,
+      epoch: 2451545.0,
+      a:5.20288700,
+      e:0.04838624,
+      i:1.30439695,
+      w:14.72847983,
+      L:34.39644051,
+      om:100.47390909,
+      P: 4332.589
+    },
+  };
 }
