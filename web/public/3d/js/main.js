@@ -239,23 +239,12 @@
       //cam.position.y = Math.sin( timer ) * 100;
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
-    if (object_movement_on) {
-    /*
-    jed += .5;
-    for (var i=0; i < planets.length; i++) {
-      planets[i].MoveParticle(jed);
-    }
-    */
-
-    /*
-    for (var i=0; i < added_objects.length; i++) {
-      added_objects[i].MoveParticle(jed);
-    }
-    */
-
-    if (jed >= 2451910.25) {
-      jed = 2451545.0;
-    }
+    if (object_movement_on && workers_initialized) {
+      for (var i=0; i < NUM_WORKERS; i++) {
+        workers[i].postMessage({
+          command: 'results'
+        });
+      }
     /*
     if (particle_system_geometry) {
       particle_system_geometry.__dirtyVertices = true;
@@ -291,6 +280,7 @@
         obj_ephs.push(particles[j].eph);
       }
       workers[i].postMessage({
+        command: 'start',
         particle_ephemeris: obj_ephs,
         start_jed: jed
       });

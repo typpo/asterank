@@ -1,27 +1,37 @@
 var Ephemeris = getEphemeris();
 var pi = Math.PI;
 var PIXELS_PER_AU = 50;
+var positions = [];
 
 self.addEventListener('message', function(e) {
   var data = e.data;
+  switch (data.command) {
+    case 'results':
+      // send over last full set of positions
+      sendResult({
+        positions: positions
+      });
+      break;
+    case 'start':
+      runSimulation(data);
+      break;
+  }
 }, false);
 
-function runSimulation(e) {
+function runSimulation(data) {
   var start_jed = data.start_jed;
   var jed_threshold = start_jed + 365.25;
   var l = data.particle_ephemeris.length;
   var jed = start_jed;
   var particle_ephemeris = data.particle_ephemeris;
   (function step() {
-    var positions = [];
+    var partial_positions = [];
     for (var i=0; i < l; i++) {
       //data.particles[i].MoveParticle(jed);
       var pos = getPosAtTime(particle_ephemeris[i], jed);
-      positions.push(pos);
+      partial_positions.push(pos);
     }
-    sendResult({
-      positions: positions
-    });
+    positions = partial_positions;
     jed += .5;
     if (jed >= jed_threshold) {
       jed = start_jed;
