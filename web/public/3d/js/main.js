@@ -239,18 +239,15 @@
       //cam.position.y = Math.sin( timer ) * 100;
       cam.position.z = -100 + Math.sin( timer ) * 40;
     }
+    /*
     if (object_movement_on && workers_initialized) {
       for (var i=0; i < NUM_WORKERS; i++) {
         workers[i].postMessage({
           command: 'results'
         });
       }
-    /*
-    if (particle_system_geometry) {
-      particle_system_geometry.__dirtyVertices = true;
     }
-    */
-    }
+      */
     render();
     requestAnimFrame(animate);
   }
@@ -296,7 +293,6 @@
       var start = i*objects_per_worker;
       works[i] = added_objects.slice(start, Math.min(start + objects_per_worker, l));
     }
-    // TODO synchronization, and don't need to call for each jed - the workers should do that themselves
 
     for (var i=0; i < NUM_WORKERS; i++) {
       (function() {

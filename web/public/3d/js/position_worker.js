@@ -8,9 +8,11 @@ self.addEventListener('message', function(e) {
   switch (data.command) {
     case 'results':
       // send over last full set of positions
+      /*
       sendResult({
         positions: positions
       });
+      */
       break;
     case 'start':
       runSimulation(data);
@@ -31,12 +33,15 @@ function runSimulation(data) {
       var pos = getPosAtTime(particle_ephemeris[i], jed);
       partial_positions.push(pos);
     }
-    positions = partial_positions;
-    jed += .5;
+    //positions = partial_positions;
+    sendResult({
+      positions: partial_positions
+    });
+    jed += .3;
     if (jed >= jed_threshold) {
       jed = start_jed;
     }
-    setTimeout(step, 60);
+    setTimeout(step, 45);
   })();
 }
 
