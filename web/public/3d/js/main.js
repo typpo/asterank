@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 10;
+  var MAX_NUM_ORBITS = 10000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -226,8 +226,9 @@
 
   // animation loop
   var works = [];
+  var workers = [];
+  var NUM_WORKERS = 10;
   var worker_path = '/3d/js/position_worker.js';
-  var workers = null;
   var workers_initialized = false;
   function animate() {
     if (camera_fly_around) {
@@ -245,35 +246,50 @@
       if (asteroids_loaded) {
         if (!workers_initialized) {
           var l = added_objects.length;
-          works[0] = added_objects.slice(0, l / 4)
-            , works[1] = added_objects.slice(l / 4, l / 2)
-            , works[2] = added_objects.slice(l / 2, l * 3 / 4)
-            , works[3] = added_objects.slice(l * 3 / 4)
 
-          workers = [new Worker(worker_path)
-            , new Worker(worker_path)
-            , new Worker(worker_path)
-            , new Worker(worker_path)
-          ];
+          var objects_per_worker = Math.floor(l / NUM_WORKERS);
+          var remainder = l % NUM_WORKERS;
+          for (var i=0; i < NUM_WORKERS; i++) {
+            workers[i] = new Worker(worker_path);
+            works[i] = added_objects.slice(i*objects_per_worker, i*objects_per_worker+objects_per_worker);
+          }
+          // TODO remainder
+          // TODO synchronization, and don't need to call for each jed - the workers should do that themselves
 
           for (var i=0; i < workers.length; i++) {
-            workers[i].onmessage = function(e) {
-              var data = e.data;
-              if (data.type === 'debug') {
-                console.log(data.value);
+            (function() {
+              var worker_index = i;
+              workers[i].onmessage = function(e) {
+                var data = e.data;
+                switch(data.type) {
+                  case 'result':
+                    var particle_index = data.value.particle_index;
+                    var pos = data.value.position;
+                    works[worker_index][particle_index].MoveParticleToPosition(pos);
+                    break;
+                  case 'debug':
+                    console.log(data.value);
+                    break;
+                  default:
+                    console.log('Invalid data type', data.type);
+                }
               }
-            }
+            })();
           }
-
           workers_initialized = true;
         }
 
         for (var i=0; i < workers.length; i++) {
           // trigger work
-          console.log('werk', works[i]);
+          var particles = works[i];
+          var obj_ephs = [];
+          for (var j=0; j < particles.length; j++) {
+            obj_ephs.push(particles[j].eph);
+          }
           workers[i].postMessage({
-            particles: works[i],
-            jed: jed
+            particle_ephemeris: obj_ephs,
+            jed: jed,
+            ephemeris: Ephemeris
           });
         }
 
@@ -286,8 +302,11 @@
         if (jed >= 2451910.25) {
           jed = 2451545.0;
         }
-        if (particle_system_geometry)
+        /*
+        if (particle_system_geometry) {
           particle_system_geometry.__dirtyVertices = true;
+        }
+        */
       }
     }
     render();
@@ -315,6 +334,10 @@
 
     // Get new data points
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
+      if (!data.results) {
+        alert('Sorry, something went wrong and the server failed to return data.');
+        return;
+      }
       var n = data.results.rankings.length;
       added_objects = [];
       particle_system_geometry = new THREE.Geometry();
@@ -355,7 +378,6 @@
 
       // add it to the scene
       particleSystem.sortParticles = true;
-      console.log(particleSystem);
       scene.add(particleSystem);
       asteroids_loaded = true;
 

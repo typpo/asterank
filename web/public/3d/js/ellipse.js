@@ -66,6 +66,10 @@
 
   Orbit3D.prototype.MoveParticle = function(time_jed) {
     var pos = this.getPosAtTime(time_jed);
+    this.MoveParticleToPosition(pos);
+  }
+
+  Orbit3D.prototype.MoveParticleToPosition = function(pos) {
     //this.particle.position.set(pos[0], pos[1], pos[2]);
     if (this.farticle) {
       var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
