@@ -29,7 +29,6 @@ function runSimulation(data) {
   (function step() {
     var partial_positions = [];
     for (var i=0; i < l; i++) {
-      //data.particles[i].MoveParticle(jed);
       var pos = getPosAtTime(particle_ephemeris[i], jed);
       partial_positions.push(pos);
     }

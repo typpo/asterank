@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 10000;
+  var MAX_NUM_ORBITS = 15000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -384,7 +384,7 @@
       scene.add(particleSystem);
       asteroids_loaded = true;
 
-      console.log('Starting with', NUM_WORKERS, 'worker');
+      console.log('Starting with', NUM_WORKERS, 'worker for', n);
       initSimulation();
       startSimulation();
 

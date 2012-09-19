@@ -62,8 +62,9 @@ app.get('/top', function(req, res) {
   var num = parseInt(req.query.n);
   if (isNaN(num) || typeof num !== 'number')
     num = 100;
-  else
-    num = Math.min(num, 10000);
+  //else
+  // NOTE no minimum for many-particles simulation
+    //num = Math.min(num, 10000);
   var include_3d_vars = req.query.use3d ? true : false;
   lookup.topN({n: num, sort: req.query.sort, include_3d_vars: include_3d_vars},
     function(err, result) {
