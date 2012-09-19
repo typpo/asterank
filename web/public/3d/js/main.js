@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 10000;
+  var MAX_NUM_ORBITS = 20000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -380,7 +380,6 @@
 
       // add it to the scene
       particleSystem.sortParticles = true;
-      particleSystem.frustumCulled = true;
       scene.add(particleSystem);
       asteroids_loaded = true;
 
