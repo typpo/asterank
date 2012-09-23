@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 20000;
+  var MAX_NUM_ORBITS = 10000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -35,6 +35,7 @@
   var NUM_WORKERS = 1;
   var worker_path = '/3d/js/position_worker.js';
   var workers_initialized = false;
+  var position_results_queue = [];
 
   if(!init())	animate();
   initGUI();
@@ -229,10 +230,17 @@
     $('#container').on('mousedown', function() {
       camera_fly_around = false;
     });
+
+    window.renderer = renderer;
   }
 
   // animation loop
   function animate() {
+    if (!asteroids_loaded) {
+      render();
+      requestAnimFrame(animate);
+      return;
+    }
     if (camera_fly_around) {
       var timer = 0.0001 * Date.now();
       cam.position.x = Math.cos( timer ) * 50;
@@ -248,6 +256,14 @@
       }
     }
       */
+    /*
+    for (var j=0; j < position_results_queue.length; j++) {
+      var partpos_tuple = position_results_queue[j];
+      partpos_tuple[0].MoveParticleToPosition(partpos_tuple[1]);
+    }
+    particle_system_geometry.__dirtyVertices = true;
+    */
+
     render();
     requestAnimFrame(animate);
   }
@@ -309,12 +325,13 @@
     var data = e.data;
     switch(data.type) {
       case 'result':
+        // queue simulation results
         var positions = data.value.positions;
         var particles = works[worker_index];
-        for (var j=0; j < positions.length; j++) {
-          particles[j].MoveParticleToPosition(positions[j]);
+        for (var i=0; i < positions.length; i++) {
+          //position_results_queue.push([particles[i], positions[i]])
+          particles[i].MoveParticleToPosition(positions[i]);
         }
-        particle_system_geometry.__dirtyVertices = true;
         break;
       case 'debug':
         console.log(data.value);
@@ -323,6 +340,7 @@
         console.log('Invalid data type', data.type);
     }
   }
+
 
   function runAsteroidQuery(sort) {
     sort = sort || 'score';
@@ -370,9 +388,9 @@
 
       // done loading
       var particle_system_material = new THREE.ParticleBasicMaterial({
-          color: 0xffffff,
-          size: 1
-        });
+        color: 0xffffff,
+        size: 0.5
+      });
       var particleSystem = new THREE.ParticleSystem(
         particle_system_geometry,
         particle_system_material

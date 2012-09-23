@@ -70,13 +70,10 @@
   }
 
   Orbit3D.prototype.MoveParticleToPosition = function(pos) {
-    //this.particle.position.set(pos[0], pos[1], pos[2]);
-    if (this.farticle) {
-      var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
-      vertex_particle.x = pos[0];
-      vertex_particle.y = pos[1];
-      vertex_particle.z = pos[2];
-    }
+    var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
+    vertex_particle.x = pos[0];
+    vertex_particle.y = pos[1];
+    vertex_particle.z = pos[2];
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
