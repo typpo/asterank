@@ -35,7 +35,7 @@
   var NUM_WORKERS = 1;
   var worker_path = '/3d/js/position_worker.js';
   var workers_initialized = false;
-  var position_results_queue = [];
+  //var position_results_queue = [];
 
   if(!init())	animate();
   initGUI();
@@ -332,6 +332,7 @@
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
+        particle_system_geometry.verticesNeedUpdate = true;
         break;
       case 'debug':
         console.log(data.value);
