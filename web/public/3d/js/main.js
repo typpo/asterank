@@ -328,11 +328,23 @@
         // queue simulation results
         var positions = data.value.positions;
         var particles = works[worker_index];
+        /*
         for (var i=0; i < positions.length; i++) {
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
-        particle_system_geometry.verticesNeedUpdate = true;
+        */
+
+        var all_chunks = [];
+        for (var i=0; i < positions.length; i++) {
+          all_chunks.push([particles[i], positions[i]]);
+        }
+        timedChunk(all_chunks, function(chunk) {
+          chunk[0].MoveParticleToPosition(chunk[1]);
+        }, this, function() {
+          particle_system_geometry.verticesNeedUpdate = true;
+        });
+        //particle_system_geometry.verticesNeedUpdate = true;
         break;
       case 'debug':
         console.log(data.value);
