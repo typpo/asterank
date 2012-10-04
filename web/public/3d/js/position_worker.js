@@ -46,7 +46,7 @@ function runSimulation(data) {
       });
       pos_cache[jed] = partial_positions;
     }
-    jed += .5;
+    jed += .25;
     if (jed >= jed_threshold) {
       jed = start_jed;
       log('Switch to cache mode');

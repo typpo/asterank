@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 10000;
+  var MAX_NUM_ORBITS = 15000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -333,6 +333,7 @@
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
+        particle_system_geometry.verticesNeedUpdate = true;
         */
 
         var all_chunks = [];
@@ -344,7 +345,6 @@
         }, this, function() {
           particle_system_geometry.verticesNeedUpdate = true;
         });
-        //particle_system_geometry.verticesNeedUpdate = true;
         break;
       case 'debug':
         console.log(data.value);
