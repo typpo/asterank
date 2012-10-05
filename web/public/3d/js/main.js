@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 15000;
+  var MAX_NUM_ORBITS = 1000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -310,24 +310,30 @@
       works[i] = added_objects.slice(start, Math.min(start + objects_per_worker, l));
     }
 
+    $.each(works, function(idx) {
+      var work = this;
+      workers[idx].onmessage = function(e) {
+        handleSimulationResults(e, work.slice());
+      }
+    });
+    /*
     for (var i=0; i < NUM_WORKERS; i++) {
       (function() {
-        var worker_index = i;
-        workers[worker_index].onmessage = function(e) {
-          handleSimulationResults(e, worker_index);
+        workers[i].onmessage = function(e) {
+          handleSimulationResults(e, works[i]);
         }
       })();
     }
+    */
     workers_initialized = true;
   }
 
-  function handleSimulationResults(e, worker_index) {
+  function handleSimulationResults(e, particles) {
     var data = e.data;
     switch(data.type) {
       case 'result':
         // queue simulation results
         var positions = data.value.positions;
-        var particles = works[worker_index];
         /*
         for (var i=0; i < positions.length; i++) {
           //position_results_queue.push([particles[i], positions[i]])
@@ -336,12 +342,14 @@
         particle_system_geometry.verticesNeedUpdate = true;
         */
 
+        /*
         var all_chunks = [];
         for (var i=0; i < positions.length; i++) {
           all_chunks.push([particles[i], positions[i]]);
         }
-        timedChunk(all_chunks, function(chunk) {
-          chunk[0].MoveParticleToPosition(chunk[1]);
+        */
+        timedChunk(particles, positions, function(particle, position) {
+          particle.MoveParticleToPosition(position);
         }, this, function() {
           particle_system_geometry.verticesNeedUpdate = true;
         });
