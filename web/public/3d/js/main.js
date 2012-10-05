@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 1000;
+  var MAX_NUM_ORBITS = 10000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -32,7 +32,7 @@
   // workers stuff
   var works = [];
   var workers = [];
-  var NUM_WORKERS = 1;
+  var NUM_WORKERS = 3;
   var worker_path = '/3d/js/position_worker.js';
   var workers_initialized = false;
   //var position_results_queue = [];
@@ -348,6 +348,7 @@
           all_chunks.push([particles[i], positions[i]]);
         }
         */
+
         timedChunk(particles, positions, function(particle, position) {
           particle.MoveParticleToPosition(position);
         }, this, function() {
