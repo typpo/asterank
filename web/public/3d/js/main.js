@@ -334,13 +334,11 @@
       case 'result':
         // queue simulation results
         var positions = data.value.positions;
-        /*
         for (var i=0; i < positions.length; i++) {
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
         particle_system_geometry.verticesNeedUpdate = true;
-        */
 
         /*
         var all_chunks = [];
@@ -349,11 +347,13 @@
         }
         */
 
+        /*
         timedChunk(particles, positions, function(particle, position) {
           particle.MoveParticleToPosition(position);
         }, this, function() {
           particle_system_geometry.verticesNeedUpdate = true;
         });
+        */
         break;
       case 'debug':
         console.log(data.value);

@@ -2,16 +2,22 @@
 //Copyright 2009 Nicholas C. Zakas. All rights reserved.
 //MIT Licensed
 function timedChunk(particles, positions, fn, context, callback){
-  setTimeout(function(){
-    var start = +new Date();
-    do {
-      fn.call(context, particles.shift(), positions.shift());
-    } while (positions.length > 0 && (+new Date() - start < 50));
+  var i = 0;
+  var tick = function() {
+    var start = new Date().getTime();
+    for (; i < positions.length && (new Date().getTime()) - start < 50; i++) {
+      fn.call(context, particles[i], positions[i]);
+    }
 
-    if (positions.length > 0){
-      setTimeout(arguments.callee, 25);
+    if (i < positions.length) {
+      console.log(i);
+      setTimeout(function() {
+        tick();
+      }, 25);
     } else {
       callback(positions, particles);
     }
-  }, 25);
+  };
+
+  setTimeout(tick, 25);
 }
