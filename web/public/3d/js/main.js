@@ -428,7 +428,11 @@
       // done loading
       var particle_system_material = new THREE.ParticleBasicMaterial({
         color: 0xffffff,
-        size: 0.5
+        size: 1,
+        blending: THREE.AdditiveBlending,
+        map: THREE.ImageUtils.loadTexture(
+          "/images/asteroidsprite.png"
+        ),
       });
       var particleSystem = new THREE.ParticleSystem(
         particle_system_geometry,
