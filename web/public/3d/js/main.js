@@ -433,6 +433,7 @@
         map: THREE.ImageUtils.loadTexture(
           "/images/asteroidsprite.png"
         ),
+        transparent: true
       });
       var particleSystem = new THREE.ParticleSystem(
         particle_system_geometry,
