@@ -14,7 +14,8 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 30;
+  var MAX_NUM_ORBITS = 3000;
+  var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -408,6 +409,7 @@
 
       var useBigParticles = true;
       for (var i=0; i < n; i++) {
+        if (i === NUM_BIG_PARTICLES) useBigParticles = false;
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
