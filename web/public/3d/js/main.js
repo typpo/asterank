@@ -64,6 +64,7 @@
       };
       this.movement = object_movement_on;
       this['planet orbits'] = planet_orbits_visible;
+      // TODO have this update with the simulation!
       this['display date'] = '12/26/2012';
     };
 
@@ -414,7 +415,7 @@
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
           width:2,
-          object_size: 0.75,
+          object_size: 0.4,
           jed: jed,
           particle_geometry: particle_system_geometry
         }, useBigParticles);
@@ -423,6 +424,7 @@
             orbit.getParticle().on('mouseover', function(e) {
               if (lastHovered) scene.remove(lastHovered);
               lastHovered = orbit.getEllipse();
+              // TODO hitting escape should cancel this
               scene.add(lastHovered);
               $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
               $('#other-caption').html('(ranked #' + (i+1) + ')');
