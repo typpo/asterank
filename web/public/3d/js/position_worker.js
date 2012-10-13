@@ -5,6 +5,10 @@ var positions = [];
 var pos_cache = {};
 var first_cycle_complete = false;
 
+var jed, jed_threshold;
+var running = true;
+var simulationData = null;
+
 self.addEventListener('message', function(e) {
   var data = e.data;
   switch (data.command) {
@@ -16,17 +20,43 @@ self.addEventListener('message', function(e) {
       });
       */
       break;
+    case 'set_jed':
+      setJED(data.jed);
+      if (!running) {
+        // we have to update manually for one step
+        runSimulation(simulationData);
+      }
+      break;
+
+    case 'toggle_simulation':
+      if (data.val) {
+        // start if not already started
+        if (!running) {
+          running = true;
+          runSimulation(simulationData);
+        }
+      }
+      else {
+        // stop
+        running = false;
+      }
+      break;
     case 'start':
+      var start_jed = data.start_jed;
+      setJED(start_jed);
+      simulationData = data;
       runSimulation(data);
       break;
   }
 }, false);
 
+function setJED(new_jed) {
+  jed = new_jed;
+  jed_threshold = new_jed + 365.25;
+}
+
 function runSimulation(data) {
-  var start_jed = data.start_jed;
-  var jed_threshold = start_jed + 365.25;
   var l = data.particle_ephemeris.length;
-  var jed = start_jed;
   var particle_ephemeris = data.particle_ephemeris;
   (function step() {
     if (first_cycle_complete) {
@@ -52,7 +82,9 @@ function runSimulation(data) {
       log('Switch to cache mode');
       first_cycle_complete = true;
     }
-    setTimeout(step, 60);
+    if (running) {
+      setTimeout(step, 60);
+    }
   })();
 }
 

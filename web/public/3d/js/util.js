@@ -21,3 +21,7 @@ function timedChunk(particles, positions, fn, context, callback){
 
   setTimeout(tick, 25);
 }
+
+function toJED(d){
+  return Math.floor((d.getTime() / (1000 * 60 * 60 * 24)) - 0.5) + 2440588;
+}

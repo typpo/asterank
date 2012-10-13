@@ -1,5 +1,6 @@
 var express = require('express')
   , app = express.createServer()
+  , connect = require('connect')
   , _ = require('underscore')
   , BundleUp = require('bundle-up')
   , lookup = require('./lookup.js')
@@ -11,6 +12,7 @@ app.set('view engine', 'jade');
 app.set('view options', { layout: false });
 
 app.use(express.cookieParser());
+//app.use(connect.compress());
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 

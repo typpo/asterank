@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 10000;
+  var MAX_NUM_ORBITS = 3000;
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -36,6 +36,7 @@
   var worker_path = '/3d/js/position_worker.js';
   var workers_initialized = false;
   //var position_results_queue = [];
+  var particleSystem;
 
   if(!init())	animate();
   initGUI();
@@ -62,6 +63,7 @@
       };
       this.movement = object_movement_on;
       this['planet orbits'] = planet_orbits_visible;
+      this['display date'] = '12/26/2012';
     };
 
     window.onload = function() {
@@ -72,9 +74,19 @@
       gui.add(text, 'Most accessible');
       gui.add(text, 'movement').onChange(function() {
         object_movement_on = !object_movement_on;
+        toggleSimulation(object_movement_on);
       });
       gui.add(text, 'planet orbits').onChange(function() {
         togglePlanetOrbits();
+      });
+      gui.add(text, 'display date').onChange(function(val) {
+        // TODO don't do anything unless it changed
+        var newdate = Date.parse(val);
+        if (newdate) {
+          var newjed = toJED(newdate);
+          console.log('Changing date to', newdate, ' -> ', newjed);
+          changeJED(newjed);
+        }
       });
     };
   }
@@ -334,6 +346,7 @@
       case 'result':
         // queue simulation results
         var positions = data.value.positions;
+
         for (var i=0; i < positions.length; i++) {
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
@@ -372,6 +385,10 @@
     for (var i=0; i < added_objects.length; i++) {
       scene.remove(added_objects[i].getParticle());
     }
+    if (particleSystem) scene.remove(particleSystem);
+    // TODO right now this can only happen once
+    particleSystem = null;
+
     if (lastHovered) scene.remove(lastHovered);
 
     // Get new data points
@@ -448,6 +465,24 @@
     context.fillStyle = gradient;
     context.fillRect( 0, 0, canvas.width, canvas.height );
     return canvas;
+  }
+
+  function changeJED(new_jed) {
+    for (var i=0; i < workers.length; i++) {
+      workers[i].postMessage({
+        command: 'set_jed',
+        jed: new_jed
+      });
+    }
+  }
+
+  function toggleSimulation(run) {
+    for (var i=0; i < workers.length; i++) {
+      workers[i].postMessage({
+        command: 'toggle_simulation',
+        val: run
+      });
+    }
   }
 })();
 
