@@ -74,13 +74,15 @@ function runSimulation(data) {
       sendResult({
         positions: partial_positions
       });
-      pos_cache[jed] = partial_positions;
+      //pos_cache[jed] = partial_positions;
     }
     jed += .25;
     if (jed >= jed_threshold) {
+      /*
       jed = start_jed;
       log('Switch to cache mode');
       first_cycle_complete = true;
+      */
     }
     if (running) {
       setTimeout(step, 60);
