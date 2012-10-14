@@ -204,27 +204,27 @@
     // Ellipses
     runAsteroidQuery();
     var mercury = new Orbit3D(Ephemeris.mercury,
-        {color: 0x913CEE, width: 1, jed: jed}, true);
+        {color: 0x913CEE, width: 1, jed: jed, object_size: 1}, true);
     scene.add(mercury.getEllipse());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
-        {color: 0xFF7733, width: 1, jed: jed}, true);
+        {color: 0xFF7733, width: 1, jed: jed, object_size: 1}, true);
     scene.add(venus.getEllipse());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
-        {color: 0x009ACD, width: 1, jed: jed}, true);
+        {color: 0x009ACD, width: 1, jed: jed, object_size: 1}, true);
     scene.add(earth.getEllipse());
     scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
-        {color: 0xA63A3A, width: 1, jed: jed}, true);
+        {color: 0xA63A3A, width: 1, jed: jed, object_size: 1}, true);
     scene.add(mars.getEllipse());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
-        {color: 0xFF7F50, width: 1, jed: jed}, true);
+        {color: 0xFF7F50, width: 1, jed: jed, object_size: 1}, true);
     scene.add(jupiter.getEllipse());
     scene.add(jupiter.getParticle());
 
-    //planets.push.apply(planets, [mercury, venus, earth, mars, jupiter]);
+    planets.push.apply(planets, [mercury, venus, earth, mars, jupiter]);
     added_objects.push.apply(added_objects, [mercury, venus, earth, mars, jupiter]);
 
 
@@ -318,6 +318,19 @@
     }
   }
 
+  function stopSimulation() {
+    toggleSimulation(false);
+  }
+
+  function toggleSimulation(run) {
+    for (var i=0; i < workers.length; i++) {
+      workers[i].postMessage({
+        command: 'toggle_simulation',
+        val: run
+      });
+    }
+  }
+
   function initSimulation() {
     var l = added_objects.length;
     var objects_per_worker = Math.ceil(l / NUM_WORKERS);
@@ -391,9 +404,14 @@
     for (var i=0; i < added_objects.length; i++) {
       scene.remove(added_objects[i].getParticle());
     }
-    if (particleSystem) scene.remove(particleSystem);
+    if (particleSystem) {
+      scene.remove(particleSystem);
+      particleSystem = null;
+    }
+    if (asteroids_loaded) {
+      stopSimulation();
+    }
     // TODO right now this can only happen once
-    particleSystem = null;
 
     if (lastHovered) scene.remove(lastHovered);
 
@@ -405,7 +423,7 @@
       }
       var n = data.results.rankings.length;
       // TODO needs to clear and re-add planets if re-ranking requests are allowed
-      //added_objects = [];
+      added_objects = [];
       particle_system_geometry = new THREE.Geometry();
 
       var useBigParticles = true;
@@ -415,7 +433,7 @@
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
           width:2,
-          object_size: 0.4,
+          object_size: 0.7,
           jed: jed,
           particle_geometry: particle_system_geometry
         }, useBigParticles);
@@ -430,8 +448,6 @@
               $('#other-caption').html('(ranked #' + (i+1) + ')');
             });
           })(roid, orbit, i);
-        }
-        if (useBigParticles) {
           scene.add(orbit.getParticle());
         }
         added_objects.push(orbit);
@@ -446,7 +462,7 @@
           "/images/asteroidsprite.png"
         ),
       });
-      var particleSystem = new THREE.ParticleSystem(
+      particleSystem = new THREE.ParticleSystem(
         particle_system_geometry,
         particle_system_material
       );
@@ -488,15 +504,6 @@
       workers[i].postMessage({
         command: 'set_jed',
         jed: new_jed
-      });
-    }
-  }
-
-  function toggleSimulation(run) {
-    for (var i=0; i < workers.length; i++) {
-      workers[i].postMessage({
-        command: 'toggle_simulation',
-        val: run
       });
     }
   }
