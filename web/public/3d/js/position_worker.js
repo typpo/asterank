@@ -2,8 +2,6 @@ var Ephemeris = getEphemeris();
 var pi = Math.PI;
 var PIXELS_PER_AU = 50;
 var positions = [];
-var pos_cache = {};
-var first_cycle_complete = false;
 
 var jed, jed_threshold;
 var running = true;
@@ -59,31 +57,16 @@ function runSimulation(data) {
   var l = data.particle_ephemeris.length;
   var particle_ephemeris = data.particle_ephemeris;
   (function step() {
-    if (first_cycle_complete) {
-      sendResult({
-        positions: pos_cache[jed]
-      });
+    var partial_positions = [];
+    for (var i=0; i < l; i++) {
+      var pos = getPosAtTime(particle_ephemeris[i], jed);
+      partial_positions.push(pos);
     }
-    else {
-      var partial_positions = [];
-      for (var i=0; i < l; i++) {
-        var pos = getPosAtTime(particle_ephemeris[i], jed);
-        partial_positions.push(pos);
-      }
-      //positions = partial_positions;
-      sendResult({
-        positions: partial_positions
-      });
-      //pos_cache[jed] = partial_positions;
-    }
+    //positions = partial_positions;
+    sendResult({
+      positions: partial_positions
+    });
     jed += .25;
-    if (jed >= jed_threshold) {
-      /*
-      jed = start_jed;
-      log('Switch to cache mode');
-      first_cycle_complete = true;
-      */
-    }
     if (running) {
       setTimeout(step, 60);
     }

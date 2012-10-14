@@ -13,7 +13,6 @@
     this.opts = opts;
     this.eph = eph;
     this.particle_geometry = opts.particle_geometry;
-    this.pos_cache = {};
     this.bigParticle = bigParticle;
 
     this.CreateParticle(opts.jed);
@@ -83,10 +82,6 @@
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
-    if (jed in this.pos_cache) {
-      return this.pos_cache[jed];
-    }
-
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
@@ -128,7 +123,6 @@
     var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
     var ret = [X, Y, Z];
-    this.pos_cache[jed] = ret;
     return ret;
   }
 
