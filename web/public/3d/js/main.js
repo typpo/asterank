@@ -332,6 +332,7 @@
   }
 
   function initSimulation() {
+    // TODO fallback for unsupported webworkers
     var l = added_objects.length;
     var objects_per_worker = Math.ceil(l / NUM_WORKERS);
     var remainder = l % NUM_WORKERS;
@@ -428,7 +429,12 @@
 
       var useBigParticles = true;
       for (var i=0; i < n; i++) {
-        if (i === NUM_BIG_PARTICLES) useBigParticles = false;
+        if (i === NUM_BIG_PARTICLES) {
+          if (!using_webgl) {
+            break;
+          }
+          useBigParticles = false;
+        }
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
@@ -453,26 +459,28 @@
         added_objects.push(orbit);
       }
 
-      // done loading
-      var particle_system_material = new THREE.ParticleBasicMaterial({
-        color: 0xffffff,
-        size: 1,
-        blending: THREE.AdditiveBlending,
-        map: THREE.ImageUtils.loadTexture(
-          "/images/asteroidsprite.png"
-        ),
-      });
-      particleSystem = new THREE.ParticleSystem(
-        particle_system_geometry,
-        particle_system_material
-      );
+      if (using_webgl) {
+        // build particlesystem
+        var particle_system_material = new THREE.ParticleBasicMaterial({
+          color: 0xffffff,
+          size: 1,
+          blending: THREE.AdditiveBlending,
+          map: THREE.ImageUtils.loadTexture(
+            "/images/asteroidsprite.png"
+          ),
+        });
+        particleSystem = new THREE.ParticleSystem(
+          particle_system_geometry,
+          particle_system_material
+        );
 
-      // add it to the scene
-      particleSystem.sortParticles = true;
-      scene.add(particleSystem);
+        // add it to the scene
+        particleSystem.sortParticles = true;
+        scene.add(particleSystem);
+      }
       asteroids_loaded = true;
 
-      console.log('Starting with', NUM_WORKERS, 'worker for', n, 'from request of', MAX_NUM_ORBITS);
+      console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
       initSimulation();
       startSimulation();
 
