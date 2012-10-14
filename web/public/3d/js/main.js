@@ -431,6 +431,7 @@
       for (var i=0; i < n; i++) {
         if (i === NUM_BIG_PARTICLES) {
           if (!using_webgl) {
+            // only show objects of interest if there's no particlesystem support
             break;
           }
           useBigParticles = false;
@@ -444,6 +445,7 @@
           particle_geometry: particle_system_geometry
         }, useBigParticles);
         if (useBigParticles) {
+          // bind information/orbit mouseover
           (function(roid, orbit, i) {
             orbit.getParticle().on('mouseover', function(e) {
               if (lastHovered) scene.remove(lastHovered);
@@ -516,5 +518,4 @@
     }
   }
 })();
-
 if (!window.console) window.console = {log: function() {}};
