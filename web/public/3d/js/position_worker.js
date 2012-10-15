@@ -64,7 +64,8 @@ function runSimulation(data) {
     }
     //positions = partial_positions;
     sendResult({
-      positions: partial_positions
+      positions: partial_positions,
+      jed: jed
     });
     jed += .25;
     if (running) {

@@ -89,8 +89,9 @@
           console.log('Changing date to', newdate, ' -> ', newjed);
           changeJED(newjed);
         }
-      });
-    };
+      }).listen();
+      window.datgui = text;
+    }; // end window onload
   }
 
   function togglePlanetOrbits() {
@@ -372,6 +373,13 @@
         }
         particle_system_geometry.verticesNeedUpdate = true;
 
+        if (typeof datgui !== 'undefined') {
+          // update with date
+          var georgian_date = fromJED(data.value.jed);
+          datgui['display date'] = georgian_date.getMonth()+1 + "/"
+            + georgian_date.getDate() + "/" + georgian_date.getFullYear();
+        }
+
         /*
         var all_chunks = [];
         for (var i=0; i < positions.length; i++) {
@@ -484,7 +492,6 @@
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
       initSimulation();
       startSimulation();
-
       $('#loading').hide();
     });
   }
