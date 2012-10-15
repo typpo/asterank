@@ -224,8 +224,7 @@
     scene.add(jupiter.getEllipse());
     scene.add(jupiter.getParticle());
 
-    planets.push.apply(planets, [mercury, venus, earth, mars, jupiter]);
-    added_objects.push.apply(added_objects, [mercury, venus, earth, mars, jupiter]);
+    planets = [mercury, venus, earth, mars, jupiter];
 
 
     // Sky
@@ -423,8 +422,8 @@
         return;
       }
       var n = data.results.rankings.length;
-      // TODO needs to clear and re-add planets if re-ranking requests are allowed
-      added_objects = [];
+      // add planets
+      added_objects = planets.slice();
       particle_system_geometry = new THREE.Geometry();
 
       var useBigParticles = true;
