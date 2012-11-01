@@ -110,7 +110,7 @@
 
   // init the scene
   function init(){
-    if(WEB_GL_ENABLED && Detector.webgl){
+    if (WEB_GL_ENABLED && Detector.webgl){
       renderer = new THREE.WebGLRenderer({
         antialias		: true,	// to get smoother output
         //preserveDrawingBuffer	: true	// to allow screenshot
@@ -118,7 +118,7 @@
       renderer.setClearColorHex(0x000000, 1);
       using_webgl = true;
     }
-    else{
+    else {
       renderer	= new THREE.CanvasRenderer();
     }
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -279,8 +279,6 @@
     }
     particle_system_geometry.__dirtyVertices = true;
     */
-
-    // TODO move planets
 
     render();
     requestAnimFrame(animate);
