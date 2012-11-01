@@ -3,16 +3,19 @@
   var PIXELS_PER_AU = 50;
   var USE_REAL_ELLIPSE = true;
 
-  var Orbit3D = function(eph, opts, scene) {
+  var Orbit3D = function(eph, opts, bigParticle) {
     opts = opts || {};
     opts.color = opts.color || 0xffee00;
     opts.width = opts.width || 1;
-    opts.object_size = opts.object_size || 2;
+    opts.object_size = opts.object_size || 1;
     opts.jed =  opts.jed || 2451545.0;
 
     this.opts = opts;
     this.eph = eph;
-    this.particle = this.CreateParticle(opts.jed);
+    this.particle_geometry = opts.particle_geometry;
+    this.bigParticle = bigParticle;
+
+    this.CreateParticle(opts.jed);
   }
 
   Orbit3D.prototype.CreateOrbit = function(jed) {
@@ -24,11 +27,9 @@
     var parts = this.eph.e > .20 ? 300 : 100;   // extra precision for high eccentricity
     var delta = Math.ceil(limit / parts);
     var prev;
-    var group = new THREE.Object3D();
     for (var i=0; i <= parts; i++, time+=delta) {
       var pos = this.getPosAtTime(time);
       var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      group.add(this.CreateParticle(time));
       prev = vector;
       pts.push(vector);
     }
@@ -42,22 +43,45 @@
   }
 
   Orbit3D.prototype.CreateParticle = function(jed) {
-    var geometry= new THREE.SphereGeometry(this.opts.object_size);
-    var material= new THREE.MeshBasicMaterial({color: this.opts.color});
-    var particle = new THREE.Mesh(geometry, material);
     var pos = this.getPosAtTime(jed);
-    particle.position.set(pos[0], pos[1], pos[2]);
 
-    return particle;
+    if (this.bigParticle) {
+      var geometry= new THREE.SphereGeometry(this.opts.object_size);
+      var material= new THREE.MeshBasicMaterial({color: this.opts.color});
+      this.particle = new THREE.Mesh(geometry, material);
+      this.particle.position.set(pos[0], pos[1], pos[2]);
+    }
+    else if (this.particle_geometry) {
+      this.farticle = new THREE.Vector3(
+        pos[0], pos[1], pos[2]
+      );
+      // add it to the geometry
+      this.vertex_pos = this.particle_geometry.vertices.length;
+      this.particle_geometry.vertices.push(this.farticle);
+    }
+
+    //return particle;
   }
 
   Orbit3D.prototype.MoveParticle = function(time_jed) {
     var pos = this.getPosAtTime(time_jed);
-    this.particle.position.set(pos[0], pos[1], pos[2]);
+    this.MoveParticleToPosition(pos);
+  }
+
+  Orbit3D.prototype.MoveParticleToPosition = function(pos) {
+    if (this.bigParticle) {
+      this.particle.position.set(pos[0], pos[1], pos[2]);
+    }
+    else {
+      // TODO cache this lookup
+      var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
+      vertex_particle.x = pos[0];
+      vertex_particle.y = pos[1];
+      vertex_particle.z = pos[2];
+    }
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
-    //jed = jed || 2451545.0; // 2000 Jan 1.5
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
@@ -98,7 +122,8 @@
     var X = r * (cos(o) * cos(v + p - o) - sin(o) * sin(v + p - o) * cos(i))
     var Y = r * (sin(o) * cos(v + p - o) + cos(o) * sin(v + p - o) * cos(i))
     var Z = r * (sin(v + p - o) * sin(i))
-    return [X, Y, Z];
+    var ret = [X, Y, Z];
+    return ret;
   }
 
   Orbit3D.prototype.getEllipse = function() {

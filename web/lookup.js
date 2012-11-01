@@ -106,6 +106,7 @@ function topN(opts, cb) {
   var coll = db.collection('asteroids');
   var sortobj = {};
   sortobj[opts.sort] = VALID_SORT_FIELDS[opts.sort];
+  console.log('limit', opts.n);
   coll.find().limit(opts.n).sort(sortobj).toArray(function(err, docs) {
     if (err) {
       cb(true, null);
