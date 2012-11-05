@@ -243,6 +243,8 @@ def valuePerKg(type):
   return mat_price_per_kg
 
 def savedPerKg(type):
+  # This is is a dummy calculation used to compare the cost of mining in space
+  # to the cost of getting the same materials from earth.
   cto = GENERAL_INDEX['cost_to_orbit']
   ret = 0
   for mat,pct in SPECTRA_INDEX[type].iteritems():
