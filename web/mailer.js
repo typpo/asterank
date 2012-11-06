@@ -1,4 +1,4 @@
-var sendmail = require('sendmail').sendmail;
+var sendmail = require('sendmail')();
 
 /**
  * Sends mail to me!
