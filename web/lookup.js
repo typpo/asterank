@@ -70,7 +70,8 @@ function homepage(cb) {
 function upcomingPasses(num, cb) {
   var db = new Mongolian('localhost/asterank');
   var coll = db.collection('jpl');
-  coll.find({'Next Pass': {$exists: true, $ne: null}})
+  coll.find({'Next Pass': {$exists: true, $ne: null},
+            'Next Pass.date_iso': {$gte: new Date().toISOString()}})
     .sort({'Next Pass.date_iso': 1})
     .limit(num).toArray(function(err, docs) {
       if (docs) {
