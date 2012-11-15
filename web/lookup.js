@@ -18,6 +18,8 @@ var VALID_SORT_FIELDS = {
 
 var HOMEPAGE_CACHE_ENABLED = true;
 
+var topN_query_cache = {};
+
 var homepage_summary_result;  // cache of summary results
 
 /**
@@ -87,6 +89,16 @@ function upcomingPasses(num, cb) {
 }
 
 /**
+ * Generates a unique key for a given topN query.
+ *
+ * @param {object} parameters for search
+ * @return {string} key
+ */
+function queryToKey(opts) {
+  return opts.sort + '_' + opts.n + '_' + opts.include_3d_vars;
+}
+
+/**
  * Returns the top results based on given ranking parameters.
  *
  * @param {object} parameters for search.
@@ -108,6 +120,15 @@ function topN(opts, cb) {
   var sortobj = {};
   sortobj[opts.sort] = VALID_SORT_FIELDS[opts.sort];
   console.log('limit', opts.n);
+
+  var query_key = queryToKey(opts);
+  if (topN_query_cache[query_key]) {
+    // present in cache
+    console.log('returning query from cache');
+    cb(null, topN_query_cache[query_key]);
+    return;
+  }
+
   coll.find().limit(opts.n).sort(sortobj).toArray(function(err, docs) {
     if (err) {
       cb(true, null);
@@ -138,11 +159,15 @@ function topN(opts, cb) {
       else
         compositions = JSON.parse(stdout);
 
-      // send result to client
-      cb(null, {
+      // cache result
+      var full_result = {
         rankings: rankings,
         compositions: compositions,
-      });
+      };
+      topN_query_cache[query_key] = full_result;
+
+      // send result to client
+      cb(null, full_result);
     });
   });
 }
