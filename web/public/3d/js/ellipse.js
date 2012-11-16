@@ -15,7 +15,7 @@
     this.particle_geometry = opts.particle_geometry;
     this.bigParticle = bigParticle;
 
-    this.CreateParticle(opts.jed);
+    this.CreateParticle(opts.jed, opts.texture_path);
   }
 
   Orbit3D.prototype.CreateOrbit = function(jed) {
@@ -42,13 +42,22 @@
     return line;
   }
 
-  Orbit3D.prototype.CreateParticle = function(jed) {
+  Orbit3D.prototype.CreateParticle = function(jed, texture_path) {
     var pos = this.getPosAtTime(jed);
 
     if (this.bigParticle) {
       var geometry= new THREE.SphereGeometry(this.opts.object_size);
-      var material= new THREE.MeshBasicMaterial({color: this.opts.color});
+      var mat_opts = {color: this.opts.color};
+      if (texture_path) {
+        $.extend(mat_opts, {
+          map: THREE.ImageUtils.loadTexture(texture_path),
+          wireframe: false,
+          overdraw: true
+        });
+      }
+      var material= new THREE.MeshBasicMaterial(mat_opts);
       this.particle = new THREE.Mesh(geometry, material);
+      this.particle.scale.x = -1; // flip so texture shows up oriented correctly
       this.particle.position.set(pos[0], pos[1], pos[2]);
     }
     else if (this.particle_geometry) {

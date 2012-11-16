@@ -29,6 +29,7 @@
   var jed = 2451545.0;
   var particle_system_geometry = null;
   var asteroids_loaded = false;
+  var display_date_last_updated = 0;
 
   // workers stuff
   var works = [];
@@ -139,7 +140,8 @@
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
+    //camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
+    camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
 
     window.cam = camera;
@@ -170,14 +172,14 @@
         var texture = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
         var sprite = new THREE.Sprite({
           map: texture,
-            useScreenCoordinates: false,
-            color: 0xffffff
+          blending: THREE.AdditiveBlending,
+          useScreenCoordinates: false,
+          color: 0xffffff
         });
         sprite.scale.x = .1;
         sprite.scale.y = .1;
         sprite.scale.z = .1;
         sprite.color.setHSV(1.0, 0.0, 1.0);
-        sprite.blending = THREE.AdditiveBlending;
         sun.add(sprite);
         scene.add(sun);
       }
@@ -205,23 +207,38 @@
     // Ellipses
     runAsteroidQuery();
     var mercury = new Orbit3D(Ephemeris.mercury,
-        {color: 0x913CEE, width: 1, jed: jed, object_size: 1}, true);
+        {
+          color: 0x913CEE, width: 1, jed: jed, object_size: 1,
+          texture_path: '/images/texture-mercury.jpg'
+        }, true);
     scene.add(mercury.getEllipse());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
-        {color: 0xFF7733, width: 1, jed: jed, object_size: 1}, true);
+        {
+          color: 0xFF7733, width: 1, jed: jed, object_size: 1,
+          texture_path: '/images/texture-venus.jpg'
+        }, true);
     scene.add(venus.getEllipse());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
-        {color: 0x009ACD, width: 1, jed: jed, object_size: 1}, true);
+        {
+          color: 0x009ACD, width: 1, jed: jed, object_size: 1,
+          texture_path: '/images/texture-earth.jpg'
+        }, true);
     scene.add(earth.getEllipse());
     scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
-        {color: 0xA63A3A, width: 1, jed: jed, object_size: 1}, true);
+        {
+          color: 0xA63A3A, width: 1, jed: jed, object_size: 1,
+          texture_path: '/images/texture-mars.jpg'
+        }, true);
     scene.add(mars.getEllipse());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
-        {color: 0xFF7F50, width: 1, jed: jed, object_size: 1}, true);
+        {
+          color: 0xFF7F50, width: 1, jed: jed, object_size: 1,
+          texture_path: '/images/texture-jupiter.jpg'
+        }, true);
     scene.add(jupiter.getEllipse());
     scene.add(jupiter.getParticle());
 
@@ -373,9 +390,13 @@
 
         if (typeof datgui !== 'undefined') {
           // update with date
-          var georgian_date = fromJED(data.value.jed);
-          datgui['display date'] = georgian_date.getMonth()+1 + "/"
-            + georgian_date.getDate() + "/" + georgian_date.getFullYear();
+          var now = new Date().getTime();
+          if (now - display_date_last_updated > 500) {
+            var georgian_date = fromJED(data.value.jed);
+            datgui['display date'] = georgian_date.getMonth()+1 + "/"
+              + georgian_date.getDate() + "/" + georgian_date.getFullYear();
+            display_date_last_updated = now;
+          }
         }
 
         /*
@@ -444,7 +465,7 @@
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xffffff,
-          width:2,
+          width: 2,
           object_size: 0.7,
           jed: jed,
           particle_geometry: particle_system_geometry
@@ -470,16 +491,16 @@
         // build particlesystem
         var particle_system_material = new THREE.ParticleBasicMaterial({
           color: 0xffffff,
-          size: 1,
+          size: 5,
           blending: THREE.AdditiveBlending,
           map: THREE.ImageUtils.loadTexture(
-            "/images/asteroidsprite.png"
+            "/images/cloud3.png"
           ),
           transparent: true,
           depthTest: false,
-          vertexColor: true,
+          vertexColor: true
         });
-        particle_system_material.color.setHSV(1.0, 0.0, 1.0);
+        //particle_system_material.color.setHSV(0.5, 1.0, 0.5);
 
         particleSystem = new THREE.ParticleSystem(
           particle_system_geometry,
