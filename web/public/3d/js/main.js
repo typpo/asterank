@@ -475,7 +475,12 @@
           map: THREE.ImageUtils.loadTexture(
             "/images/asteroidsprite.png"
           ),
+          transparent: true,
+          depthTest: false,
+          vertexColor: true,
         });
+        particle_system_material.color.setHSV(1.0, 0.0, 1.0);
+
         particleSystem = new THREE.ParticleSystem(
           particle_system_geometry,
           particle_system_material
