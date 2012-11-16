@@ -20,7 +20,7 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = false;
+  var camera_fly_around = true;
   var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
@@ -276,9 +276,9 @@
     }
     if (camera_fly_around) {
       var timer = 0.0001 * Date.now();
-      cam.position.x = Math.cos( timer ) * 50;
+      cam.position.x = Math.cos(timer) * 25;
       //cam.position.y = Math.sin( timer ) * 100;
-      cam.position.z = -100 + Math.sin( timer ) * 40;
+      cam.position.z = -100 + Math.sin(timer) * 20;
     }
     /*
     if (object_movement_on && workers_initialized) {
