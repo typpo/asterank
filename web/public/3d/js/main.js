@@ -140,8 +140,8 @@
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    //camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
-    camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
+    camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
+    //camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
 
     window.cam = camera;
