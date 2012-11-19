@@ -524,7 +524,7 @@ scene.add(mesh);
         // build particlesystem
         var particle_system_material = new THREE.ParticleBasicMaterial({
           color: 0xffffff,
-          size: 5,
+          size: 10,
           blending: THREE.AdditiveBlending,
           map: THREE.ImageUtils.loadTexture(
             "/images/cloud3.png"
