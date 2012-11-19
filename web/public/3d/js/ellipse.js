@@ -36,14 +36,15 @@
 
     points = new THREE.Geometry();
     points.vertices = pts;
+    points.computeLineDistances(); // required for dotted lines
 
     var line = new THREE.Line(points,
       new THREE.LineDashedMaterial({
         color: this.opts.color,
         linewidth: this.opts.width,
         dashSize: 1,
-        gapSize: 0.5
-      }));
+        gapSize: 1,
+      }), THREE.LineStrip);
     return line;
   }
 
