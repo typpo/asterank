@@ -20,8 +20,8 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = false;
-  var object_movement_on = false;
+  var camera_fly_around = true;
+  var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
   var planets = [];
@@ -252,20 +252,18 @@ var path = "/images/s_";
             path + 'py' + format, path + 'ny' + format,
             path + 'pz' + format, path + 'nz' + format
           ];
-      var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
-              reflectionCube.format = THREE.RGBFormat;
+        var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
+        reflectionCube.format = THREE.RGBFormat;
 
-var shader = THREE.ShaderUtils.lib[ "cube" ];
+        var shader = THREE.ShaderUtils.lib[ "cube" ];
         shader.uniforms[ "tCube" ].value = reflectionCube;
 
         var material = new THREE.ShaderMaterial( {
-
           fragmentShader: shader.fragmentShader,
           vertexShader: shader.vertexShader,
           uniforms: shader.uniforms,
           depthWrite: false,
           side: THREE.BackSide
-
         } ),
 
         mesh = new THREE.Mesh( new THREE.CubeGeometry( 5000, 5000, 5000 ), material );
@@ -303,9 +301,9 @@ scene.add(mesh);
     }
     if (camera_fly_around) {
       var timer = 0.0001 * Date.now();
-      cam.position.x = Math.cos(timer) * 25;
+      cam.position.x = Math.sin(timer) * 10;
       //cam.position.y = Math.sin( timer ) * 100;
-      cam.position.z = -100 + Math.sin(timer) * 20;
+      cam.position.z = -100 + Math.cos(timer) * 20;
     }
     /*
     if (object_movement_on && workers_initialized) {
