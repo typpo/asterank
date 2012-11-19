@@ -493,9 +493,9 @@ scene.add(mesh);
         }
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
-          color: 0xffffff,
+          color: 0xcccccc,
           width: 2,
-          object_size: 0.7,
+          object_size: 1,
           jed: jed,
           particle_geometry: particle_system_geometry
         }, useBigParticles);
@@ -529,7 +529,7 @@ scene.add(mesh);
           depthTest: false,
           vertexColor: true
         });
-        //particle_system_material.color.setHSV(0.5, 1.0, 0.5);
+        //particle_system_material.color.setHSV(0, .80, .70);
 
         particleSystem = new THREE.ParticleSystem(
           particle_system_geometry,
