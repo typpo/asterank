@@ -511,7 +511,8 @@ scene.add(mesh);
                 $('#main-caption').html(roid.full_name + ' - no significant value');
               }
               else {
-                $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
+                $('#main-caption').html(roid.full_name
+                      + ' - $' + roid.fuzzed_price + ' in potential value');
               }
               $('#other-caption').html('(ranked #' + (i+1) + ')');
             });
