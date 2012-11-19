@@ -10,7 +10,9 @@
   <noscript>Sorry, this page requires Canvas/WebGL, so you'll need to enable JavaScript.</noscript>
   <script type="x-shader/x-vertex" id="vertexshader">
     #define pi 3.141592653589793238462643383279
-#
+
+    varying vec2 vUv;
+
     attribute float alpha;
     varying float vAlpha;
 
@@ -18,6 +20,7 @@
     uniform float earth_om;
 
     // TODO most of these should be uniforms, except for jed
+    // see https://github.com/mrdoob/three.js/wiki/Uniforms-types
     attribute float a;
     attribute float e;
     attribute float i;
@@ -75,6 +78,7 @@
 
     void main() {
         vAlpha = alpha;
+        vUv = uv;
         //vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
         vec3 newpos = getAstroPos();
         vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0 );
@@ -83,10 +87,13 @@
     }
   </script>
   <script type="x-shader/x-fragment" id="fragmentshader">
+      varying vec2 vUv;
       uniform vec3 color;
+      uniform sampler2D small_roid_texture;
       varying float vAlpha;
       void main() {
-          gl_FragColor = vec4( color, vAlpha );
+        //gl_FragColor = vec4( color, vAlpha );
+        gl_FragColor = texture2D(small_roid_texture, vUv);
       }
   </script>
   <div id="backhome">

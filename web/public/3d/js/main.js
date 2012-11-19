@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 7000;
+  var MAX_NUM_ORBITS = 3000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -337,10 +337,12 @@ scene.add(mesh);
     cameraControls.update();
 
     // update shader vals
+    // TODO only need to do this loop when user changes JED
     for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
       attributes.jed.value[i] = jed;
     }
     attributes.jed.needsUpdate = true; // important!
+    particle_system_geometry.verticesNeedUpdate = true;
     jed += .25;
 
     // actually render the scene
@@ -571,11 +573,16 @@ scene.add(mesh);
         };
 
         // uniforms
+        // https://github.com/mrdoob/three.js/wiki/Updates
         var uniforms = {
           color: { type: "c", value: new THREE.Color( 0xff0000 ) },
           earth_i: { type: "f", value: Ephemeris.earth.i },
           earth_om: { type: "f", value: Ephemeris.earth.om },
+          small_roid_texture:
+            { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") }
         };
+        uniforms.small_roid_texture.needsUpdate = true;
+        //uniforms.small_roid_texture.value.wrapS = uniforms.small_roid_texture.value.wrapT = THREE.ClampToEdgeWrapping;
         var vertexshader = document.getElementById( 'vertexshader' ).textContent
                               .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
         var particle_system_shader_material = new THREE.ShaderMaterial( {
@@ -584,6 +591,8 @@ scene.add(mesh);
             vertexShader:   vertexshader,
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent
         });
+        //particle_system_shader_material.dynamic = true;
+        //particle_system_shader_material.needsUpdate = true;
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
