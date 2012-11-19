@@ -52,7 +52,8 @@
     var pos = this.getPosAtTime(jed);
 
     if (this.bigParticle) {
-      var geometry= new THREE.SphereGeometry(this.opts.object_size);
+      //var obj = new THREE.Object3D();
+      var geometry = new THREE.SphereGeometry(this.opts.object_size);
       var mat_opts = {color: this.opts.color};
       if (texture_path) {
         $.extend(mat_opts, {
@@ -60,11 +61,27 @@
           wireframe: false,
           overdraw: true
         });
+        /*
+        var texture = THREE.ImageUtils.loadTexture(texture_path);
+        var sprite = new THREE.Sprite({
+          map: texture,
+          blending: THREE.AdditiveBlending,
+          useScreenCoordinates: false,
+          color: 0xffffff
+        });
+        sprite.scale.x = 10;
+        sprite.scale.y = 10;
+        sprite.scale.z = 1;
+        sprite.color.setHSV(1.0, 0.0, 1.0);
+        obj.add(sprite);
+        */
       }
       var material= new THREE.MeshBasicMaterial(mat_opts);
       this.particle = new THREE.Mesh(geometry, material);
       this.particle.scale.x = -1; // flip so texture shows up oriented correctly
       this.particle.position.set(pos[0], pos[1], pos[2]);
+      //obj.add(this.particle);
+      //this.particle = obj;
     }
     else if (this.particle_geometry) {
       this.farticle = new THREE.Vector3(

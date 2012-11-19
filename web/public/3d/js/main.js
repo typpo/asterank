@@ -201,35 +201,35 @@
     runAsteroidQuery();
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
-          color: 0x913CEE, width: 1, jed: jed, object_size: 1,
+          color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-mercury.jpg'
         }, true);
     scene.add(mercury.getEllipse());
     scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
         {
-          color: 0xFF7733, width: 1, jed: jed, object_size: 1,
+          color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-venus.jpg'
         }, true);
     scene.add(venus.getEllipse());
     scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
         {
-          color: 0x009ACD, width: 1, jed: jed, object_size: 1,
+          color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-earth.jpg'
         }, true);
     scene.add(earth.getEllipse());
     scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
         {
-          color: 0xA63A3A, width: 1, jed: jed, object_size: 1,
+          color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-mars.jpg'
         }, true);
     scene.add(mars.getEllipse());
     scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {
-          color: 0xFF7F50, width: 1, jed: jed, object_size: 1,
+          color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-jupiter.jpg'
         }, true);
     scene.add(jupiter.getEllipse());
@@ -495,7 +495,7 @@ scene.add(mesh);
         var orbit = new Orbit3D(roid, {
           color: 0xcccccc,
           width: 2,
-          object_size: 1,
+          object_size: 1.5,
           jed: jed,
           particle_geometry: particle_system_geometry
         }, useBigParticles);
