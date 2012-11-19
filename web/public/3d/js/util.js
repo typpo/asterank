@@ -10,15 +10,11 @@ function timedChunk(particles, positions, fn, context, callback){
     }
 
     if (i < positions.length) {
-      console.log(i);
-      setTimeout(function() {
-        tick();
-      }, 25);
+      setTimeout(tick, 25);
     } else {
       callback(positions, particles);
     }
   };
-
   setTimeout(tick, 25);
 }
 
