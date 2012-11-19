@@ -8,6 +8,35 @@
 	</head>
 <body>
   <noscript>Sorry, this page requires Canvas/WebGL, so you'll need to enable JavaScript.</noscript>
+  <script type="x-shader/x-vertex" id="vertexshader">
+    attribute float alpha;
+    varying float vAlpha;
+    attribute float jed;
+
+    vec3 getAstroPos() {
+      float x = 10.0;
+      float y = 10.0;
+      float z = 10.0;
+
+      return vec3(x, y, z);
+    }
+
+    void main() {
+        vAlpha = alpha;
+        //vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        vec3 newpos = getAstroPos();
+        vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0 );
+        gl_PointSize = 5.0;
+        gl_Position = projectionMatrix * mvPosition;
+    }
+  </script>
+  <script type="x-shader/x-fragment" id="fragmentshader">
+      uniform vec3 color;
+      varying float vAlpha;
+      void main() {
+          gl_FragColor = vec4( color, vAlpha );
+      }
+  </script>
   <div id="backhome">
     <p>
     <a href="/">&laquo; Main site</a>

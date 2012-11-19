@@ -535,9 +535,32 @@ scene.add(mesh);
         });
         //particle_system_material.color.setHSV(0, .80, .70);
 
+
+        // particle system SHADER material
+        // attributes
+        var attributes = {
+          alpha: { type: 'f', value: [] },
+        };
+
+        // uniforms
+        var uniforms = {
+          color: { type: "c", value: new THREE.Color( 0xff0000 ) },
+        };
+        var particle_system_shader_material = new THREE.ShaderMaterial( {
+            uniforms:       uniforms,
+            attributes:     attributes,
+            vertexShader:   document.getElementById( 'vertexshader' ).textContent,
+            fragmentShader: document.getElementById( 'fragmentshader' ).textContent
+        });
+        for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
+          // set alpha based on distance to (local) y-axis
+          attributes.alpha.value[ i ] = Math.abs( particle_system_geometry.vertices[ i ].x / 100 );
+        }
+
         particleSystem = new THREE.ParticleSystem(
           particle_system_geometry,
-          particle_system_material
+          //particle_system_material
+          particle_system_shader_material
         );
 
         // add it to the scene
