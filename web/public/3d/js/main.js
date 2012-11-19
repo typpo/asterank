@@ -245,7 +245,7 @@
         urls.push('/images/universe.jpg');
       }
 */
-var path = "/images/s_";
+var path = "/images/dark-s_";
         var format = '.jpg';
         var urls = [
             path + 'px' + format, path + 'nx' + format,
