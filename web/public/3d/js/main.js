@@ -15,6 +15,7 @@
 
   var WEB_GL_ENABLED = true;
   var MAX_NUM_ORBITS = 3000;
+  var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
   var camera, cameraControls;
@@ -39,6 +40,10 @@
   var workers_initialized = false;
   //var position_results_queue = [];
   var particleSystem;
+
+  // glsl stuff
+  var attributes;
+  var psg_vertex_offset;
 
   init();
   initGUI();
@@ -331,6 +336,12 @@ scene.add(mesh);
     // update camera controls
     cameraControls.update();
 
+    // update shader vals
+    for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
+      attributes.jed.value[i] = jed;
+    }
+    attributes.jed.needsUpdate = true; // important!
+
     // actually render the scene
     renderer.render(scene, camera);
   }
@@ -495,7 +506,7 @@ scene.add(mesh);
           width: 2,
           object_size: 1.5,
           jed: jed,
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry // will add itself to this geometry
         }, useBigParticles);
         if (useBigParticles) {
           // bind information/orbit mouseover
@@ -516,12 +527,16 @@ scene.add(mesh);
             });
           })(roid, orbit, i);
           scene.add(orbit.getParticle());
+        } // end bigParticle logic
+        else {
+
         }
         added_objects.push(orbit);
       }
 
       if (using_webgl) {
         // build particlesystem
+        /*
         var particle_system_material = new THREE.ParticleBasicMaterial({
           color: 0xffffff,
           size: 10,
@@ -533,28 +548,60 @@ scene.add(mesh);
           depthTest: false,
           vertexColor: true
         });
+        */
         //particle_system_material.color.setHSV(0, .80, .70);
 
 
         // particle system SHADER material
         // attributes
-        var attributes = {
+        attributes = {
           alpha: { type: 'f', value: [] },
+          a: { type: 'f', value: [] },
+          e: { type: 'f', value: [] },
+          i: { type: 'f', value: [] },
+          o: { type: 'f', value: [] },
+          p: { type: 'f', value: [] },
+          ma: { type: 'f', value: [] },
+          n: { type: 'f', value: [] },
+          w: { type: 'f', value: [] },
+          P: { type: 'f', value: [] },
+          epoch: { type: 'f', value: [] },
+          jed: { type: 'f', value: [] },
         };
 
         // uniforms
         var uniforms = {
           color: { type: "c", value: new THREE.Color( 0xff0000 ) },
+          earth_i: { type: "f", value: Ephemeris.earth.i },
+          earth_om: { type: "f", value: Ephemeris.earth.om },
         };
+        var vertexshader = document.getElementById( 'vertexshader' ).textContent
+                              .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
         var particle_system_shader_material = new THREE.ShaderMaterial( {
             uniforms:       uniforms,
             attributes:     attributes,
-            vertexShader:   document.getElementById( 'vertexshader' ).textContent,
+            vertexShader:   vertexshader,
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent
         });
+        psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
           attributes.alpha.value[ i ] = Math.abs( particle_system_geometry.vertices[ i ].x / 100 );
+          if (i < psg_vertex_offset) {
+            // these are planets and bigParticles, our shaders won't apply
+            continue;
+          }
+          attributes.a.value[i] = added_objects[i].eph.a;
+          attributes.e.value[i] = added_objects[i].eph.e;
+          attributes.i.value[i] = added_objects[i].eph.i;
+          attributes.o.value[i] = added_objects[i].eph.om;
+          attributes.p.value[i] = added_objects[i].eph.p;
+          attributes.ma.value[i] = added_objects[i].eph.ma;
+          attributes.n.value[i] = added_objects[i].eph.n || -1.0;
+          attributes.w.value[i] = added_objects[i].eph.w;
+          attributes.P.value[i] = added_objects[i].eph.P;
+          attributes.epoch.value[i] = added_objects[i].eph.epoch;
+          attributes.jed.value[i] = jed;
         }
 
         particleSystem = new THREE.ParticleSystem(
@@ -571,7 +618,7 @@ scene.add(mesh);
 
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
       initSimulation();
-      startSimulation();
+      //startSimulation();
       animate();
       $('#loading').hide();
     });
