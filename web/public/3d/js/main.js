@@ -507,7 +507,12 @@ scene.add(mesh);
               lastHovered = orbit.getEllipse();
               // TODO hitting escape should cancel this
               scene.add(lastHovered);
-              $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
+              if (roid.price < 1e10) {
+                $('#main-caption').html(roid.full_name + ' - no significant value');
+              }
+              else {
+                $('#main-caption').html(roid.full_name + ' - $' + roid.fuzzed_price + ' in potential value');
+              }
               $('#other-caption').html('(ranked #' + (i+1) + ')');
             });
           })(roid, orbit, i);
