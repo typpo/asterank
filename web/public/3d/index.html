@@ -19,7 +19,9 @@
     uniform float earth_i;
     uniform float earth_om;
 
-    // TODO most of these should be uniforms, except for jed
+    uniform float jed;
+
+    // TODO most of these should be uniforms?
     // see https://github.com/mrdoob/three.js/wiki/Uniforms-types
     attribute float a;
     attribute float e;
@@ -31,7 +33,6 @@
     attribute float n;
     attribute float w;
     attribute float epoch;
-    attribute float jed;
 
     vec3 getAstroPos() {
       float i_rad = (i - earth_i) * pi/180.0;
@@ -92,8 +93,8 @@
       uniform sampler2D small_roid_texture;
       varying float vAlpha;
       void main() {
-        //gl_FragColor = vec4( color, vAlpha );
-        gl_FragColor = texture2D(small_roid_texture, vUv);
+        gl_FragColor = vec4( color, vAlpha );
+        //gl_FragColor = texture2D(small_roid_texture, vUv);
       }
   </script>
   <div id="backhome">

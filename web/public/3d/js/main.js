@@ -43,6 +43,7 @@
 
   // glsl stuff
   var attributes;
+  var uniforms;
   var psg_vertex_offset;
 
   init();
@@ -338,11 +339,13 @@ scene.add(mesh);
 
     // update shader vals
     // TODO only need to do this loop when user changes JED
+    /*
     for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
       attributes.jed.value[i] = jed;
     }
     attributes.jed.needsUpdate = true; // important!
-    particle_system_geometry.verticesNeedUpdate = true;
+    */
+    uniforms.jed.value = jed;
     jed += .25;
 
     // actually render the scene
@@ -568,14 +571,14 @@ scene.add(mesh);
           n: { type: 'f', value: [] },
           w: { type: 'f', value: [] },
           P: { type: 'f', value: [] },
-          epoch: { type: 'f', value: [] },
-          jed: { type: 'f', value: [] },
+          epoch: { type: 'f', value: [] }
         };
 
         // uniforms
         // https://github.com/mrdoob/three.js/wiki/Updates
-        var uniforms = {
+        uniforms = {
           color: { type: "c", value: new THREE.Color( 0xff0000 ) },
+          jed: { type: 'f', value: jed },
           earth_i: { type: "f", value: Ephemeris.earth.i },
           earth_om: { type: "f", value: Ephemeris.earth.om },
           small_roid_texture:
@@ -591,8 +594,6 @@ scene.add(mesh);
             vertexShader:   vertexshader,
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent
         });
-        //particle_system_shader_material.dynamic = true;
-        //particle_system_shader_material.needsUpdate = true;
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
@@ -611,7 +612,6 @@ scene.add(mesh);
           attributes.w.value[i] = added_objects[i].eph.w;
           attributes.P.value[i] = added_objects[i].eph.P;
           attributes.epoch.value[i] = added_objects[i].eph.epoch;
-          attributes.jed.value[i] = jed;
         }
 
         particleSystem = new THREE.ParticleSystem(
