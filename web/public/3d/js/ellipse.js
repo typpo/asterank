@@ -38,7 +38,12 @@
     points.vertices = pts;
 
     var line = new THREE.Line(points,
-      new THREE.LineBasicMaterial({color: this.opts.color, linewidth: this.opts.width}));
+      new THREE.LineDashedMaterial({
+        color: this.opts.color,
+        linewidth: this.opts.width,
+        dashSize: 1,
+        gapSize: 0.5
+      }));
     return line;
   }
 

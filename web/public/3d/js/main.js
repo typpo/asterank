@@ -20,8 +20,8 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = true;
-  var object_movement_on = true;
+  var camera_fly_around = false;
+  var object_movement_on = false;
   var lastHovered;
   var added_objects = [];
   var planets = [];
@@ -40,7 +40,7 @@
   //var position_results_queue = [];
   var particleSystem;
 
-  if(!init())	animate();
+  init();
   initGUI();
 
   $('#btn-toggle-movement').on('click', function() {
@@ -87,7 +87,6 @@
         var newdate = Date.parse(val);
         if (newdate) {
           var newjed = toJED(newdate);
-          console.log('Changing date to', newdate, ' -> ', newjed);
           changeJED(newjed);
         }
       }).listen();
@@ -140,9 +139,12 @@
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
+    camera.position.set(0, -155, 32);
+    //camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
     //camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
+    //camera.position.set(-145, 41, -31);
+    // 77, -155, 23
 
     window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
@@ -159,40 +161,31 @@
     // Rendering stuff
 
     // "sun" - 0,0 marker
-    (function() {
-
-      if (using_webgl) {
-        /*
-           var geometry= new THREE.SphereGeometry(1);
-           var material= new THREE.MeshBasicMaterial({color: 0xffee00});
-           var mesh = new THREE.Mesh(geometry, material);
-           scene.add(mesh);
-           */
-        var sun = new THREE.Object3D();
-        var texture = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
-        var sprite = new THREE.Sprite({
-          map: texture,
-          blending: THREE.AdditiveBlending,
-          useScreenCoordinates: false,
-          color: 0xffffff
-        });
-        sprite.scale.x = .1;
-        sprite.scale.y = .1;
-        sprite.scale.z = .1;
-        sprite.color.setHSV(1.0, 0.0, 1.0);
-        sun.add(sprite);
-        scene.add(sun);
-      }
-      else {
-        var material = new THREE.ParticleBasicMaterial({
-          map: new THREE.Texture( starTexture(0xfff2a1,1) ),
-          blending: THREE.AdditiveBlending
-        });
-        var particle = new THREE.Particle(material);
-        particle.isClickable = false;
-        scene.add(particle);
-      }
-    })();
+    if (using_webgl) {
+      var sun = new THREE.Object3D();
+      var texture = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
+      var sprite = new THREE.Sprite({
+        map: texture,
+        blending: THREE.AdditiveBlending,
+        useScreenCoordinates: false,
+        color: 0xffffff
+      });
+      sprite.scale.x = 50;
+      sprite.scale.y = 50;
+      sprite.scale.z = 1;
+      sprite.color.setHSV(1.0, 0.0, 1.0);
+      sun.add(sprite);
+      scene.add(sun);
+    }
+    else {
+      var material = new THREE.ParticleBasicMaterial({
+        map: new THREE.Texture( starTexture(0xfff2a1,1) ),
+        blending: THREE.AdditiveBlending
+      });
+      var particle = new THREE.Particle(material);
+      particle.isClickable = false;
+      scene.add(particle);
+    }
 
     /*
     var plane = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshBasicMaterial({
@@ -244,9 +237,42 @@
 
     planets = [mercury, venus, earth, mars, jupiter];
 
-
     // Sky
     if (using_webgl) {
+/*
+      var urls = [];
+      for (var i=0 ; i<6; i++) {
+        urls.push('/images/universe.jpg');
+      }
+*/
+var path = "/images/s_";
+        var format = '.jpg';
+        var urls = [
+            path + 'px' + format, path + 'nx' + format,
+            path + 'py' + format, path + 'ny' + format,
+            path + 'pz' + format, path + 'nz' + format
+          ];
+      var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
+              reflectionCube.format = THREE.RGBFormat;
+
+var shader = THREE.ShaderUtils.lib[ "cube" ];
+        shader.uniforms[ "tCube" ].value = reflectionCube;
+
+        var material = new THREE.ShaderMaterial( {
+
+          fragmentShader: shader.fragmentShader,
+          vertexShader: shader.vertexShader,
+          uniforms: shader.uniforms,
+          depthWrite: false,
+          side: THREE.BackSide
+
+        } ),
+
+        mesh = new THREE.Mesh( new THREE.CubeGeometry( 5000, 5000, 5000 ), material );
+scene.add(mesh);
+/*
+
+
       var materialArray = [];
       materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
       materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
@@ -255,9 +281,10 @@
       materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
       materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
       var skyboxGeom = new THREE.CubeGeometry(5000, 5000, 5000, 1, 1, 1, materialArray);
-      var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial() );
+      var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial(materialArray) );
       skybox.flipSided = true;
       scene.add(skybox);
+*/
     }
 
     $('#container').on('mousedown', function() {
@@ -440,7 +467,9 @@
     }
     // TODO right now this can only happen once
 
-    if (lastHovered) scene.remove(lastHovered);
+    if (lastHovered) {
+      scene.remove(lastHovered);
+    }
 
     // Get new data points
     $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
@@ -516,6 +545,7 @@
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
       initSimulation();
       startSimulation();
+      animate();
       $('#loading').hide();
     });
   }
