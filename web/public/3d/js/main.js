@@ -27,7 +27,7 @@
   var added_objects = [];
   var planets = [];
   var planet_orbits_visible = true;
-  var jed = 2451545.0;
+  var jed = 2451545.0;  // 1/1/00
   var particle_system_geometry = null;
   var asteroids_loaded = false;
   var display_date_last_updated = 0;
@@ -584,8 +584,6 @@ scene.add(mesh);
           small_roid_texture:
             { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") }
         };
-        uniforms.small_roid_texture.needsUpdate = true;
-        //uniforms.small_roid_texture.value.wrapS = uniforms.small_roid_texture.value.wrapT = THREE.ClampToEdgeWrapping;
         var vertexshader = document.getElementById( 'vertexshader' ).textContent
                               .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
         var particle_system_shader_material = new THREE.ShaderMaterial( {
@@ -594,6 +592,15 @@ scene.add(mesh);
             vertexShader:   vertexshader,
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent
         });
+        particle_system_shader_material.depthTest = false;
+        particle_system_shader_material.transparent = true;
+        particle_system_shader_material.vertexColor = true;
+        // TODO
+        /*
+          transparent: true,
+          depthTest: false,
+          vertexColor: true
+          */
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
