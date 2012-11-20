@@ -11,7 +11,7 @@
   <script type="x-shader/x-vertex" id="vertexshader">
     #define pi 3.141592653589793238462643383279
 
-    varying vec2 vUv;
+    //varying vec2 vUv;
 
     attribute float alpha;
     varying float vAlpha;
@@ -79,22 +79,25 @@
 
     void main() {
         vAlpha = alpha;
-        vUv = uv;
+        //vUv = uv;
         //vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
         vec3 newpos = getAstroPos();
         vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0 );
-        gl_PointSize = 5.0;
         gl_Position = projectionMatrix * mvPosition;
+        //gl_PointSize = 5.0;
+        gl_PointSize = 15.0;
     }
   </script>
   <script type="x-shader/x-fragment" id="fragmentshader">
-      varying vec2 vUv;
+      //varying vec2 vUv;
       uniform vec3 color;
       uniform sampler2D small_roid_texture;
       varying float vAlpha;
       void main() {
-        gl_FragColor = vec4( color, vAlpha );
+        //gl_FragColor = vec4( color, vAlpha );
         //gl_FragColor = texture2D(small_roid_texture, vUv);
+        gl_FragColor = texture2D(small_roid_texture, vec2( gl_PointCoord.x, 1.0 - gl_PointCoord.y ) );
+        //gl_FragColor = texture2D(small_roid_texture, vAlpha);
       }
   </script>
   <div id="backhome">

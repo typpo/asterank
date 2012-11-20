@@ -428,7 +428,7 @@ scene.add(mesh);
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
-        particle_system_geometry.verticesNeedUpdate = true;
+        //particle_system_geometry.verticesNeedUpdate = true;  // TODO this necessary?
 
         if (typeof datgui !== 'undefined') {
           // update with date
@@ -542,7 +542,6 @@ scene.add(mesh);
 
       if (using_webgl) {
         // build particlesystem
-        /*
         var particle_system_material = new THREE.ParticleBasicMaterial({
           color: 0xffffff,
           size: 10,
@@ -554,7 +553,6 @@ scene.add(mesh);
           depthTest: false,
           vertexColor: true
         });
-        */
         //particle_system_material.color.setHSV(0, .80, .70);
 
 
@@ -593,14 +591,10 @@ scene.add(mesh);
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent
         });
         particle_system_shader_material.depthTest = false;
+        /*
         particle_system_shader_material.transparent = true;
         particle_system_shader_material.vertexColor = true;
-        // TODO
-        /*
-          transparent: true,
-          depthTest: false,
-          vertexColor: true
-          */
+        */
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
@@ -627,6 +621,8 @@ scene.add(mesh);
           particle_system_shader_material
         );
 
+        window.poop = particle_system_material;
+
         // add it to the scene
         particleSystem.sortParticles = true;
         scene.add(particleSystem);
@@ -635,7 +631,7 @@ scene.add(mesh);
 
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
       initSimulation();
-      //startSimulation();
+      startSimulation();
       animate();
       $('#loading').hide();
     });
