@@ -60,6 +60,7 @@ body {
 	bottom		: 0px;
 	right		: 5px;
 	padding		: 5px;
+  text-align: right;
 }
 
 #loading {
