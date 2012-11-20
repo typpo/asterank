@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 3000;
+  var MAX_NUM_ORBITS = 7000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -121,7 +121,7 @@
         antialias		: true,	// to get smoother output
         //preserveDrawingBuffer	: true	// to allow screenshot
       });
-      renderer.setClearColorHex(0x000000, 1);
+      renderer.setClearColor(0x000000, 1);
       using_webgl = true;
     }
     else {
@@ -131,12 +131,10 @@
     document.getElementById('container').appendChild(renderer.domElement);
 
     // Set up stats
-    /*
     stats = new Stats();
     stats.domElement.style.position	= 'absolute';
     stats.domElement.style.bottom	= '0px';
     document.body.appendChild(stats.domElement);
-    */
 
     // create a scene
     scene = new THREE.Scene();
@@ -591,10 +589,10 @@ scene.add(mesh);
             fragmentShader: document.getElementById( 'fragmentshader' ).textContent
         });
         particle_system_shader_material.depthTest = false;
-        /*
-        particle_system_shader_material.transparent = true;
         particle_system_shader_material.vertexColor = true;
-        */
+        particle_system_shader_material.transparent = true;
+        particle_system_shader_material.blending = THREE.AdditiveBlending;
+
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
