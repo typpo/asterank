@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 7000;
+  var MAX_NUM_ORBITS = 3000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -540,6 +540,7 @@ scene.add(mesh);
 
       if (using_webgl) {
         // build particlesystem
+        /*
         var particle_system_material = new THREE.ParticleBasicMaterial({
           color: 0xffffff,
           size: 10,
@@ -551,6 +552,7 @@ scene.add(mesh);
           depthTest: false,
           vertexColor: true
         });
+        */
         //particle_system_material.color.setHSV(0, .80, .70);
 
 
@@ -586,7 +588,7 @@ scene.add(mesh);
             uniforms:       uniforms,
             attributes:     attributes,
             vertexShader:   vertexshader,
-            fragmentShader: document.getElementById( 'fragmentshader' ).textContent
+            fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
         });
         particle_system_shader_material.depthTest = false;
         particle_system_shader_material.vertexColor = true;
@@ -618,8 +620,6 @@ scene.add(mesh);
           //particle_system_material
           particle_system_shader_material
         );
-
-        window.poop = particle_system_material;
 
         // add it to the scene
         particleSystem.sortParticles = true;
