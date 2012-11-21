@@ -103,7 +103,9 @@
 
       //mediump vec3 fragcolor = vec3(texture2D(small_roid_texture, gl_PointCoord.xy));
       //gl_FragColor = fragcolor;
-      gl_FragColor = texture2D(small_roid_texture, gl_PointCoord.xy);
+      gl_FragColor = texture2D(small_roid_texture,
+          vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
+      //if ( gl_FragColor.a < 0.10) discard;
     }
   </script>
   <div id="backhome">

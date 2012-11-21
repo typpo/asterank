@@ -532,9 +532,6 @@ scene.add(mesh);
           })(roid, orbit, i);
           scene.add(orbit.getParticle());
         } // end bigParticle logic
-        else {
-
-        }
         added_objects.push(orbit);
       }
 
