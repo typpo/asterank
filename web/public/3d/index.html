@@ -86,8 +86,6 @@
       gl_Position = projectionMatrix * mvPosition;
       gl_PointSize = 15.0;
       center = gl_Position.xy;
-
-
       //vUv = uv2;
     }
   </script>
@@ -132,6 +130,11 @@
       }
       gl_FragColor = vec4(color, opacity);
        */
+    }
+  </script>
+  <script type="x-shader/x-fragment" id="bigparticle-fragmentshader">
+    void main() {
+      gl_FragColor = vec4(255.0, 255.0, 255.0, 1.0);
     }
   </script>
   <div id="backhome">
