@@ -552,7 +552,6 @@ scene.add(mesh);
         */
         //particle_system_material.color.setHSV(0, .80, .70);
 
-
         // particle system SHADER material
         // attributes
         attributes = {
@@ -572,7 +571,7 @@ scene.add(mesh);
         // uniforms
         // https://github.com/mrdoob/three.js/wiki/Updates
         uniforms = {
-          color: { type: "c", value: new THREE.Color( 0xff0000 ) },
+          color: { type: "c", value: new THREE.Color( 0xffffff ) },
           jed: { type: 'f', value: jed },
           earth_i: { type: "f", value: Ephemeris.earth.i },
           earth_om: { type: "f", value: Ephemeris.earth.om },

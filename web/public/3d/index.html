@@ -12,6 +12,7 @@
     #define pi 3.141592653589793238462643383279
 
     varying vec2 vUv;
+    varying vec2 center;
 
     attribute float alpha;
     varying float vAlpha;
@@ -84,12 +85,15 @@
       vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0);
       gl_Position = projectionMatrix * mvPosition;
       gl_PointSize = 15.0;
+      center = gl_Position.xy;
+
 
       //vUv = uv2;
     }
   </script>
   <script type="x-shader/x-fragment" id="fragmentshader">
     varying vec2 vUv;
+    varying vec2 center;
     uniform vec3 color;
     uniform sampler2D small_roid_texture;
     varying float vAlpha;
@@ -97,15 +101,37 @@
     void main() {
       //gl_FragColor = vec4( color, vAlpha );
       //gl_FragColor = texture2D(small_roid_texture, vUv);
-
-      //vec3 buttho = vec3(texture2D(small_roid_texture, gl_PointCoord.xy));
-      //gl_FragColor = vec4(buttho, 0.1);
-
-      //mediump vec3 fragcolor = vec3(texture2D(small_roid_texture, gl_PointCoord.xy));
-      //gl_FragColor = fragcolor;
-      gl_FragColor = texture2D(small_roid_texture,
+      //vec4 sum = texture2D(small_roid_texture,
+        //vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
+     //gl_FragColor = sum;
+//vec2 pos = mod(gl_PointCoord.xy, vec2(0.5, 0.5));
+      float xs = gl_PointCoord.x - 0.5;
+      float ys = gl_PointCoord.y - 0.5;
+      float dist = sqrt(xs*xs + ys*ys);
+      if (dist > 0.25) {
+        gl_FragColor = texture2D(small_roid_texture,
+          vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y))
+          * vec4(1.0, 1.0, 1.0, 0.5);
+      }
+      else {
+        gl_FragColor = texture2D(small_roid_texture,
           vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
-      //if ( gl_FragColor.a < 0.10) discard;
+      }
+      /*
+      float opacity;
+      if (dist > 0.25) {
+        discard;
+        return;
+      }
+      else if (dist < 0.05) {
+        opacity = 1.0;
+      }
+      else {
+        //opacity = 1.0 - max(0.0, min(1.0, dist));
+        opacity = 0.1;
+      }
+      gl_FragColor = vec4(color, opacity);
+       */
     }
   </script>
   <div id="backhome">
