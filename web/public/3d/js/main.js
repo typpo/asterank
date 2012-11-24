@@ -335,17 +335,6 @@ scene.add(mesh);
     // update camera controls
     cameraControls.update();
 
-    // update shader vals
-    // TODO only need to do this loop when user changes JED
-    /*
-    for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
-      attributes.jed.value[i] = jed;
-    }
-    attributes.jed.needsUpdate = true; // important!
-    */
-    uniforms.jed.value = jed;
-    jed += .25;
-
     // actually render the scene
     renderer.render(scene, camera);
   }
@@ -426,6 +415,11 @@ scene.add(mesh);
           //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
+
+        // update shader vals for asteroid cloud
+        uniforms.jed.value = jed;
+        jed += .25;
+
         //particle_system_geometry.verticesNeedUpdate = true;  // TODO this necessary?
 
         if (typeof datgui !== 'undefined') {

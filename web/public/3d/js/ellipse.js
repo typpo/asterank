@@ -76,19 +76,20 @@
         obj.add(sprite);
         */
       }
-      //var material= new THREE.MeshBasicMaterial(mat_opts);
+      var material= new THREE.MeshBasicMaterial(mat_opts);
+      /*
         var attributes = {
-          alpha: { type: 'f', value: 1.0 },
-          a: { type: 'f', value: this.eph.a },
-          e: { type: 'f', value: this.eph.e },
-          i: { type: 'f', value: this.eph.i },
-          o: { type: 'f', value: this.eph.om },
-          p: { type: 'f', value: this.eph.p },
-          ma: { type: 'f', value: this.eph.ma },
-          n: { type: 'f', value: this.eph.n || -1.0 },
-          w: { type: 'f', value: this.eph.w },
-          P: { type: 'f', value: this.eph.P },
-          epoch: { type: 'f', value: this.eph.epoch }
+          alpha: { type: 'f', value: [1.0] },
+          a: { type: 'f', value: [this.eph.a] },
+          e: { type: 'f', value: [this.eph.e] },
+          i: { type: 'f', value: [this.eph.i] },
+          o: { type: 'f', value: [this.eph.om] },
+          p: { type: 'f', value: [this.eph.p] },
+          ma: { type: 'f', value: [this.eph.ma] },
+          n: { type: 'f', value: [this.eph.n || -1.0] },
+          w: { type: 'f', value: [this.eph.w] },
+          P: { type: 'f', value: [this.eph.P] },
+          epoch: { type: 'f', value: [this.eph.epoch] }
         };
 
         var uniforms = {
@@ -107,9 +108,10 @@
             vertexShader:   vertexshader,
             fragmentShader: document.getElementById('bigparticle-fragmentshader').textContent,
         });
+        */
       this.particle = new THREE.Mesh(geometry, material);
-      this.particle.scale.x = -1; // flip so texture shows up oriented correctly
-      this.particle.position.set(pos[0], pos[1], pos[2]);
+      //this.particle.scale.x = -1; // flip so texture shows up oriented correctly
+      //this.particle.position.set(pos[0], pos[1], pos[2]);
       //obj.add(this.particle);
       //this.particle = obj;
     }
