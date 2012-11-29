@@ -335,6 +335,10 @@ scene.add(mesh);
     // update camera controls
     cameraControls.update();
 
+        // update shader vals for asteroid cloud
+        uniforms.jed.value = jed;
+        jed += .25;
+
     // actually render the scene
     renderer.render(scene, camera);
   }
@@ -416,10 +420,6 @@ scene.add(mesh);
           particles[i].MoveParticleToPosition(positions[i]);
         }
 
-        // update shader vals for asteroid cloud
-        uniforms.jed.value = jed;
-        jed += .25;
-
         //particle_system_geometry.verticesNeedUpdate = true;  // TODO this necessary?
 
         if (typeof datgui !== 'undefined') {
@@ -472,7 +472,6 @@ scene.add(mesh);
     if (asteroids_loaded) {
       stopSimulation();
     }
-    // TODO right now this can only happen once
 
     if (lastHovered) {
       scene.remove(lastHovered);
@@ -559,7 +558,8 @@ scene.add(mesh);
           n: { type: 'f', value: [] },
           w: { type: 'f', value: [] },
           P: { type: 'f', value: [] },
-          epoch: { type: 'f', value: [] }
+          epoch: { type: 'f', value: [] },
+          value_color : { type: 'c', value: [] }
         };
 
         // uniforms
@@ -603,6 +603,17 @@ scene.add(mesh);
           attributes.w.value[i] = added_objects[i].eph.w;
           attributes.P.value[i] = added_objects[i].eph.P;
           attributes.epoch.value[i] = added_objects[i].eph.epoch;
+          // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
+          attributes.value_color.value[i] = new THREE.Color(0xff0000);
+          /*
+          (function() {
+              return new THREE.Color(0xff0000);
+            if (added_objects[i].price > 1e11) {
+            }
+            return new THREE.Color(0xffffff);
+
+          })();
+          */
         }
 
         particleSystem = new THREE.ParticleSystem(
