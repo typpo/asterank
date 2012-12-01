@@ -500,6 +500,12 @@ scene.add(mesh);
         var roid = data.results.rankings[i];
         var orbit = new Orbit3D(roid, {
           color: 0xcccccc,
+          display_color: (function() {
+            if (roid.price > 1e12) {
+              return new THREE.Color(0x00ff00);
+            }
+            return new THREE.Color(0xffffff);
+          })(),
           width: 2,
           object_size: 1.5,
           jed: jed,
@@ -589,31 +595,19 @@ scene.add(mesh);
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           // set alpha based on distance to (local) y-axis
           attributes.alpha.value[ i ] = Math.abs( particle_system_geometry.vertices[ i ].x / 100 );
-          if (i < psg_vertex_offset) {
-            // these are planets and bigParticles, our shaders won't apply
-            continue;
-          }
-          attributes.a.value[i] = added_objects[i].eph.a;
-          attributes.e.value[i] = added_objects[i].eph.e;
-          attributes.i.value[i] = added_objects[i].eph.i;
-          attributes.o.value[i] = added_objects[i].eph.om;
-          attributes.p.value[i] = added_objects[i].eph.p;
-          attributes.ma.value[i] = added_objects[i].eph.ma;
-          attributes.n.value[i] = added_objects[i].eph.n || -1.0;
-          attributes.w.value[i] = added_objects[i].eph.w;
-          attributes.P.value[i] = added_objects[i].eph.P;
-          attributes.epoch.value[i] = added_objects[i].eph.epoch;
+          var added_objects_idx = i + psg_vertex_offset;
+          attributes.a.value[i] = added_objects[added_objects_idx].eph.a;
+          attributes.e.value[i] = added_objects[added_objects_idx].eph.e;
+          attributes.i.value[i] = added_objects[added_objects_idx].eph.i;
+          attributes.o.value[i] = added_objects[added_objects_idx].eph.om;
+          attributes.p.value[i] = added_objects[added_objects_idx].eph.p;
+          attributes.ma.value[i] = added_objects[added_objects_idx].eph.ma;
+          attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
+          attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
+          attributes.P.value[i] = added_objects[added_objects_idx].eph.P;
+          attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
           // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
-          attributes.value_color.value[i] = new THREE.Color(0xff0000);
-          /*
-          (function() {
-              return new THREE.Color(0xff0000);
-            if (added_objects[i].price > 1e11) {
-            }
-            return new THREE.Color(0xffffff);
-
-          })();
-          */
+          attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
         }
 
         particleSystem = new THREE.ParticleSystem(
