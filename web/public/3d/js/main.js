@@ -501,10 +501,20 @@ scene.add(mesh);
         var orbit = new Orbit3D(roid, {
           color: 0xcccccc,
           display_color: (function() {
-            if (roid.price > 1e12) {
-              return new THREE.Color(0x00ff00);
-            }
-            return new THREE.Color(0xffffff);
+            var normal = parseFloat(1e12);
+            if (roid.price < 1)
+              return new THREE.Color(0xcccccc);
+
+            var adjustment = roid.price / normal;
+            console.log(adjustment);
+            var ret = new THREE.Color(getColorFromPercent(
+              adjustment,
+              0x00ff00,
+              0x0000ff
+
+            ));
+            // TODO change size too
+            return ret;
           })(),
           width: 2,
           object_size: 1.5,
