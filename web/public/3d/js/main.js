@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 7000;
+  var MAX_NUM_ORBITS = 15000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -431,7 +431,7 @@
       added_objects = planets.slice();
       particle_system_geometry = new THREE.Geometry();
 
-      var useBigParticles = true;
+      var useBigParticles = !using_webgl;
       for (var i=0; i < n; i++) {
         if (i === NUM_BIG_PARTICLES) {
           if (!using_webgl) {
@@ -522,7 +522,8 @@
           w: { type: 'f', value: [] },
           P: { type: 'f', value: [] },
           epoch: { type: 'f', value: [] },
-          value_color : { type: 'c', value: [] }
+          value_color : { type: 'c', value: [] },
+          size: { type: 'f', value: [] }
         };
 
         uniforms = {
@@ -549,6 +550,8 @@
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
           var added_objects_idx = i + psg_vertex_offset;
+
+          attributes.size.value[i] = i < 30 ? 50 : 15;
 
           attributes.a.value[i] = added_objects[added_objects_idx].eph.a;
           attributes.e.value[i] = added_objects[added_objects_idx].eph.e;

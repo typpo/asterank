@@ -17,6 +17,8 @@
     attribute vec3 value_color;
     varying vec3 vColor;
 
+    attribute float size;
+
     uniform float earth_i;
     uniform float earth_om;
 
@@ -82,7 +84,7 @@
       vec3 newpos = getAstroPos();
       vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0);
       gl_Position = projectionMatrix * mvPosition;
-      gl_PointSize = 15.0;
+      gl_PointSize = size;
       //vUv = uv2;
     }
   </script>
