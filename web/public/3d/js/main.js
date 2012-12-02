@@ -505,8 +505,9 @@ scene.add(mesh);
               return new THREE.Color(0x00ff00);
             return new THREE.Color(0xcccccc);
 
-            var normal = parseFloat(1e12);
-            if (roid.price < 1)
+            /*
+            var normal = parseFloat(1e11);
+            if (roid.profit < 1)
               return new THREE.Color(0xcccccc);
 
             var adjustment = roid.profit / normal;
@@ -514,11 +515,12 @@ scene.add(mesh);
             var ret = new THREE.Color(getColorFromPercent(
               adjustment,
               0x00ff00,
-              0xff0000
+              0xcccccc
 
             ));
             // TODO change size too
             return ret;
+            */
           })(),
           width: 2,
           object_size: 1.5,
