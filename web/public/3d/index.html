@@ -8,30 +8,24 @@
 	</head>
 <body>
   <noscript>Sorry, this page requires Canvas/WebGL, so you'll need to enable JavaScript.</noscript>
+
   <script type="x-shader/x-vertex" id="vertexshader">
     #define pi 3.141592653589793238462643383279
 
     varying vec2 vUv;
-    varying vec2 center;
 
     attribute vec3 value_color;
     varying vec3 vColor;
-
-    attribute float alpha;
-    varying float vAlpha;
 
     uniform float earth_i;
     uniform float earth_om;
 
     uniform float jed;
 
-    // TODO most of these should be uniforms?
-    // see https://github.com/mrdoob/three.js/wiki/Uniforms-types
     attribute float a;
     attribute float e;
     attribute float i;
     attribute float o;
-    attribute float p;
     attribute float P;
     attribute float ma;
     attribute float n;
@@ -82,7 +76,6 @@
     }
 
     void main() {
-      vAlpha = alpha;
       vColor = value_color;
 
       //vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
@@ -90,20 +83,16 @@
       vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0);
       gl_Position = projectionMatrix * mvPosition;
       gl_PointSize = 15.0;
-      center = gl_Position.xy;
       //vUv = uv2;
     }
   </script>
   <script type="x-shader/x-fragment" id="fragmentshader">
     varying vec2 vUv;
-    varying vec2 center;
     varying vec3 vColor;
     uniform vec3 color;
     uniform sampler2D small_roid_texture;
-    varying float vAlpha;
 
     void main() {
-      //gl_FragColor = vec4( color, vAlpha );
       //gl_FragColor = texture2D(small_roid_texture, vUv);
       //vec4 sum = texture2D(small_roid_texture,
         //vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
@@ -135,18 +124,91 @@
         opacity = 1.0;
       }
       else {
-        //opacity = 1.0 - max(0.0, min(1.0, dist));
         opacity = 0.1;
       }
       gl_FragColor = vec4(color, opacity);
        */
     }
   </script>
-  <script type="x-shader/x-fragment" id="bigparticle-fragmentshader">
+  <script type="x-shader/x-vertex" id="bigparticle-vertexshader">
+    #define pi 3.141592653589793238462643383279
+
+    uniform float earth_i;
+    uniform float earth_om;
+
+    uniform float jed;
+
+    uniform float a;
+    uniform float e;
+    uniform float i;
+    uniform float o;
+    uniform float ma;
+    uniform float n;
+    uniform float w;
+    uniform float P;
+    uniform float epoch;
+
+    vec3 getAstroPos() {
+      float i_rad = (i - earth_i) * pi/180.0;
+      float o_rad = (o - earth_om) * pi/180.0; // longitude of ascending node
+      float p_rad = w * pi/180.0; // longitude of perihelion
+      float ma_rad = ma * pi/180.0;
+      float n_rad;
+      if (n > -1.0)
+        n_rad = n * pi/180.0; // mean motion
+      else {
+        n_rad = 2.0 * pi / P;
+      }
+
+      float d = epoch - jed;
+      float M = ma_rad + n_rad * -d;
+
+      // Estimate eccentric and true anom using iterative approx
+      float E0 = M;
+      float lastdiff;
+      // converted do/while:
+      float E1 = M + e * sin(E0);
+      lastdiff = abs(E1-E0);
+      E0 = E1;
+      for (int foo=0; foo < 5000; foo++) {
+        float E1 = M + e * sin(E0);
+        lastdiff = abs(E1-E0);
+        E0 = E1;
+        if (lastdiff > 0.0000001) {
+          break;
+        }
+      }
+      float E = E0;
+      float v = 2.0 * atan(sqrt((1.0+e)/(1.0-e)) * tan(E/2.0));
+
+      // radius vector, in AU
+      float r = a * (1.0 - e*e) / (1.0 + e * cos(v)) * {{PIXELS_PER_AU}};
+
+      // heliocentric coords
+      float X = r * (cos(o_rad) * cos(v + p_rad - o_rad) - sin(o_rad) * sin(v + p_rad - o_rad) * cos(i_rad));
+      float Y = r * (sin(o_rad) * cos(v + p_rad - o_rad) + cos(o_rad) * sin(v + p_rad - o_rad) * cos(i_rad));
+      float Z = r * (sin(v + p_rad - o_rad) * sin(i_rad));
+      return vec3(X, Y, Z);
+    }
+
     void main() {
-      gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+      gl_Position = vec4(10., 10., 10., 1.);
+      gl_PointSize = 30.0;
+
+      // ....
+      return;
+      vec3 newpos = getAstroPos();
+      vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0);
+      gl_Position = projectionMatrix * mvPosition;
+      gl_PointSize = 30.0;
     }
   </script>
+  <script type="x-shader/x-fragment" id="bigparticle-fragmentshader">
+    void main() {
+      gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    }
+  </script>
+
   <div id="backhome">
     <p>
     <a href="/">&laquo; Main site</a>

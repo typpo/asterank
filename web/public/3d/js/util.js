@@ -19,7 +19,7 @@ function timedChunk(particles, positions, fn, context, callback){
 }
 
 function toJED(d){
-  // TODO precompute the constants
+  // TODO precompute constants
   return Math.floor((d.getTime() / (1000 * 60 * 60 * 24)) - 0.5) + 2440588;
 }
 

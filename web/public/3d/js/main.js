@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 3000;
+  var MAX_NUM_ORBITS = 7000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -38,7 +38,6 @@
   var NUM_WORKERS = 3;
   var worker_path = '/3d/js/position_worker.js';
   var workers_initialized = false;
-  //var position_results_queue = [];
   var particleSystem;
 
   // glsl stuff
@@ -243,50 +242,29 @@
 
     // Sky
     if (using_webgl) {
-/*
-      var urls = [];
-      for (var i=0 ; i<6; i++) {
-        urls.push('/images/universe.jpg');
-      }
-*/
-var path = "/images/dark-s_";
-        var format = '.jpg';
-        var urls = [
-            path + 'px' + format, path + 'nx' + format,
-            path + 'py' + format, path + 'ny' + format,
-            path + 'pz' + format, path + 'nz' + format
-          ];
-        var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
-        reflectionCube.format = THREE.RGBFormat;
+      var path = "/images/dark-s_";
+      var format = '.jpg';
+      var urls = [
+          path + 'px' + format, path + 'nx' + format,
+          path + 'py' + format, path + 'ny' + format,
+          path + 'pz' + format, path + 'nz' + format
+        ];
+      var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
+      reflectionCube.format = THREE.RGBFormat;
 
-        var shader = THREE.ShaderUtils.lib[ "cube" ];
-        shader.uniforms[ "tCube" ].value = reflectionCube;
+      var shader = THREE.ShaderUtils.lib[ "cube" ];
+      shader.uniforms[ "tCube" ].value = reflectionCube;
 
-        var material = new THREE.ShaderMaterial( {
-          fragmentShader: shader.fragmentShader,
-          vertexShader: shader.vertexShader,
-          uniforms: shader.uniforms,
-          depthWrite: false,
-          side: THREE.BackSide
-        } ),
+      var material = new THREE.ShaderMaterial( {
+        fragmentShader: shader.fragmentShader,
+        vertexShader: shader.vertexShader,
+        uniforms: shader.uniforms,
+        depthWrite: false,
+        side: THREE.BackSide
+      } ),
 
-        mesh = new THREE.Mesh( new THREE.CubeGeometry( 5000, 5000, 5000 ), material );
-scene.add(mesh);
-/*
-
-
-      var materialArray = [];
-      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-      materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '/images/universe.jpg' ) }));
-      var skyboxGeom = new THREE.CubeGeometry(5000, 5000, 5000, 1, 1, 1, materialArray);
-      var skybox = new THREE.Mesh( skyboxGeom, new THREE.MeshFaceMaterial(materialArray) );
-      skybox.flipSided = true;
-      scene.add(skybox);
-*/
+      mesh = new THREE.Mesh( new THREE.CubeGeometry( 5000, 5000, 5000 ), material );
+      scene.add(mesh);
     }
 
     $('#container').on('mousedown', function() {
@@ -309,22 +287,6 @@ scene.add(mesh);
       //cam.position.y = Math.sin( timer ) * 100;
       cam.position.z = -100 + Math.cos(timer) * 20;
     }
-    /*
-    if (object_movement_on && workers_initialized) {
-      for (var i=0; i < NUM_WORKERS; i++) {
-        workers[i].postMessage({
-          command: 'results'
-        });
-      }
-    }
-      */
-    /*
-    for (var j=0; j < position_results_queue.length; j++) {
-      var partpos_tuple = position_results_queue[j];
-      partpos_tuple[0].MoveParticleToPosition(partpos_tuple[1]);
-    }
-    particle_system_geometry.__dirtyVertices = true;
-    */
 
     render();
     requestAnimFrame(animate);
@@ -335,9 +297,9 @@ scene.add(mesh);
     // update camera controls
     cameraControls.update();
 
-        // update shader vals for asteroid cloud
-        uniforms.jed.value = jed;
-        jed += .25;
+    // update shader vals for asteroid cloud
+    uniforms.jed.value = jed;
+    jed += .25;
 
     // actually render the scene
     renderer.render(scene, camera);
@@ -380,7 +342,6 @@ scene.add(mesh);
   }
 
   function initSimulation() {
-    // TODO fallback for unsupported webworkers
     var l = added_objects.length;
     var objects_per_worker = Math.ceil(l / NUM_WORKERS);
     var remainder = l % NUM_WORKERS;
@@ -416,11 +377,8 @@ scene.add(mesh);
         var positions = data.value.positions;
 
         for (var i=0; i < positions.length; i++) {
-          //position_results_queue.push([particles[i], positions[i]])
           particles[i].MoveParticleToPosition(positions[i]);
         }
-
-        //particle_system_geometry.verticesNeedUpdate = true;  // TODO this necessary?
 
         if (typeof datgui !== 'undefined') {
           // update with date
@@ -432,21 +390,6 @@ scene.add(mesh);
             display_date_last_updated = now;
           }
         }
-
-        /*
-        var all_chunks = [];
-        for (var i=0; i < positions.length; i++) {
-          all_chunks.push([particles[i], positions[i]]);
-        }
-        */
-
-        /*
-        timedChunk(particles, positions, function(particle, position) {
-          particle.MoveParticleToPosition(position);
-        }, this, function() {
-          particle_system_geometry.verticesNeedUpdate = true;
-        });
-        */
         break;
       case 'debug':
         console.log(data.value);
@@ -545,7 +488,8 @@ scene.add(mesh);
               $('#other-caption').html('(ranked #' + (i+1) + ')');
             });
           })(roid, orbit, i);
-          scene.add(orbit.getParticle());
+            var particle_to_add = orbit.getParticle();
+          scene.add(particle_to_add);
         } // end bigParticle logic
         added_objects.push(orbit);
       }
@@ -565,17 +509,14 @@ scene.add(mesh);
           vertexColor: true
         });
         */
-        //particle_system_material.color.setHSV(0, .80, .70);
 
         // particle system SHADER material
         // attributes
         attributes = {
-          alpha: { type: 'f', value: [] },
           a: { type: 'f', value: [] },
           e: { type: 'f', value: [] },
           i: { type: 'f', value: [] },
           o: { type: 'f', value: [] },
-          p: { type: 'f', value: [] },
           ma: { type: 'f', value: [] },
           n: { type: 'f', value: [] },
           w: { type: 'f', value: [] },
@@ -584,8 +525,6 @@ scene.add(mesh);
           value_color : { type: 'c', value: [] }
         };
 
-        // uniforms
-        // https://github.com/mrdoob/three.js/wiki/Updates
         uniforms = {
           color: { type: "c", value: new THREE.Color( 0xffffff ) },
           jed: { type: 'f', value: jed },
@@ -597,10 +536,10 @@ scene.add(mesh);
         var vertexshader = document.getElementById( 'vertexshader' ).textContent
                               .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
         var particle_system_shader_material = new THREE.ShaderMaterial( {
-            uniforms:       uniforms,
-            attributes:     attributes,
-            vertexShader:   vertexshader,
-            fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+          uniforms:       uniforms,
+          attributes:     attributes,
+          vertexShader:   vertexshader,
+          fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
         });
         particle_system_shader_material.depthTest = false;
         particle_system_shader_material.vertexColor = true;
@@ -609,14 +548,12 @@ scene.add(mesh);
 
         psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
         for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
-          // set alpha based on distance to (local) y-axis
-          attributes.alpha.value[ i ] = Math.abs( particle_system_geometry.vertices[ i ].x / 100 );
           var added_objects_idx = i + psg_vertex_offset;
+
           attributes.a.value[i] = added_objects[added_objects_idx].eph.a;
           attributes.e.value[i] = added_objects[added_objects_idx].eph.e;
           attributes.i.value[i] = added_objects[added_objects_idx].eph.i;
           attributes.o.value[i] = added_objects[added_objects_idx].eph.om;
-          attributes.p.value[i] = added_objects[added_objects_idx].eph.p;
           attributes.ma.value[i] = added_objects[added_objects_idx].eph.ma;
           attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
           attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
