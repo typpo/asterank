@@ -1,5 +1,6 @@
 /**
  * @author Eberhard Graether / http://egraether.com/
+ * some changes, eg. scroll support by Ian Webster ianww.com
  */
 
 THREE.TrackballControlsX = function ( object, domElement ) {
