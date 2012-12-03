@@ -149,15 +149,14 @@
     // put a camera in the scene
     var cameraH	= 3;
     var cameraW	= cameraH / window.innerHeight * window.innerWidth;
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
-    camera.position.set(0, -155, 32);
+    window.cam = camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
+    setDefaultCameraPosition();
     //camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
     //camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
     //camera.position.set(-145, 41, -31);
     // 77, -155, 23
 
-    window.cam = camera;
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
     THREEx.WindowResize(renderer, camera);    // handle window resize
 
@@ -574,6 +573,7 @@
           // special case full names
           case 'sun':
             clearLock();
+            setDefaultCameraPosition();
             return false;
         }
 
@@ -704,6 +704,10 @@
         jed: new_jed
       });
     }
+  }
+
+  function setDefaultCameraPosition() {
+    cam.position.set(0, -155, 32);
   }
 })();
 if (!window.console) window.console = {log: function() {}};
