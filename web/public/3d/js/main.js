@@ -374,9 +374,11 @@
       display_date_last_updated = now;
     }
 
-    // update shader vals for asteroid cloud
-    uniforms.jed.value = jed;
-    jed += .25;
+    if (object_movement_on) {
+      // update shader vals for asteroid cloud
+      uniforms.jed.value = jed;
+      jed += .25;
+    }
 
     // actually render the scene
     renderer.render(scene, camera);
@@ -562,7 +564,7 @@
             + '"><td><a href="#">'
             + (roid.prov_des || roid.full_name)
             + '</a></td><td>$'
-            + roid.fuzzed_price
+            + (roid.price < 1 ? 'N/A' : roid.fuzzed_price)
             + '</td></tr>';
         }
 
