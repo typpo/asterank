@@ -64,7 +64,7 @@
       return this.farticle;
     }
 
-    //var pos = this.getPosAtTime(jed);
+    var pos = this.getPosAtTime(jed);
 
     if (this.bigParticle) {
       //var obj = new THREE.Object3D();
@@ -131,7 +131,7 @@
       */
       this.particle = new THREE.Mesh(geometry, material);
       //this.particle.scale.x = -1; // flip so texture shows up oriented correctly
-      //this.particle.position.set(pos[0], pos[1], pos[2]);
+      this.particle.position.set(pos[0], pos[1], pos[2]);
       //obj.add(this.particle);
       //this.particle = obj;
     }
@@ -143,7 +143,6 @@
   }
 
   Orbit3D.prototype.MoveParticleToPosition = function(pos) {
-    return false;
     if (this.bigParticle) {
       this.particle.position.set(pos[0], pos[1], pos[2]);
     }
