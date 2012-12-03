@@ -14,7 +14,7 @@
 
 
   var WEB_GL_ENABLED = true;
-  var MAX_NUM_ORBITS = 15000;
+  var MAX_NUM_ORBITS = 7000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -31,6 +31,13 @@
   var particle_system_geometry = null;
   var asteroids_loaded = false;
   var display_date_last_updated = 0;
+
+  // Lock/feature stuff
+  var feature_map = {};       // map from object full name to Orbit3D instance
+  var locked_object = null;
+  var locked_object_ellipse = null;
+  var locked_object_idx = -1;
+  var locked_object_size = -1;
 
   // workers stuff
   var works = [];
@@ -281,7 +288,15 @@
       requestAnimFrame(animate);
       return;
     }
-    if (camera_fly_around) {
+
+    if (locked_object) {
+      // Follow locked object
+      var pos = locked_object.getPosAtTime(jed);
+      cam.position.z = Math.min(cam.position.z, 330);
+      cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
+    }
+    else if (camera_fly_around) {
+      // Follow floating path around
       var timer = 0.0001 * Date.now();
       cam.position.x = Math.sin(timer) * 10;
       //cam.position.y = Math.sin( timer ) * 100;
@@ -290,6 +305,46 @@
 
     render();
     requestAnimFrame(animate);
+  }
+
+  // camera locking fns
+  function clearLock() {
+    cameraControls.target = new THREE.Vector3(0,0,0);
+
+    // restore color and size
+    var idx = locked_object_idx - psg_vertex_offset;
+    attributes.value_color.value[idx] =
+      displayColorForObject(locked_object);
+    attributes.size.value[idx] = locked_object_size;
+    attributes.locked.value[idx] = 0.0;
+    scene.remove(locked_object_ellipse);
+
+    locked_object = null;
+    locked_object_ellipse = null;
+    locked_object_idx = -1;
+    locked_object_size = -1;
+  }
+  function setLock(full_name) {
+    if (locked_object) {
+      clearLock();
+    }
+
+    var mapped_obj = feature_map[full_name];
+    var orbit_obj = mapped_obj['orbit'];
+    if (!orbit_obj) {
+      alert("Sorry, something went wrong and I can't lock on this object.");
+      return;
+    }
+    locked_object = orbit_obj;
+    locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
+    var idx = locked_object_idx - psg_vertex_offset;
+    attributes.value_color.value[idx] = new THREE.Color(0xff0000);
+    locked_object_size = attributes.size.value[idx];
+    locked_object_ellipse = locked_object.getEllipse();
+    scene.add(locked_object_ellipse);
+    attributes.size.value[idx] = 30.0;
+    attributes.locked.value[idx] = 1.0;
+    cam.position.z = 70; // zoom in a bit
   }
 
   // render the scene
@@ -443,33 +498,10 @@
           useBigParticles = false;
         }
         var roid = data.results.rankings[i];
-        if (featured_count++ < 15) {
-          featured_html += '<tr><td><a href="#">' + roid.full_name + '</a></td><td>$' + roid.fuzzed_price + '</td></tr>';
-        }
+        var locked = false;
         var orbit = new Orbit3D(roid, {
           color: 0xcccccc,
-          display_color: (function() {
-            if (roid.profit > 1e11)
-              return new THREE.Color(0x00ff00);
-            return new THREE.Color(0xcccccc);
-
-            /*
-            var normal = parseFloat(1e11);
-            if (roid.profit < 1)
-              return new THREE.Color(0xcccccc);
-
-            var adjustment = roid.profit / normal;
-            console.log(adjustment);
-            var ret = new THREE.Color(getColorFromPercent(
-              adjustment,
-              0x00ff00,
-              0xcccccc
-
-            ));
-            // TODO change size too
-            return ret;
-            */
-          })(),
+          display_color: displayColorForObject(roid),
           width: 2,
           object_size: 1.5,
           jed: jed,
@@ -496,27 +528,35 @@
             var particle_to_add = orbit.getParticle();
           scene.add(particle_to_add);
         } // end bigParticle logic
+
+        if (featured_count++ < 15) {
+          // Add it to featured list
+          feature_map[roid.full_name] = {
+            'orbit': orbit,
+            'idx': added_objects.length
+          };
+          featured_html += '<tr><td><a href="#" data-full-name="'
+            + roid.full_name
+            + '">'
+            + roid.prov_des
+            + '</a></td><td>$'
+            + roid.fuzzed_price
+            + '</td></tr>';
+        }
+
+        // Add to list of objects in scene
         added_objects.push(orbit);
+
       } // end asteroid results for loop
-      $('#objects-of-interest').html(featured_html);
+      $('#objects-of-interest').html(featured_html).find('a').on('click', function() {
+        setLock($(this).data('full-name'));
+        return false;
+      });
+      $('#objects-of-interest-container').show();
 
       if (using_webgl) {
         // build particlesystem
-        /*
-        var particle_system_material = new THREE.ParticleBasicMaterial({
-          color: 0xffffff,
-          size: 7.5,
-          blending: THREE.AdditiveBlending,
-          map: THREE.ImageUtils.loadTexture(
-            "/images/cloud3.png"
-          ),
-          transparent: true,
-          depthTest: false,
-          vertexColor: true
-        });
-        */
 
-        // particle system SHADER material
         // attributes
         attributes = {
           a: { type: 'f', value: [] },
@@ -529,7 +569,8 @@
           P: { type: 'f', value: [] },
           epoch: { type: 'f', value: [] },
           value_color : { type: 'c', value: [] },
-          size: { type: 'f', value: [] }
+          size: { type: 'f', value: [] },
+          locked: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
         };
 
         uniforms = {
@@ -538,7 +579,9 @@
           earth_i: { type: "f", value: Ephemeris.earth.i },
           earth_om: { type: "f", value: Ephemeris.earth.om },
           small_roid_texture:
-            { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") }
+            { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") },
+          small_roid_circled_texture:
+            { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4-circled.png") }
         };
         var vertexshader = document.getElementById( 'vertexshader' ).textContent
                               .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
@@ -570,6 +613,7 @@
           attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
           // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
           attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
+          attributes.locked.value[i] = 0.0;
         }
 
         particleSystem = new THREE.ParticleSystem(
@@ -585,8 +629,8 @@
       asteroids_loaded = true;
 
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
-      initSimulation();
-      startSimulation();
+      //initSimulation();
+      //startSimulation();
       animate();
       $('#loading').hide();
     });

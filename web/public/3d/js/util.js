@@ -38,3 +38,26 @@ function getColorFromPercent(value, highColor, lowColor) {
 
     return (r << 16 | g << 8 | b);
 }
+
+function displayColorForObject(roid) {
+  if (roid.profit > 1e11)
+    return new THREE.Color(0x00ff00);
+  return new THREE.Color(0xcccccc);
+
+  /*
+  var normal = parseFloat(1e11);
+  if (roid.profit < 1)
+    return new THREE.Color(0xcccccc);
+
+  var adjustment = roid.profit / normal;
+  console.log(adjustment);
+  var ret = new THREE.Color(getColorFromPercent(
+    adjustment,
+    0x00ff00,
+    0xcccccc
+
+  ));
+  // TODO change size too
+  return ret;
+  */
+}
