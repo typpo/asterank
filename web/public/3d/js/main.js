@@ -27,7 +27,7 @@
   var added_objects = [];
   var planets = [];
   var planet_orbits_visible = true;
-  var jed = 2451545.0;  // 1/1/00
+  var jed = toJED(new Date());
   var particle_system_geometry = null;
   var asteroids_loaded = false;
   var display_date_last_updated = 0;
