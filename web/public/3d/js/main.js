@@ -13,7 +13,7 @@
   })();
 
 
-  var WEB_GL_ENABLED = true;
+  var WEB_GL_ENABLED = false;
   var MAX_NUM_ORBITS = 7000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
@@ -370,7 +370,7 @@
       display_date_last_updated = now;
     }
 
-    if (object_movement_on) {
+    if (using_webgl && object_movement_on) {
       // update shader vals for asteroid cloud
       uniforms.jed.value = jed;
       jed += .25;
