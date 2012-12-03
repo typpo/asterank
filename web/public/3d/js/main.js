@@ -36,7 +36,6 @@
   var feature_map = {};       // map from object full name to Orbit3D instance
   var locked_object = null;
   var locked_object_ellipse = null;
-  var $locked_object_dom = null;
   var locked_object_idx = -1;
   var locked_object_size = -1;
 
@@ -333,9 +332,6 @@
 
     // reset camera pos so subsequent locks don't get into crazy positions
     setNeutralCameraPosition();
-
-    // reset dom
-    $locked_object_dom = null;
   }
   function setLock(full_name) {
     if (locked_object) {
@@ -589,17 +585,9 @@
         }
 
         clearLock();
-        /*
-        console.log($locked_object_dom);
-        if ($locked_object_dom
-          && $locked_object_dom.data('full-name') === full_name) {
-          // user clicked same one again
-          return false;
-        }
-        */
 
         // set new lock
-        $locked_object_dom = $e.css('background-color', 'green');
+        $e.css('background-color', 'green');
         $('#sun-selector').css('background-color', '#000');
         setLock(full_name);
 
