@@ -78,7 +78,6 @@
       };
       this.movement = object_movement_on;
       this['planet orbits'] = planet_orbits_visible;
-      // TODO have this update with the simulation!
       this['display date'] = '12/26/2012';
     };
 
@@ -365,6 +364,15 @@
   function render() {
     // update camera controls
     cameraControls.update();
+
+    // update display date
+    var now = new Date().getTime();
+    if (now - display_date_last_updated > 500) {
+      var georgian_date = fromJED(jed);
+      datgui['display date'] = georgian_date.getMonth()+1 + "/"
+        + georgian_date.getDate() + "/" + georgian_date.getFullYear();
+      display_date_last_updated = now;
+    }
 
     // update shader vals for asteroid cloud
     uniforms.jed.value = jed;
@@ -699,12 +707,15 @@
   }
 
   function changeJED(new_jed) {
+    jed = new_jed;
+    /*
     for (var i=0; i < workers.length; i++) {
       workers[i].postMessage({
         command: 'set_jed',
         jed: new_jed
       });
     }
+    */
   }
 
   function setDefaultCameraPosition() {
