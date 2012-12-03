@@ -335,7 +335,6 @@
     setNeutralCameraPosition();
 
     // reset dom
-    $locked_object_dom.data('selected', false);
     $locked_object_dom = null;
   }
   function setLock(full_name) {
@@ -562,30 +561,35 @@
         added_objects.push(orbit);
 
       } // end asteroid results for loop
+
+      // TODO handle when view mode is switched - need to clear but preserve sun
       $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
         $('#objects-of-interest tr').css('background-color', '#000');
         var $e = $(this);
         var full_name = $e.data('full-name');
+        $('#sun-selector').css('background-color', 'green');
         switch (full_name) {
           // special case full names
           case 'sun':
             clearLock();
-            return;
+            return false;
         }
 
-        if ($locked_object_dom && $locked_object_dom.data('full-name')
-          === full_name) {
-          clearLock();  // clear lock if exists. order matters so we repeat this below...
+        clearLock();
+        /*
+        console.log($locked_object_dom);
+        if ($locked_object_dom
+          && $locked_object_dom.data('full-name') === full_name) {
+          // user clicked same one again
+          return false;
         }
-        else {
-          clearLock();
+        */
 
-          $e.css('background-color', 'green')
-            .data('selected', true);
+        // set new lock
+        $locked_object_dom = $e.css('background-color', 'green');
+        $('#sun-selector').css('background-color', '#000');
+        setLock(full_name);
 
-          $locked_object_dom = $e;
-          setLock(full_name);
-        }
         return false;
       });
       $('#objects-of-interest-container').show();

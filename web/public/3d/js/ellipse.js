@@ -92,7 +92,8 @@
         obj.add(sprite);
         */
       }
-      //var material= new THREE.MeshBasicMaterial(mat_opts);
+      var material= new THREE.MeshBasicMaterial(mat_opts);
+      /*
       attributes = {
       };
       uniforms = {
@@ -127,6 +128,7 @@
       material.vertexColor = true;
       material.transparent = true;
       material.blending = THREE.AdditiveBlending;
+      */
       this.particle = new THREE.Mesh(geometry, material);
       //this.particle.scale.x = -1; // flip so texture shows up oriented correctly
       //this.particle.position.set(pos[0], pos[1], pos[2]);
