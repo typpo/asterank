@@ -563,8 +563,8 @@
             + roid.full_name
             + '"><td><a href="#">'
             + (roid.prov_des || roid.full_name)
-            + '</a></td><td>$'
-            + (roid.price < 1 ? 'N/A' : roid.fuzzed_price)
+            + '</a></td><td>'
+            + (roid.price < 1 ? 'N/A' : '$' + roid.fuzzed_price)
             + '</td></tr>';
         }
 
