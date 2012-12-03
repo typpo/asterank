@@ -52,14 +52,16 @@ body {
 }
 
 #sidebar table {
-  font-size: 12px;
+  font-size: 11px;
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin-top: 6px;
+  margin-bottom: 10px;
 }
 #sidebar table td {
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 4px;
+  cursor: pointer;
 }
 
 #caption-container {

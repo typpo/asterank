@@ -36,6 +36,7 @@
   var feature_map = {};       // map from object full name to Orbit3D instance
   var locked_object = null;
   var locked_object_ellipse = null;
+  var $locked_object_dom = null;
   var locked_object_idx = -1;
   var locked_object_size = -1;
 
@@ -296,19 +297,25 @@
       cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
     }
     else if (camera_fly_around) {
-      // Follow floating path around
-      var timer = 0.0001 * Date.now();
-      cam.position.x = Math.sin(timer) * 10;
-      //cam.position.y = Math.sin( timer ) * 100;
-      cam.position.z = -100 + Math.cos(timer) * 20;
+      setNeutralCameraPosition();
     }
 
     render();
     requestAnimFrame(animate);
   }
 
+  function setNeutralCameraPosition() {
+    // Follow floating path around
+    var timer = 0.0001 * Date.now();
+    cam.position.x = Math.sin(timer) * 10;
+    //cam.position.y = Math.sin( timer ) * 100;
+    cam.position.z = -100 + Math.cos(timer) * 20;
+  }
+
   // camera locking fns
   function clearLock() {
+    if (!locked_object) return;
+
     cameraControls.target = new THREE.Vector3(0,0,0);
 
     // restore color and size
@@ -323,6 +330,13 @@
     locked_object_ellipse = null;
     locked_object_idx = -1;
     locked_object_size = -1;
+
+    // reset camera pos so subsequent locks don't get into crazy positions
+    setNeutralCameraPosition();
+
+    // reset dom
+    $locked_object_dom.data('selected', false);
+    $locked_object_dom = null;
   }
   function setLock(full_name) {
     if (locked_object) {
@@ -529,16 +543,16 @@
           scene.add(particle_to_add);
         } // end bigParticle logic
 
-        if (featured_count++ < 15) {
+        if (featured_count++ < 30) {
           // Add it to featured list
           feature_map[roid.full_name] = {
             'orbit': orbit,
             'idx': added_objects.length
           };
-          featured_html += '<tr><td><a href="#" data-full-name="'
+          featured_html += '<tr data-full-name="'
             + roid.full_name
-            + '">'
-            + roid.prov_des
+            + '"><td><a href="#">'
+            + (roid.prov_des || roid.full_name)
             + '</a></td><td>$'
             + roid.fuzzed_price
             + '</td></tr>';
@@ -548,8 +562,30 @@
         added_objects.push(orbit);
 
       } // end asteroid results for loop
-      $('#objects-of-interest').html(featured_html).find('a').on('click', function() {
-        setLock($(this).data('full-name'));
+      $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
+        $('#objects-of-interest tr').css('background-color', '#000');
+        var $e = $(this);
+        var full_name = $e.data('full-name');
+        switch (full_name) {
+          // special case full names
+          case 'sun':
+            clearLock();
+            return;
+        }
+
+        if ($locked_object_dom && $locked_object_dom.data('full-name')
+          === full_name) {
+          clearLock();  // clear lock if exists. order matters so we repeat this below...
+        }
+        else {
+          clearLock();
+
+          $e.css('background-color', 'green')
+            .data('selected', true);
+
+          $locked_object_dom = $e;
+          setLock(full_name);
+        }
         return false;
       });
       $('#objects-of-interest-container').show();
