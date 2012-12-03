@@ -290,47 +290,16 @@
       return;
     }
 
-    if (locked_object) {
-      // Follow locked object
-      var pos = locked_object.getPosAtTime(jed);
-      /*
-      pos[0] += 50;
-      pos[1] += 50;
-      pos[2] += 50;
-      */
-      var xs = (pos[0] - cam.position.x);
-      var ys = (pos[1] - cam.position.y);
-      var zs = (pos[2] - cam.position.z);
-      var distsquared = xs*xs + ys*ys + zs*zs;
-      if (distsquared > 10000) {
-      /*
-        if (xs < -1) {
-          // newpos is smaller than current
-          pos[0] = cam.position.x - 2;
-        }
-        else if (xs > 1) {
-          pos[0] = cam.position.x + 2;
-        }
-        if (ys < -1) {
-          pos[1] = cam.position.y - 2;
-        }
-        else if (ys > 1) {
-          pos[1] = cam.position.y + 2;
-        }
-        if (zs < -1) {
-          pos[2] = cam.position.z - 2;
-        }
-        else if (zs > 1) {
-          pos[2] = cam.position.z + 2;
-        }
-        cam.position.set(pos[0], pos[1], pos[2]);
-      */
+    if (camera_fly_around) {
+      if (locked_object) {
+        // Follow locked object
+        var pos = locked_object.getPosAtTime(jed);
         cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
+        cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
       }
-      cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
-    }
-    else if (camera_fly_around) {
-      setNeutralCameraPosition();
+      else {
+        setNeutralCameraPosition();
+      }
     }
 
     render();
@@ -390,6 +359,7 @@
     scene.add(locked_object_ellipse);
     attributes.size.value[idx] = 30.0;
     attributes.locked.value[idx] = 1.0;
+    camera_fly_around = true;
   }
 
   // render the scene
