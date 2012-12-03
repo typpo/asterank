@@ -432,6 +432,8 @@
       particle_system_geometry = new THREE.Geometry();
 
       var useBigParticles = !using_webgl;
+      var featured_count = 0;
+      var featured_html = '';
       for (var i=0; i < n; i++) {
         if (i === NUM_BIG_PARTICLES) {
           if (!using_webgl) {
@@ -441,6 +443,9 @@
           useBigParticles = false;
         }
         var roid = data.results.rankings[i];
+        if (featured_count++ < 15) {
+          featured_html += '<tr><td><a href="#">' + roid.full_name + '</a></td><td>$' + roid.fuzzed_price + '</td></tr>';
+        }
         var orbit = new Orbit3D(roid, {
           color: 0xcccccc,
           display_color: (function() {
@@ -492,7 +497,8 @@
           scene.add(particle_to_add);
         } // end bigParticle logic
         added_objects.push(orbit);
-      }
+      } // end asteroid results for loop
+      $('#objects-of-interest').html(featured_html);
 
       if (using_webgl) {
         // build particlesystem

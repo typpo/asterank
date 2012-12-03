@@ -33,18 +33,35 @@ body {
   padding: 5px 10px;
   font-size: 13px;
 }
-#backhome {
+#sidebar {
   z-index: 10;
   position: absolute;
   left: 0;
   top: 0;
   padding: 5px 10px;
   font-size: 15px;
-  background-color: #ccc;
-  width: 75px;
+  background-color: #000;
+  color: #f0f0f0;
+  width: 150px;
   -moz-border-radius-bottomright: 15px;
   border-bottom-right-radius: 15px;
+  border-right: 1px solid #ccc;
 }
+#sidebar a {
+  color: #f0f0f0;
+}
+
+#sidebar table {
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin-top: 6px;
+}
+#sidebar table td {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
 #caption-container {
   background-color: #000;
 }
