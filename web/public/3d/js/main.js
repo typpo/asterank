@@ -563,7 +563,8 @@
 
       } // end asteroid results for loop
 
-      // TODO handle when view mode is switched - need to clear but preserve sun
+      // handle when view mode is switched - need to clear every row but the sun
+      $('#objects-of-interest tr:not(:first)').remove();
       $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
         $('#objects-of-interest tr').css('background-color', '#000');
         var $e = $(this);
