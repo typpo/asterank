@@ -21,6 +21,7 @@
 
     uniform float earth_i;
     uniform float earth_om;
+    uniform float time;
 
     uniform float jed;
 
@@ -79,6 +80,11 @@
       float Z = r * (sin(v + p_rad - o_rad) * sin(i_rad));
       return vec3(X, Y, Z);
     }
+
+
+float rand(vec2 co){
+  return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
 
     void main() {
       vColor = value_color;

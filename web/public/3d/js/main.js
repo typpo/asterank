@@ -129,6 +129,7 @@
       });
       renderer.setClearColor(0x000000, 1);
       using_webgl = true;
+      window.gl = renderer.getContext();
     }
     else {
       renderer	= new THREE.CanvasRenderer();
@@ -364,7 +365,7 @@
 
     // update display date
     var now = new Date().getTime();
-    if (now - display_date_last_updated > 500) {
+    if (now - display_date_last_updated > 500 && datgui) {
       var georgian_date = fromJED(jed);
       datgui['display date'] = georgian_date.getMonth()+1 + "/"
         + georgian_date.getDate() + "/" + georgian_date.getFullYear();
@@ -376,6 +377,7 @@
       uniforms.jed.value = jed;
       jed += .25;
     }
+    uniforms.time.value = now;
 
     // actually render the scene
     renderer.render(scene, camera);
@@ -618,6 +620,7 @@
         uniforms = {
           color: { type: "c", value: new THREE.Color( 0xffffff ) },
           jed: { type: 'f', value: jed },
+          time: { type: 'f', value: new Date().getTime() },
           earth_i: { type: "f", value: Ephemeris.earth.i },
           earth_om: { type: "f", value: Ephemeris.earth.om },
           small_roid_texture:
