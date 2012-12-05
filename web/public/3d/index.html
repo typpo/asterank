@@ -21,7 +21,6 @@
 
     uniform float earth_i;
     uniform float earth_om;
-    uniform float time;
 
     uniform float jed;
 
@@ -61,7 +60,7 @@
       lastdiff = abs(E1-E0);
       E0 = E1;
       for (int foo=0; foo < 6; foo++) {
-        float E1 = M + e * sin(E0);
+        E1 = M + e * sin(E0);
         lastdiff = abs(E1-E0);
         E0 = E1;
         if (lastdiff > 0.0000001) {
@@ -80,11 +79,6 @@
       float Z = r * (sin(v + p_rad - o_rad) * sin(i_rad));
       return vec3(X, Y, Z);
     }
-
-
-float rand(vec2 co){
-  return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
 
     void main() {
       vColor = value_color;
