@@ -43,10 +43,11 @@
       float p_rad = w * pi/180.0; // longitude of perihelion
       float ma_rad = ma * pi/180.0;
       float n_rad;
-      if (n > -1.0)
-        n_rad = n * pi/180.0; // mean motion
-      else {
+      if (P > 0.) {
         n_rad = 2.0 * pi / P;
+      }
+      else {
+        n_rad = n * pi/180.0; // mean motion
       }
 
       float d = epoch - jed;
@@ -54,10 +55,9 @@
 
       // Estimate eccentric and true anom using iterative approx
       float E0 = M;
-      float lastdiff;
       // converted do/while:
       float E1 = M + e * sin(E0);
-      lastdiff = abs(E1-E0);
+      float lastdiff = abs(E1-E0);
       E0 = E1;
       for (int foo=0; foo < 6; foo++) {
         E1 = M + e * sin(E0);

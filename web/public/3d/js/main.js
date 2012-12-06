@@ -654,7 +654,8 @@
           attributes.ma.value[i] = added_objects[added_objects_idx].eph.ma;
           attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
           attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
-          attributes.P.value[i] = added_objects[added_objects_idx].eph.P;
+          attributes.P.value[i] = added_objects[added_objects_idx].eph.P || -1.0;
+          console.log(attributes.n.value[i], attributes.P.value[i]);
           attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
           // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
           attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
