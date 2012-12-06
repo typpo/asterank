@@ -377,7 +377,6 @@
       uniforms.jed.value = jed;
       jed += .25;
     }
-    uniforms.time.value = now;
 
     // actually render the scene
     renderer.render(scene, camera);
@@ -620,7 +619,6 @@
         uniforms = {
           color: { type: "c", value: new THREE.Color( 0xffffff ) },
           jed: { type: 'f', value: jed },
-          time: { type: 'f', value: new Date().getTime() },
           earth_i: { type: "f", value: Ephemeris.earth.i },
           earth_om: { type: "f", value: Ephemeris.earth.om },
           small_roid_texture:
@@ -655,7 +653,6 @@
           attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
           attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
           attributes.P.value[i] = added_objects[added_objects_idx].eph.P || -1.0;
-          console.log(attributes.n.value[i], attributes.P.value[i]);
           attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
           // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
           attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
