@@ -175,7 +175,7 @@
     var d = epoch - jed;
     //L = ma + p;
     //M =  n * -d + L - p;
-    M = ma + n * -d;
+    M = ma + n * d;
 
     var sin = Math.sin, cos = Math.cos;
     // Estimate eccentric and true anom using iterative approx
