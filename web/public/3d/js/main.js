@@ -577,7 +577,6 @@
 
         // Add to list of objects in scene
         added_objects.push(orbit);
-
       } // end asteroid results for loop
 
       // handle when view mode is switched - need to clear every row but the sun
@@ -593,7 +592,6 @@
             clearLock(true);
             return false;
         }
-
         clearLock();
 
         // set new lock
