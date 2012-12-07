@@ -101,3 +101,23 @@ body {
 
   border: 1px #ccc solid;
 }
+
+#not-supported {
+  position: fixed;
+  top: 150px;
+  left: 50%;
+  color: #000;
+  background-color: #fff;
+  width: 250px;
+  height: 350px;
+  margin-top: -20px;
+  margin-left: -75px;
+  text-align:center;
+  padding: 30px;
+
+  -moz-border-radius: 6px;
+  -webkit-border-radius:6px;
+  border-radius: 6px;
+
+  border: 1px #ccc solid;
+}

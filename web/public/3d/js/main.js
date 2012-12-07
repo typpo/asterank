@@ -16,6 +16,7 @@
   var WEB_GL_ENABLED = true;
 
   var MAX_NUM_ORBITS = 5000;
+  var CANVAS_NUM_ORBITS = 30;  // gimped version orbits
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 25;   // show this many asteroids with orbits
 
@@ -134,6 +135,7 @@
     }
     else {
       renderer	= new THREE.CanvasRenderer();
+      $('#not-supported').show();
     }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('container').appendChild(renderer.domElement);
@@ -218,7 +220,8 @@
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(mercury.getEllipse());
-    //scene.add(mercury.getParticle());
+    if (!using_webgl)
+      scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
         {
           color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
@@ -227,7 +230,8 @@
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(venus.getEllipse());
-    //scene.add(venus.getParticle());
+    if (!using_webgl)
+      scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
         {
           color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
@@ -236,7 +240,8 @@
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(earth.getEllipse());
-    //scene.add(earth.getParticle());
+    if (!using_webgl)
+      scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
         {
           color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
@@ -245,7 +250,8 @@
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(mars.getEllipse());
-    //scene.add(mars.getParticle());
+    if (!using_webgl)
+      scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {
           color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
@@ -254,7 +260,8 @@
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(jupiter.getEllipse());
-    //scene.add(jupiter.getParticle());
+    if (!using_webgl)
+      scene.add(jupiter.getParticle());
 
     planets = [mercury, venus, earth, mars, jupiter];
 
@@ -335,11 +342,13 @@
 
     // restore color and size
     var idx = locked_object_idx - psg_vertex_offset;
-    attributes.value_color.value[idx] =
-      //displayColorForObject(locked_object);
-      new THREE.Color(0xffff00);
-    attributes.size.value[idx] = locked_object_size;
-    attributes.locked.value[idx] = 0.0;
+    if (using_webgl) {
+      attributes.value_color.value[idx] =
+        //displayColorForObject(locked_object);
+        new THREE.Color(0xffff00);
+      attributes.size.value[idx] = locked_object_size;
+      attributes.locked.value[idx] = 0.0;
+    }
     scene.remove(locked_object_ellipse);
 
     locked_object = null;
@@ -364,12 +373,16 @@
     locked_object = orbit_obj;
     locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
     var idx = locked_object_idx - psg_vertex_offset;
-    attributes.value_color.value[idx] = new THREE.Color(0xff0000);
-    locked_object_size = attributes.size.value[idx];
+
+    if (using_webgl) {
+      attributes.value_color.value[idx] = new THREE.Color(0xff0000);
+      locked_object_size = attributes.size.value[idx];
+      attributes.size.value[idx] = 30.0;
+      attributes.locked.value[idx] = 1.0;
+    }
+
     locked_object_ellipse = locked_object.getEllipse();
     scene.add(locked_object_ellipse);
-    attributes.size.value[idx] = 30.0;
-    attributes.locked.value[idx] = 1.0;
     camera_fly_around = true;
   }
 
@@ -514,7 +527,9 @@
     }
 
     // Get new data points
-    $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true&compact=true', function(data) {
+    $.getJSON('/top?sort=' + sort + '&n='
+        + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
+        + '&use3d=true&compact=true', function(data) {
       if (!data.results) {
         alert('Sorry, something went wrong and the server failed to return data.');
         return;
@@ -550,12 +565,11 @@
           particle_geometry: particle_system_geometry // will add itself to this geometry
         }, useBigParticles);
         if (useBigParticles) {
-          // bind information/orbit mouseover
+          // bind information/orbit mouseover - only for canvas mode
           (function(roid, orbit, i) {
             orbit.getParticle().on('mouseover', function(e) {
               if (lastHovered) scene.remove(lastHovered);
               lastHovered = orbit.getEllipse();
-              // TODO hitting escape should cancel this
               scene.add(lastHovered);
               if (roid.price < 1e10) {
                 $('#main-caption').html(roid.full_name + ' - no significant value');

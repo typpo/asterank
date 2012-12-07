@@ -266,6 +266,18 @@
   <div id="loading">
     <img src="/images/loader.gif"/> Loading...
   </div>
+  <div id="not-supported" style="display:none;">
+    <p>
+    <strong>Sorry, your computer or browser doesn't support webgl.  Most features of the simulation will not be available.</strong>
+    </p>
+    <p>
+    You may be able to see the simulation if you..
+    </p>
+    <h2><a href="http://google.com/chrome">Get Chrome</a><br>or<br><a href="http://getfirefox.com">Get Firefox</a></h2>
+    <p>
+    <input type="submit" onClick="$('#not-supported').hide();return false;" value="Ignore for now"/>
+    </p>
+  </div>
 	<div id="info">
     <div id="caption-container">
       <div id="main-caption" class="top">
