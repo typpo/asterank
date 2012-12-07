@@ -136,6 +136,7 @@
     else {
       renderer	= new THREE.CanvasRenderer();
       $('#not-supported').show();
+      mixpanel.track('not supported');
     }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('container').appendChild(renderer.domElement);
