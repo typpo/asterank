@@ -17,7 +17,10 @@
 
   var MAX_NUM_ORBITS = 5000;
   var PIXELS_PER_AU = 50;
-  var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
+  var NUM_BIG_PARTICLES = 25;   // show this many asteroids with orbits
+
+  var PLANET_DISPLAY_COLOR = new THREE.Color(0xffff00);
+
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -212,38 +215,48 @@
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/images/texture-mercury.jpg'
-        }, true);
+          texture_path: '/images/texture-mercury.jpg',
+          display_color: PLANET_DISPLAY_COLOR,
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
     scene.add(mercury.getEllipse());
-    scene.add(mercury.getParticle());
+    //scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
         {
           color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/images/texture-venus.jpg'
-        }, true);
+          texture_path: '/images/texture-venus.jpg',
+          display_color: PLANET_DISPLAY_COLOR,
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
     scene.add(venus.getEllipse());
-    scene.add(venus.getParticle());
+    //scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
         {
           color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/images/texture-earth.jpg'
-        }, true);
+          texture_path: '/images/texture-earth.jpg',
+          display_color: PLANET_DISPLAY_COLOR,
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
     scene.add(earth.getEllipse());
-    scene.add(earth.getParticle());
+    //scene.add(earth.getParticle());
     var mars = new Orbit3D(Ephemeris.mars,
         {
           color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/images/texture-mars.jpg'
-        }, true);
+          texture_path: '/images/texture-mars.jpg',
+          display_color: PLANET_DISPLAY_COLOR,
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
     scene.add(mars.getEllipse());
-    scene.add(mars.getParticle());
+    //scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {
           color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/images/texture-jupiter.jpg'
-        }, true);
+          texture_path: '/images/texture-jupiter.jpg',
+          display_color: PLANET_DISPLAY_COLOR,
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
     scene.add(jupiter.getEllipse());
-    scene.add(jupiter.getParticle());
+    //scene.add(jupiter.getParticle());
 
     planets = [mercury, venus, earth, mars, jupiter];
 
@@ -603,87 +616,110 @@
       });
       $('#objects-of-interest-container').show();
 
-      if (using_webgl) {
-        // build particlesystem
-
-        // attributes
-        attributes = {
-          a: { type: 'f', value: [] },
-          e: { type: 'f', value: [] },
-          i: { type: 'f', value: [] },
-          o: { type: 'f', value: [] },
-          ma: { type: 'f', value: [] },
-          n: { type: 'f', value: [] },
-          w: { type: 'f', value: [] },
-          P: { type: 'f', value: [] },
-          epoch: { type: 'f', value: [] },
-          value_color : { type: 'c', value: [] },
-          size: { type: 'f', value: [] },
-          locked: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
-        };
-
-        uniforms = {
-          color: { type: "c", value: new THREE.Color( 0xffffff ) },
-          jed: { type: 'f', value: jed },
-          earth_i: { type: "f", value: Ephemeris.earth.i },
-          earth_om: { type: "f", value: Ephemeris.earth.om },
-          small_roid_texture:
-            { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") },
-          small_roid_circled_texture:
-            { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4-circled.png") }
-        };
-        var vertexshader = document.getElementById( 'vertexshader' ).textContent
-                              .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
-        var particle_system_shader_material = new THREE.ShaderMaterial( {
-          uniforms:       uniforms,
-          attributes:     attributes,
-          vertexShader:   vertexshader,
-          fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-        });
-        particle_system_shader_material.depthTest = false;
-        particle_system_shader_material.vertexColor = true;
-        particle_system_shader_material.transparent = true;
-        particle_system_shader_material.blending = THREE.AdditiveBlending;
-
-        psg_vertex_offset = added_objects.length - particle_system_geometry.vertices.length;
-        for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
-          var added_objects_idx = i + psg_vertex_offset;
-
-          attributes.size.value[i] = i < 30 ? 50 : 15;
-
-          attributes.a.value[i] = added_objects[added_objects_idx].eph.a;
-          attributes.e.value[i] = added_objects[added_objects_idx].eph.e;
-          attributes.i.value[i] = added_objects[added_objects_idx].eph.i;
-          attributes.o.value[i] = added_objects[added_objects_idx].eph.om;
-          attributes.ma.value[i] = added_objects[added_objects_idx].eph.ma;
-          attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
-          attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
-          attributes.P.value[i] = added_objects[added_objects_idx].eph.P || -1.0;
-          attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
-          // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
-          attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
-          attributes.locked.value[i] = 0.0;
-        }
-
-        particleSystem = new THREE.ParticleSystem(
-          particle_system_geometry,
-          //particle_system_material
-          particle_system_shader_material
-        );
-        window.ps = particleSystem;
-
-        // add it to the scene
-        particleSystem.sortParticles = true;
-        scene.add(particleSystem);
-      }
       asteroids_loaded = true;
+      if (using_webgl) {
+        createParticleSystem();
+      }
+      else {
+        initSimulation();
+        startSimulation();
+      }
 
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
-      //initSimulation();
-      //startSimulation();
+
       animate();
+
       $('#loading').hide();
     });
+  }
+
+  function createParticleSystem() {
+    // attributes
+    attributes = {
+      a: { type: 'f', value: [] },
+      e: { type: 'f', value: [] },
+      i: { type: 'f', value: [] },
+      o: { type: 'f', value: [] },
+      ma: { type: 'f', value: [] },
+      n: { type: 'f', value: [] },
+      w: { type: 'f', value: [] },
+      P: { type: 'f', value: [] },
+      epoch: { type: 'f', value: [] },
+      value_color : { type: 'c', value: [] },
+      size: { type: 'f', value: [] },
+      locked: { type: 'f', value: [] },  // attributes can't be bool or int in some versions of opengl
+      planet: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
+    };
+
+    uniforms = {
+      color: { type: "c", value: new THREE.Color( 0xffffff ) },
+      jed: { type: 'f', value: jed },
+      earth_i: { type: "f", value: Ephemeris.earth.i },
+      earth_om: { type: "f", value: Ephemeris.earth.om },
+      small_roid_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") },
+      small_roid_circled_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4-circled.png") },
+      mercury_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-mercury.jpg") },
+      venus_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-venus.jpg") },
+      earth_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-earth.jpg") },
+      mars_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-mars.jpg") },
+      jupiter_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-jupiter.jpg") }
+    };
+    var vertexshader = document.getElementById( 'vertexshader' ).textContent
+                          .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
+    var particle_system_shader_material = new THREE.ShaderMaterial( {
+      uniforms:       uniforms,
+      attributes:     attributes,
+      vertexShader:   vertexshader,
+      fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+    });
+    particle_system_shader_material.depthTest = false;
+    particle_system_shader_material.vertexColor = true;
+    particle_system_shader_material.transparent = true;
+    particle_system_shader_material.blending = THREE.AdditiveBlending;
+
+    psg_vertex_offset = 0;//added_objects.length - particle_system_geometry.vertices.length;
+    for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
+      var added_objects_idx = i + psg_vertex_offset;
+
+      attributes.size.value[i] = i < 30 ? 50 : 15;
+
+      attributes.a.value[i] = added_objects[added_objects_idx].eph.a;
+      attributes.e.value[i] = added_objects[added_objects_idx].eph.e;
+      attributes.i.value[i] = added_objects[added_objects_idx].eph.i;
+      attributes.o.value[i] = added_objects[added_objects_idx].eph.om;
+      attributes.ma.value[i] = added_objects[added_objects_idx].eph.ma;
+      attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
+      attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
+      attributes.P.value[i] = added_objects[added_objects_idx].eph.P || -1.0;
+      attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
+      // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
+      attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
+      attributes.locked.value[i] = 0.0;
+      if (i < 5) {
+        attributes.planet.value[i] = i + 1.;
+      }
+      else {
+        attributes.planet.value[i] = -1.;
+      }
+    }
+
+    particleSystem = new THREE.ParticleSystem(
+      particle_system_geometry,
+      //particle_system_material
+      particle_system_shader_material
+    );
+    window.ps = particleSystem;
+
+    // add it to the scene
+    particleSystem.sortParticles = true;
+    scene.add(particleSystem);
   }
 
   function starTexture(color, size) {
