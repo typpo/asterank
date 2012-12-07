@@ -314,8 +314,11 @@
   }
 
   // camera locking fns
-  function clearLock() {
+  function clearLock(set_default_camera) {
     if (!locked_object) return;
+
+    if (set_default_camera)
+      setDefaultCameraPosition();
 
     cameraControls.target = new THREE.Vector3(0,0,0);
 
@@ -486,6 +489,7 @@
     for (var i=0; i < added_objects.length; i++) {
       scene.remove(added_objects[i].getParticle());
     }
+    clearLock(true);
     if (particleSystem) {
       scene.remove(particleSystem);
       particleSystem = null;
@@ -586,8 +590,7 @@
         switch (full_name) {
           // special case full names
           case 'sun':
-            clearLock();
-            setDefaultCameraPosition();
+            clearLock(true);
             return false;
         }
 
