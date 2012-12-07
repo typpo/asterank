@@ -41,7 +41,7 @@ function getColorFromPercent(value, highColor, lowColor) {
 
 function displayColorForObject(roid) {
   if (roid.profit > 1e11)
-    return new THREE.Color(0x00ffff);
+    return new THREE.Color(0xffff00);
   return new THREE.Color(0xffffff);
 
   /*

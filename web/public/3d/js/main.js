@@ -19,8 +19,6 @@
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 25;   // show this many asteroids with orbits
 
-  var PLANET_DISPLAY_COLOR = new THREE.Color(0xffff00);
-
   var stats, scene, renderer, composer;
   var camera, cameraControls;
   var pi = Math.PI;
@@ -216,7 +214,7 @@
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-mercury.jpg',
-          display_color: PLANET_DISPLAY_COLOR,
+          display_color: new THREE.Color(0x913CEE),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(mercury.getEllipse());
@@ -225,7 +223,7 @@
         {
           color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-venus.jpg',
-          display_color: PLANET_DISPLAY_COLOR,
+          display_color: new THREE.Color(0xFF7733),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(venus.getEllipse());
@@ -234,7 +232,7 @@
         {
           color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-earth.jpg',
-          display_color: PLANET_DISPLAY_COLOR,
+          display_color: new THREE.Color(0x009ACD),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(earth.getEllipse());
@@ -243,7 +241,7 @@
         {
           color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-mars.jpg',
-          display_color: PLANET_DISPLAY_COLOR,
+          display_color: new THREE.Color(0xA63A3A),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(mars.getEllipse());
@@ -252,7 +250,7 @@
         {
           color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-jupiter.jpg',
-          display_color: PLANET_DISPLAY_COLOR,
+          display_color: new THREE.Color(0xFF7F50),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(jupiter.getEllipse());
@@ -339,7 +337,7 @@
     var idx = locked_object_idx - psg_vertex_offset;
     attributes.value_color.value[idx] =
       //displayColorForObject(locked_object);
-      new THREE.Color(0x00ffff);
+      new THREE.Color(0xffff00);
     attributes.size.value[idx] = locked_object_size;
     attributes.locked.value[idx] = 0.0;
     scene.remove(locked_object_ellipse);
@@ -647,8 +645,7 @@
       epoch: { type: 'f', value: [] },
       value_color : { type: 'c', value: [] },
       size: { type: 'f', value: [] },
-      locked: { type: 'f', value: [] },  // attributes can't be bool or int in some versions of opengl
-      planet: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
+      locked: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
     };
 
     uniforms = {
@@ -659,17 +656,7 @@
       small_roid_texture:
         { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") },
       small_roid_circled_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4-circled.png") },
-      mercury_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-mercury.jpg") },
-      venus_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-venus.jpg") },
-      earth_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-earth.jpg") },
-      mars_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-mars.jpg") },
-      jupiter_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/images/texture-jupiter.jpg") }
+        { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4-circled.png") }
     };
     var vertexshader = document.getElementById( 'vertexshader' ).textContent
                           .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
@@ -702,12 +689,6 @@
       // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
       attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
       attributes.locked.value[i] = 0.0;
-      if (i < 5) {
-        attributes.planet.value[i] = i + 1.;
-      }
-      else {
-        attributes.planet.value[i] = -1.;
-      }
     }
 
     particleSystem = new THREE.ParticleSystem(
