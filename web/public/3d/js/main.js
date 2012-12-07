@@ -15,7 +15,7 @@
 
   var WEB_GL_ENABLED = true;
 
-  var MAX_NUM_ORBITS = 3000;
+  var MAX_NUM_ORBITS = 5000;
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 20;   // show this many asteroids with orbits
   var stats, scene, renderer, composer;
@@ -322,7 +322,8 @@
     // restore color and size
     var idx = locked_object_idx - psg_vertex_offset;
     attributes.value_color.value[idx] =
-      displayColorForObject(locked_object);
+      //displayColorForObject(locked_object);
+      new THREE.Color(0x00ffff);
     attributes.size.value[idx] = locked_object_size;
     attributes.locked.value[idx] = 0.0;
     scene.remove(locked_object_ellipse);
@@ -498,7 +499,7 @@
     }
 
     // Get new data points
-    $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true', function(data) {
+    $.getJSON('/top?sort=' + sort + '&n=' + MAX_NUM_ORBITS + '&use3d=true&compact=true', function(data) {
       if (!data.results) {
         alert('Sorry, something went wrong and the server failed to return data.');
         return;
