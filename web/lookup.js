@@ -95,7 +95,7 @@ function upcomingPasses(num, cb) {
  * @return {string} key
  */
 function queryToKey(opts) {
-  return opts.sort + '_' + opts.n + '_' + opts.include_3d_vars;
+  return opts.sort + '_' + opts.n + '_' + opts.include_3d_vars + '_' + opts.compact;
 }
 
 /**
@@ -136,17 +136,43 @@ function topN(opts, cb) {
     }
 
     // load asteroid rankings
+    var args = ['score', 'saved', 'price', 'profit',
+      'closeness', 'GM', 'spec_B', 'full_name',
+      'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
+      'prov_des', 'w', ];
+    //if (opts.include_3d_vars) {
+    // Always include, now
+      args.push.apply(args, ['i', 'om', 'ma', 'n', 'epoch','tp', 'per']);
+    //}
+    if (opts.compact) {
+      args.push('fuzzed_price');
+    }
+
     var rankings = _.map(docs, function(doc) {
-      var args = [doc, 'score', 'saved', 'price', 'profit',
-        'closeness', 'GM', 'spec_B', 'full_name',
-        'moid', 'neo', 'pha', 'diameter', 'inexact', 'dv', 'a', 'e', 'q',
-        'prov_des', 'w', ];
-      //if (opts.include_3d_vars) {
-      // Always include, now
-        args.push.apply(args, ['i', 'om', 'ma', 'n', 'epoch','tp', 'per']);
-      //}
-      var ret = _.pick.apply(this, args);
-      ret.fuzzed_price = shared_util.toFuzz(ret.price);
+      if (opts.compact) {
+        var ret = [];
+        _.each(args, function(arg) {
+          if (arg === 'fuzzed_price') {
+            ret.push(shared_util.toFuzz(doc.price));
+          }
+          else {
+            var val = doc[arg];
+            /*
+            if (typeof val  === 'number') {
+              ret.push(sigfig(val, 8));
+            }
+            else {
+            }
+        */
+            ret.push(val);
+          }
+        });
+      }
+      else {
+        //var ret = _.pick.apply(this, args);
+        var ret = _.pick.apply(this, [doc].concat(args));
+        ret.fuzzed_price = shared_util.toFuzz(ret.price);
+      }
       return ret;
     });
 
@@ -164,6 +190,9 @@ function topN(opts, cb) {
         rankings: rankings,
         compositions: compositions,
       };
+      if (opts.compact) {
+        full_result.fields = args;
+      }
       topN_query_cache[query_key] = full_result;
 
       // send result to client
@@ -234,6 +263,20 @@ function query(query, cb) {
     }
   });
 
+}
+
+function sigfig(num, sig) {
+  if (num == 0)
+    return 0;
+  if (Math.round(num) == num)
+    return num;
+  var digits = Math.round((-Math.log(Math.abs(num)) / Math.LN10) + (sig || 2)); //round to significant digits (sig)
+  if (digits < 0)
+    digits = 0;
+  if (digits > 20 && num < 1) {
+    return 0;
+  }
+  return num.toFixed(Math.min(20, digits));
 }
 
 module.exports = {

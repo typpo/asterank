@@ -68,7 +68,13 @@ app.get('/top', function(req, res) {
   // NOTE no minimum for many-particles simulation
     //num = Math.min(num, 10000);
   var include_3d_vars = req.query.use3d ? true : false;
-  lookup.topN({n: num, sort: req.query.sort, include_3d_vars: include_3d_vars},
+  var compact = req.query.compact ? true : false;
+  lookup.topN({
+    n: num,
+    sort: req.query.sort,
+    include_3d_vars: include_3d_vars,
+    compact: compact,
+  },
     function(err, result) {
       res.send({results:result});
   });

@@ -520,7 +520,11 @@
           }
           useBigParticles = false;
         }
-        var roid = data.results.rankings[i];
+        var roid_data = data.results.rankings[i];
+        var roid = {};
+        for (var j=0; j < data.results.fields.length; j++) {
+          roid[data.results.fields[j]] = roid_data[j];
+        }
         var locked = false;
         var orbit = new Orbit3D(roid, {
           color: 0xcccccc,
