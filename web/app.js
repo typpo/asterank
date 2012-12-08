@@ -1,6 +1,7 @@
 var express = require('express')
-  , app = express.createServer()
   , connect = require('connect')
+  , gzip = require('connect-gzip')
+  , app = express.createServer(gzip.gzip({ flags: '--best' }))
   , _ = require('underscore')
   , BundleUp = require('bundle-up')
   , lookup = require('./lookup.js')

@@ -3,6 +3,7 @@
   , "dependencies": {
       "express": "2.5.2"
       , "connect": "2.x"
+      , "connect-gzip": "latest"
       , "jade": "0.26.3"
       , "underscore": "latest"
       , "connect-redis": "1.2.0"
