@@ -124,6 +124,7 @@
 
   // init the scene
   function init(){
+    $('#loading-text').html('renderer');
     if (WEB_GL_ENABLED && Detector.webgl){
       renderer = new THREE.WebGLRenderer({
         antialias		: true,	// to get smoother output
@@ -178,6 +179,7 @@
 
     // "sun" - 0,0 marker
     if (using_webgl) {
+      $('#loading-text').html('sun');
       var sun = new THREE.Object3D();
       var texture = THREE.ImageUtils.loadTexture("/images/sunsprite.png");
       var sprite = new THREE.Sprite({
@@ -215,6 +217,8 @@
 
     // Ellipses
     runAsteroidQuery();
+
+      $('#loading-text').html('planets');
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
@@ -270,6 +274,7 @@
 
     // Sky
     if (using_webgl) {
+      $('#loading-text').html('skybox');
       var path = "/images/dark-s_";
       var format = '.jpg';
       var urls = [
@@ -530,6 +535,7 @@
     }
 
     // Get new data points
+    $('#loading-text').html('asteroids database');
     $.getJSON('/top?sort=' + sort + '&n='
         + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
         + '&use3d=true&compact=true', function(data) {
