@@ -49,6 +49,7 @@ TOP = """162385 (2000 BM19),1113
 (1998 SD9),6
 """
 
+NUM_CRAWL = 1000
 connection = Connection('localhost', 27017)
 db = connection.asterank
 
@@ -69,7 +70,7 @@ def process(asteroid):
   a.data['tag_name'] = desig
   jpl.insert(a.data)
 
-for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(150):
+for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
   process(asteroid)
-for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(150):
+for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
   process(asteroid)
