@@ -645,6 +645,8 @@
       animate();
 
       $('#loading').hide();
+
+      mixpanel.track('simulation started');
     });
   }
 
