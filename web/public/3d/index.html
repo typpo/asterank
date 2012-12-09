@@ -84,12 +84,10 @@
       vColor = value_color;
       vLocked = locked;
 
-      //vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
       vec3 newpos = getAstroPos();
       vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0);
       gl_Position = projectionMatrix * mvPosition;
       gl_PointSize = size;
-      //vUv = uv2;
     }
   </script>
   <script type="x-shader/x-fragment" id="fragmentshader">
@@ -101,11 +99,6 @@
     uniform sampler2D small_roid_circled_texture;
 
     void main() {
-      //gl_FragColor = texture2D(small_roid_texture, vUv);
-      //vec4 sum = texture2D(small_roid_texture,
-        //vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
-     //gl_FragColor = sum;
-//vec2 pos = mod(gl_PointCoord.xy, vec2(0.5, 0.5));
       if (vLocked == 0.0) {
       gl_FragColor = vec4(vColor, 1.0) * texture2D(small_roid_texture,
         vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
@@ -114,113 +107,6 @@
       gl_FragColor = vec4(vColor, 1.0) * texture2D(small_roid_circled_texture,
         vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
       }
-      /*
-      float xs = gl_PointCoord.x - 0.5;
-      float ys = gl_PointCoord.y - 0.5;
-      float dist = sqrt(xs*xs + ys*ys);
-      if (dist > 0.25) {
-        gl_FragColor = texture2D(small_roid_texture,
-          vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y))
-          * vec4(1.0, 1.0, 1.0, 0.5);
-      }
-      else {
-        gl_FragColor = texture2D(small_roid_texture,
-          vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
-      }
-        */
-      /*
-      float opacity;
-      if (dist > 0.25) {
-        discard;
-        return;
-      }
-      else if (dist < 0.05) {
-        opacity = 1.0;
-      }
-      else {
-        opacity = 0.1;
-      }
-      gl_FragColor = vec4(color, opacity);
-       */
-    }
-  </script>
-  <script type="x-shader/x-vertex" id="bigparticle-vertexshader">
-    #define pi 3.141592653589793238462643383279
-
-    uniform float earth_i;
-    uniform float earth_om;
-
-    uniform float jed;
-
-    uniform float a;
-    uniform float e;
-    uniform float i;
-    uniform float o;
-    uniform float ma;
-    uniform float n;
-    uniform float w;
-    uniform float P;
-    uniform float epoch;
-
-    vec3 getAstroPos() {
-      float i_rad = (i - earth_i) * pi/180.0;
-      float o_rad = (o - earth_om) * pi/180.0; // longitude of ascending node
-      float p_rad = w * pi/180.0; // longitude of perihelion
-      float ma_rad = ma * pi/180.0;
-      float n_rad;
-      if (n > -1.0)
-        n_rad = n * pi/180.0; // mean motion
-      else {
-        n_rad = 2.0 * pi / P;
-      }
-
-      float d = epoch - jed;
-      float M = ma_rad + n_rad * -d;
-
-      // Estimate eccentric and true anom using iterative approx
-      float E0 = M;
-      float lastdiff;
-      // converted do/while:
-      float E1 = M + e * sin(E0);
-      lastdiff = abs(E1-E0);
-      E0 = E1;
-      for (int foo=0; foo < 5000; foo++) {
-        float E1 = M + e * sin(E0);
-        lastdiff = abs(E1-E0);
-        E0 = E1;
-        if (lastdiff > 0.0000001) {
-          break;
-        }
-      }
-      float E = E0;
-      float v = 2.0 * atan(sqrt((1.0+e)/(1.0-e)) * tan(E/2.0));
-
-      // radius vector, in AU
-      float r = a * (1.0 - e*e) / (1.0 + e * cos(v)) * {{PIXELS_PER_AU}};
-
-      // heliocentric coords
-      float X = r * (cos(o_rad) * cos(v + p_rad - o_rad) - sin(o_rad) * sin(v + p_rad - o_rad) * cos(i_rad));
-      float Y = r * (sin(o_rad) * cos(v + p_rad - o_rad) + cos(o_rad) * sin(v + p_rad - o_rad) * cos(i_rad));
-      float Z = r * (sin(v + p_rad - o_rad) * sin(i_rad));
-      return vec3(X, Y, Z);
-    }
-
-    void main() {
-      gl_Position = vec4(10., 10., 10., 1.);
-      gl_PointSize = 30.0;
-
-      // ....
-      return;
-      vec3 newpos = getAstroPos();
-      vec4 mvPosition = modelViewMatrix * vec4(newpos, 1.0);
-      gl_Position = projectionMatrix * mvPosition;
-      gl_PointSize = 30.0;
-    }
-  </script>
-  <script type="x-shader/x-fragment" id="bigparticle-fragmentshader">
-    void main() {
-      gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-    }
   </script>
 
   <div id="sidebar">
@@ -246,20 +132,6 @@
 
     </div>
   </div>
-    <!--
-  <div id="controls">
-    <select id="search-type">
-      <option value="score">Most cost effective</option>
-      <option value="price">Most valuable</option>
-      <option value="closeness">Most accessible</option>
-    </select>
-    <input type="button" value="Update"/>
-    <a href="#" class="js-sort" data-sort="score" style="font-weight:bold;">Most cost effective</a>
-    <a href="#" class="js-sort" data-sort="price">Most valuable</a>
-    <a href="#" class="js-sort" data-sort="closeness">Most accessible</a>
-    <input id="btn-toggle-movement" type="button" value="Toggle Movement"/>
-  </div>
-    -->
 	<!-- three.js container -->
   <div id="container"></div>
 	<!-- info on screen display -->
@@ -292,14 +164,6 @@
       Hover over the big white asteroids for economic estimates.
       <br>
       The locations of asteroids and planets shown are scientifically accurate.</span>
-<!--
-      <span style="background-color:#913CEE;color:#000">Mercury</span>
-      <span style="background-color:#ff7733;color:#000">Venus</span>
-      <span style="background-color:#009acd;color:#000">Earth</span>
-      <span style="background-color:#a63a3a;color:#000">Mars</span>
-      <span style="background-color:#ff7f50;color:#000">Jupiter</span>
-      <span style="background-color:#fff;color:#000">Asteroids</span>
--->
 		</div>
 	</div>
   <script src="vendor/three.js/Three.min.js"></script>
