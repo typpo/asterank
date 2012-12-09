@@ -60,6 +60,10 @@ app.post('/feedback', function(req, res) {
   res.redirect('/')
 });
 
+app.get('/3dtest', function(req, res) {
+  renderWithContext(res, '3d');
+});
+
 app.get('/top', function(req, res) {
   // gets top n asteroids for a given sort system
   var num = parseInt(req.query.n);
