@@ -1,4 +1,4 @@
-(function() {
+$(function() {
   "use strict";
 
   window.requestAnimFrame = (function(){
@@ -137,7 +137,7 @@
     else {
       renderer	= new THREE.CanvasRenderer();
       $('#not-supported').show();
-      mixpanel.track('not supported');
+      if (typeof mixpanel !== 'undefined') mixpanel.track('not supported');
     }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('container').appendChild(renderer.domElement);
@@ -652,7 +652,7 @@
 
       $('#loading').hide();
 
-      mixpanel.track('simulation started');
+      if (typeof mixpanel !== 'undefined') mixpanel.track('simulation started');
     });
   }
 
@@ -762,5 +762,5 @@
   function setDefaultCameraPosition() {
     cam.position.set(0, -155, 32);
   }
-})();
+});
 if (!window.console) window.console = {log: function() {}};
