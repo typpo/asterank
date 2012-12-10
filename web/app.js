@@ -1,6 +1,6 @@
 var express = require('express')
   , connect = require('connect')
-  , gzip = require('connect-gzip')
+  //, gzip = require('connect-gzip')
   //, app = express.createServer(gzip.gzip({ flags: '--best' }))
   // cloudflare does gzip for us now, and this was causing issues.
   , app = express.createServer()
