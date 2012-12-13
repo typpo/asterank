@@ -248,7 +248,7 @@
     planets = [mercury, venus, earth, mars, jupiter];
 
     // Sky
-    if (using_webgl) {
+    if (using_webgl && !$.browser.mozilla) {
       var path = "/images/dark-s_";
       var format = '.jpg';
       var urls = [
