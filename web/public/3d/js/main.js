@@ -273,7 +273,7 @@ $(function() {
     planets = [mercury, venus, earth, mars, jupiter];
 
     // Sky
-    if (using_webgl) {
+    if (using_webgl && !$.browser.mozilla) {
       $('#loading-text').html('skybox');
       var path = "/images/dark-s_";
       var format = '.jpg';
