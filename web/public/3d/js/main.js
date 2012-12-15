@@ -105,7 +105,13 @@ $(function() {
         }
       }).listen();
       window.datgui = text;
+
+      // Fullscreen api
+      if (THREEx.FullScreen.available()) {
+        THREEx.FullScreen.bindKey();
+      }
     }; // end window onload
+
   }
 
   function togglePlanetOrbits() {
