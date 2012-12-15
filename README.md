@@ -10,7 +10,7 @@ Certain areas could use some cleanup and polish.  In particular, the ranking and
 
 ## License (MIT)
 
-Copyright (C) 2011 by Ian Webster
+Copyright (C) 2012 by Ian Webster
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
