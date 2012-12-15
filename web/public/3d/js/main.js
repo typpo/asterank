@@ -105,11 +105,6 @@ $(function() {
         }
       }).listen();
       window.datgui = text;
-
-      // Fullscreen api
-      if (THREEx.FullScreen.available()) {
-        THREEx.FullScreen.bindKey();
-      }
     }; // end window onload
 
   }
@@ -653,6 +648,11 @@ $(function() {
       }
 
       console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
+
+      // Fullscreen api
+      if (THREEx.FullScreen.available()) {
+        THREEx.FullScreen.bindKey();
+      }
 
       animate();
 
