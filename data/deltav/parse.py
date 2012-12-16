@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+#
+# Parses delta v file from Lance Benner
+# @ http://echo.jpl.nasa.gov/~lance/delta_v/delta_v.rendezvous.html
+#
 
 import re
 
