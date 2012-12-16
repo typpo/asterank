@@ -53,7 +53,6 @@ $(function() {
   // glsl stuff
   var attributes;
   var uniforms;
-  var psg_vertex_offset;
 
   init();
   initGUI();
@@ -97,7 +96,6 @@ $(function() {
         togglePlanetOrbits();
       });
       gui.add(text, 'display date').onChange(function(val) {
-        // TODO don't do anything unless it changed
         var newdate = Date.parse(val);
         if (newdate) {
           var newjed = toJED(newdate);
@@ -206,16 +204,6 @@ $(function() {
       scene.add(particle);
     }
 
-    /*
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(75, 75), new THREE.MeshBasicMaterial({
-        color: 0x0000ff
-    }));
-    plane.overdraw = true;
-    plane.doubleSided = true;
-    plane.rotation.x = pi/2;
-    scene.add(plane);
-    */
-
     // Ellipses
     runAsteroidQuery();
 
@@ -312,30 +300,6 @@ $(function() {
     window.renderer = renderer;
   }
 
-  // animation loop
-  function animate() {
-    if (!asteroids_loaded) {
-      render();
-      requestAnimFrame(animate);
-      return;
-    }
-
-    if (camera_fly_around) {
-      if (locked_object) {
-        // Follow locked object
-        var pos = locked_object.getPosAtTime(jed);
-        cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
-        cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      }
-      else {
-        setNeutralCameraPosition();
-      }
-    }
-
-    render();
-    requestAnimFrame(animate);
-  }
-
   function setNeutralCameraPosition() {
     // Follow floating path around
     var timer = 0.0001 * Date.now();
@@ -354,13 +318,12 @@ $(function() {
     cameraControls.target = new THREE.Vector3(0,0,0);
 
     // restore color and size
-    var idx = locked_object_idx - psg_vertex_offset;
     if (using_webgl) {
-      attributes.value_color.value[idx] =
+      attributes.value_color.value[locked_object_idx] =
         //displayColorForObject(locked_object);
         new THREE.Color(0xffff00);
-      attributes.size.value[idx] = locked_object_size;
-      attributes.locked.value[idx] = 0.0;
+      attributes.size.value[locked_object_idx] = locked_object_size;
+      attributes.locked.value[locked_object_idx] = 0.0;
     }
     scene.remove(locked_object_ellipse);
 
@@ -385,42 +348,16 @@ $(function() {
     }
     locked_object = orbit_obj;
     locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
-    var idx = locked_object_idx - psg_vertex_offset;
-
     if (using_webgl) {
-      attributes.value_color.value[idx] = new THREE.Color(0xff0000);
-      locked_object_size = attributes.size.value[idx];
-      attributes.size.value[idx] = 30.0;
-      attributes.locked.value[idx] = 1.0;
+      attributes.value_color.value[locked_object_idx] = new THREE.Color(0xff0000);
+      locked_object_size = attributes.size.value[locked_object_idx];
+      attributes.size.value[locked_object_idx] = 30.0;
+      attributes.locked.value[locked_object_idx] = 1.0;
     }
 
     locked_object_ellipse = locked_object.getEllipse();
     scene.add(locked_object_ellipse);
     camera_fly_around = true;
-  }
-
-  // render the scene
-  function render() {
-    // update camera controls
-    cameraControls.update();
-
-    // update display date
-    var now = new Date().getTime();
-    if (now - display_date_last_updated > 500 && typeof datgui !== 'undefined') {
-      var georgian_date = fromJED(jed);
-      datgui['display date'] = georgian_date.getMonth()+1 + "/"
-        + georgian_date.getDate() + "/" + georgian_date.getFullYear();
-      display_date_last_updated = now;
-    }
-
-    if (using_webgl && object_movement_on) {
-      // update shader vals for asteroid cloud
-      uniforms.jed.value = jed;
-      jed += .25;
-    }
-
-    // actually render the scene
-    renderer.render(scene, camera);
   }
 
   function startSimulation() {
@@ -516,7 +453,6 @@ $(function() {
         console.log('Invalid data type', data.type);
     }
   }
-
 
   function runAsteroidQuery(sort) {
     sort = sort || 'score';
@@ -706,23 +642,20 @@ $(function() {
     particle_system_shader_material.transparent = true;
     particle_system_shader_material.blending = THREE.AdditiveBlending;
 
-    psg_vertex_offset = 0;//added_objects.length - particle_system_geometry.vertices.length;
     for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
-      var added_objects_idx = i + psg_vertex_offset;
-
       attributes.size.value[i] = i < 30 ? 50 : 15;
 
-      attributes.a.value[i] = added_objects[added_objects_idx].eph.a;
-      attributes.e.value[i] = added_objects[added_objects_idx].eph.e;
-      attributes.i.value[i] = added_objects[added_objects_idx].eph.i;
-      attributes.o.value[i] = added_objects[added_objects_idx].eph.om;
-      attributes.ma.value[i] = added_objects[added_objects_idx].eph.ma;
-      attributes.n.value[i] = added_objects[added_objects_idx].eph.n || -1.0;
-      attributes.w.value[i] = added_objects[added_objects_idx].eph.w;
-      attributes.P.value[i] = added_objects[added_objects_idx].eph.P || -1.0;
-      attributes.epoch.value[i] = added_objects[added_objects_idx].eph.epoch;
+      attributes.a.value[i] = added_objects[i].eph.a;
+      attributes.e.value[i] = added_objects[i].eph.e;
+      attributes.i.value[i] = added_objects[i].eph.i;
+      attributes.o.value[i] = added_objects[i].eph.om;
+      attributes.ma.value[i] = added_objects[i].eph.ma;
+      attributes.n.value[i] = added_objects[i].eph.n || -1.0;
+      attributes.w.value[i] = added_objects[i].eph.w;
+      attributes.P.value[i] = added_objects[i].eph.P || -1.0;
+      attributes.epoch.value[i] = added_objects[i].eph.epoch;
       // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
-      attributes.value_color.value[i] = added_objects[added_objects_idx].opts.display_color;
+      attributes.value_color.value[i] = added_objects[i].opts.display_color;
       attributes.locked.value[i] = 0.0;
     }
 
@@ -771,6 +704,54 @@ $(function() {
 
   function setDefaultCameraPosition() {
     cam.position.set(0, -155, 32);
+  }
+
+  // animation loop
+  function animate() {
+    if (!asteroids_loaded) {
+      render();
+      requestAnimFrame(animate);
+      return;
+    }
+
+    if (camera_fly_around) {
+      if (locked_object) {
+        // Follow locked object
+        var pos = locked_object.getPosAtTime(jed);
+        cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
+        cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
+      }
+      else {
+        setNeutralCameraPosition();
+      }
+    }
+
+    render();
+    requestAnimFrame(animate);
+  }
+
+  // render the scene
+  function render() {
+    // update camera controls
+    cameraControls.update();
+
+    // update display date
+    var now = new Date().getTime();
+    if (now - display_date_last_updated > 500 && typeof datgui !== 'undefined') {
+      var georgian_date = fromJED(jed);
+      datgui['display date'] = georgian_date.getMonth()+1 + "/"
+        + georgian_date.getDate() + "/" + georgian_date.getFullYear();
+      display_date_last_updated = now;
+    }
+
+    if (using_webgl && object_movement_on) {
+      // update shader vals for asteroid cloud
+      uniforms.jed.value = jed;
+      jed += .25;
+    }
+
+    // actually render the scene
+    renderer.render(scene, camera);
   }
 });
 if (!window.console) window.console = {log: function() {}};
