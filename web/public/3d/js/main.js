@@ -18,7 +18,7 @@ $(function() {
   var MAX_NUM_ORBITS = 4000;
   var CANVAS_NUM_ORBITS = 30;  // gimped version orbits
   var PIXELS_PER_AU = 50;
-  var NUM_BIG_PARTICLES = 25;   // show this many asteroids with orbits
+  var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
 
   var stats, scene, renderer, composer;
   var camera, cameraControls;
