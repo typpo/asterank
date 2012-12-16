@@ -1,8 +1,7 @@
 // Data from NASA, eg.
 // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
 
-(function() {
-  var eph = {
+  window.Ephemeris = {
     mercury: {
       full_name: 'Mercury',
       ma: 174.79439,
@@ -65,5 +64,3 @@
       P: 4332.589
     },
   };
-  window.Ephemeris = eph;
-})();
