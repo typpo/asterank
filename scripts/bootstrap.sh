@@ -1,4 +1,3 @@
 #!/bin/sh
-sudo apt-get install python-dev && libgmp3-dev && libmpfr-dev
+sudo apt-get install python-dev libgmp3-dev libmpfr-dev python-pymongo
 sudo npm install supervisor -g
-sudo apt-get install python-pymongo
