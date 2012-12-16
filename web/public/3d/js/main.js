@@ -325,7 +325,10 @@ $(function() {
       attributes.size.value[locked_object_idx] = locked_object_size;
       attributes.locked.value[locked_object_idx] = 0.0;
     }
-    scene.remove(locked_object_ellipse);
+    if (locked_object_idx > 4) {
+      // not a planet
+      scene.remove(locked_object_ellipse);
+    }
 
     locked_object = null;
     locked_object_ellipse = null;
