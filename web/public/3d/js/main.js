@@ -250,6 +250,10 @@ $(function() {
     scene.add(earth.getEllipse());
     if (!using_webgl)
       scene.add(earth.getParticle());
+    feature_map['earth'] = {
+      orbit: earth,
+      idx: 2
+    };
     var mars = new Orbit3D(Ephemeris.mars,
         {
           color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
@@ -615,7 +619,7 @@ $(function() {
       } // end asteroid results for loop
 
       // handle when view mode is switched - need to clear every row but the sun
-      $('#objects-of-interest tr:not(:first)').remove();
+      $('#objects-of-interest tr:gt(1)').remove();
       $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
         $('#objects-of-interest tr').css('background-color', '#000');
         var $e = $(this);
