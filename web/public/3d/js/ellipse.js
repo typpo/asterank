@@ -55,8 +55,7 @@
 
   Orbit3D.prototype.CreateParticle = function(jed, texture_path) {
     if (!this.bigParticle && this.particle_geometry) {
-      // TODO need to clean this up - none of this is necessary anymore with
-      // shader positioning
+      // dummy position for particle geometry
       var tmp_vec = new THREE.Vector3(0,0,0);
       this.particle_geometry.vertices.push(tmp_vec);
       return;
@@ -95,7 +94,6 @@
       this.particle.position.set(pos[0], pos[1], pos[2]);
     }
     else {
-      // TODO cache this lookup
       var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
       vertex_particle.x = pos[0];
       vertex_particle.y = pos[1];
@@ -104,6 +102,8 @@
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {
+    // Note: this must match the vertex shader.
+    // This position calculation is used to follow asteroids in 'lock-on' mode
     var e = this.eph.e;
     var a = this.eph.a;
     var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
@@ -121,8 +121,6 @@
     }
     var epoch = this.eph.epoch;
     var d = epoch - jed;
-    //L = ma + p;
-    //M =  n * -d + L - p;
     M = ma + n * d;
 
     var sin = Math.sin, cos = Math.cos;
