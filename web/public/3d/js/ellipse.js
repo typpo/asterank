@@ -57,12 +57,12 @@
     if (!this.bigParticle && this.particle_geometry) {
       // TODO need to clean this up - none of this is necessary anymore with
       // shader positioning
-      this.farticle = new THREE.Vector3(0,0,0);
-      // add it to the geometry
-      this.vertex_pos = this.particle_geometry.vertices.length;
-      this.particle_geometry.vertices.push(this.farticle);
-      return this.farticle;
+      var tmp_vec = new THREE.Vector3(0,0,0);
+      this.particle_geometry.vertices.push(tmp_vec);
+      return;
     }
+
+    // this is used by broken canvas mode only
 
     var pos = this.getPosAtTime(jed);
 
@@ -77,63 +77,11 @@
           wireframe: false,
           overdraw: true
         });
-        /*
-        var texture = THREE.ImageUtils.loadTexture(texture_path);
-        var sprite = new THREE.Sprite({
-          map: texture,
-          blending: THREE.AdditiveBlending,
-          useScreenCoordinates: false,
-          color: 0xffffff
-        });
-        sprite.scale.x = 10;
-        sprite.scale.y = 10;
-        sprite.scale.z = 1;
-        sprite.color.setHSV(1.0, 0.0, 1.0);
-        obj.add(sprite);
-        */
       }
       var material= new THREE.MeshBasicMaterial(mat_opts);
-      /*
-      attributes = {
-      };
-      uniforms = {
-        //color: { type: "c", value: new THREE.Color( 0xffffff ) },
-        jed: { type: 'f', value: jed },
-        earth_i: { type: "f", value: Ephemeris.earth.i },
-        earth_om: { type: "f", value: Ephemeris.earth.om },
-        //small_roid_texture:
-        //  { type: "t", value: THREE.ImageUtils.loadTexture("/images/cloud4.png") },
-
-        a: { type: 'f', value: this.eph.a },
-        e: { type: 'f', value: this.eph.e },
-        i: { type: 'f', value: this.eph.i },
-        o: { type: 'f', value: this.eph.om },
-        ma: { type: 'f', value: this.eph.ma },
-        n: { type: 'f', value: this.eph.n || -1.0 },
-        w: { type: 'f', value: this.eph.w },
-        P: { type: 'f', value: this.eph.P }, // P can be undefined, but n is always defined in that case
-        epoch: { type: 'f', value: this.eph.epoch }
-      };
-
-      var vertexshader = document.getElementById( 'bigparticle-vertexshader' ).textContent
-                            .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
-
-      var material = new THREE.ShaderMaterial( {
-        uniforms:       uniforms,
-        attributes:     attributes,
-        vertexShader:   vertexshader,
-        fragmentShader: document.getElementById('bigparticle-fragmentshader').textContent,
-      });
-      material.depthTest = false;
-      material.vertexColor = true;
-      material.transparent = true;
-      material.blending = THREE.AdditiveBlending;
-      */
       this.particle = new THREE.Mesh(geometry, material);
       //this.particle.scale.x = -1; // flip so texture shows up oriented correctly
       this.particle.position.set(pos[0], pos[1], pos[2]);
-      //obj.add(this.particle);
-      //this.particle = obj;
     }
   }
 
