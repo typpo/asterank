@@ -303,7 +303,7 @@ $(function() {
   function setNeutralCameraPosition() {
     // Follow floating path around
     var timer = 0.0001 * Date.now();
-    cam.position.x = Math.sin(timer) * 10;
+    cam.position.x = Math.sin(timer) * 25;
     //cam.position.y = Math.sin( timer ) * 100;
     cam.position.z = -100 + Math.cos(timer) * 20;
   }
@@ -725,7 +725,7 @@ $(function() {
         cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
       }
       else {
-        //setNeutralCameraPosition();
+        setNeutralCameraPosition();
       }
     }
 
