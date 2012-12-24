@@ -725,7 +725,7 @@ $(function() {
         cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
       }
       else {
-        setNeutralCameraPosition();
+        //setNeutralCameraPosition();
       }
     }
 
