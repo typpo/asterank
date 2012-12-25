@@ -1,19 +1,9 @@
-
-	proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:8m max_size=1000m inactive=600m;
-	proxy_temp_path /var/www/cache/tmp; 
+proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:8m max_size=1000m inactive=600m;
+proxy_temp_path /var/www/cache/tmp; 
 
 server {
     listen   80;
     server_name asterank.com www.asterank.com;
-    # no security problem here, since / is alway passed to upstream
-    #root /home/wol/world-of-loot/worldofloot;
-    # serve directly - analogous for static/staticfiles
-    #location /media/ {
-    #    # if asset versioning is used
-    #    if ($query_string) {
-    #        expires max;
-    #    }
-    #}
 
     location / {
         proxy_pass_header Server;
