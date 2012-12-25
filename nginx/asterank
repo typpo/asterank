@@ -1,0 +1,34 @@
+
+	proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:8m max_size=1000m inactive=600m;
+	proxy_temp_path /var/www/cache/tmp; 
+
+server {
+    listen   80;
+    server_name asterank.com www.asterank.com;
+    # no security problem here, since / is alway passed to upstream
+    #root /home/wol/world-of-loot/worldofloot;
+    # serve directly - analogous for static/staticfiles
+    #location /media/ {
+    #    # if asset versioning is used
+    #    if ($query_string) {
+    #        expires max;
+    #    }
+    #}
+
+    location / {
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_connect_timeout 40;
+        proxy_read_timeout 40;
+        proxy_pass http://localhost:9590/;
+	
+	proxy_cache my-cache;
+	proxy_cache_valid 200 302 600m;
+	proxy_cache_valid 404 1m;
+    }
+    # what to serve if upstream is not available or crashes
+    error_page 500 502 503 504 /media/50x.html;
+}
