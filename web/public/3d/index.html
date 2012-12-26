@@ -184,6 +184,14 @@ if(~document.location.href.indexOf('asterank.com')) {
 for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
 })();
 mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");mixpanel.track('3d');
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-32180949-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 }
 else {
   mixpanel = {track: function() {}};
