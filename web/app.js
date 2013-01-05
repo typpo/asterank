@@ -83,14 +83,26 @@ app.get('/top', function(req, res) {
     compact: compact,
   },
     function(err, result) {
+    if (err) {
+      res.status(500);
       res.send({results:result});
+    }
+    else {
+      res.send({results:result});
+    }
   });
 });
 
 app.get('/summary', function(req, res) {
   // Homepage result summary
   lookup.homepage(function(err, result) {
-    res.send(result);
+    if (err) {
+      res.status(500);
+      res.send(result);
+    }
+    else {
+      res.send(result);
+    }
   });
 
 });
