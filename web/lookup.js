@@ -43,6 +43,9 @@ function homepage(cb) {
       most_cost_effective: mce,
       upcoming_passes: up,
     };
+    setTimeout(function() {
+      homepage_summary_result = null;
+    }, 1000*60*60*12);
     cb(false, homepage_summary_result);
   });
 
