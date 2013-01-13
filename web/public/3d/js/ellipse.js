@@ -48,7 +48,7 @@
         color: this.opts.color,
         linewidth: this.opts.width,
         dashSize: 1,
-        gapSize: 0.5,
+        gapSize: 0.5
       }), THREE.LineStrip);
     return line;
   }

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Asterank - 3D Asteroid Orbit Space Simulation</title>
+		<title>3D Interactive Asteroid Space Visualization - Asterank</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link  href="css/main.css" rel="stylesheet"/>
@@ -115,7 +115,7 @@
     <a href="/">&laquo; Main site</a>
     </p>
     <div class="fb-like" data-href="http://www.asterank.com/3d" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
-    <a style="font-size:10px;" href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+    <a style="font-size:10px;" href="https://twitter.com/share" data-url="http://asterank.com/3d/" data-counturl="http://asterank.com/3d/" class="twitter-share-button" data-lang="en">Tweet</a>
 <div>
     <g:plusone size="small" count="false"></g:plusone>
 </div>
@@ -165,7 +165,7 @@
       <br>
       <strong>Zoom</strong>: scroll/middle click + drag; <strong>Fullscreen</strong>: press f
       <br>
-      The location of all objects shown is scientifically accurate.</span>
+      Location of all objects shown is scientifically accurate.</span>
 		</div>
 	</div>
   <script src="vendor/vendor.min.js"></script>
@@ -184,6 +184,14 @@ if(~document.location.href.indexOf('asterank.com')) {
 for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
 })();
 mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");mixpanel.track('3d');
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-32180949-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 }
 else {
   mixpanel = {track: function() {}};

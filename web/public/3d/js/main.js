@@ -126,7 +126,7 @@ $(function() {
     $('#loading-text').html('renderer');
     if (WEB_GL_ENABLED && Detector.webgl){
       renderer = new THREE.WebGLRenderer({
-        antialias		: true,	// to get smoother output
+        antialias		: true	// to get smoother output
         //preserveDrawingBuffer	: true	// to allow screenshot
       });
       renderer.setClearColor(0x000000, 1);
@@ -303,7 +303,7 @@ $(function() {
   function setNeutralCameraPosition() {
     // Follow floating path around
     var timer = 0.0001 * Date.now();
-    cam.position.x = Math.sin(timer) * 10;
+    cam.position.x = Math.sin(timer) * 25;
     //cam.position.y = Math.sin( timer ) * 100;
     cam.position.z = -100 + Math.cos(timer) * 20;
   }
@@ -638,7 +638,7 @@ $(function() {
       uniforms:       uniforms,
       attributes:     attributes,
       vertexShader:   vertexshader,
-      fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+      fragmentShader: document.getElementById( 'fragmentshader' ).textContent
     });
     particle_system_shader_material.depthTest = false;
     particle_system_shader_material.vertexColor = true;
