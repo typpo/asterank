@@ -165,6 +165,10 @@ $(function() {
 
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
     THREEx.WindowResize(renderer, camera);    // handle window resize
+    // Fullscreen api
+    if (THREEx.FullScreen.available()) {
+      THREEx.FullScreen.bindKey();
+    }
 
     scene.add(camera);
 
@@ -581,7 +585,6 @@ $(function() {
       });
       $('#objects-of-interest-container').show();
 
-      asteroids_loaded = true;
       if (using_webgl) {
         createParticleSystem();
       }
@@ -590,14 +593,12 @@ $(function() {
         startSimulation();
       }
 
-      console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
+      //console.log('Starting with', NUM_WORKERS, 'workers for', n, 'from request of', MAX_NUM_ORBITS);
 
-      // Fullscreen api
-      if (THREEx.FullScreen.available()) {
-        THREEx.FullScreen.bindKey();
+      if (!asteroids_loaded) {
+        asteroids_loaded = true;
+        animate();
       }
-
-      animate();
 
       $('#loading').hide();
 
