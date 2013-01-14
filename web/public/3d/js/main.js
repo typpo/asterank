@@ -15,7 +15,7 @@ $(function() {
 
   var WEB_GL_ENABLED = true;
 
-  var MAX_NUM_ORBITS = 5;
+  var MAX_NUM_ORBITS = 4000;
   var CANVAS_NUM_ORBITS = 30;  // gimped version orbits
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
@@ -224,11 +224,9 @@ $(function() {
           display_color: new THREE.Color(0xBF5FFF),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
-    /*
     scene.add(asteroid_2012_da14.getEllipse());
     if (!using_webgl)
       scene.add(asteroid_2012_da14.getParticle());
-      */
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
@@ -284,7 +282,7 @@ $(function() {
     if (!using_webgl)
       scene.add(jupiter.getParticle());
 
-    planets = [/*asteroid_2012_da14,*/ mercury, venus, earth, mars, jupiter];
+    planets = [asteroid_2012_da14, mercury, venus, earth, mars, jupiter];
 
     // Sky
     if (using_webgl) {
@@ -672,7 +670,7 @@ $(function() {
       attributes.o.value[i] = added_objects[i].eph.om;
       attributes.ma.value[i] = added_objects[i].eph.ma;
       attributes.n.value[i] = added_objects[i].eph.n || -1.0;
-      attributes.w.value[i] = added_objects[i].eph.w_bar;
+      attributes.w.value[i] = added_objects[i].eph.w_bar || (added_objects[i].eph.w + added_objects[i].eph.om);
       attributes.P.value[i] = added_objects[i].eph.P || -1.0;
       attributes.epoch.value[i] = added_objects[i].eph.epoch;
       // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html

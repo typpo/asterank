@@ -3,16 +3,16 @@ window.Ephemeris = {
     full_name: '2012 DA14',
     ma: 299.99868,
     epoch: 2456200.5,
-    //n: 0.98289640,
-    a: 1.0018381,
+    n: 0.98289640,
+    a: 1.110,
     e: 0.1081389,
     i: 10.33722,
 
-    w: 271.07725,   // ARGUMENT of perihelion.  argument = longitude - om
-    //L: 299.99868,
+    w_bar: 58.33968,
+    w: 271.07725,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
     om: 147.26243,
 
-    P: 365.256
+    //P: 365.256
   },
 
   // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
@@ -86,7 +86,7 @@ window.Ephemeris = {
 };
 
 for (x in Ephemeris) {
-  if (Ephemeris.hasOwnProperty(x) && Ephemeris[x].w_bar) {
+  if (Ephemeris.hasOwnProperty(x) && Ephemeris[x].w_bar && Ephemeris[x].L) {
     Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
   }
 }

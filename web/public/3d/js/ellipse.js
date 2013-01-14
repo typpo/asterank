@@ -106,7 +106,7 @@
     // This position calculation is used to follow asteroids in 'lock-on' mode
     var e = this.eph.e;
     var a = this.eph.a;
-    var i = (this.eph.i-Ephemeris.earth.i) * pi/180;
+    var i = (this.eph.i) * pi/180;
     var o = (this.eph.om) * pi/180; // longitude of ascending node
     var p = this.eph.w_bar * pi/180; // LONGITUDE of perihelion
     var ma = this.eph.ma;

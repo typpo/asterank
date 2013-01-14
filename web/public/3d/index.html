@@ -38,7 +38,7 @@
     varying float vLocked;
 
     vec3 getAstroPos() {
-      float i_rad = (i - earth_i) * pi/180.0;
+      float i_rad = (i) * pi/180.0;
       float o_rad = (o) * pi/180.0; // longitude of ascending node
       float p_rad = (w) * pi/180.0; // LONGITUDE of perihelion
       float ma_rad = ma * pi/180.0;
