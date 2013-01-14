@@ -44,7 +44,7 @@ $(function() {
   var locked_object_color = -1;
 
   // 2012 da14
-  var featured_2012_da14 = getParameterByName('2012_da14') === '1';
+  var featured_2012_da14 = getParameterByName('2012_DA14') === '1';
 
   // workers stuff
   var works = [];
@@ -72,7 +72,7 @@ $(function() {
 
   // 2012 Da14 feature
   if (featured_2012_da14) {
-    jed = toJED(new Date('2012-12-01'));
+    jed = toJED(new Date('2012-11-01'));
   }
 
   function initGUI() {
@@ -284,24 +284,26 @@ $(function() {
     if (!using_webgl)
       scene.add(jupiter.getParticle());
 
-    // Special: 2012 DA14
-    var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
-        {
-          color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
+    planets = [mercury, venus, earth, mars, jupiter];
+    if (featured_2012_da14) {
+      // Special: 2012 DA14
+      var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
+          {
+            color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/cloud4.png',
           display_color: new THREE.Color(0xff0000),
           particle_geometry: particle_system_geometry,
           name: '2012 DA14'
-        }, !using_webgl);
-    scene.add(asteroid_2012_da14.getEllipse());
-    if (!using_webgl)
-      scene.add(asteroid_2012_da14.getParticle());
-    feature_map['2012 DA14'] = {
-      orbit: asteroid_2012_da14,
-      idx: 5
-    };
-
-    planets = [mercury, venus, earth, mars, jupiter, asteroid_2012_da14];
+          }, !using_webgl);
+      scene.add(asteroid_2012_da14.getEllipse());
+      if (!using_webgl)
+        scene.add(asteroid_2012_da14.getParticle());
+      feature_map['2012 DA14'] = {
+        orbit: asteroid_2012_da14,
+        idx: 5
+      };
+      planets.push(asteroid_2012_da14);
+    }
 
     // Sky
     if (using_webgl) {
@@ -379,7 +381,7 @@ $(function() {
       attributes.size.value[locked_object_idx] = locked_object_size;
       attributes.locked.value[locked_object_idx] = 0.0;
     }
-    if (locked_object_idx > 5) {  // TODO update when 2012 da14 removed
+    if (locked_object_idx > planets.length) {
       // not a planet
       scene.remove(locked_object_ellipse);
     }
@@ -616,7 +618,12 @@ $(function() {
       } // end asteroid results for loop
 
       // handle when view mode is switched - need to clear every row but the sun
-      $('#objects-of-interest tr:gt(2)').remove();  // TODO update when 2012 da14 removed
+      if (featured_2012_da14) {
+        $('#objects-of-interest tr:gt(2)').remove();
+      }
+      else {
+        $('#objects-of-interest tr:gt(1)').remove();
+      }
       $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
         $('#objects-of-interest tr').css('background-color', '#000');
         var $e = $(this);
