@@ -217,16 +217,6 @@ $(function() {
     runAsteroidQuery();
 
     $('#loading-text').html('planets');
-    var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
-        {
-          color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/images/cloud4.png',
-          display_color: new THREE.Color(0xBF5FFF),
-          particle_geometry: particle_system_geometry
-        }, !using_webgl);
-    scene.add(asteroid_2012_da14.getEllipse());
-    if (!using_webgl)
-      scene.add(asteroid_2012_da14.getParticle());
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
@@ -282,7 +272,19 @@ $(function() {
     if (!using_webgl)
       scene.add(jupiter.getParticle());
 
-    planets = [asteroid_2012_da14, mercury, venus, earth, mars, jupiter];
+    // Special: 2012 DA14
+    var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
+        {
+          color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
+          texture_path: '/images/cloud4.png',
+          display_color: new THREE.Color(0xBF5F3D),
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
+    scene.add(asteroid_2012_da14.getEllipse());
+    if (!using_webgl)
+      scene.add(asteroid_2012_da14.getParticle());
+
+    planets = [mercury, venus, earth, mars, jupiter, asteroid_2012_da14];
 
     // Sky
     if (using_webgl) {
@@ -670,7 +672,8 @@ $(function() {
       attributes.o.value[i] = added_objects[i].eph.om;
       attributes.ma.value[i] = added_objects[i].eph.ma;
       attributes.n.value[i] = added_objects[i].eph.n || -1.0;
-      attributes.w.value[i] = added_objects[i].eph.w_bar || (added_objects[i].eph.w + added_objects[i].eph.om);
+      attributes.w.value[i] = added_objects[i].eph.w_bar
+        || (added_objects[i].eph.w + added_objects[i].eph.om);
       attributes.P.value[i] = added_objects[i].eph.P || -1.0;
       attributes.epoch.value[i] = added_objects[i].eph.epoch;
       // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html

@@ -4,7 +4,7 @@ window.Ephemeris = {
     ma: 299.99868,
     epoch: 2456200.5,
     n: 0.98289640,
-    a: 1.110,
+    a: 1.0018381,
     e: 0.1081389,
     i: 10.33722,
 
@@ -12,7 +12,7 @@ window.Ephemeris = {
     w: 271.07725,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
     om: 147.26243,
 
-    //P: 365.256
+    P: 365.256
   },
 
   // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
