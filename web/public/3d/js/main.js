@@ -397,7 +397,8 @@ $(function() {
     locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
     if (using_webgl) {
       locked_object_color = attributes.value_color.value[locked_object_idx];
-      attributes.value_color.value[locked_object_idx] = new THREE.Color(0xff0000);
+      attributes.value_color.value[locked_object_idx] = full_name === 'earth'
+        ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000);
       locked_object_size = attributes.size.value[locked_object_idx];
       attributes.size.value[locked_object_idx] = 30.0;
       attributes.locked.value[locked_object_idx] = 1.0;
