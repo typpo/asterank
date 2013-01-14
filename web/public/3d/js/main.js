@@ -24,15 +24,13 @@ $(function() {
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = false;
-  var object_movement_on = false;
+  var camera_fly_around = true;
+  var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
   var planets = [];
   var planet_orbits_visible = true;
-  //var jed = toJED(new Date('2013-02-15'));
-  //var jed = toJED(new Date('2000-01-01'));
-  var jed = toJED(new Date('2013-01-13'));
+  var jed = toJED(new Date());
   var particle_system_geometry = null;
   var asteroids_loaded = false;
   var display_date_last_updated = 0;
@@ -44,6 +42,9 @@ $(function() {
   var locked_object_idx = -1;
   var locked_object_size = -1;
   var locked_object_color = -1;
+
+  // 2012 da14
+  var featured_2012_da14 = getParameterByName('2012_da14') === '1';
 
   // workers stuff
   var works = [];
@@ -68,6 +69,11 @@ $(function() {
     $('#controls .js-sort').css('font-weight', 'normal');
     $(this).css('font-weight', 'bold');
   });
+
+  // 2012 Da14 feature
+  if (featured_2012_da14) {
+    jed = toJED(new Date('2012-12-01'));
+  }
 
   function initGUI() {
     var ViewUI = function() {
@@ -223,7 +229,8 @@ $(function() {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-mercury.jpg',
           display_color: new THREE.Color(0x913CEE),
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry,
+          name: 'Mercury'
         }, !using_webgl);
     scene.add(mercury.getEllipse());
     if (!using_webgl)
@@ -233,7 +240,8 @@ $(function() {
           color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-venus.jpg',
           display_color: new THREE.Color(0xFF7733),
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry,
+          name: 'Venus'
         }, !using_webgl);
     scene.add(venus.getEllipse());
     if (!using_webgl)
@@ -243,7 +251,8 @@ $(function() {
           color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-earth.jpg',
           display_color: new THREE.Color(0x009ACD),
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry,
+          name: 'Earth'
         }, !using_webgl);
     scene.add(earth.getEllipse());
     if (!using_webgl)
@@ -257,7 +266,8 @@ $(function() {
           color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-mars.jpg',
           display_color: new THREE.Color(0xA63A3A),
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry,
+          name: 'Mars'
         }, !using_webgl);
     scene.add(mars.getEllipse());
     if (!using_webgl)
@@ -267,7 +277,8 @@ $(function() {
           color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/texture-jupiter.jpg',
           display_color: new THREE.Color(0xFF7F50),
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry,
+          name: 'Jupiter'
         }, !using_webgl);
     scene.add(jupiter.getEllipse());
     if (!using_webgl)
@@ -279,7 +290,8 @@ $(function() {
           color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/cloud4.png',
           display_color: new THREE.Color(0xff0000),
-          particle_geometry: particle_system_geometry
+          particle_geometry: particle_system_geometry,
+          name: '2012 DA14'
         }, !using_webgl);
     scene.add(asteroid_2012_da14.getEllipse());
     if (!using_webgl)
@@ -584,7 +596,7 @@ $(function() {
           scene.add(particle_to_add);
         } // end bigParticle logic
 
-        if (featured_count++ < 30) {
+        if (featured_count++ < NUM_BIG_PARTICLES) {
           // Add it to featured list
           feature_map[roid.full_name] = {
             'orbit': orbit,
@@ -643,6 +655,9 @@ $(function() {
 
       if (!asteroids_loaded) {
         asteroids_loaded = true;
+        if (featured_2012_da14) {
+          setLock('earth');
+        }
         animate();
       }
 
@@ -769,7 +784,12 @@ $(function() {
       if (locked_object) {
         // Follow locked object
         var pos = locked_object.getPosAtTime(jed);
-        cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
+        if (featured_2012_da14 && locked_object.name === 'Earth') {
+          cam.position.set(pos[0]-20, pos[1]+20, pos[2]+20);
+        }
+        else {
+          cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
+        }
         cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
       }
       else {

@@ -15,7 +15,9 @@
     opts.object_size = opts.object_size || 1;
     opts.jed =  opts.jed || 2451545.0;
 
+
     this.opts = opts;
+    this.name = opts.name;
     this.eph = eph;
     this.particle_geometry = opts.particle_geometry;
     this.bigParticle = bigParticle;
