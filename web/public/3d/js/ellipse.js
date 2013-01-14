@@ -108,7 +108,8 @@
     var a = this.eph.a;
     var i = (this.eph.i) * pi/180;
     var o = (this.eph.om) * pi/180; // longitude of ascending node
-    var p = this.eph.w_bar * pi/180; // LONGITUDE of perihelion
+    var p = (this.eph.w_bar
+        || this.eph.w + this.eph.om) * pi/180; // LONGITUDE of perihelion
     var ma = this.eph.ma;
     var M;
     // Calculate mean anomaly at jed
