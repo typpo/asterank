@@ -101,59 +101,6 @@
     }
   }
 
-  Orbit3D.prototype.getPosAtTime2 = function(jed) {
-    var sin = Math.sin, cos = Math.cos, sqrt = Math.sqrt;
-
-    var ecc = this.eph.e;
-    var w_arg_perihelion = this.eph.w - this.eph.om;
-
-    // calculate eccentric anomaly
-    var a = this.eph.a;
-    var e = this.eph.e;
-    var e_star = 180/pi * this.eph.e;
-    var ma = this.eph.ma;   // MA at epoch
-    var n;
-    if (this.eph.n)
-      n = this.eph.n; // mean motion
-    else {
-      n = 2*pi / this.eph.P * 180/pi;
-    }
-    var epoch = this.eph.epoch;
-    var d = epoch - jed;
-    var M = ma + n * d; // mean anomaly, in degrees
-    //var M = this.eph.ma;  // mean anomaly, in degrees
-    var E_n = M + e_star * sin(M);
-    var diff = 1;
-    var i =0;
-    do {
-      if (++i > 50) break;
-      var delta_M = M - (E_n - e_star * sin(E_n));
-      var delta_E = delta_M / (1 - e*cos(E_n));
-
-      var E_n = E_n + delta_E;
-      diff = delta_E;
-    } while (diff < 1e-6);
-
-    var E = E_n;
-
-    var x1 = a * (cos(E) - e);
-    var y1 = a * sqrt(1 - e*e) * sin(E);
-    var z1 = 0;
-
-    var w = w_arg_perihelion * pi/180;
-    var i = this.eph.i * pi/180;
-    var om = this.eph.om * pi / 180;
-    var X = (cos(w) * cos(om) - sin(w) * sin(om) * cos(i)) * x1
-          + (-sin(w) * cos(om) - cos(w) * sin(om) * cos(i)) * y1;
-    var Y = (cos(w) * sin(om) + sin(w) * cos(om) * cos(i)) * x1
-          + (-sin(w) * sin(om) + cos(w) * cos(om) * cos(i)) * y1;
-    var Z = (sin(w) * sin(i)) * x1
-          + (cos(w) * sin(i)) * y1;
-
-    var ret = [X*PIXELS_PER_AU, Y*PIXELS_PER_AU, Z*PIXELS_PER_AU];
-    return ret;
-  }
-
   Orbit3D.prototype.getPosAtTime = function(jed) {
     // Note: this must match the vertex shader.
     // This position calculation is used to follow asteroids in 'lock-on' mode
