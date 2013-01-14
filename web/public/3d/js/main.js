@@ -15,7 +15,7 @@ $(function() {
 
   var WEB_GL_ENABLED = true;
 
-  var MAX_NUM_ORBITS = 4000;
+  var MAX_NUM_ORBITS = 6;
   var CANVAS_NUM_ORBITS = 30;  // gimped version orbits
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
@@ -24,13 +24,14 @@ $(function() {
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = true;
-  var object_movement_on = true;
+  var camera_fly_around = false;
+  var object_movement_on = false;
   var lastHovered;
   var added_objects = [];
   var planets = [];
   var planet_orbits_visible = true;
-  var jed = toJED(new Date());
+  //var jed = toJED(new Date('2013-02-15'));
+  var jed = toJED(new Date('2000-01-01'));
   var particle_system_geometry = null;
   var asteroids_loaded = false;
   var display_date_last_updated = 0;
@@ -100,6 +101,9 @@ $(function() {
         if (newdate) {
           var newjed = toJED(newdate);
           changeJED(newjed);
+          if (!object_movement_on) {
+            render(true); // force rerender even if simulation isn't running
+          }
         }
       }).listen();
       window.datgui = text;
@@ -211,7 +215,17 @@ $(function() {
     // Ellipses
     runAsteroidQuery();
 
-      $('#loading-text').html('planets');
+    $('#loading-text').html('planets');
+    var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
+        {
+          color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
+          texture_path: '/images/cloud4.png',
+          display_color: new THREE.Color(0xBF5FFF),
+          particle_geometry: particle_system_geometry
+        }, !using_webgl);
+    scene.add(asteroid_2012_da14.getEllipse());
+    if (!using_webgl)
+      scene.add(asteroid_2012_da14.getParticle());
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
@@ -267,7 +281,7 @@ $(function() {
     if (!using_webgl)
       scene.add(jupiter.getParticle());
 
-    planets = [mercury, venus, earth, mars, jupiter];
+    planets = [asteroid_2012_da14, mercury, venus, earth, mars, jupiter];
 
     // Sky
     if (using_webgl) {
@@ -735,7 +749,7 @@ $(function() {
   }
 
   // render the scene
-  function render() {
+  function render(force) {
     // update camera controls
     cameraControls.update();
 
@@ -748,7 +762,7 @@ $(function() {
       display_date_last_updated = now;
     }
 
-    if (using_webgl && object_movement_on) {
+    if (using_webgl && (object_movement_on || force)) {
       // update shader vals for asteroid cloud
       uniforms.jed.value = jed;
       jed += .25;

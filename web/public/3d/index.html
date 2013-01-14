@@ -39,7 +39,7 @@
 
     vec3 getAstroPos() {
       float i_rad = (i - earth_i) * pi/180.0;
-      float o_rad = (o - earth_om) * pi/180.0; // longitude of ascending node
+      float o_rad = (o) * pi/180.0; // longitude of ascending node
       float p_rad = w * pi/180.0; // longitude of perihelion
       float ma_rad = ma * pi/180.0;
       float n_rad;
@@ -59,7 +59,7 @@
       float E1 = M + e * sin(E0);
       float lastdiff = abs(E1-E0);
       E0 = E1;
-      for (int foo=0; foo < 6; foo++) {
+      for (int foo=0; foo < 25; foo++) {
         E1 = M + e * sin(E0);
         lastdiff = abs(E1-E0);
         E0 = E1;
