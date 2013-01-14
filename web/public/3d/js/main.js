@@ -275,9 +275,9 @@ $(function() {
     // Special: 2012 DA14
     var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
         {
-          color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
+          color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
           texture_path: '/images/cloud4.png',
-          display_color: new THREE.Color(0xBF5F3D),
+          display_color: new THREE.Color(0xff0000),
           particle_geometry: particle_system_geometry
         }, !using_webgl);
     scene.add(asteroid_2012_da14.getEllipse());
