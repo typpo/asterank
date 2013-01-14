@@ -50,7 +50,7 @@
         n_rad = n * pi/180.0; // mean motion
       }
 
-      float d = epoch - jed;
+      float d = jed - epoch;
       float M = ma_rad + n_rad * d;
 
       // Estimate eccentric and true anom using iterative approx

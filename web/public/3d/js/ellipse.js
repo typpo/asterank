@@ -164,16 +164,17 @@
     var p = this.eph.w_bar * pi/180; // LONGITUDE of perihelion
     var ma = this.eph.ma;
     var M;
-    // Calculate mean anomaly at J2000
+    // Calculate mean anomaly at jed
     ma = ma * pi/180;
     var n;
     if (this.eph.n)
       n = this.eph.n * pi/180; // mean motion
+      //n = 17.0436 / sqrt(a*a*a);
     else {
       n = 2*pi / this.eph.P;
     }
     var epoch = this.eph.epoch;
-    var d = epoch - jed;
+    var d = jed - epoch;
     M = ma + n * d;
 
     var sin = Math.sin, cos = Math.cos;

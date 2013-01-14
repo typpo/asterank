@@ -15,6 +15,7 @@ window.Ephemeris = {
     P: 365.256
   },
 
+  // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
   // http://ssd.jpl.nasa.gov/txt/aprx_pos_planets.pdf
   mercury: {
     full_name: 'Mercury',
@@ -83,3 +84,9 @@ window.Ephemeris = {
     P: 4332.589
   }
 };
+
+for (x in Ephemeris) {
+  if (Ephemeris.hasOwnProperty(x) && Ephemeris[x].w_bar) {
+    Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
+  }
+}
