@@ -43,6 +43,7 @@ $(function() {
   var locked_object_ellipse = null;
   var locked_object_idx = -1;
   var locked_object_size = -1;
+  var locked_object_color = -1;
 
   // workers stuff
   var works = [];
@@ -283,6 +284,10 @@ $(function() {
     scene.add(asteroid_2012_da14.getEllipse());
     if (!using_webgl)
       scene.add(asteroid_2012_da14.getParticle());
+    feature_map['2012 DA14'] = {
+      orbit: asteroid_2012_da14,
+      idx: 5
+    };
 
     planets = [mercury, venus, earth, mars, jupiter, asteroid_2012_da14];
 
@@ -329,6 +334,24 @@ $(function() {
     cam.position.z = -100 + Math.cos(timer) * 20;
   }
 
+  // camera highlight fns
+  function setHighlight(full_name) {
+    // Colors the object differently, but doesn't follow it.
+    var mapped_obj = feature_map[full_name];
+    var orbit_obj = mapped_obj['orbit'];
+    if (!orbit_obj) {
+      alert("Sorry, something went wrong and I can't highlight this object.");
+      return;
+    }
+    var idx = mapped_obj['idx']; // this is the object's position in the added_objects array
+    if (using_webgl) {
+      attributes.value_color.value[idx] = new THREE.Color(0x0000ff);
+      attributes.size.value[idx] = 30.0;
+      attributes.locked.value[idx] = 1.0;
+    }
+
+  }
+
   // camera locking fns
   function clearLock(set_default_camera) {
     if (!locked_object) return;
@@ -340,13 +363,11 @@ $(function() {
 
     // restore color and size
     if (using_webgl) {
-      attributes.value_color.value[locked_object_idx] =
-        //displayColorForObject(locked_object);
-        new THREE.Color(0xffff00);
+      attributes.value_color.value[locked_object_idx] = locked_object_color;
       attributes.size.value[locked_object_idx] = locked_object_size;
       attributes.locked.value[locked_object_idx] = 0.0;
     }
-    if (locked_object_idx > 4) {
+    if (locked_object_idx > 5) {  // TODO update when 2012 da14 removed
       // not a planet
       scene.remove(locked_object_ellipse);
     }
@@ -355,10 +376,12 @@ $(function() {
     locked_object_ellipse = null;
     locked_object_idx = -1;
     locked_object_size = -1;
+    locked_object_color = null;
 
     // reset camera pos so subsequent locks don't get into crazy positions
     setNeutralCameraPosition();
   }
+
   function setLock(full_name) {
     if (locked_object) {
       clearLock();
@@ -373,6 +396,7 @@ $(function() {
     locked_object = orbit_obj;
     locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
     if (using_webgl) {
+      locked_object_color = attributes.value_color.value[locked_object_idx];
       attributes.value_color.value[locked_object_idx] = new THREE.Color(0xff0000);
       locked_object_size = attributes.size.value[locked_object_idx];
       attributes.size.value[locked_object_idx] = 30.0;
@@ -579,7 +603,7 @@ $(function() {
       } // end asteroid results for loop
 
       // handle when view mode is switched - need to clear every row but the sun
-      $('#objects-of-interest tr:gt(1)').remove();
+      $('#objects-of-interest tr:gt(2)').remove();  // TODO update when 2012 da14 removed
       $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
         $('#objects-of-interest tr').css('background-color', '#000');
         var $e = $(this);
@@ -590,6 +614,10 @@ $(function() {
           case 'sun':
             clearLock(true);
             return false;
+          case '2012 DA14':
+            // highlight the earth too
+            //setHighlight('earth');
+            break;
         }
         clearLock();
 
