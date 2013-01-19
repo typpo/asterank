@@ -307,7 +307,7 @@ $(function() {
 
     // Sky
     if (using_webgl) {
-      $('#loading-text').html('skybox');
+      //$('#loading-text').html('skybox');
       var path = "/images/dark-s_";
       var format = '.jpg';
       var urls = [
