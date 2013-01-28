@@ -73,6 +73,7 @@ $(function() {
   // 2012 Da14 feature
   if (featured_2012_da14) {
     jed = toJED(new Date('2012-11-01'));
+    mixpanel.track('2012_da14 special');
   }
 
   function initGUI() {
