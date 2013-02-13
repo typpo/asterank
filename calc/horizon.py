@@ -12,7 +12,7 @@ import scoring
 import estimate
 from pymongo import Connection
 
-DATA_PATH = 'data/fulldb.20120706.csv'
+DATA_PATH = 'data/fulldb.20130213.csv'
 DV_PATH = 'data/deltav/db.csv'
 MASS_PATH = 'data/masses.txt'
 G = 6.67300e-20   # km^3 / kgs^2
@@ -92,12 +92,16 @@ def populateDb():
       if newspec:
         # TODO should have our own merged spec row, instead we overwrite spec_B
         row['spec_B'] = newspec
+      elif row['pdes'] == '2012 DA14':
+        row['spec_B'] = 'L'
       else:
-        #continue # TODO temp
+        continue # TODO temp
         row['spec_B'] = 'S'
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
+    if 'pdes' in row and 'prov_des' not in row:
+      row['prov_des'] = row['pdes']  # backwards compatibility for NASA change
     if m:
       row['prov_des'] = m.groups()[0]
       dv = deltav_map.get(row['prov_des'], None)
