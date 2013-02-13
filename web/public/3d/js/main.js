@@ -665,6 +665,8 @@ $(function() {
         asteroids_loaded = true;
         if (featured_2012_da14) {
           setLock('earth');
+          $('#sun-selector').css('background-color', 'black');
+          $('#earth-selector').css('background-color', 'green');
         }
         animate();
       }
