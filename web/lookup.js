@@ -268,6 +268,43 @@ function query(query, cb) {
 
 }
 
+/**
+ * Regex lookup
+ *
+ * @param {string} query to search for
+ * @param {function} callback
+ */
+function autoComplete(query, cb, opts) {
+  // options and defaults
+  opts = opts || {};
+  opts.full_results = opts.full_results || false;
+  opts.limit = opts.limit || 8;
+
+  var db = new Mongolian('localhost/asterank');
+  var coll = db.collection('asteroids');
+  console.log('regex lookup on', query);
+  var start = +new Date();
+  coll.find({full_name: {$regex: new RegExp(query, 'i')}})
+    .limit(opts.limit)
+    .toArray(function(err, docs) {
+    var finish = +new Date();
+    console.log('regex lookup on', query, 'returned in', (finish-start)), 'ms';
+    if (err || !docs) {
+      cb(true, null);
+    }
+    else {
+      var matches;
+      if (opts.full_results) {
+        matches = _.map(docs, function(doc) { delete doc._id; return doc; });
+      }
+      else {
+        matches = _.map(docs, function(doc) { return _.pick(doc, 'full_name') });
+      }
+      cb(false, matches);
+    }
+  });
+}
+
 function sigfig(num, sig) {
   if (num == 0)
     return 0;
@@ -287,4 +324,5 @@ module.exports = {
   count: count,
   query: query,
   homepage: homepage,
+  autoComplete: autoComplete,
 }

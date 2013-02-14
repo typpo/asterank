@@ -104,7 +104,6 @@ app.get('/summary', function(req, res) {
       res.send(result);
     }
   });
-
 });
 
 app.get('/count', function(req, res) {
@@ -124,6 +123,26 @@ app.get('/info/:query', function(req, res) {
 app.get('/search/:q', function(req, res) {
   // Placeholder: search database for any asteroid
   res.send('');
+});
+
+app.get('/autocomplete/:query', function(req, res) {
+  // Query info on a specific asteroid
+  lookup.autoComplete(req.params.query, function(err, result) {
+    res.send({data: result});
+  }, {
+    full_results: false,
+    limit: 8,
+  });
+});
+
+app.get('/api/:query', function(req, res) {
+  // Query info on a specific asteroid
+  lookup.autoComplete(req.params.query, function(err, result) {
+    res.send({data: result});
+  }, {
+    full_results: true,
+    limit: 100,
+  });
 });
 
 app.post('/subscribe', function(req, res) {
