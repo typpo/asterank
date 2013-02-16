@@ -51,6 +51,7 @@ window.Asterank = (function() {
   Asterank.prototype.handleTableClick = function($e) {
     var me = this;
     $('#instructions').hide();
+    $('#details').detach().appendTo('#main-details-container');
     var $tbody = $('#details').show().find('tbody').html('Loading...');
     var obj = $e.attr('data-obj');
     var obj_type = $e.attr('data-obj_type');
@@ -177,6 +178,19 @@ window.Asterank = (function() {
       }
     });
     return false;
+  }
+
+  Asterank.prototype.getCompositions = function(cb) {
+    // gets compositions if it's not already gotten in top response
+    if (compositions) {
+      cb();
+    }
+    else {
+      $.getJSON('/compositions', function(result) {
+        compositions = result.data;
+        cb();
+      });
+    }
   }
 
   Asterank.prototype.renderMainTable = function(data, num_search) {

@@ -40,11 +40,7 @@ block content
               option(value='closeness') accessibility
             input#submit.btn.btn-large.btn-primary(type='submit', value='Go', style='width:175px;margin-left:15px')
 
-        form.form-inline(style='margin-top:15px;')
-          div.search-thing
-            span or look up an asteroid by name:
-            input#direct-lookup.xlarge(type='text', style='margin-left:10px', placeholder='433 Eros')
-            <div id="direct-lookup-suggestions" class="direct-lookup-suggestions"></div>
+          span or <a href="#" id="direct-lookup-link">look up an object directly</a>
 
 
   div.row-fluid#landing-page
@@ -150,24 +146,25 @@ block content
       div#instructions(style='margin-top:35px;')
         h3(style='margin-bottom:25px') Click a row to view details. &rarr;
         div.span3#spec-graph
-      div#details(style='display:none;')
-        h2
-        table.table.table-bordered.table-condensed
-          thead
-            tr
-              th Data
-              th Value
-          tbody
-        div#orbit-viz-container(style='display:none;')
-          div#orbit-viz(style='background-color:#000')
-          div(style='text-align:center;background-color:#000')
-            span(style='color:purple') Mercury
-            | ,
-            span(style='color:orange') Venus
-            | ,
-            span(style='color:cyan') Earth
-            | ,
-            span(style='color:red') Mars
+      div#main-details-container
+        div#details(style='display:none;')
+          h2
+          table.table.table-bordered.table-condensed
+            thead
+              tr
+                th Data
+                th Value
+            tbody
+          div#orbit-viz-container(style='display:none;')
+            div#orbit-viz(style='background-color:#000')
+            div(style='text-align:center;background-color:#000')
+              span(style='color:purple') Mercury
+              | ,
+              span(style='color:orange') Venus
+              | ,
+              span(style='color:cyan') Earth
+              | ,
+              span(style='color:red') Mars
     div#tbl-container.span9(style='height:423px;overflow:scroll;overflow-x:auto;')
       table#tbl.table.table-bordered.table-striped
         thead(style='background-color:#fff')
@@ -268,6 +265,17 @@ block content
         tbody
     div.modal-footer
       a.btn(data-dismiss='modal') Close
+
+  div#lookup-modal.modal(style='overflow:visible;display:none;')
+    div.modal-header
+      a.close(data-dismiss='modal') ×
+      h2 Direct Lookup
+    div.modal-body(style='overflow:visible')
+      form.form-inline(style='margin-top:15px;')
+        input#direct-lookup.xlarge(type='text', style='margin-left:10px; font-size: 18px; font-weight: bold; width: 500px;', placeholder='433 Eros')
+        <div id="direct-lookup-suggestions" class="direct-lookup-suggestions"></div>
+
+      div#lookup-details
 
 block page_js
   != renderJs('main')

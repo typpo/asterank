@@ -137,6 +137,12 @@ app.get('/autocomplete', function(req, res) {
   });
 });
 
+app.get('/compositions', function(req, res) {
+  lookup.compositions(function(err, result) {
+    res.send({data: result});
+  });
+});
+
 app.post('/subscribe', function(req, res) {
   // Mail me to subscribe
   var email = req.body.email;

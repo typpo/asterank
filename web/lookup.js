@@ -209,6 +209,24 @@ function topN(opts, cb) {
 }
 
 /**
+ * Returns static compositions table
+ */
+function compositions(callback) {
+  // load composition map
+  var cmd = path.join(__dirname, '../calc/horizon.py') + ' compositions';
+  var child = exec(cmd, function (error, stdout, stderr) {
+    if (error) {
+      console.error(error);
+      callback(true, null);
+    }
+    else {
+      compositions = JSON.parse(stdout);
+      callback(false, compositions);
+    }
+  });
+}
+
+/**
  * Total number of asteroids
  *
  * @param {function} callback
@@ -302,7 +320,7 @@ function autoComplete(query, cb, opts) {
         matches = _.map(docs, function(doc) { delete doc._id; return doc; });
       }
       else {
-        matches = _.map(docs, function(doc) { return _.pick(doc, 'full_name') });
+        matches = _.map(docs, function(doc) { return _.pick(doc, 'prov_des', 'full_name') });
       }
       cb(false, matches);
     }
@@ -329,4 +347,5 @@ module.exports = {
   query: query,
   homepage: homepage,
   autoComplete: autoComplete,
+  compositions: compositions,
 }

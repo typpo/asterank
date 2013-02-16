@@ -129,7 +129,6 @@
     $.Autocomplete = Autocomplete;
 
     Autocomplete.formatResult = function (suggestion, currentValue) {
-      return suggestion.value;
         var reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g'),
             pattern = '(' + currentValue.replace(reEscape, '\\$1') + ')';
 
