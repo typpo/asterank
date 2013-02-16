@@ -33,7 +33,7 @@ for object in objects:
   if object.strip() == '':
     continue
   item = {}
-  item['des'] = object[0:7]          # in packed form
+  item['des'] = object[0:7].strip()          # in packed form
   if item['des'] in seen:
     print 'Duplicate des', item['des']
     continue
@@ -74,23 +74,23 @@ for object in objects:
 
   try:
     # optional
-    item['flags'] = object[161:165]   # flags
-    item['readable_des'] = object[166:194]  # readable des
-    item['last_obs'] = object[194:202]    # date of last obs YYYYMMDD
+    item['flags'] = object[161:165].strip()   # flags
+    item['readable_des'] = object[166:194].strip()  # readable des
+    item['last_obs'] = object[194:202].strip()    # date of last obs YYYYMMDD
   except:
     pass
   items.append(item)
 
 # insert into mongo
-def chunks(l, n):
-  for i in xrange(0, len(l), n):
-    yield l[i:i+n]
 print 'Inserting/updating %d items into MPC collection' % (len(items))
 conn = MongoClient()
 db = conn.asterank
 coll = db.mpc
 coll.drop()
 coll.ensure_index('des', unique=True)
+def chunks(l, n):
+  for i in xrange(0, len(l), n):
+    yield l[i:i+n]
 c = 0
 for chunk in chunks(items, 50000):
   print 'Chunk %d+...' % (50000 * c)
