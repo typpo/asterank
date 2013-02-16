@@ -78,16 +78,21 @@ function upcomingPasses(num, cb) {
   coll.find({'Next Pass': {$exists: true, $ne: null},
             'Next Pass.date_iso': {$gte: new Date().toISOString()}})
     .sort({'Next Pass.date_iso': 1})
-    .limit(num).toArray(function(err, docs) {
+    .limit(num + 50).toArray(function(err, docs) {
+      var results = [];
+      var seen = {};
       if (docs) {
         for (var i in docs) {
-          delete docs[i]._id;
+          var doc = docs[i];
+          console.log(doc.tag_name);
+          if (seen[doc.tag_name]) continue;
+          delete doc._id;
+          results.push(doc);
+          seen[doc.tag_name] = true;
           // Need to pair prices with each jpl entry
-
         }
       }
-
-      cb(err, docs);
+      cb(err, results.slice(0, num));
   });
 }
 
@@ -265,7 +270,6 @@ function query(query, cb) {
       cb(null, doc);
     }
   });
-
 }
 
 /**
