@@ -149,8 +149,8 @@ $(function() {
     else {
       renderer	= new THREE.CanvasRenderer();
       if (typeof mixpanel !== 'undefined') mixpanel.track('not supported');
-    }
       $('#not-supported').show();
+    }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('container').appendChild(renderer.domElement);
 
