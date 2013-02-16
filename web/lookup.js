@@ -92,6 +92,7 @@ function upcomingPasses(num, cb) {
           // Need to pair prices with each jpl entry
         }
       }
+      console.log('Upcoming Passes', results);
       cb(err, results.slice(0, num));
   });
 }
