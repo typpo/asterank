@@ -69,3 +69,21 @@ ellipse {
 #chart-legend table {
   background-color: #545454;
 }
+
+/* Autocomplete stuff */
+#direct-lookup-suggestions {
+  position: relative;
+  width: 500px;
+}
+.autocomplete-suggestions {
+  border: 1px #000 solid;
+
+}
+.autocomplete-suggestion {
+  padding: 2px 5px; white-space: nowrap; overflow: hidden;
+  background-color: #fff;
+}
+.autocomplete-selected { background: #F0F0F0; }
+.direct-lookup-suggestions strong {
+  color: #3399FF;
+}

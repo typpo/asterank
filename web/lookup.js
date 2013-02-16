@@ -84,7 +84,6 @@ function upcomingPasses(num, cb) {
       if (docs) {
         for (var i in docs) {
           var doc = docs[i];
-          console.log(doc.tag_name);
           if (seen[doc.tag_name]) continue;
           delete doc._id;
           results.push(doc);
@@ -92,7 +91,6 @@ function upcomingPasses(num, cb) {
           // Need to pair prices with each jpl entry
         }
       }
-      console.log('Upcoming Passes', results);
       cb(err, results.slice(0, num));
   });
 }
@@ -289,7 +287,8 @@ function autoComplete(query, cb, opts) {
   var coll = db.collection('asteroids');
   console.log('regex lookup on', query);
   var start = +new Date();
-  coll.find({full_name: {$regex: new RegExp(query, 'i')}})
+  var escaped_query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&").replace('+', ' ');
+  coll.find({full_name: {$regex: new RegExp(escaped_query, 'i')}})
     .limit(opts.limit)
     .toArray(function(err, docs) {
     var finish = +new Date();

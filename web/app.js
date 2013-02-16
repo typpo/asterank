@@ -24,6 +24,7 @@ var PROD_PORT = 9590;
 var IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 // Minification
+console.log('Bundling....');
 BundleUp(app, __dirname + '/assets', {
   staticRoot: __dirname + '/public/',
   staticUrlRoot: '/',
@@ -31,6 +32,7 @@ BundleUp(app, __dirname + '/assets', {
   minifyCss: false,
   minifyJs: true,
 });
+console.log('Finished bundling');
 
 // Routing
 
@@ -125,23 +127,13 @@ app.get('/search/:q', function(req, res) {
   res.send('');
 });
 
-app.get('/autocomplete/:query', function(req, res) {
+app.get('/autocomplete', function(req, res) {
   // Query info on a specific asteroid
-  lookup.autoComplete(req.params.query, function(err, result) {
+  lookup.autoComplete(req.query.query, function(err, result) {
     res.send({data: result});
   }, {
     full_results: false,
     limit: 8,
-  });
-});
-
-app.get('/api/:query', function(req, res) {
-  // Query info on a specific asteroid
-  lookup.autoComplete(req.params.query, function(err, result) {
-    res.send({data: result});
-  }, {
-    full_results: true,
-    limit: 100,
   });
 });
 

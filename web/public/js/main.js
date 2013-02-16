@@ -11,6 +11,7 @@ window.Asterank = (function() {
   var tableStretched = false;
   var isMobile = false;
   var AsteroidOrbitRenderer = null;
+  var AutocompleteWidget = null;
 
   function Asterank() {
     var me = this;
@@ -41,6 +42,7 @@ window.Asterank = (function() {
         attachment: '#tbl-container'
       });
       AsteroidOrbitRenderer = new OrbitDiagram('#orbit-viz');
+      AutocompleteWidget = new Autocomplete('#direct-lookup');
       mixpanel.track('home');
       _gaq.push(['_trackEvent', 'home', 'arrived', '']);
     });
