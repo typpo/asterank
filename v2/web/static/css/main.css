@@ -9,3 +9,7 @@ body {
   height: 300px;
   overflow-y: scroll;
 }
+
+#results-table-loader {
+  text-align: center;
+}

@@ -1,6 +1,6 @@
 function AsteroidTableCtrl($scope, $http) {
+  // Config
   $scope.rankings = [];
-  $scope.limit = 100;
   $scope.sort_orders = [
     {
       text: 'most cost effective',
@@ -19,15 +19,43 @@ function AsteroidTableCtrl($scope, $http) {
       search_value: 'upcoming'
     }
   ];
-  $scope.sort_by = $scope.sort_orders[0];
+  $scope.limit_options = [100, 300, 500, 1000, 4000];
+
+  // Functions
+
+  $scope.Init = function() {
+    // Initialization
+    $scope.limit = $scope.limit_options[0];
+    $scope.sort_by = $scope.sort_orders[0];
+
+    $scope.UpdateRankings();
+  }
+
+  var rankings_cache = new SimpleCache(function(item) {
+    return item.sort_by + '|' + item.limit;
+  });
 
   $scope.UpdateRankings = function() {
-    $http.get('/api/rankings?sort_by='
-        + $scope.sort_by.search_value
-        + '&limit=' + $scope.limit)
-      .success(function(data) {
-      $scope.rankings = data;
-    });
+    var params = {
+      sort_by: $scope.sort_by.search_value,
+      limit: $scope.limit
+    };
+    var cache_result = rankings_cache.Get(params);
+    if (cache_result) {
+      $scope.rankings = cache_result;
+    }
+    else {
+      $('#results-table-loader').show();
+      $scope.rankings = [];
+      $http.get('/api/rankings?sort_by='
+          + params.sort_by
+          + '&limit='
+          + params.limit)
+        .success(function(data) {
+        $scope.rankings = data;
+        rankings_cache.Set(params, data);
+        $('#results-table-loader').hide();
+      });
+    }
   }
-  $scope.UpdateRankings(); // call for the first time
 }

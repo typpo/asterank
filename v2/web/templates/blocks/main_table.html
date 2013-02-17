@@ -1,13 +1,18 @@
-<div ng-controller="AsteroidTableCtrl">
+<div ng-controller="AsteroidTableCtrl" ng-init="Init()">
   <div class="form-horizontal" style="height: 30px">
     <div style="float: left; display: block; margin-right: 15px;">
-      Showing:
+      Query:
       <select ng-options="x.text for x in sort_orders" ng-model="sort_by" ng-change="UpdateRankings()" style="height:24px">
       </select>
     </div>
     <div style="float: left;">
       Lookup:
       <input class="input-small" type="text" placeholder="433 Eros" style="height:15px;font-size:12px;"/>
+    </div>
+    <div style="float: right;">
+      Show
+      <select ng-options="x for x in limit_options" ng-model="limit" ng-change="UpdateRankings()" style="height:24px; width:70px;">
+      </select>
     </div>
   </div>
   <div id="results-table-container">
@@ -37,7 +42,7 @@
       <tbody>
         <tr ng-repeat="asteroid in rankings">
           <td><span ng:bind="asteroid.name | ifempty:asteroid.prov_des"></span></td>
-          <td><span ng:bind="asteroid.type"></span></td>
+          <td><span ng:bind="asteroid.spec_B"></span></td>
           <td><span ng:bind="asteroid.score | number:3"></span></td>
           <td><span ng:bind="asteroid.price | fuzzynum"></span></td>
           <td><span ng:bind="asteroid.profit | fuzzynum"></span></td>
@@ -45,5 +50,8 @@
         </tr>
       </tbody>
     </table>
+    <div id="results-table-loader" class="loader">
+      Loading....
+    </div>
   </div>
 </div>
