@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-from flask import Flask, request, redirect, session, url_for, render_template
+from flask import Flask, request, redirect, session, url_for, render_template, Response
 import urllib
 import urlparse
 import json
 import random
 import base64
 import re
+
+import api
 
 app = Flask(__name__)
 app.secret_key = 'not a secret key'
@@ -14,5 +16,12 @@ app.secret_key = 'not a secret key'
 def index():
   return render_template('index.html')
 
+@app.route('/api/rankings')
+def rankings():
+  limit = int(request.args.get('limit')) or 10
+  results = api.rankings(request.args.get('sort_by'), limit)
+  json_resp = json.dumps(list(results))
+  return Response(json_resp, mimetype='application/json')
+
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', use_reloader=False)
+    app.run(debug=True, host='0.0.0.0', use_reloader=True)

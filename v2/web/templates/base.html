@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" ng-app="AsterankApp">
   <head>
     <meta charset="utf-8">
     <title>
@@ -60,9 +59,9 @@
     </div>
       {% block content %}{% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js">
-    </script>
-    <script src="static/js/bootstrap.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script src="static/js/bootstrap.js"></script>
+    {% block scripts %}{% endblock %}
   </body>
 </html>

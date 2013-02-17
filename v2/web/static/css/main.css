@@ -4,3 +4,8 @@ body {
   padding-top: 60px;
   margin: 0px 15px;
 }
+
+#results-table-container {
+  height: 300px;
+  overflow-y: scroll;
+}
