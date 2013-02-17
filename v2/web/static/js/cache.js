@@ -1,5 +1,6 @@
 function SimpleCache(hash_fn) {
   var me = this;
+  hash_fn = hash_fn || function(x) { return x; };
   var cache = {};
   me.Get = function(key) {
     var result = cache[hash_fn(key)];

@@ -73,6 +73,8 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   $scope.asteroid_details = null;
   $scope.showing_stats = [];   // stats to show
 
+  var jpl_cache = new SimpleCache();
+
   pubsub.subscribe('AsteroidDetailsClick', function(arg) {
     if ($scope.asteroid
       && arg.full_name === $scope.asteroid.full_name) return;
@@ -87,22 +89,32 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     pubsub.publish('HideIntroStatement');
 
     // grab jpl asteroid details
-    // TODO loader
-    $http.get('/jpl/lookup?query=' + $scope.asteroid.prov_des)
-      .success(function(data) {
-        for (var attr in data) {
-          if (!data.hasOwnProperty(attr)) continue;
-          if (typeof data[attr] !== 'object') {
-            $scope.stats.push({
-              name: attr,
-              value: data[attr]
-            });
-          }
-        }
-
-        // TODO special fields: next pass and close approaches
-    });
+    var query = $scope.asteroid.prov_des;
+    var cache_result = jpl_cache.Get(query);
+    if (cache_result) {
+      ShowData(cache_result);
+    }
+    else {
+      $http.get('/jpl/lookup?query=' + query)
+        .success(function(data) {
+          ShowData(data);
+      });
+    }
   });
+
+  function ShowData(data) {
+    for (var attr in data) {
+      if (!data.hasOwnProperty(attr)) continue;
+      if (typeof data[attr] !== 'object') {
+        $scope.stats.push({
+          name: attr,
+          value: data[attr]
+        });
+      }
+    }
+
+    // TODO special fields: next pass and close approaches
+  }
 }
 
 function IntroStatementCtrl($scope, pubsub) {
