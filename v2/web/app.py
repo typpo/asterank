@@ -20,15 +20,15 @@ def index():
 def rankings():
   limit = int(request.args.get('limit')) or 10
   results = api.rankings(request.args.get('sort_by'), limit)
-  json_resp = json.dumps(list(results))
+  json_resp = json.dumps(results)
   return Response(json_resp, mimetype='application/json')
 
 @app.route('/jpl/lookup')
 def horizons():
   query = request.args.get('query')
-  results = list(api.jpl_lookup(query))
-  if len(results) > 0:
-    json_resp = json.dumps(results[0])
+  result = api.jpl_lookup(query)
+  if result:
+    json_resp = json.dumps(result)
     return Response(json_resp, mimetype='application/json')
   else:
     return Response('{}', mimetype='application/json')

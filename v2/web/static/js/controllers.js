@@ -74,15 +74,33 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   $scope.showing_stats = [];   // stats to show
 
   pubsub.subscribe('AsteroidDetailsClick', function(arg) {
+    if ($scope.asteroid
+      && arg.full_name === $scope.asteroid.full_name) return;
+
     // Update detailed click view
     $scope.asteroid = arg;
+
+    // Flat fields that we just want to display
+    // TODO these need to have units as a separate structure attr
+    $scope.stats = [];
 
     pubsub.publish('HideIntroStatement');
 
     // grab jpl asteroid details
+    // TODO loader
     $http.get('/jpl/lookup?query=' + $scope.asteroid.prov_des)
       .success(function(data) {
-        console.log(data);
+        for (var attr in data) {
+          if (!data.hasOwnProperty(attr)) continue;
+          if (typeof data[attr] !== 'object') {
+            $scope.stats.push({
+              name: attr,
+              value: data[attr]
+            });
+          }
+        }
+
+        // TODO special fields: next pass and close approaches
     });
   });
 }

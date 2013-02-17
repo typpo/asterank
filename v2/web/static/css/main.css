@@ -10,6 +10,13 @@ body {
   overflow-y: scroll;
 }
 
+#selection-details {
+  height: 300px;
+
+  font-size: 14px;
+  margin-top: -20px;
+}
+
 #results-table tr:hover {
   cursor: pointer;
 }

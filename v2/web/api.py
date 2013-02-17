@@ -24,17 +24,28 @@ def rankings(sort_by, limit):
     return None
   if sort_by in FIELD_ALIASES:
     sort_by = FIELD_ALIASES[sort_by]
-  return asteroids.find({}, {'_id': False}) \
+  return list(asteroids.find({}, {'_id': False}) \
           .sort(sort_by, direction=pymongo.DESCENDING) \
-          .limit(limit)
+          .limit(limit))
 
 def jpl_lookup(query):
-  ret = jpl.find({'tag_name': query}, {'_id': False}).limit(1)
-  if not ret:
+  result = jpl.find_one({'tag_name': query}, {'_id': False})
+  if not result:
+    print 'JPL lookup: %s not found in cache...' % query
     # maybe it's not cached; try querying for it from horizons
-    a = JPL_Asteroid(query)
-    a.load()
-    ret = a.data
-    ret.tag_name = query
-    jpl.insert(a.data)  # cache
-  return ret
+    try:
+      a = JPL_Asteroid(query)
+      a.load()
+      print 'JPL lookup: %s loaded from JPL' % query
+      result = a.data
+      result['tag_name'] = query
+      jpl.insert(result)  # cache
+      del result['_id']
+    except:
+      print 'JPL lookup: %s lookup failed' % query
+      return None
+  else:
+    print 'JPL lookup: %s found in cache' % query
+
+  del result['tag_name']
+  return result
