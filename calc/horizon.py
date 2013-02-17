@@ -91,7 +91,7 @@ def populateDb():
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
         # TODO should have our own merged spec row, instead we overwrite spec_B
-        row['spec_B'] = newspec
+        row['spec_B'] = newspec.replace('type').strip()
       elif row['pdes'] == '2012 DA14':
         row['spec_B'] = 'L'
       else:
