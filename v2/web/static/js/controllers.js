@@ -106,14 +106,19 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     for (var attr in data) {
       if (!data.hasOwnProperty(attr)) continue;
       if (typeof data[attr] !== 'object') {
-        $scope.stats.push({
-          name: attr,
-          value: data[attr]
-        });
+        if (data[attr] != -1) {
+          $scope.stats.push({
+            name: attr.replace(/(.*?)\(.*?\)/, "$1"),
+            units: attr.replace(/.*?\((.*?)\)/, "$1"),
+            value: data[attr]
+          });
+        }
       }
     }
 
     // TODO special fields: next pass and close approaches
+    // TODO composition
+    // TODO orbital diagram
   }
 }
 
