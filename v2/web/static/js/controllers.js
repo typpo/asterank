@@ -1,5 +1,4 @@
 function AsteroidTableCtrl($scope, $http, pubsub) {
-  console.log(pubsub);
   'use strict';
   // Config
   $scope.rankings = [];
@@ -78,11 +77,17 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     // Update detailed click view
     $scope.asteroid = arg;
 
+    pubsub.publish('HideIntroStatement');
+
     // TODO http jpl asteroid details
   });
 }
 
-function IntroStatementCtrl($scope) {
+function IntroStatementCtrl($scope, pubsub) {
   'use strict';
   $scope.show = true;
+
+  pubsub.subscribe('HideIntroStatement', function() {
+    $scope.show = false;
+  });
 }
