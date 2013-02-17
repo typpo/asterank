@@ -6,15 +6,24 @@ body {
 }
 
 #results-table-container {
-  height: 350px;
+  height: 375px;
   overflow-y: scroll;
 }
 
 #selection-details {
-  height: 350px;
-
-  font-size: 14px;
+  height: 425px;
   margin-top: -20px;
+
+  overflow-y: scroll;
+}
+
+#selection-details h3 {
+  margin: 0;
+}
+
+#selection-details li {
+  font-size: 12px;
+  line-height: 14px;
 }
 
 #results-table tr:hover {
@@ -28,6 +37,27 @@ body {
 #results-table-loader {
   text-align: center;
 }
+
+/** Scrollbar **/
+::-webkit-scrollbar {
+background:transparent;overflow:visible; width:8px;margin-left:2px;}
+::-webkit-scrollbar-thumb {
+background-color:rgba(0,0,0,0.2); /*border:solid #000;*/}
+::-webkit-scrollbar-thumb:hover {
+background:rgba(0,0,0,0.4);}
+::-webkit-scrollbar-thumb:horizontal {
+border-width:4px 6px;min-width:40px;}
+::-webkit-scrollbar-thumb:vertical {
+border-width:6px 4px;min-height:40px;}
+::-webkit-scrollbar-track-piece{
+background-color: #ddd;
+}
+::-webkit-scrollbar-corner {
+background:transparent;}
+::-webkit-scrollbar-thumb {
+background-color: #555;}
+::-webkit-scrollbar-thumb:hover {background-color: #333;}
+
 
 /** Bootstrap changes **/
 table.table tr.info {

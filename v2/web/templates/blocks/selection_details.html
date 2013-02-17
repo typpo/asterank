@@ -3,11 +3,10 @@
   <p ng-show="stats.length < 1">
     Please be patient as data is loaded from JPL...
   </p>
+  <div id="orbit-2d-diagram"></div>
   <ul>
   <li ng-repeat="stat in stats">
-    <strong ng-bind="stat.name"></strong> (<span ng-bind="stat.units"></span>): <span ng-bind="stat.value"></span>
+  <strong ng-bind="stat.name"></strong><span ng-show="stat.units && stat.units != ''"> (<span ng-bind="stat.units"></span>)</span>: <span ng-bind="stat.value"></span>
   </li>
   </ul>
-
-  <div id="orbit-2d-diagram"></div>
 </div>

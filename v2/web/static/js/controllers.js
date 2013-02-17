@@ -69,6 +69,48 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
 function AsteroidDetailsCtrl($scope, $http, pubsub) {
   'use strict';
 
+  var MPC_FIELDS_TO_INCLUDE = {
+    /*
+    'a': {
+      'name': 'Semimajor Axis',
+      'units': 'AU'
+    },
+    'i': {
+      'name': 'Inclination',
+      'units': 'deg'
+    },
+    */
+    'e': {
+      'name': 'Eccentricity',
+    },
+    'class': {
+      'name': 'Orbital class',
+    },
+    'epoch': {
+      'name': 'Epoch',
+    },
+    'dv': {
+      'name': 'Delta-v',
+      'units': 'km/s'
+    },
+    'diameter': {
+      'name': 'Diameter',
+      'units': 'km?'
+    },
+    'ma': {
+      'name': 'Mean Anomaly',
+      'units': 'deg @ epoch'
+    },
+    'om': {
+      'name': 'Longitude of Ascending Node',
+      'units': 'deg @ J2000'
+    },
+    'w': {
+      'name': 'Argument of Perihelion',
+      'units': 'deg @ J2000'
+    }
+  };
+
   $scope.asteroid = null;
   $scope.asteroid_details = null;
   $scope.showing_stats = [];   // stats to show
@@ -83,13 +125,12 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     $scope.asteroid = arg;
 
     // Flat fields that we just want to display
-    // TODO these need to have units as a separate structure attr
     $scope.stats = [];
 
     pubsub.publish('HideIntroStatement');
 
     // grab jpl asteroid details
-    var query = $scope.asteroid.prov_des;
+    var query = $scope.asteroid.prov_des || $scope.asteroid.full_name;
     var cache_result = jpl_cache.Get(query);
     if (cache_result) {
       ShowData(cache_result);
@@ -104,17 +145,30 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   });
 
   function ShowData(data) {
+    // MPC/Horizons data
+    // JPL data
     for (var attr in data) {
       if (!data.hasOwnProperty(attr)) continue;
       if (typeof data[attr] !== 'object') {
         if (data[attr] != -1) {
           $scope.stats.push({
+            // TODO these need to have units as a separate structure attr
             name: attr.replace(/(.*?)\(.*?\)/, "$1"),
             units: attr.replace(/.*?\((.*?)\)/, "$1"),
             value: data[attr]
           });
         }
       }
+    }
+
+    for (var attr in MPC_FIELDS_TO_INCLUDE) {
+      if (!MPC_FIELDS_TO_INCLUDE.hasOwnProperty(attr)) continue;
+      var val = MPC_FIELDS_TO_INCLUDE[attr];
+      $scope.stats.push({
+        name: attr,
+        units: val.units,
+        value: $scope.asteroid[attr]
+      });
     }
 
     // TODO special fields: next pass and close approaches
