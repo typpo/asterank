@@ -10,6 +10,24 @@ body {
   overflow-y: scroll;
 }
 
+#results-table tr:hover {
+  cursor: pointer;
+}
+
+#results-table tr.selected {
+  font-weight: bold;
+}
+
 #results-table-loader {
   text-align: center;
+}
+
+/** Bootstrap changes **/
+table.table tr.info {
+  border: 1px #000 solid;
+}
+table.table tr.info > td {
+  background-color: #ccc;
+  color: #000;
+  border: 1px #999 solid;
 }

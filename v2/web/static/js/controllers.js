@@ -1,4 +1,5 @@
 function AsteroidTableCtrl($scope, $http) {
+  'use strict';
   // Config
   $scope.rankings = [];
   $scope.sort_orders = [
@@ -58,4 +59,13 @@ function AsteroidTableCtrl($scope, $http) {
       });
     }
   }
+
+  $scope.AsteroidClick = function(obj) {
+    $scope.selected = obj;
+  }
+}
+
+function AsteroidDetailsCtrl($scope, $html) {
+  'use strict';
+
 }

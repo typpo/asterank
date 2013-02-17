@@ -40,7 +40,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="asteroid in rankings">
+        <tr ng-repeat="asteroid in rankings" ng-click="AsteroidClick(asteroid)" ng-class="{info: selected.prov_des == asteroid.prov_des}">
           <td><span ng:bind="asteroid.name | ifempty:asteroid.prov_des"></span></td>
           <td><span ng:bind="asteroid.spec_B"></span></td>
           <td><span ng:bind="asteroid.score | number:3"></span></td>
