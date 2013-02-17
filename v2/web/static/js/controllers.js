@@ -100,6 +100,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
           ShowData(data);
       });
     }
+    ShowOrbitalDiagram();
   });
 
   function ShowData(data) {
@@ -118,7 +119,18 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
 
     // TODO special fields: next pass and close approaches
     // TODO composition
-    // TODO orbital diagram
+  }
+
+  function ShowOrbitalDiagram() {
+    // Orbital diagram
+    var orbit_diagram = new OrbitDiagram('#orbit-2d-diagram', {
+
+    });
+    orbit_diagram.render(
+        $scope.asteroid.a,
+        $scope.asteroid.e,
+        $scope.asteroid.w
+    );
   }
 }
 

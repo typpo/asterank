@@ -6,12 +6,12 @@ body {
 }
 
 #results-table-container {
-  height: 300px;
+  height: 350px;
   overflow-y: scroll;
 }
 
 #selection-details {
-  height: 300px;
+  height: 350px;
 
   font-size: 14px;
   margin-top: -20px;
