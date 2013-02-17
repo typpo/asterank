@@ -1,19 +1,6 @@
-<h3>2012 DA14</h3>
-<p>
-<strong>Blah blah:</strong> blah
-</p>
-<p>
-<strong>Blah blah:</strong> blah
-</p>
-<p>
-<strong>Blah blah:</strong> blah
-</p>
-<p>
-<strong>Blah blah:</strong> blah
-</p>
-<p>
-<strong>Blah blah:</strong> blah
-</p>
-<p>
-<strong>Blah blah:</strong> blah
-</p>
+<div ng-controller="AsteroidDetailsCtrl" ng-show="asteroid != null">
+  <h3 ng:bind="asteroid.full_name"></h3>
+  <p ng-repeat="x for x in showing_stats">
+    <strong>Blah blah:</strong> blah
+  </p>
+</div>

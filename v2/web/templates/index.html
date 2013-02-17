@@ -9,26 +9,8 @@
 {% block content %}
 <div class="row-fluid">
   <div id="left-side" class="span4">
-    <div id="intro">
-      <p>
-        Asterank is a scientific and economic database of over 600,000 asteroids.
-        <br>
-        <br>
-        We've collected, computed, or inferred important data such as asteroid
-        mass and composition from multiple scientific sources. With this information,
-        we estimate the costs and rewards of mining asteroids.
-        <br>
-        <br>
-        Details on orbits and basic physical parameters are mostly sourced from
-        JPL data. Composition data is less well known, so we compute generalizations
-        based on spectral classification and size. Our calculations incorporate
-        conclusions from multiple scientific publications in addition to cross-referencing
-        known meteorite data.
-      </p>
-    </div>
-    <div id="selection-details" style="display:none;">
+      {% include "blocks/intro_statement.html" %}
       {% include "blocks/selection_details.html" %}
-    </div>
   </div>
   <div class="span8">
     {% include "blocks/main_table.html" %}

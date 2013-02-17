@@ -1,4 +1,5 @@
-function AsteroidTableCtrl($scope, $http) {
+function AsteroidTableCtrl($scope, $http, pubsub) {
+  console.log(pubsub);
   'use strict';
   // Config
   $scope.rankings = [];
@@ -62,10 +63,26 @@ function AsteroidTableCtrl($scope, $http) {
 
   $scope.AsteroidClick = function(obj) {
     $scope.selected = obj;
+    pubsub.publish('AsteroidDetailsClick', [obj]);
   }
 }
 
-function AsteroidDetailsCtrl($scope, $html) {
+function AsteroidDetailsCtrl($scope, $http, pubsub) {
   'use strict';
 
+  $scope.asteroid = null;
+  $scope.asteroid_details = null;
+  $scope.showing_stats = [];   // stats to show
+
+  pubsub.subscribe('AsteroidDetailsClick', function(arg) {
+    // Update detailed click view
+    $scope.asteroid = arg;
+
+    // TODO http jpl asteroid details
+  });
+}
+
+function IntroStatementCtrl($scope) {
+  'use strict';
+  $scope.show = true;
 }
