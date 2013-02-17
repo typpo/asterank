@@ -79,7 +79,11 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
 
     pubsub.publish('HideIntroStatement');
 
-    // TODO http jpl asteroid details
+    // grab jpl asteroid details
+    $http.get('/jpl/lookup?query=' + $scope.asteroid.prov_des)
+      .success(function(data) {
+        console.log(data);
+    });
   });
 }
 

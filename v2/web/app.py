@@ -23,5 +23,12 @@ def rankings():
   json_resp = json.dumps(list(results))
   return Response(json_resp, mimetype='application/json')
 
+@app.route('/jpl/lookup')
+def horizons():
+  query = request.args.get('query')
+  results = api.jpl_lookup(query)
+  json_resp = json.dumps(list(results))
+  return Response(json_resp, mimetype='application/json')
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', use_reloader=True)

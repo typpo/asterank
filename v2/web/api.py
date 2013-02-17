@@ -1,5 +1,8 @@
+import json
 import pymongo
 from pymongo import MongoClient
+
+from calc.jpl_lookup import Asteroid as JPL_Asteroid
 
 conn = MongoClient()
 db = conn.asterank
@@ -24,3 +27,14 @@ def rankings(sort_by, limit):
   return asteroids.find({}, {'_id': False}) \
           .sort(sort_by, direction=pymongo.DESCENDING) \
           .limit(limit)
+
+def jpl_lookup(query):
+  ret = jpl.find({'tag_name': query}, {'_id': False}).limit(1)
+  if not ret:
+    # maybe it's not cached; try querying for it from horizons
+    a = JPL_Asteroid(query)
+    a.load()
+    ret = a.data
+    ret.tag_name = query
+    jpl.insert(a.data)  # cache
+  return ret
