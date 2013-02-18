@@ -59,8 +59,8 @@
       }
     });
 
-  // https://gist.github.com/floatingmonkey/3384419
   mod.factory('pubsub', function() {
+  // https://gist.github.com/floatingmonkey/3384419
     var cache = {};
     return {
       publish: function(topic, args) {
@@ -86,6 +86,34 @@
         });
       }
     }
+  });
+
+  mod.directive('autocomplete', function() {
+    return {
+      restrict: 'A',
+      replace: true,
+      transclude: true,
+      template: '<div style="display:inline"><input class="input" type="text" placeholder="433 Eros" style="height:15px;font-size:12px;"/>'
+          + '<div id="asteroid-lookup-suggestions"></div></div>',
+
+      link: function($scope, element, attrs) {
+        var $el = $(element).find('input');
+        $el.autocomplete({
+          minChars: 3,
+          serviceUrl: '/api/autocomplete',
+          paramName: 'query',
+          transformResult: function(resp) {
+            return $.map(resp, function(item) {
+              return {value: item.full_name, data: item};
+            });
+          },
+          onSelect: function(suggestion) {
+            $scope.Lookup(suggestion);
+          },
+          appendTo: '#asteroid-lookup-suggestions'
+        });
+      }
+    };
   });
 
 })();

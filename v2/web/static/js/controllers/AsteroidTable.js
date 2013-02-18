@@ -21,7 +21,6 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     }
   ];
   $scope.limit_options = [100, 300, 500, 1000, 4000];
-  $scope.lookup_query = '';
 
   // Functions
 
@@ -64,10 +63,6 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
   $scope.AsteroidClick = function(obj) {
     $scope.selected = obj;
     pubsub.publish('AsteroidDetailsClick', [obj]);
-  }
-
-  $scope.UpdateLookup = function() {
-    console.log($scope.lookup_query);
   }
 }
 

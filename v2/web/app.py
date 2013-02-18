@@ -23,6 +23,13 @@ def rankings():
   json_resp = json.dumps(results)
   return Response(json_resp, mimetype='application/json')
 
+@app.route('/api/autocomplete')
+def autocomplete():
+  results = api.autocomplete(request.args.get('query'), 10)
+  json_resp = json.dumps(results)
+  return Response(json_resp, mimetype='application/json')
+
+
 @app.route('/jpl/lookup')
 def horizons():
   query = request.args.get('query')

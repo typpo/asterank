@@ -1,4 +1,5 @@
 import json
+import re
 import pymongo
 from pymongo import MongoClient
 
@@ -26,6 +27,13 @@ def rankings(sort_by, limit):
     sort_by = FIELD_ALIASES[sort_by]
   return list(asteroids.find({}, {'_id': False}) \
           .sort(sort_by, direction=pymongo.DESCENDING) \
+          .limit(limit))
+
+def autocomplete(query, limit):
+  query = query.replace('+', ' ')
+  regx = re.compile(query, re.IGNORECASE)
+  return list(asteroids.find({'full_name': {'$regex': regx}}, \
+          {'_id': False})
           .limit(limit))
 
 def jpl_lookup(query):

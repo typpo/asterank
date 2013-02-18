@@ -2,6 +2,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   'use strict';
 
   var MPC_FIELDS_TO_INCLUDE = {
+    // Already in JPL fields:
     /*
     'a': {
       'name': 'Semimajor Axis',

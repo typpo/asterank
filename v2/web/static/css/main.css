@@ -38,6 +38,25 @@ body {
   text-align: center;
 }
 
+/* Autocomplete stuff */
+#asteroid-lookup-suggestions {
+  position: relative;
+  width: 500px;
+  margin-left: 55px;
+}
+.autocomplete-suggestions {
+  border: 1px #000 solid;
+  width: 500px;
+}
+.autocomplete-suggestion {
+  padding: 2px 5px; white-space: nowrap; overflow: hidden;
+  background-color: #000;
+}
+.autocomplete-selected { background: #333; }
+.direct-lookup-suggestions strong {
+  color: #3399FF;
+}
+
 /** Scrollbar **/
 ::-webkit-scrollbar {
 background:transparent;overflow:visible; width:8px;margin-left:2px;}
@@ -49,9 +68,7 @@ background:rgba(0,0,0,0.4);}
 border-width:4px 6px;min-width:40px;}
 ::-webkit-scrollbar-thumb:vertical {
 border-width:6px 4px;min-height:40px;}
-::-webkit-scrollbar-track-piece{
-background-color: #ddd;
-}
+::-webkit-scrollbar-track-piece{background-color: #ddd;}
 ::-webkit-scrollbar-corner {
 background:transparent;}
 ::-webkit-scrollbar-thumb {
