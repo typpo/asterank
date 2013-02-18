@@ -1,11 +1,32 @@
 {% extends "base.html" %}
 
 {% block scripts %}
-<script src="static/js/d3.v2.js"></script>
+<script src="static/js/lib/d3.v2.js"></script>
 <script src="static/js/orbit.js"></script>
 <script src="static/js/cache.js"></script>
 <script src="static/js/app.js"></script>
-<script src="static/js/controllers.js"></script>
+<script src="static/js/controllers/AsteroidTable.js"></script>
+<script src="static/js/controllers/AsteroidDetails.js"></script>
+<script src="static/js/controllers/IntroStatement.js"></script>
+
+<!-- 3d stuff -->
+<script src="static/js/3d/lib/three.js/three.min.js"></script>
+<script src="static/js/3d/lib/three.js/Detector.js"></script>
+<script src="static/js/3d/lib/three.js/TrackballControls.js"></script>
+<!--<script src="static/js/3d/lib/threex.dragpancontrols.js"></script>-->
+<!--
+<script src="static/js/3d/lib/threex/threex.domevent.js"></script>
+<script src="static/js/3d/lib/threex/threex.domevent.object3d.js"></script>
+-->
+<script src="static/js/3d/lib/threex/THREEx.WindowResize.js"></script>
+<script src="static/js/3d/lib/threex/THREEx.FullScreen.js"></script>
+
+<script src="static/js/3d/ellipse.js"></script>
+<script src="static/js/3d/ephemeris.js"></script>
+<script src="static/js/3d/util.js"></script>
+<!--<script src="static/js/3d/trackballx.js"></script>-->
+<script src="static/js/3d/main.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -22,4 +43,6 @@
 <div class="row-fluid">
   {% include "blocks/webgl.html" %}
 </div>
+
+{% include "blocks/shaders.html" %}
 {% endblock %}
