@@ -72,6 +72,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       $http.get('/jpl/lookup?query=' + query)
         .success(function(data) {
           ShowData(data);
+          jpl_cache.Set(query, data);
       });
     }
     ShowOrbitalDiagram();
