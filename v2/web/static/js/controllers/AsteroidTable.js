@@ -44,6 +44,8 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     var cache_result = rankings_cache.Get(params);
     if (cache_result) {
       $scope.rankings = cache_result;
+      // publish to subscribers (incl. 3d view)
+      pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
     }
     else {
       $('#results-table-loader').show();
@@ -56,9 +58,13 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
         $scope.rankings = data;
         rankings_cache.Set(params, data);
         $('#results-table-loader').hide();
+
+        // publish to subscribers (incl. 3d view)
+        pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
       });
     }
-  }
+
+  } // end UpdateRankings
 
   $scope.AsteroidClick = function(obj) {
     $scope.selected = obj;

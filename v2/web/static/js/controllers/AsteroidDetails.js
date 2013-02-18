@@ -50,12 +50,12 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
 
   var jpl_cache = new SimpleCache();
 
-  pubsub.subscribe('AsteroidDetailsClick', function(arg) {
+  pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
     if ($scope.asteroid
-      && arg.full_name === $scope.asteroid.full_name) return;
+      && asteroid.full_name === $scope.asteroid.full_name) return;
 
     // Update detailed click view
-    $scope.asteroid = arg;
+    $scope.asteroid = asteroid;
 
     // Flat fields that we just want to display
     $scope.stats = [];

@@ -1,5 +1,7 @@
-$(function() {
+function Asterank3D(container) {
   "use strict";
+
+  var me = this;
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -154,7 +156,7 @@ $(function() {
     var containerHeight = $(window).height()/2;
     var containerWidth = $(window).width() -25;
     renderer.setSize(containerWidth, containerHeight);
-    document.getElementById('webgl-container').appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     /*
     // Set up stats
@@ -189,7 +191,7 @@ $(function() {
 
     cameraControls	= new THREE.TrackballControls(
         camera,
-        document.getElementById('webgl-container')
+        container
         )
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
@@ -227,7 +229,7 @@ $(function() {
     }
 
     // Ellipses
-    runAsteroidQuery();
+    //runAsteroidQuery();
 
     $('#loading-text').html('planets');
     var mercury = new Orbit3D(Ephemeris.mercury,
@@ -402,6 +404,10 @@ $(function() {
     setNeutralCameraPosition();
   }
 
+  me.setLock = function(full_name) {
+    return setLock(full_name);
+  }
+
   function setLock(full_name) {
     if (locked_object) {
       clearLock();
@@ -527,6 +533,22 @@ $(function() {
     sort = sort || 'score';
     $('#loading').show();
 
+    clearAsteroids();
+
+    // Get new data points
+    $('#loading-text').html('asteroids database');
+    $.getJSON('/api/rankings?sort_by=' + sort + '&n='
+        + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
+        + '&use3d=true&compact=true&limit=100', function(data) {
+          processAsteroidRankings(data);
+    });
+  }
+
+  me.clearRankings = function() {
+    clearRankings();
+  }
+
+  function clearRankings() {
     // Remove any old setup
     for (var i=0; i < added_objects.length; i++) {
       scene.remove(added_objects[i].getParticle());
@@ -543,111 +565,111 @@ $(function() {
     if (lastHovered) {
       scene.remove(lastHovered);
     }
+  }
 
-    // Get new data points
-    $('#loading-text').html('asteroids database');
-    $.getJSON('/api/rankings?sort_by=' + sort + '&n='
-        + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
-        + '&use3d=true&compact=true&limit=100', function(data) {
-      if (!data) {
-        alert('Sorry, something went wrong and the server failed to return data.');
-        return;
+  me.processAsteroidRankings = function(data) {
+    return processAsteroidRankings(data);
+  }
+
+  function processAsteroidRankings(data) {
+    if (!data) {
+      alert('Sorry, something went wrong and the server failed to return data.');
+      return;
+    }
+    var n = data.length;
+    // add planets
+    added_objects = planets.slice();
+    particle_system_geometry = new THREE.Geometry();
+
+    var useBigParticles = false;//!using_webgl;
+    var featured_count = 0;
+    var featured_html = '';
+    for (var i=0; i < n; i++) {
+      if (i === NUM_BIG_PARTICLES) {
+        if (!using_webgl) {
+          // only show objects of interest if there's no particlesystem support
+          break;
+        }
+        useBigParticles = false;
       }
-      var n = data.length;
-      // add planets
-      added_objects = planets.slice();
-      particle_system_geometry = new THREE.Geometry();
+      var roid = data[i];
+      var locked = false;
+      var orbit = new Orbit3D(roid, {
+        color: 0xcccccc,
+        display_color: displayColorForObject(roid),
+        width: 2,
+        object_size: 1.5,
+        jed: jed,
+        particle_geometry: particle_system_geometry // will add itself to this geometry
+      }, useBigParticles);
 
-      var useBigParticles = false;//!using_webgl;
-      var featured_count = 0;
-      var featured_html = '';
-      for (var i=0; i < n; i++) {
-        if (i === NUM_BIG_PARTICLES) {
-          if (!using_webgl) {
-            // only show objects of interest if there's no particlesystem support
-            break;
-          }
-          useBigParticles = false;
-        }
-        var roid = data[i];
-        var locked = false;
-        var orbit = new Orbit3D(roid, {
-          color: 0xcccccc,
-          display_color: displayColorForObject(roid),
-          width: 2,
-          object_size: 1.5,
-          jed: jed,
-          particle_geometry: particle_system_geometry // will add itself to this geometry
-        }, useBigParticles);
-
-        if (featured_count++ < NUM_BIG_PARTICLES) {
-          // Add it to featured list
-          feature_map[roid.full_name] = {
-            'orbit': orbit,
-            'idx': added_objects.length
-          };
-          featured_html += '<tr data-full-name="'
-            + roid.full_name
-            + '"><td><a href="#">'
-            + (roid.prov_des || roid.full_name)
-            + '</a></td><td>'
-            + (roid.price < 1 ? 'N/A' : '$' + roid.fuzzed_price)
-            + '</td></tr>';
-        }
-
-        // Add to list of objects in scene
-        added_objects.push(orbit);
-      } // end asteroid results for loop
-
-      // handle when view mode is switched - need to clear every row but the sun
-      if (featured_2012_da14) {
-        $('#objects-of-interest tr:gt(2)').remove();
-      }
-      else {
-        $('#objects-of-interest tr:gt(1)').remove();
-      }
-      $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
-        $('#objects-of-interest tr').css('background-color', '#000');
-        var $e = $(this);
-        var full_name = $e.data('full-name');
-        $('#sun-selector').css('background-color', 'green');
-        switch (full_name) {
-          // special case full names
-          case 'sun':
-            clearLock(true);
-            return false;
-          case '2012 DA14':
-            // highlight the earth too
-            //setHighlight('earth');
-            break;
-        }
-        clearLock();
-
-        // set new lock
-        $e.css('background-color', 'green');
-        $('#sun-selector').css('background-color', '#000');
-        setLock(full_name);
-
-        return false;
-      });
-      $('#objects-of-interest-container').show();
-
-      createParticleSystem();   // initialize and start the simulation
-
-      if (!asteroids_loaded) {
-        asteroids_loaded = true;
-        if (featured_2012_da14) {
-          setLock('earth');
-          $('#sun-selector').css('background-color', 'black');
-          $('#earth-selector').css('background-color', 'green');
-        }
-        animate();
+      if (featured_count++ < NUM_BIG_PARTICLES) {
+        // Add it to featured list
+        feature_map[roid.full_name] = {
+          'orbit': orbit,
+          'idx': added_objects.length
+        };
+        featured_html += '<tr data-full-name="'
+          + roid.full_name
+          + '"><td><a href="#">'
+          + (roid.prov_des || roid.full_name)
+          + '</a></td><td>'
+          + (roid.price < 1 ? 'N/A' : '$' + roid.fuzzed_price)
+          + '</td></tr>';
       }
 
-      $('#loading').hide();
+      // Add to list of objects in scene
+      added_objects.push(orbit);
+    } // end asteroid results for loop
 
-      if (typeof mixpanel !== 'undefined') mixpanel.track('simulation started');
+    // handle when view mode is switched - need to clear every row but the sun
+    if (featured_2012_da14) {
+      $('#objects-of-interest tr:gt(2)').remove();
+    }
+    else {
+      $('#objects-of-interest tr:gt(1)').remove();
+    }
+    $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
+      $('#objects-of-interest tr').css('background-color', '#000');
+      var $e = $(this);
+      var full_name = $e.data('full-name');
+      $('#sun-selector').css('background-color', 'green');
+      switch (full_name) {
+        // special case full names
+        case 'sun':
+          clearLock(true);
+          return false;
+        case '2012 DA14':
+          // highlight the earth too
+          //setHighlight('earth');
+          break;
+      }
+      clearLock();
+
+      // set new lock
+      $e.css('background-color', 'green');
+      $('#sun-selector').css('background-color', '#000');
+      setLock(full_name);
+
+      return false;
     });
+    $('#objects-of-interest-container').show();
+
+    createParticleSystem();   // initialize and start the simulation
+
+    if (!asteroids_loaded) {
+      asteroids_loaded = true;
+      if (featured_2012_da14) {
+        setLock('earth');
+        $('#sun-selector').css('background-color', 'black');
+        $('#earth-selector').css('background-color', 'green');
+      }
+      animate();
+    }
+
+    $('#loading').hide();
+
+    if (typeof mixpanel !== 'undefined') mixpanel.track('simulation started');
   }
 
   function createParticleSystem() {
@@ -807,5 +829,5 @@ $(function() {
     // actually render the scene
     renderer.render(scene, camera);
   }
-});
+}
 if (!window.console) window.console = {log: function() {}};
