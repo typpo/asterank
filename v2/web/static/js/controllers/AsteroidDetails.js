@@ -28,7 +28,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     },
     'diameter': {
       'name': 'Diameter',
-      'units': 'km?'
+      'units': 'km'
     },
     'ma': {
       'name': 'Mean Anomaly',

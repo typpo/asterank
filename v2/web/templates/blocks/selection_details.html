@@ -5,7 +5,7 @@
   </p>
   <div id="orbit-2d-diagram"></div>
   <ul>
-  <li ng-repeat="stat in stats">
+  <li ng-repeat="stat in stats" ng-show="stat.value && stat.value != ''">
   <strong ng-bind="stat.name"></strong><span ng-show="stat.units && stat.units != ''"> (<span ng-bind="stat.units"></span>)</span>: <span ng-bind="stat.value"></span>
   </li>
   </ul>
