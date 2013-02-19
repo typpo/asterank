@@ -67,7 +67,13 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
   } // end UpdateRankings
 
   $scope.AsteroidClick = function(obj) {
-    $scope.selected = obj;
+    if (obj === $scope.selected) {
+      // deselect
+      $scope.selected = null;
+    }
+    else {
+      $scope.selected = obj;
+    }
     pubsub.publish('AsteroidDetailsClick', [obj]);
   }
 

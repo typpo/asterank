@@ -52,7 +52,13 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
 
   pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
     if ($scope.asteroid
-      && asteroid.full_name === $scope.asteroid.full_name) return;
+      && asteroid.full_name === $scope.asteroid.full_name) {
+      // already selected
+      $scope.asteroid = null;
+      pubsub.publish('ShowIntroStatement');
+      pubsub.publish('Default3DView');
+      return;
+    }
 
     // Update detailed click view
     $scope.asteroid = asteroid;
@@ -76,6 +82,9 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       });
     }
     ShowOrbitalDiagram();
+
+    // Lock 3d view
+    pubsub.publish('Lock3DView', [asteroid]);
   });
 
   function ShowData(data) {

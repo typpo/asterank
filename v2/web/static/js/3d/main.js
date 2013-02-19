@@ -380,6 +380,10 @@ function Asterank3D(container) {
   }
 
   // camera locking fns
+  me.clearLock = function() {
+    return clearLock(true);
+  }
+
   function clearLock(set_default_camera) {
     if (!locked_object) return;
 

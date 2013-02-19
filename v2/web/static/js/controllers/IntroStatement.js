@@ -5,4 +5,8 @@ function IntroStatementCtrl($scope, pubsub) {
   pubsub.subscribe('HideIntroStatement', function() {
     $scope.show = false;
   });
+
+  pubsub.subscribe('ShowIntroStatement', function() {
+    $scope.show = true;
+  });
 }
