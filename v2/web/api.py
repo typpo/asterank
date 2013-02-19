@@ -4,6 +4,7 @@ import pymongo
 from pymongo import MongoClient
 
 from calc.jpl_lookup import Asteroid as JPL_Asteroid
+import calc.horizon as horizon
 
 conn = MongoClient()
 db = conn.asterank
@@ -35,6 +36,10 @@ def autocomplete(query, limit):
   return list(asteroids.find({'full_name': {'$regex': regx}}, \
           {'_id': False})
           .limit(limit))
+
+def compositions():
+  return horizon.compositions()
+
 
 def jpl_lookup(query):
   result = jpl.find_one({'tag_name': query}, {'_id': False})

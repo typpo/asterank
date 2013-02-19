@@ -29,6 +29,11 @@ def autocomplete():
   json_resp = json.dumps(results)
   return Response(json_resp, mimetype='application/json')
 
+@app.route('/api/compositions')
+def compositions():
+  json_resp = json.dumps(api.compositions())
+  return Response(json_resp, mimetype='application/json')
+
 
 @app.route('/jpl/lookup')
 def horizons():

@@ -152,9 +152,11 @@ def populateDb():
 
 def compositions():
   print json.dumps(estimate.SPECTRA_INDEX)
+  return estimate.SPECTRA_INDEX
 
 def materials():
   print json.dumps(estimate.MATERIALS_INDEX)
+  return estimate.MATERIALS_INDEX
 
 def telnetLookup():
   t = telnetlib.Telnet()

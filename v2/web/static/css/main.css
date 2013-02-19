@@ -17,6 +17,16 @@ body {
   overflow-y: auto;
 }
 
+#left-side a {
+  color: #aaa;
+  text-decoration: underline;
+}
+
+#left-side .jump-to {
+  font-size: 12px;
+
+}
+
 #right-side {
   float: left;
   margin-right:0;

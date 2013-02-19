@@ -47,8 +47,11 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   $scope.asteroid = null;
   $scope.asteroid_details = null;
   $scope.showing_stats = [];   // stats to show
+  $scope.approaches = [];      // upcoming approaches
+  $scope.composition = [];
 
   var jpl_cache = new SimpleCache();
+  var compositions_map = null;
 
   pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
     if ($scope.asteroid
@@ -114,8 +117,22 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       });
     }
 
-    // TODO special fields: next pass and close approaches
-    // TODO composition
+    // special fields: next pass and close approaches
+    $scope.approaches = data['Close Approaches'];
+
+    // composition
+    if (compositions_map) {
+      // Object.keys not supported < ie9, so shim is required (see misc.js)
+      $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec_B]);
+    }
+    else {
+      $http.get('/api/compositions').success(function(data) {
+        compositions_map = data;
+        $scope.composition =
+          Object.keys(compositions_map[$scope.asteroid.spec_B]);
+      });
+    }
+    //$scope.composition = data['
   }
 
   function ShowOrbitalDiagram() {
