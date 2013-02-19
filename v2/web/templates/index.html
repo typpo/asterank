@@ -35,17 +35,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="row-fluid">
-  <div id="left-side" class="span4">
+<div id="top-container" class="row">
+  <div id="left-side">
       {% include "blocks/intro_statement.html" %}
       {% include "blocks/selection_details.html" %}
   </div>
-  <div class="span8">
+  <div id="right-side">
     {% include "blocks/main_table.html" %}
   </div>
 </div>
-<hr style="margin-top:0"/>
-<div class="row-fluid">
+<hr class="top-bottom-divider"/>
+<div id="bottom-container" class="row">
   {% include "blocks/webgl.html" %}
 </div>
 

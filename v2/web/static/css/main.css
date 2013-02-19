@@ -2,19 +2,37 @@ body {
   background-color: #333;
   color: #ddd;
   padding-top: 60px;
-  margin: 0px 15px;
+}
+
+#top-container {
+  margin: 0 15px;
+  overflow-y: hidden;
+}
+
+#left-side {
+  float: left;
+  margin-right: 15px;
+  width: 30%;
+  max-width: 400px;
+  overflow-y: auto;
+}
+
+#right-side {
+  float: left;
+  margin-right:0;
+  overflow-y: scroll;
+}
+
+hr.top-bottom-divider {
+ margin: 0;
 }
 
 #results-table-container {
-  height: 375px;
-  overflow-y: scroll;
 }
 
 #selection-details {
-  height: 425px;
-  margin-top: -20px;
-
-  overflow-y: scroll;
+  /*height: 425px;
+  margin-top: -20px;*/
 }
 
 #selection-details h3 {

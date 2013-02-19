@@ -39,6 +39,29 @@
     return txt;
   }
 
+  function sizeContainers() {
+    // top and bottom
+    var $tc = $('#top-container');
+    var $bc = $('#bottom-container');
+    var wh = $(window).height();
+    var tch = wh / 2 - $tc.offset().top - 25;
+    $tc.height(tch);
+    var bch = wh - $tc.height() - $tc.offset().top - 25;
+    $bc.height(bch);
+
+    // top left and top right
+    var $rs = $('#right-side');
+    var $ls = $('#left-side');
+    $rs.width($(window).width() - $ls.width()-45);
+    $rs.height(tch);
+    $ls.height(tch);
+  }
+  sizeContainers();
+
+  $(window).on('resize', function() {
+    sizeContainers();
+  });
+
   var mod = angular.module('AsterankApp', ['filters']);
 
   angular.module('filters',[])

@@ -154,7 +154,7 @@ function Asterank3D(container) {
       $('#not-supported').show();
     }
     var containerHeight = $(window).height()/2;
-    var containerWidth = $(window).width() -25;
+    var containerWidth = $(window).width();
     renderer.setSize(containerWidth, containerHeight);
     container.appendChild(renderer.domElement);
 
@@ -421,12 +421,12 @@ function Asterank3D(container) {
 
     var mapped_obj = feature_map[full_name];
     if (!mapped_obj) {
-      console.log("Sorry, something went wrong and I can't lock on this object.");
+      alert("Sorry, something went wrong and I can't lock on this object.");
       return;
     }
     var orbit_obj = mapped_obj['orbit'];
     if (!orbit_obj) {
-      console.log("Sorry, something went wrong and I can't lock on this object.");
+      alert("Sorry, something went wrong and I can't lock on this object.");
       return;
     }
     locked_object = orbit_obj;
