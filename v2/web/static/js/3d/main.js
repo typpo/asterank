@@ -26,7 +26,7 @@ function Asterank3D(container) {
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = false;
+  var camera_fly_around = true;
   var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
@@ -341,7 +341,7 @@ function Asterank3D(container) {
       scene.add(mesh);
     }
 
-    $('#container').on('mousedown', function() {
+    $(container).on('mousedown', function() {
       camera_fly_around = false;
     });
 
@@ -723,7 +723,7 @@ function Asterank3D(container) {
 
     // particle_system_geometry.vertices.length
     for (var i = 0; i < added_objects.length; i++) {
-      attributes.size.value[i] = 30;//i < NUM_BIG_PARTICLES ? 50 : 15;
+      attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
 
       attributes.a.value[i] = added_objects[i].eph.a;
       attributes.e.value[i] = added_objects[i].eph.e;
