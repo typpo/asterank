@@ -1,5 +1,6 @@
 import json
 import re
+import datetime
 import pymongo
 from pymongo import MongoClient
 
@@ -12,7 +13,9 @@ asteroids = db.asteroids
 mpc = db.mpc
 jpl = db.jpl
 
-VALID_SORTS = set(['value', 'profit', 'accessibility', 'score'])
+UPCOMING_SORT = 'upcoming'
+
+VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT])
 
 # some of these were poorly named, so we map better names, but the database stays the
 # same for backwards compatibility
@@ -24,6 +27,8 @@ FIELD_ALIASES = {
 def rankings(sort_by, limit):
   if sort_by not in VALID_SORTS:
     return None
+  if sort_by == UPCOMING_SORT:
+    return upcoming_passes()
   if sort_by in FIELD_ALIASES:
     sort_by = FIELD_ALIASES[sort_by]
   return list(asteroids.find({}, {'_id': False}) \
@@ -39,6 +44,24 @@ def autocomplete(query, limit):
 
 def compositions():
   return horizon.compositions()
+
+def upcoming_passes():
+  jpl_objs = jpl.find({'Next Pass': {'$exists': True, '$ne': None}, \
+    'Next Pass.date_iso': {'$gte': datetime.datetime.now().isoformat()}}, \
+    {'_id': False},) \
+    .sort('Next Pass.date_iso', direction=pymongo.ASCENDING).limit(30)
+
+  ret = []
+  seen = set()
+  # TODO this is why the db should be relational...
+  for result in jpl_objs:
+    if result['tag_name'] in seen:
+      continue
+    roid = asteroids.find_one({'prov_des': result['tag_name']}, {'_id': False})
+    seen.add(result['tag_name'])
+    ret.append(roid)
+
+  return ret
 
 
 def jpl_lookup(query):

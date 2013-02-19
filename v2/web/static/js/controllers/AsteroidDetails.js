@@ -132,7 +132,6 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
           Object.keys(compositions_map[$scope.asteroid.spec_B]);
       });
     }
-    //$scope.composition = data['
   }
 
   function ShowOrbitalDiagram() {
