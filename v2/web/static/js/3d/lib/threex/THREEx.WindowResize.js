@@ -6,7 +6,7 @@
 // **Step 1**: Start updating renderer and camera
 //
 // ```var windowResize = THREEx.WindowResize(aRenderer, aCamera)```
-//    
+//
 // **Step 2**: Start updating renderer and camera
 //
 // ```windowResize.stop()```
@@ -19,16 +19,19 @@ var THREEx	= THREEx 		|| {};
 
 /**
  * Update renderer and camera when the window is resized
- * 
+ *
  * @param {Object} renderer the renderer to update
  * @param {Object} Camera the camera to update
 */
-THREEx.WindowResize	= function(renderer, camera){
+THREEx.WindowResize	= function(renderer, camera, container){
+  container = container || window;
+  var $c = $(container);
 	var callback	= function(){
 		// notify the renderer of the size change
-		renderer.setSize( window.innerWidth, window.innerHeight );
+    // TODO make this sufficiently generic and then make a pull request...
+		renderer.setSize( $(window).width(), $c.height() );
 		// update the camera
-		camera.aspect	= window.innerWidth / window.innerHeight;
+		camera.aspect	= $c.width() / $c.height();
 		camera.updateProjectionMatrix();
 	}
 	// bind the resize event
