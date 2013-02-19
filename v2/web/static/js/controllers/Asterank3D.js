@@ -1,7 +1,6 @@
 function Asterank3DCtrl($scope, pubsub) {
 
   $scope.Init = function() {
-    // TODO move to directive...
     asterank3d = new Asterank3D(document.getElementById('webgl-container'));
   }
 

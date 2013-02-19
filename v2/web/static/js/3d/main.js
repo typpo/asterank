@@ -370,6 +370,7 @@ function Asterank3D(container) {
       attributes.value_color.value[idx] = new THREE.Color(0x0000ff);
       attributes.size.value[idx] = 30.0;
       attributes.locked.value[idx] = 1.0;
+      setAttributeNeedsUpdateFlags();
     }
 
   }
@@ -388,8 +389,9 @@ function Asterank3D(container) {
       attributes.value_color.value[locked_object_idx] = locked_object_color;
       attributes.size.value[locked_object_idx] = locked_object_size;
       attributes.locked.value[locked_object_idx] = 0.0;
+      setAttributeNeedsUpdateFlags();
     }
-    if (locked_object_idx > planets.length) {
+    if (locked_object_idx >= planets.length) {
       // not a planet
       scene.remove(locked_object_ellipse);
     }
@@ -414,6 +416,7 @@ function Asterank3D(container) {
     }
 
     var mapped_obj = feature_map[full_name];
+    console.log(mapped_obj);
     var orbit_obj = mapped_obj['orbit'];
     if (!orbit_obj) {
       alert("Sorry, something went wrong and I can't lock on this object.");
@@ -428,6 +431,7 @@ function Asterank3D(container) {
       locked_object_size = attributes.size.value[locked_object_idx];
       attributes.size.value[locked_object_idx] = 30.0;
       attributes.locked.value[locked_object_idx] = 1.0;
+      setAttributeNeedsUpdateFlags();
     }
 
     locked_object_ellipse = locked_object.getEllipse();
@@ -580,6 +584,11 @@ function Asterank3D(container) {
     // add planets
     added_objects = planets.slice();
     particle_system_geometry = new THREE.Geometry();
+    for (var i=0; i < planets.length; i++) {
+      // FIXME this is a workaround for the poor handling of PSG vertices in ellipse.js
+      // needs to be cleaned up
+      particle_system_geometry.vertices.push(new THREE.Vector3(0,0,0));
+    }
 
     var useBigParticles = false;//!using_webgl;
     var featured_count = 0;
@@ -603,12 +612,13 @@ function Asterank3D(container) {
         particle_geometry: particle_system_geometry // will add itself to this geometry
       }, useBigParticles);
 
-      if (featured_count++ < NUM_BIG_PARTICLES) {
-        // Add it to featured list
-        feature_map[roid.full_name] = {
-          'orbit': orbit,
-          'idx': added_objects.length
-        };
+      // Add it to featured list
+      // if (featured_count++ < NUM_BIG_PARTICLES) {
+      feature_map[roid.full_name] = {
+        'orbit': orbit,
+        'idx': added_objects.length
+      };
+      /*
         featured_html += '<tr data-full-name="'
           + roid.full_name
           + '"><td><a href="#">'
@@ -616,7 +626,7 @@ function Asterank3D(container) {
           + '</a></td><td>'
           + (roid.price < 1 ? 'N/A' : '$' + roid.fuzzed_price)
           + '</td></tr>';
-      }
+          */
 
       // Add to list of objects in scene
       added_objects.push(orbit);
@@ -712,8 +722,9 @@ function Asterank3D(container) {
     particle_system_shader_material.transparent = true;
     particle_system_shader_material.blending = THREE.AdditiveBlending;
 
-    for( var i = 0; i < particle_system_geometry.vertices.length; i++ ) {
-      attributes.size.value[i] = i < 30 ? 50 : 15;
+    // particle_system_geometry.vertices.length
+    for (var i = 0; i < added_objects.length; i++) {
+      attributes.size.value[i] = 30;//i < NUM_BIG_PARTICLES ? 50 : 15;
 
       attributes.a.value[i] = added_objects[i].eph.a;
       attributes.e.value[i] = added_objects[i].eph.e;
@@ -729,6 +740,7 @@ function Asterank3D(container) {
       attributes.value_color.value[i] = added_objects[i].opts.display_color;
       attributes.locked.value[i] = 0.0;
     }
+    setAttributeNeedsUpdateFlags();
 
     particleSystem = new THREE.ParticleSystem(
       particle_system_geometry,
@@ -738,8 +750,14 @@ function Asterank3D(container) {
     window.ps = particleSystem;
 
     // add it to the scene
-    particleSystem.sortParticles = true;
+    //particleSystem.sortParticles = true;
     scene.add(particleSystem);
+  }
+
+  function setAttributeNeedsUpdateFlags() {
+    attributes.value_color.needsUpdate = true;
+    attributes.locked.needsUpdate = true;
+    attributes.size.needsUpdate = true;
   }
 
   function starTexture(color, size) {
