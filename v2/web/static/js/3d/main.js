@@ -360,12 +360,16 @@ function Asterank3D(container) {
   function setHighlight(full_name) {
     // Colors the object differently, but doesn't follow it.
     var mapped_obj = feature_map[full_name];
-    var orbit_obj = mapped_obj['orbit'];
+    if (!mapped_obj) {
+      alert("Sorry, something went wrong and I can't highlight this object.");
+      return;
+    }
+    var orbit_obj = mapped_obj.orbit;
     if (!orbit_obj) {
       alert("Sorry, something went wrong and I can't highlight this object.");
       return;
     }
-    var idx = mapped_obj['idx']; // this is the object's position in the added_objects array
+    var idx = mapped_obj.idx; // this is the object's position in the added_objects array
     if (using_webgl) {
       attributes.value_color.value[idx] = new THREE.Color(0x0000ff);
       attributes.size.value[idx] = 30.0;
@@ -416,9 +420,13 @@ function Asterank3D(container) {
     }
 
     var mapped_obj = feature_map[full_name];
+    if (!mapped_obj) {
+      console.log("Sorry, something went wrong and I can't lock on this object.");
+      return;
+    }
     var orbit_obj = mapped_obj['orbit'];
     if (!orbit_obj) {
-      alert("Sorry, something went wrong and I can't lock on this object.");
+      console.log("Sorry, something went wrong and I can't lock on this object.");
       return;
     }
     locked_object = orbit_obj;

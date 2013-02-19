@@ -7,5 +7,6 @@ function AsteroidLookupCtrl($scope, $http, pubsub) {
 
   $scope.Lookup = function(suggestion) {
     pubsub.publish('AsteroidDetailsClick', [suggestion.data]);
+    pubsub.publish('ClearAsteroidSelection', []);
   }
 }

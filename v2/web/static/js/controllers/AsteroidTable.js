@@ -70,5 +70,9 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     $scope.selected = obj;
     pubsub.publish('AsteroidDetailsClick', [obj]);
   }
+
+  pubsub.subscribe('ClearAsteroidSelection', function() {
+    $scope.selected = null;
+  });
 }
 
