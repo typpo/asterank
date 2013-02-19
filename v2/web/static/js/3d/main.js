@@ -416,7 +416,6 @@ function Asterank3D(container) {
     }
 
     var mapped_obj = feature_map[full_name];
-    console.log(mapped_obj);
     var orbit_obj = mapped_obj['orbit'];
     if (!orbit_obj) {
       alert("Sorry, something went wrong and I can't lock on this object.");
