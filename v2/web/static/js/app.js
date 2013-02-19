@@ -59,6 +59,7 @@
     $rs.width(ww - $ls.width()-55);
     $rs.height(tch);
     $ls.height(tch);
+    $('#results-table-container').height($ls.height() - 15);
   }
   sizeContainers();
 

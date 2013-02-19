@@ -20,7 +20,6 @@ body {
 #right-side {
   float: left;
   margin-right:0;
-  overflow-y: scroll;
 }
 
 hr.top-bottom-divider {
@@ -28,6 +27,8 @@ hr.top-bottom-divider {
 }
 
 #results-table-container {
+  overflow-y: scroll;
+  /* height set in js */
 }
 
 #selection-details {
