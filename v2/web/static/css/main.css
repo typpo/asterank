@@ -36,6 +36,41 @@ hr.top-bottom-divider {
  margin: 0;
 }
 
+#webgl-controls {
+  position: absolute;
+  right: 0;
+  width: 325px;
+  height: 23px;
+  background-color: #ccc;
+  color: #000;
+
+  padding-top: 3px;
+
+  text-align: center;
+
+  opacity: 0.3;
+  filter:alpha(opacity=30); /* For IE8 and earlier */
+  -moz-border-radius-bottomleft: 25px 25px;
+  border-bottom-left-radius: 25px 25px;
+}
+
+#webgl-controls span {
+  cursor: pointer;
+}
+
+#webgl-controls ul {
+  margin: 0;
+}
+
+#webgl-controls ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+#webgl-controls ul li:hover {
+  color: #333;
+}
+
 #results-table-container {
   overflow-y: scroll;
   /* height set in js */

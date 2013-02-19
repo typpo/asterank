@@ -72,6 +72,13 @@ function Asterank3D(container) {
     $(this).css('font-weight', 'bold');
   });
 
+  me.pause = function() {
+    object_movement_on = false;
+  }
+  me.play = function() {
+    object_movement_on = true;
+  }
+
   // 2012 Da14 feature
   if (featured_2012_da14) {
     jed = toJED(new Date('2012-11-01'));

@@ -1,4 +1,13 @@
 <div class="span12" ng-controller="Asterank3DCtrl" ng-init="Init()">
+  <div id="webgl-controls">
+    <ul>
+      <li><span ng-click="SunView()"><i class="icon-star-empty"></i> Sun</span></li>
+      <li><span ng-click="EarthView()"><i class="icon-home"></i> Earth</span></li>
+      <li ng-show="running"><span ng-click="Pause()"><i class="icon-pause"></i> Pause</span></li>
+      <li ng-show="!running"><span ng-click="Play()"><i class="icon-play"></i> Play</span></li>
+      <li><span ng-click="FullView()"><i class="icon-share-alt"></i> Full View</span></li>
+    </ul>
+  </div>
   <div id="webgl-container">
 
   </div>
