@@ -71,13 +71,23 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     pubsub.publish('AsteroidDetailsClick', [obj]);
   }
 
+  var inserted_asteroids = {};
   pubsub.subscribe('UpdateRankingsWithFeaturedAsteroid', function(asteroid) {
     // normal rankings, except we insert a featured asteroid on top
     $scope.selected = asteroid;
-    $scope.rankings.unshift(asteroid);
 
-    // send new rankings to 3d view
-    pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
+    if (!inserted_asteroids[asteroid.full_name]) {
+      // update rankings
+      $scope.rankings.unshift(asteroid);
+
+      // send new rankings to 3d view
+      pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
+
+      inserted_asteroids[asteroid.full_name] = true;
+    }
+
+    // load details
+    pubsub.publish('AsteroidDetailsClick', [asteroid]);
   });
 }
 
