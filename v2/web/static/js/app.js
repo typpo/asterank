@@ -52,7 +52,11 @@
     // top left and top right
     var $rs = $('#right-side');
     var $ls = $('#left-side');
-    $rs.width($(window).width() - $ls.width()-45);
+
+    var ww = $(window).width();
+
+    $ls.width(ww * .3);
+    $rs.width(ww - $ls.width()-55);
     $rs.height(tch);
     $ls.height(tch);
   }
