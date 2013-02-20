@@ -15,6 +15,7 @@ f = open(FILE, 'r')
 lines = f.readlines()
 f.close()
 
+"""
 idx = 0
 objects = None
 for line in lines:
@@ -26,18 +27,30 @@ for line in lines:
 
 if not objects:
   print 'Could not find beginning'
+"""
 
 items = []
-seen = set()
-for object in objects:
+#seen = set()
+firstlineseen = False
+c = 0
+for object in open(FILE, 'r'):
+  if object.startswith('00001'):
+    firstlineseen = True
+  if not firstlineseen:
+    continue
+  if c % 5000 == 0:
+    print c, '...'
+  c += 1
   if object.strip() == '':
     continue
   item = {}
   item['des'] = object[0:7].strip()          # in packed form
+  """
   if item['des'] in seen:
     print 'Duplicate des', item['des']
     continue
-  seen.add(item['des'])
+  #seen.add(item['des'])
+  """
   try:
     item['H'] = float(object[8:13])    # can be blank
   except ValueError:
@@ -94,5 +107,5 @@ def chunks(l, n):
 c = 0
 for chunk in chunks(items, 50000):
   print 'Chunk %d+...' % (50000 * c)
-  coll.insert(chunk)
+  coll.insert(chunk, continue_on_error=True)
   c += 1
