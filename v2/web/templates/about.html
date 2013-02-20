@@ -4,16 +4,31 @@
 {% endblock %}
 
 {% block content %}
+<script>
+function email() {
+  return 'i' + String.fromCharCode(97) + 'n.webster+asterank' + '@gm' + String.fromCharCode(97) + 'il.com';
+}
+</script>
 <div class="row-fluid basic-content">
 <h1>About</h1>
 <p>This database is maintained by <a href="http://ianww.com">Ian Webster</a>. The code is available <a href="http://github.com/typpo/asterank">on github</a>.</p>
+<h3>Contact</h3>
+<p>
+All feedback is welcomed, especially if it would help make this site more informative, accurate, and interesting.
+</p>
+<p>
+I'm especially interested in fine-tuning the estimations and calculations for asteroid composition, value of materials, and cost of extraction.
+</p>
+<p>
+Please contact me at <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script>.
+</p>
 <div>
-  <h2>Accuracy</h2>
+  <h3>Accuracy</h3>
   <p>Scientists know shockingly little about the composition of asteroids. Visit the <a href="http://ssd.jpl.nasa.gov/sbdb.cgi">JPL's Small Body Database</a> and you will notice how the overwhelming majority of asteroids have no spectral classification. Not even experts have the numbers they need to completely and accurately estimate the true value of an asteroid or the cost of mining it.</p>
   <p>This information scarcity is exactly why Planetary Resources is going to spend years or even decades investing in <a href="http://www.planetaryresources.com/technology/">LEO-telescopes and data-gathering flybys</a> before they ever touch an asteroid.</p>
   <p>This site applies accurate, up-to-date information from world markets and scientific papers, but all figures come with the disclaimer that they are very rough estimations. The primary purpose of this site is to broadly educate and inspire.</p>
 </div>
-<h2>Overview</h2>
+<h3>Overview of estimates</h3>
 <p>
 <strong>Value</strong> estimates are based on the mass of a given asteroid and its spectral type.  I used spectral type to infer the composition of the asteroid, which i referenced with current market prices, mostly from the London Metal Exchange, to determine potential value.
 </p>
@@ -24,7 +39,7 @@
 <strong>Profit</strong> or "cost effectiveness" is a combination of accessibility and value.  Although it is hard to estimate the costs of an extraction mission to an asteroid, I tried to strike a balance between high value and high distance and energy expenditure.  Mining costs are factored in as a flat percentage of potential value.
 </p>
 <div>
-<h2>Research & Sources</h2>
+<h3>Research & Sources</h3>
 <p>A number of references, including:</p>
 <ul>
   <li><a href="http://ssd.jpl.nasa.gov/sbdb.cgi#top">JPL's Small Body Database</a></li>
@@ -32,7 +47,7 @@
   <li><a href="http://www.minorplanetcenter.net/iau/lists/Dangerous.html">Minor Planet Center</a></li>
   <li><a href="http://smass.mit.edu/catalog.php">MIT SMASS Survey</a></li>
   <li><a href="http://echo.jpl.nasa.gov/~lance/delta_v/delta_v.rendezvous.html">Lance Benner's delta-v calculations</a></li>
-  <li><a href="http://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;ved=0CD0QFjAB&amp;url=http%3A%2F%2Fwww.nhm.ac.uk%2Fresearch-curation%2Fresearch%2Fprojects%2Fmetcat%2FClass.rtf&amp;ei=H0ejT6CLPIKpiQKH2dHdAw&amp;usg=AFQjCNExa9jhGl5eJqlWUfC0s9a9TkvJYw&amp;sig2=OGUk3xV2184-NwNIF7k38w">Classified List of Meteorites</a></li>
+  <li><a href="http://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;ved=0CD0QFjAB&amp;url=http%3A%2F%2Fwww.nhm.ac.uk%2Fresearch-curation%2Fresearch%2Fprojects%2Fmetcat%2FClass.rtf&amp;ei=H0ejT6CLPIKpiQKh3dHdAw&amp;usg=AFQjCNExa9jhGl5eJqlWUfC0s9a9TkvJYw&amp;sig2=OGUk3xV2184-NwNIF7k38w">Classified List of Meteorites</a></li>
   <li><a href="http://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CCoQFjAA&amp;url=http%3A%2F%2Fwww-pao.ksc.nasa.gov%2Fkscpao%2Fnasafact%2Fps%2FSSP.ps&amp;ei=HUWjT8DaH43SiALzwbHwAw&amp;usg=AFQjCNEMiqog8TpHYyUiZLPZvtLpZUmCuA&amp;sig2=weEJFTyVMUnJ3_S_y7B1Wg">NASA LVDC Fact Sheet</a></li>
   <li><a href="http://www.lme.com/">The London Metal Exchange</a></li>
   <li><a href="http://www.outofthecradle.net/WordPress/wp-content/uploads/srn_v3n12.pdf">Asteroids: Sources of Precious Metals</a></li>

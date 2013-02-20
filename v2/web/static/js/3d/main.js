@@ -854,7 +854,7 @@
         }
         else {
           //cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
-          cam.position.set(pos[0]+25, pos[1]-25, pos[2]-40);
+          cam.position.set(pos[0]+25, pos[1]-25, pos[2]-70);
         }
         cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
       }

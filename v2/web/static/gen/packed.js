@@ -791,7 +791,7 @@ else{$http.get('/api/compositions').success(function(data){compositions_map=data
 function ShowOrbitalDiagram(){ var orbit_diagram=new OrbitDiagram('#orbit-2d-diagram',{});orbit_diagram.render($scope.asteroid.a,$scope.asteroid.e,$scope.asteroid.w);}}
 function AsteroidLookupCtrl($scope,$http,pubsub){$scope.lookup_query='';$scope.Init=function(){}
 $scope.Lookup=function(suggestion){pubsub.publish('UpdateRankingsWithFeaturedAsteroid',[suggestion.data]);}}
-function AsteroidTableCtrl($scope,$http,pubsub){'use strict'; $scope.rankings=[];$scope.sort_orders=[{text:'most cost effective',search_value:'score'},{text:'most valuable',search_value:'value'},{text:'most accessible',search_value:'accessibility'},{text:'upcoming passes',search_value:'upcoming'}];$scope.limit_options=[100,300,500,1000,4000]; $scope.Init=function(){ $scope.limit=300;$scope.sort_by=$scope.sort_orders[0];$scope.UpdateRankings();}
+function AsteroidTableCtrl($scope,$http,pubsub){'use strict'; $scope.rankings=[];$scope.sort_orders=[{text:'most cost effective',search_value:'score'},{text:'most valuable',search_value:'value'},{text:'most accessible',search_value:'accessibility'},{text:'upcoming passes',search_value:'upcoming'}];$scope.limit_options=[100,300,500,1000,4000]; $scope.Init=function(){ $scope.limit=$scope.limit_options[1];$scope.sort_by=$scope.sort_orders[0];$scope.UpdateRankings();}
 var rankings_cache=new SimpleCache(function(item){return item.sort_by+'|'+item.limit;});$scope.UpdateRankings=function(){var params={sort_by:$scope.sort_by.search_value,limit:$scope.limit};var cache_result=rankings_cache.Get(params);if(cache_result){$scope.rankings=cache_result;pubsub.publish('NewAsteroidRanking',[$scope.rankings]);}
 else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/rankings?sort_by='
 +params.sort_by
@@ -974,7 +974,7 @@ function changeJED(new_jed){jed=new_jed;}
 function setDefaultCameraPosition(){cam.position.set(0,-155,32);} 
 function animate(){if(!asteroids_loaded){render();requestAnimFrame(animate);return;}
 if(camera_fly_around){if(locked_object){ var pos=locked_object.getPosAtTime(jed);if(featured_2012_da14&&locked_object.name==='Earth'){cam.position.set(pos[0]-20,pos[1]+20,pos[2]+20);}
-else{cam.position.set(pos[0]+25,pos[1]-25,pos[2]-40);}
+else{cam.position.set(pos[0]+25,pos[1]-25,pos[2]-70);}
 cameraControls.target=new THREE.Vector3(pos[0],pos[1],pos[2]);}
 else{setNeutralCameraPosition();}}
 render();requestAnimFrame(animate);} 
