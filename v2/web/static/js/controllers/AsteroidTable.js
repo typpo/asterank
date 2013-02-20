@@ -26,7 +26,7 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
 
   $scope.Init = function() {
     // Initialization
-    $scope.limit = $scope.limit_options[0];
+    $scope.limit = $scope.limit_options[1];
     $scope.sort_by = $scope.sort_orders[0];
 
     $scope.UpdateRankings();
