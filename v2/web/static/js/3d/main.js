@@ -848,7 +848,8 @@ function Asterank3D(container) {
           cam.position.set(pos[0]-20, pos[1]+20, pos[2]+20);
         }
         else {
-          cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
+          //cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
+          cam.position.set(pos[0]+25, pos[1]-25, pos[2]-40);
         }
         cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
       }
