@@ -37,7 +37,7 @@ coll.drop()
 coll.ensure_index('des', unique=True)
 
 items = []
-#seen = set()
+seen = set()
 firstlineseen = False
 c = 0
 for object in open(FILE, 'r'):
@@ -52,12 +52,10 @@ for object in open(FILE, 'r'):
     continue
   item = {}
   item['des'] = object[0:7].strip()          # in packed form
-  """
   if item['des'] in seen:
     print 'Duplicate des', item['des']
     continue
-  #seen.add(item['des'])
-  """
+  seen.add(item['des'])
   try:
     item['H'] = float(object[8:13])    # can be blank
   except ValueError:
@@ -101,7 +99,7 @@ for object in open(FILE, 'r'):
     pass
   items.append(item)
 
-  if len(items) > 50000
+  if len(items) > 50000:
     # insert into mongo
     print 'Inserting/updating %d items into MPC collection' % (len(items))
     coll.insert(items, continue_on_error=True)

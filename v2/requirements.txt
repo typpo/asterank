@@ -4,3 +4,4 @@ gunicorn
 Flask-Assets==0.8
 jsmin
 cssmin
+BeautifulSoup4
