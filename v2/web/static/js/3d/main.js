@@ -15,10 +15,10 @@ function Asterank3D(container) {
   })();
 
 
-  var WEB_GL_ENABLED = true;
+  var WEB_GL_ENABLED = false;
 
   var MAX_NUM_ORBITS = 4000;
-  var CANVAS_NUM_ORBITS = 30;  // gimped version orbits
+  var CANVAS_NUM_ORBITS = 15;  // gimped version orbits
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
 
@@ -52,7 +52,7 @@ function Asterank3D(container) {
   var works = [];
   var workers = [];
   var NUM_WORKERS = 3;
-  var worker_path = '/3d/js/position_worker.js';
+  var worker_path = '/static/js/3d/position_worker.js';
   var workers_initialized = false;
   var particleSystem;
 
@@ -156,9 +156,20 @@ function Asterank3D(container) {
       window.gl = renderer.getContext();
     }
     else {
-      renderer	= new THREE.CanvasRenderer();
-      if (typeof mixpanel !== 'undefined') mixpanel.track('not supported');
-      $('#not-supported').show();
+      //renderer	= new THREE.CanvasRenderer();
+      //if (typeof mixpanel !== 'undefined') mixpanel.track('not supported');
+      // TODO should be moved to controller....
+      $('#webgl-not-supported').show();
+      var $tc = $('#top-container');
+      var $bc = $('#bottom-container');
+      $tc.height($tc.height() + ($bc.height() - 250))
+      $bc.height(250);
+      var $rs = $('#right-side');
+      var $ls = $('#left-side');
+      $('#results-table-container').height($rs.height() + 250);
+      $rs.height($rs.height() + 250);
+      $ls.height($ls.height() + 250);
+      return;
     }
     var containerHeight = $(window).height()/2;
     var containerWidth = $(window).width();
@@ -608,7 +619,7 @@ function Asterank3D(container) {
       particle_system_geometry.vertices.push(new THREE.Vector3(0,0,0));
     }
 
-    var useBigParticles = false;//!using_webgl;
+    var useBigParticles = !using_webgl;
     var featured_count = 0;
     var featured_html = '';
     for (var i=0; i < n; i++) {
@@ -683,17 +694,23 @@ function Asterank3D(container) {
     });
     $('#objects-of-interest-container').show();
 
-    createParticleSystem();   // initialize and start the simulation
-
     if (!asteroids_loaded) {
       asteroids_loaded = true;
-      if (featured_2012_da14) {
-        setLock('earth');
-        $('#sun-selector').css('background-color', 'black');
-        $('#earth-selector').css('background-color', 'green');
-      }
-      animate();
     }
+    if (using_webgl) {
+      createParticleSystem();   // initialize and start the simulation
+    }
+    else {
+      initSimulation();
+      startSimulation();
+    }
+
+    if (featured_2012_da14) {
+      setLock('earth');
+      $('#sun-selector').css('background-color', 'black');
+      $('#earth-selector').css('background-color', 'green');
+    }
+    animate();
 
     $('#loading').hide();
 

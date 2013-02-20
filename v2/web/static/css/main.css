@@ -55,6 +55,14 @@ hr.top-bottom-divider {
   border-bottom-left-radius: 25px 25px;
 }
 
+#webgl-not-supported {
+  position: absolute;
+  left: 30%;
+  width: 50%;
+  min-width: 300px;
+  margin-top: 50px;
+}
+
 #webgl-controls span {
   cursor: pointer;
 }
