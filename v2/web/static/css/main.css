@@ -103,6 +103,7 @@ hr.top-bottom-divider {
 
 #results-table-container {
   overflow-y: scroll;
+  min-width: 500px;
   /* height set in js */
 }
 
