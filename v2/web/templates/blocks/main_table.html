@@ -2,10 +2,10 @@
   <div class="form-horizontal" style="height: 30px">
     <div style="float: left; display: block; margin-right: 15px;">
       Query:
-      <select ng-options="x.text for x in sort_orders" ng-model="sort_by" ng-change="UpdateRankings()" style="height:24px;font-size:12px;">
+      <select ng-options="x.text for x in sort_orders" ng-model="sort_by" ng-change="UpdateRankings()" style="height:24px;font-size:12px;width:150px;">
       </select>
     </div>
-    <div ng-controller="AsteroidLookupCtrl" ng-init="Init()" style="float: left; width:300px;">
+    <div ng-controller="AsteroidLookupCtrl" ng-init="Init()" style="float: left; width:250px;">
       Lookup:
       <span id="autocomplete-container" autocomplete-input="{{lookup_query}}" autocomplete=""></span>
     </div>
