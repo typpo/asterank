@@ -17,11 +17,11 @@ a:hover {
   text-decoration: none;
 }
 
-code {
-  background-color: #000;
-  font-weight: bold;
-  color: aquamarine;
+.share-buttons {
+  margin-top: 7px;
+  margin-right: -15px;
 }
+.share-buttons iframe { vertical-align: top; } /* line up share buttons */
 
 .basic-content {
   max-width: 900px; margin: 0 auto;
@@ -179,4 +179,9 @@ table.table tr.info > td {
   background-color: #ccc;
   color: #000;
   border: 1px #999 solid;
+}
+code {
+  background-color: #000;
+  font-weight: bold;
+  color: aquamarine;
 }
