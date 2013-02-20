@@ -16,6 +16,7 @@ app.secret_key = 'not a secret key'
 # bundling
 assets = Environment(app)
 
+# main routes/api routes
 @app.route("/")
 def index():
   return render_template('index.html')
