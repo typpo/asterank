@@ -4,31 +4,33 @@
     Please be patient as data is loaded from JPL...
   </p>
   <div id="orbit-2d-diagram"></div>
-  <div class="jump-to" ng-show="approaches.length > 0 && composition.length > 0">
-    Jump to:
-    <a href="#upcoming-approaches" ng-show="approaches.length > 0">Upcoming Approaches</a>
-     <a href="#composition" ng-show="composition.length > 0">Composition</a>
-  </div>
-  <ul>
-  <li ng-repeat="stat in stats" ng-show="stat.value && stat.value != ''">
-  <strong ng-bind="stat.name"></strong><span ng-show="stat.units && stat.units != ''"> (<span ng-bind="stat.units"></span>)</span>: <span ng-bind="stat.value"></span>
-  </li>
-  </ul>
-  <div id="composition" ng-show="composition.length > 0">
-    <h4>Composition</h4>
+  <div ng-show="stats.length > 0">
+    <div class="jump-to" ng-show="approaches.length > 0 && composition.length > 0">
+      Jump to:
+      <a href="#upcoming-approaches" ng-show="approaches.length > 0">Upcoming Approaches</a>
+       <a href="#composition" ng-show="composition.length > 0">Composition</a>
+    </div>
     <ul>
-    <li ng-repeat="material in composition">
-    <span ng-bind="material"></span>
+    <li ng-repeat="stat in stats" ng-show="stat.value && stat.value != ''">
+    <strong ng-bind="stat.name"></strong><span ng-show="stat.units && stat.units != ''"> (<span ng-bind="stat.units"></span>)</span>: <span ng-bind="stat.value"></span>
     </li>
     </ul>
-  </div>
-  <div  id="upcoming-approaches" ng-show="approaches.length > 0">
-  <h4>Upcoming Approaches</h4>
-  <ul>
-    <li ng-repeat="approach in approaches">
-    <strong ng-bind="approach.date"></strong>:
-     <span ng-bind="approach.min_dist_au | number:3"></span> AU
-    </li>
-  </ul>
+    <div id="composition" ng-show="composition.length > 0">
+      <h4>Composition</h4>
+      <ul>
+      <li ng-repeat="material in composition">
+      <span ng-bind="material"></span>
+      </li>
+      </ul>
+    </div>
+    <div  id="upcoming-approaches" ng-show="approaches.length > 0">
+    <h4>Upcoming Approaches</h4>
+    <ul>
+      <li ng-repeat="approach in approaches">
+      <strong ng-bind="approach.date"></strong>:
+       <span ng-bind="approach.min_dist_au | number:3"></span> AU
+      </li>
+    </ul>
+    </div>
   </div>
 </div>
