@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block content %}
+<script>
+function email() {
+  return 'i' + String.fromCharCode(97) + 'n' + '@' + String.fromCharCode(97) + 'sterank.com';
+}
+</script>
+<div class="row-fluid">
+<h1>Contact</h1>
+<p>
+All feedback is welcomed, especially if it would help make this site more informative, accurate, and interesting.
+</p>
+<p>
+I'm especially interested in fine-tuning the estimations and calculations for asteroid composition, value of materials, and cost of extraction.
+</p>
+<p>
+Please contact me at <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script>.
+</p>
+</div>
+{% endblock %}
