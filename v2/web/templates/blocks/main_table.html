@@ -5,7 +5,7 @@
       <select ng-options="x.text for x in sort_orders" ng-model="sort_by" ng-change="UpdateRankings()" style="height:24px;font-size:12px;width:150px;">
       </select>
     </div>
-    <div ng-controller="AsteroidLookupCtrl" ng-init="Init()" style="float: left;">
+    <div ng-controller="AsteroidLookupCtrl" ng-init="Init()" style="float: left; width: 280px;">
       Lookup:
       <span id="autocomplete-container" autocomplete-input="{{lookup_query}}" autocomplete=""></span>
     </div>
