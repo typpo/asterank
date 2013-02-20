@@ -958,7 +958,7 @@ var roid=data[i];var locked=false;var orbit=new Orbit3D(roid,{color:0xcccccc,dis
 if(featured_2012_da14){$('#objects-of-interest tr:gt(2)').remove();}
 else{$('#objects-of-interest tr:gt(1)').remove();}
 $('#objects-of-interest').append(featured_html).on('click','tr',function(){$('#objects-of-interest tr').css('background-color','#000');var $e=$(this);var full_name=$e.data('full-name');$('#sun-selector').css('background-color','green');switch(full_name){ case'sun':clearLock(true);return false;case'2012 DA14':break;}
-clearLock(); $e.css('background-color','green');$('#sun-selector').css('background-color','#000');setLock(full_name);return false;});$('#objects-of-interest-container').show();if(!asteroids_loaded){asteroids_loaded=true;}
+clearLock(); $e.css('background-color','green');$('#sun-selector').css('background-color','#000');setLock(full_name);return false;});$('#objects-of-interest-container').show();jed=toJED(new Date()); if(!asteroids_loaded){asteroids_loaded=true;}
 if(using_webgl){createParticleSystem();}
 else{initSimulation();startSimulation();}
 if(featured_2012_da14){setLock('earth');$('#sun-selector').css('background-color','black');$('#earth-selector').css('background-color','green');}

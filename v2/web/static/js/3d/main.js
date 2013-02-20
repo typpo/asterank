@@ -697,6 +697,7 @@
     });
     $('#objects-of-interest-container').show();
 
+    jed = toJED(new Date());  // reset date
     if (!asteroids_loaded) {
       asteroids_loaded = true;
     }
