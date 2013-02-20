@@ -36,6 +36,7 @@
   var particle_system_geometry = null;
   var asteroids_loaded = false;
   var display_date_last_updated = 0;
+  var first_loaded = false;
 
   // Lock/feature stuff
   var feature_map = {};       // map from object full name to Orbit3D instance
@@ -712,7 +713,10 @@
       $('#sun-selector').css('background-color', 'black');
       $('#earth-selector').css('background-color', 'green');
     }
-    animate();
+    if (!first_loaded) {
+      animate();
+      first_loaded = true;
+    }
 
     $('#loading').hide();
 
