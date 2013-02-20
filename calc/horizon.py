@@ -12,7 +12,7 @@ import scoring
 import estimate
 from pymongo import Connection
 
-DATA_PATH = 'data/fulldb.20130213.csv'
+DATA_PATH = 'data/fulldb-20130220.csv'
 DV_PATH = 'data/deltav/db.csv'
 MASS_PATH = 'data/masses.txt'
 G = 6.67300e-20   # km^3 / kgs^2
@@ -37,7 +37,7 @@ def populateDb():
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
-  #coll.drop()
+  coll.drop()
   coll.ensure_index('full_name', unique=True, background=True)
   coll.ensure_index('score', background=True)
   coll.ensure_index('profit', background=True)
@@ -91,11 +91,11 @@ def populateDb():
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
         # TODO should have our own merged spec row, instead we overwrite spec_B
-        row['spec_B'] = newspec.replace('type').strip()
+        row['spec_B'] = newspec.replace('type', '').strip()
       elif row['pdes'] == '2012 DA14':
         row['spec_B'] = 'L'
       else:
-        continue # TODO temp
+        #continue # TODO temp
         row['spec_B'] = 'S'
 
     # match it with its delta-v
