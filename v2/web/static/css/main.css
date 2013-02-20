@@ -19,9 +19,11 @@ a:hover {
 
 .share-buttons {
   margin-top: 7px;
-  margin-right: -15px;
 }
-.share-buttons iframe { vertical-align: top; } /* line up share buttons */
+.share-buttons > iframe { vertical-align: top; } /* line up share buttons */
+.twitter-share-button {
+  width: 80px !important;
+}
 
 .basic-content {
   max-width: 900px; margin: 0 auto;
