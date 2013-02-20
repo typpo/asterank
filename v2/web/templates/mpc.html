@@ -10,15 +10,16 @@ function email() {
 }
 </script>
 <div class="row-fluid basic-content">
-<h1>MPC API</h1>
+<h1>Minor Planet Center API</h1>
 
 <h3>Overview</h3>
 <p>
-Asterank is happy to offer a basic queryable database for the Minor Planet Center's MPCORB.DAT data files.  Although it is free to use, if you wish to query this API heavily please contact me at <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script>.
+Asterank is happy to offer a basic queryable database for the Minor Planet Center's MPCORB.DAT data files.  It is a simple way to quickly apply constraints to a set of over 600,000 asteroids.  It is possible to use comparators and set specific criteria for all attributes provided by the MPC.
 </p>
 <p>
-The database currently runs on <strong>mongodb</strong>.  The database is updated nightly from the MPC's MPCORB.dat dataset.
+The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json-influenced format for a 'find' operation.  The database is updated nightly from the MPC's MPCORB.dat dataset.
 </p>
+<h3>Format</h3>
 <p>
 Requests are of the form:
 <div>
@@ -27,9 +28,8 @@ Requests are of the form:
 </code>
 </div>
 </p>
-<h3>Format</h3>
 <p>
-MPC results are parsed as per the orbit format specified <a href="http://www.minorplanetcenter.net/iau/info/MPOrbitFormat.html">here</a>.  In some cases, a field may not be present in the results if it was not present in MPCORB.dat.  This can be treated as an empty field.
+MPC results are parsed as per the orbit format specified <a href="http://www.minorplanetcenter.net/iau/info/MPOrbitFormat.html">here</a>.  In some cases, a field may not be present in the results if it was not present in MPCORB.dat.  This can be treated as an empty or unspecified attribute.
 </p>
 <h3>Sample Request</h3>
 <p>
