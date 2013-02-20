@@ -37,16 +37,20 @@
           <th>
             Accessibility Score
           </th>
+          <th>
+            Class
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="asteroid in rankings" ng-click="AsteroidClick(asteroid)" ng-class="{info: selected.full_name == asteroid.full_name}">
-          <td><span ng:bind="asteroid.name | ifempty:asteroid.prov_des"></span></td>
-          <td><span ng:bind="asteroid.spec_B"></span></td>
-          <td><span ng:bind="asteroid.score | number:3"></span></td>
-          <td><span ng:bind="asteroid.price | fuzzynum"></span></td>
-          <td><span ng:bind="asteroid.profit | fuzzynum"></span></td>
-          <td><span ng:bind="asteroid.closeness | number:3"></span></td>
+          <td><span ng-bind="asteroid.name | ifempty:asteroid.prov_des"></span></td>
+          <td><span ng-bind="asteroid.spec_B"></span></td>
+          <td><span ng-bind="asteroid.score | number:3"></span></td>
+          <td><span ng-bind="asteroid.price | fuzzynum"></span></td>
+          <td><span ng-bind="asteroid.profit | fuzzynum"></span></td>
+          <td><span ng-bind="asteroid.closeness | number:3"></span></td>
+          <td><span ng-bind="asteroid.class"></span> <span ng-show="asteroid.pha == 'Y'">(PHA)</span></td>
         </tr>
       </tbody>
     </table>

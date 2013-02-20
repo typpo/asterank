@@ -16,9 +16,6 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     'e': {
       'name': 'Eccentricity',
     },
-    'class': {
-      'name': 'Orbital class',
-    },
     'epoch': {
       'name': 'Epoch',
     },
