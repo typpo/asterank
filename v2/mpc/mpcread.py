@@ -29,6 +29,13 @@ if not objects:
   print 'Could not find beginning'
 """
 
+# set up mongo connection
+conn = MongoClient()
+db = conn.asterank
+coll = db.mpc
+coll.drop()
+coll.ensure_index('des', unique=True)
+
 items = []
 #seen = set()
 firstlineseen = False
@@ -94,18 +101,8 @@ for object in open(FILE, 'r'):
     pass
   items.append(item)
 
-# insert into mongo
-print 'Inserting/updating %d items into MPC collection' % (len(items))
-conn = MongoClient()
-db = conn.asterank
-coll = db.mpc
-coll.drop()
-coll.ensure_index('des', unique=True)
-def chunks(l, n):
-  for i in xrange(0, len(l), n):
-    yield l[i:i+n]
-c = 0
-for chunk in chunks(items, 50000):
-  print 'Chunk %d+...' % (50000 * c)
-  coll.insert(chunk, continue_on_error=True)
-  c += 1
+  if len(items) > 50000
+    # insert into mongo
+    print 'Inserting/updating %d items into MPC collection' % (len(items))
+    coll.insert(items, continue_on_error=True)
+    items = []
