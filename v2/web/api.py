@@ -10,7 +10,7 @@ import calc.horizon as horizon
 conn = MongoClient()
 db = conn.asterank
 asteroids = db.asteroids
-mpc = db.mpc
+mpc_coll = db.mpc
 jpl = db.jpl
 
 UPCOMING_SORT = 'upcoming'
@@ -63,7 +63,6 @@ def upcoming_passes():
 
   return ret
 
-
 def jpl_lookup(query):
   result = jpl.find_one({'tag_name': query}, {'_id': False})
   if not result:
@@ -85,3 +84,6 @@ def jpl_lookup(query):
 
   del result['tag_name']
   return result
+
+def mpc(query, limit):
+  return list(mpc_coll.find(query, {'_id': False}).limit(limit))

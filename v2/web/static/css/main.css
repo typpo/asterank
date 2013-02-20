@@ -5,6 +5,28 @@ body {
   margin-left: 15px;
 }
 
+a {
+  color: #ccc;
+  text-decoration: underline;
+}
+a.brand {
+  text-decoration: none !important;
+}
+a:hover {
+  color: #aaa;
+  text-decoration: none;
+}
+
+code {
+  background-color: #000;
+  font-weight: bold;
+  color: aquamarine;
+}
+
+.basic-content {
+  max-width: 900px; margin: 0 auto;
+}
+
 #top-container {
   margin: 0 15px;
   overflow-y: hidden;
