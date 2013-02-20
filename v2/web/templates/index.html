@@ -2,39 +2,30 @@
 
 {% block scripts %}
 
-<script src="static/js/lib/jquery.autocomplete.js"></script>
+{% assets filter="jsmin", output="gen/packed.js",
+"js/lib/jquery.autocomplete.js",
+"js/lib/d3.v2.js",
+"js/orbit.js",
+"js/cache.js",
+"js/misc.js",
+"js/app.js",
+"js/controllers/Asterank3D.js",
+"js/controllers/AsteroidDetails.js",
+"js/controllers/AsteroidLookup.js",
+"js/controllers/AsteroidTable.js",
+"js/controllers/IntroStatement.js",
+"js/3d/lib/three.js/three.min.js",
+"js/3d/lib/three.js/Detector.js",
+"js/3d/lib/three.js/TrackballControls.js",
+"js/3d/lib/threex/THREEx.WindowResize.js",
+"js/3d/ellipse.js",
+"js/3d/ephemeris.js",
+"js/3d/util.js",
+"js/3d/main.js"
+%}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
 
-<script src="static/js/lib/d3.v2.js"></script>
-<script src="static/js/orbit.js"></script>
-<script src="static/js/cache.js"></script>
-<script src="static/js/misc.js"></script>
-<script src="static/js/app.js"></script>
-<script src="static/js/controllers/Asterank3D.js"></script>
-<script src="static/js/controllers/AsteroidDetails.js"></script>
-<script src="static/js/controllers/AsteroidLookup.js"></script>
-<script src="static/js/controllers/AsteroidTable.js"></script>
-<script src="static/js/controllers/IntroStatement.js"></script>
-
-<!-- 3d stuff -->
-<script src="static/js/3d/lib/three.js/three.min.js"></script>
-<script src="static/js/3d/lib/three.js/Detector.js"></script>
-<script src="static/js/3d/lib/three.js/TrackballControls.js"></script>
-<!--<script src="static/js/3d/lib/threex.dragpancontrols.js"></script>-->
-<!--
-<script src="static/js/3d/lib/threex/threex.domevent.js"></script>
-<script src="static/js/3d/lib/threex/threex.domevent.object3d.js"></script>
--->
-<script src="static/js/3d/lib/threex/THREEx.WindowResize.js"></script>
-<!--<script src="static/js/3d/lib/threex/THREEx.FullScreen.js"></script>-->
-
-<!--
-<script src="static/js/3d/Worker.js"></script>
--->
-<script src="static/js/3d/ellipse.js"></script>
-<script src="static/js/3d/ephemeris.js"></script>
-<script src="static/js/3d/util.js"></script>
-<!--<script src="static/js/3d/trackballx.js"></script>-->
-<script src="static/js/3d/main.js"></script>
 
 {% endblock %}
 

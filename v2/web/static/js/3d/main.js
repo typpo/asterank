@@ -1,4 +1,4 @@
-function Asterank3D(container) {
+;function Asterank3D(container) {
   "use strict";
 
   var me = this;

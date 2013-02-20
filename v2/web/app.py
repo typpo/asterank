@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from flask import Flask, request, redirect, session, url_for, render_template, Response
+from flask.ext.assets import Environment, Bundle
 import urllib
 import urlparse
 import json
@@ -11,6 +12,9 @@ import api
 
 app = Flask(__name__)
 app.secret_key = 'not a secret key'
+
+# bundling
+assets = Environment(app)
 
 @app.route("/")
 def index():

@@ -3852,7 +3852,7 @@ d3.svg.chord = function() {
   }
 
   function arc(r, p, a) {
-    return "A" + r + "," + r + " 0 " + +(a > Math.PI) + ",1 " + p;
+    return "A" + r + "," + r + " 0 " + (+(a > Math.PI)) + ",1 " + p;
   }
 
   function curve(r0, p0, r1, p1) {
@@ -8954,7 +8954,7 @@ function d3_time_parseFullYear(date, string, i) {
 function d3_time_parseYear(date, string, i) {
   d3_time_numberRe.lastIndex = 0;
   var n = d3_time_numberRe.exec(string.substring(i, i + 2));
-  return n ? (date.y = d3_time_century() + +n[0], i += n[0].length) : -1;
+  return n ? (date.y = d3_time_century() + (+n[0]), i += n[0].length) : -1;
 }
 
 function d3_time_century() {
