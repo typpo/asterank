@@ -761,7 +761,12 @@ function Asterank3D(container) {
 
     // particle_system_geometry.vertices.length
     for (var i = 0; i < added_objects.length; i++) {
-      attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
+      if (i < planets.length) {
+        attributes.size.value[i] = 75;
+      }
+      else {
+        attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
+      }
 
       attributes.a.value[i] = added_objects[i].eph.a;
       attributes.e.value[i] = added_objects[i].eph.e;
