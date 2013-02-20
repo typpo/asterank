@@ -56,7 +56,7 @@
     var ww = $(window).width();
 
     $ls.width(ww * .3);
-    $rs.width(ww - $ls.width()-55);
+    $rs.width(ww - $ls.width()-75);
     $rs.height(tch);
     $ls.height(tch);
     $('#results-table-container').height($ls.height() - 15);
@@ -121,7 +121,7 @@
       restrict: 'A',
       replace: true,
       transclude: true,
-      template: '<div style="display:inline"><input class="input" type="text" placeholder="433 Eros" style="height:15px;font-size:12px;"/>'
+      template: '<div style="display:inline"><input class="input" type="text" placeholder="eg. 433 Eros" style="height:15px;font-size:12px;"/>'
           + '<div id="asteroid-lookup-suggestions"></div></div>',
 
       link: function($scope, element, attrs) {
@@ -143,5 +143,4 @@
       }
     };
   });
-
 })();

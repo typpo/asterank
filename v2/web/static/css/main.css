@@ -25,7 +25,6 @@ body {
 
 #left-side .jump-to {
   font-size: 12px;
-
 }
 
 #right-side {
@@ -53,6 +52,14 @@ hr.top-bottom-divider {
   filter:alpha(opacity=30); /* For IE8 and earlier */
   -moz-border-radius-bottomleft: 25px 25px;
   border-bottom-left-radius: 25px 25px;
+}
+
+#webgl-not-supported {
+  position: absolute;
+  left: 30%;
+  width: 50%;
+  min-width: 300px;
+  margin-top: 50px;
 }
 
 #webgl-controls span {
