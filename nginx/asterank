@@ -13,12 +13,31 @@ server {
         proxy_set_header X-Scheme $scheme;
         proxy_connect_timeout 40;
         proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/;
-
-	proxy_cache my-cache;
-	proxy_cache_valid 200 302 600m;
-	proxy_cache_valid 404 500 1m;
+        proxy_pass http://localhost:9990/;
     }
+    location /old {
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_connect_timeout 40;
+        proxy_read_timeout 40;
+        proxy_pass http://localhost:9590/;
+    }
+    location /3d {
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_connect_timeout 40;
+        proxy_read_timeout 40;
+        proxy_pass http://localhost:9590/3d;
+    }
+    proxy_cache my-cache;
+    proxy_cache_valid 200 302 600m;
+    proxy_cache_valid 404 500 1m;
     # what to serve if upstream is not available or crashes
     error_page 500 502 503 504 /media/50x.html;
 }
