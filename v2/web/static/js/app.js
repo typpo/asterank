@@ -56,7 +56,7 @@
     var ww = $(window).width();
 
     $ls.width(ww * .3);
-    $rs.width(ww - $ls.width()-55);
+    $rs.width(ww - $ls.width()-75);
     $rs.height(tch);
     $ls.height(tch);
     $('#results-table-container').height($ls.height() - 15);
