@@ -9,7 +9,7 @@ server {
 
 server {
     listen   80;
-    server_name www.asterank.com;
+    server_name www.asterank.com 97.107.131.22;
 
     location / {
         proxy_pass_header Server;

@@ -34,3 +34,5 @@ for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRA
   process(asteroid)
 for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
   process(asteroid)
+for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
+  process(asteroid)
