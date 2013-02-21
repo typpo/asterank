@@ -10,7 +10,7 @@ echo "starting `date`"
 ./v2/gunicorn.sh 2>> /var/log/asterank/err.log 1>> /var/log/asterank/out.log &
 
 # node
-NODE_ENV=production
+export NODE_ENV=production
 node web/app.js 2>> /var/log/asterank/node.err.log 1>> /var/log/asterank/node.out.log &
 
 for job in `jobs -p`
