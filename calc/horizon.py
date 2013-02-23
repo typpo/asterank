@@ -41,7 +41,7 @@ def populateDb():
   coll.ensure_index('full_name', unique=True, background=True)
   coll.ensure_index('score', background=True)
   coll.ensure_index('profit', background=True)
-  #coll.ensure_index('prov_des', background=True)
+  coll.ensure_index('prov_des', background=True)  # necessary for upcoming pass lookups
   coll.ensure_index('closeness', background=True)
   coll.ensure_index('price', background=True)
 
