@@ -14,10 +14,10 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     },
     */
     'e': {
-      'name': 'Eccentricity',
+      'name': 'Eccentricity'
     },
     'epoch': {
-      'name': 'Epoch',
+      'name': 'Epoch'
     },
     'dv': {
       'name': 'Delta-v',
