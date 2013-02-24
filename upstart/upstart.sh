@@ -11,7 +11,7 @@ echo "starting `date`"
 
 # node
 export NODE_ENV=production
-node web/app.js 2>> /var/log/asterank/node.err.log 1>> /var/log/asterank/node.out.log &
+supervisor -w web/app.js web/app.js 2>> /var/log/asterank/node.err.log 1>> /var/log/asterank/node.out.log &
 
 for job in `jobs -p`
 do
