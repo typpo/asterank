@@ -64,7 +64,9 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     $scope.asteroid = asteroid;
 
     // TEMPORARY: Add missing data (TODO move to backend)
-    $scope.asteroid.a = $scope.asteroid.a || 3500;  // if no semi-major axis, it's probably a comet that comes from the oort cloud
+    if ($scope.asteroid.a < 1e-10) {
+      $scope.asteroid.a = 3500;  // if no semi-major axis, it's probably a comet that comes from the oort cloud
+    }
 
     // Flat fields that we just want to display
     $scope.stats = [];
