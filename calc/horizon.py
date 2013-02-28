@@ -33,6 +33,8 @@ THOLEN_MAPPINGS = {
   'A': 'A',
 }
 
+COMET_CLASSES = set(['COM', 'CTc', 'ETc', 'HTC', 'HYP', 'JFc', 'JFC', 'PAR'])
+
 def populateDb():
   conn = Connection('localhost', 27017)
   db = conn.asterank
@@ -94,6 +96,8 @@ def populateDb():
         row['spec_B'] = newspec.replace('type', '').strip()
       elif row['pdes'] == '2012 DA14':
         row['spec_B'] = 'L'
+      elif row['class'] in COMET_CLASSES:
+        row['spec_B'] = 'comet'
       else:
         #continue # TODO temp
         row['spec_B'] = 'S'
