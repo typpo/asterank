@@ -48,7 +48,7 @@ window.OrbitDiagram = (function() {
     var f = a * e;
 
     var rx = b * this.DIAGRAM_AU_FACTOR;
-    var ry = a * this.DIAGRAM_AU_FACTOR;
+    var ry = Math.abs(a * this.DIAGRAM_AU_FACTOR);
     var foci = f * this.DIAGRAM_AU_FACTOR;
 
     return this.plotCoords(rx, ry, foci, w, color);
