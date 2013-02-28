@@ -1,4 +1,4 @@
-proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:8m max_size=1000m inactive=600m;
+proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:100m max_size=1000m inactive=600m;
 proxy_temp_path /var/www/cache/tmp;
 
 server {
@@ -86,6 +86,7 @@ server {
     proxy_cache my-cache;
     proxy_cache_valid 200 302 600m;
     proxy_cache_valid 404 500 1m;
+    #add_header X-Cache $upstream_cache_status; # HIT / MISS / BYPASS / EXPIRED
     # what to serve if upstream is not available or crashes
     error_page 500 502 503 504 /media/50x.html;
 }
