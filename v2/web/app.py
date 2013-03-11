@@ -31,6 +31,16 @@ def api_mpc():
   except:
     return Response({'error': 'bad request'}, mimetype='application/json')
 
+@app.route('/api/asterank')
+def api_asterank():
+  try:
+    query = json.loads(request.args.get('query'))
+    limit = min(1000, int(request.args.get('limit')))
+    json_resp = json.dumps(api.asterank(query, limit))
+    return Response(json_resp, mimetype='application/json')
+  except:
+    return Response({'error': 'bad request'}, mimetype='application/json')
+
 @app.route('/api/rankings')
 def rankings():
   try:
