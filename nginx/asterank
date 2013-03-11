@@ -83,6 +83,11 @@ server {
         proxy_pass http://localhost:9590/generated;
     }
 
+    # galaxies
+    location /galaxies {
+      alias /home/ian/galaxies;
+    }
+
     proxy_cache my-cache;
     proxy_cache_valid 200 302 600m;
     proxy_cache_valid 404 500 1m;
