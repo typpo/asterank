@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import urllib
 import json
 import sys
+from pymongo import MongoClient
 
 if len(sys.argv) < 2:
   print 'usage: python read.py filepath'
@@ -19,5 +19,15 @@ for col, values in results['columns'].iteritems():
   for i in range(numrows):
     planets[i][col] = values[i]
 
-print planets[0]
-print planets[100]
+# put in db
+conn = MongoClient()
+db = conn.asterank
+coll = db.kepler
+coll.drop()
+coll.ensure_index('KOI', unique=True)
+
+for planet in planets:
+  coll.insert(planet, continue_on_error=True)
+
+print 'Added', len(planets), 'planets'
+print 'Done.'
