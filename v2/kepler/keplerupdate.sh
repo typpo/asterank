@@ -7,6 +7,6 @@ URL="http://planetquest.jpl.nasa.gov/kepler/columns?&json=%7B%22rows%22%3A%22ALL
 
 wget -O latest.json $URL
 
-python read.py latest.json
+python keplerread.py latest.json
 
 popd
