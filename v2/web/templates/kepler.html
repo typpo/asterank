@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block content %}
+<script>
+function email() {
+  return 'i' + String.fromCharCode(97) + 'n.webster+asterank' + '@gm' + String.fromCharCode(97) + 'il.com';
+}
+</script>
+<div class="row-fluid basic-content">
+<h1>Kepler Project API</h1>
+
+<h3>Overview</h3>
+<p>
+Asterank is happy to offer a basic queryable database for NASA's Kepler Project.  It is a simple way to quickly apply constraints to a set of over 2,000 exoplanets.  The database supports comparators and specific criteria for all attributes provided by the <a href="http://planetquest.jpl.nasa.gov/kepler">Kepler Data Explorer</a>.
+</p>
+<p>
+The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json format for a 'find' operation.  Information is updated nightly.
+</p>
+<h3>Format</h3>
+<p>
+Requests are of the form:
+<div>
+<code>
+  http://asterank.com/api/kepler?query={query}&amp;limit={limit}
+</code>
+</div>
+</p>
+<h3>Sample Request</h3>
+<p>
+{% raw %}
+This request returns 10 exoplanets with roughly circular orbits, low inclination, and semi-major axis less than 1.5 AU:
+
+<p><a href='/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10'>/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10</a></p>
+{% endraw %}
+</p>
+<p>
+Results:
+<div>
+  <pre style="background-color: #ccc; width: 500px">
+[
+   {
+      "rms":0.52,
+      "epoch":"K134I",
+      "readable_des":"(138911) 2001 AE2",
+      "H":19.1,
+      "num_obs":366,
+      "ref":"MPO229693",
+      "G":0.15,
+      "last_obs":"20120417",
+      "comp":"MPCLINUX  ",
+      "M":199.38482,
+      "U":" ",
+      "e":0.0816832,
+      "a":1.3496897,
+      "om":171.48693,
+      "pert_p":"38h",
+      "d":0.62856933,
+      "i":1.66115,
+      "des":"D8911",
+      "flags":"0804",
+      "num_opp":8,
+      "w":43.09756,
+      "pert_c":"M-v"
+   },
+   {
+      "rms":0.5,
+      "epoch":"K134I",
+      "readable_des":"(163000) 2001 SW169",
+      "H":19.0,
+      "num_obs":429,
+      "ref":"MPO232154",
+      "G":0.15,
+      "last_obs":"20120506",
+      "comp":"MPCLINUX  ",
+      "M":157.71014,
+      "U":" ",
+      "e":0.0515752,
+      "a":1.2484544,
+      "om":8.4609,
+      "pert_p":"38h",
+      "d":0.70655345,
+      "i":3.55425,
+      "des":"G3000",
+      "flags":"0804",
+      "num_opp":5,
+      "w":284.78542,
+      "pert_c":"M-v"
+   },
+   ...
+]
+  </pre>
+</div>
+</p>
+<h3>Other APIs coming soon</h3>
+<p>
+Asterank has processed NASA/JPL Horizons data and we've built our own internal tools for estimating economic value and composition.
+</p>
+</div>
+{% endblock %}

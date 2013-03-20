@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, request, redirect, session, url_for, render_template, Response
+from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify
 from flask.ext.assets import Environment, Bundle
 import urllib
 import urlparse
@@ -29,7 +29,21 @@ def api_mpc():
     json_resp = json.dumps(api.mpc(query, limit))
     return Response(json_resp, mimetype='application/json')
   except:
-    return Response({'error': 'bad request'}, mimetype='application/json')
+    resp = jsonify({'error': 'bad request'})
+    resp.status_code = 500
+    return resp
+
+@app.route('/api/kepler')
+def api_kepler():
+  try:
+    query = json.loads(request.args.get('query'))
+    limit = min(1000, int(request.args.get('limit')))
+    json_resp = json.dumps(api.kepler(query, limit))
+    return Response(json_resp, mimetype='application/json')
+  except:
+    resp = jsonify({'error': 'bad request'})
+    resp.status_code = 500
+    return resp
 
 @app.route('/api/asterank')
 def api_asterank():
@@ -39,7 +53,9 @@ def api_asterank():
     json_resp = json.dumps(api.asterank(query, limit))
     return Response(json_resp, mimetype='application/json')
   except:
-    return Response({'error': 'bad request'}, mimetype='application/json')
+    resp = jsonify({'error': 'bad request'})
+    resp.status_code = 500
+    return resp
 
 @app.route('/api/rankings')
 def rankings():
@@ -51,7 +67,9 @@ def rankings():
       'Cache-Control': 'max-age=432000', # 5 days
     })
   except:
-    return Response({'error': 'bad request'}, mimetype='application/json')
+    resp = jsonify({'error': 'bad request'})
+    resp.status_code = 500
+    return resp
 
 @app.route('/api/autocomplete')
 def autocomplete():
@@ -90,6 +108,10 @@ def contact():
 @app.route('/mpc')
 def mpc():
   return render_template('mpc.html')
+
+@app.route('/kepler')
+def kepler():
+  return render_template('kepler.html')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', use_reloader=True)
