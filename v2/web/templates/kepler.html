@@ -31,9 +31,9 @@ Requests are of the form:
 <h3>Sample Request</h3>
 <p>
 {% raw %}
-This request returns 10 exoplanets with roughly circular orbits, low inclination, and semi-major axis less than 1.5 AU:
+This request returns 10 exoplanets with estimated temperatures between 290 and 320 Kelvin.
 
-<p><a href='/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10'>/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10</a></p>
+<p><a href='/api/kepler?query={"TPLANET":{"$lt":320,"$gt":290}}&limit=10'>/api/kepler?query={"TPLANET":{"$lt":320,"$gt":290}}&limit=10</a></p>
 {% endraw %}
 </p>
 <p>
@@ -42,61 +42,178 @@ Results:
   <pre style="background-color: #ccc; width: 500px">
 [
    {
-      "rms":0.52,
-      "epoch":"K134I",
-      "readable_des":"(138911) 2001 AE2",
-      "H":19.1,
-      "num_obs":366,
-      "ref":"MPO229693",
-      "G":0.15,
-      "last_obs":"20120417",
-      "comp":"MPCLINUX  ",
-      "M":199.38482,
-      "U":" ",
-      "e":0.0816832,
-      "a":1.3496897,
-      "om":171.48693,
-      "pert_p":"38h",
-      "d":0.62856933,
-      "i":1.66115,
-      "des":"D8911",
-      "flags":"0804",
-      "num_opp":8,
-      "w":43.09756,
-      "pert_c":"M-v"
+      "KOI":371.01,
+      "A":1.361,
+      "DEC":40.8565,
+      "RSTAR":2.58,
+      "TSTAR":5215,
+      "KMAG":12.193,
+      "TPLANET":316,
+      "T0":177.08027,
+      "UT0":0.00297,
+      "PER":498.3928192,
+      "RA":19.97841,
+      "UPER":0.0041914,
+      "RPLANET":84.19,
+      "MSTAR":1.33,
+      "ROW":335
    },
    {
-      "rms":0.5,
-      "epoch":"K134I",
-      "readable_des":"(163000) 2001 SW169",
-      "H":19.0,
-      "num_obs":429,
-      "ref":"MPO232154",
-      "G":0.15,
-      "last_obs":"20120506",
-      "comp":"MPCLINUX  ",
-      "M":157.71014,
-      "U":" ",
-      "e":0.0515752,
-      "a":1.2484544,
-      "om":8.4609,
-      "pert_p":"38h",
-      "d":0.70655345,
-      "i":3.55425,
-      "des":"G3000",
-      "flags":"0804",
-      "num_opp":5,
-      "w":284.78542,
-      "pert_c":"M-v"
+      "KOI":375.01,
+      "A":0.729,
+      "DEC":51.1443,
+      "RSTAR":1.52,
+      "TSTAR":5757,
+      "KMAG":13.293,
+      "TPLANET":300,
+      "T0":172.22382,
+      "UT0":0.00095,
+      "PER":-600.0,
+      "RA":19.41341,
+      "UPER":null,
+      "RPLANET":10.44,
+      "MSTAR":1.07,
+      "ROW":339
    },
-   ...
+   {
+      "KOI":416.02,
+      "A":0.36,
+      "DEC":41.9891,
+      "RSTAR":0.7,
+      "TSTAR":5083,
+      "KMAG":14.29,
+      "TPLANET":313,
+      "T0":86.78022,
+      "UT0":0.00253,
+      "PER":88.2547155,
+      "RA":19.12437,
+      "UPER":0.0006081,
+      "RPLANET":2.71,
+      "MSTAR":0.91,
+      "ROW":370
+   },
+   {
+      "KOI":438.02,
+      "A":0.23,
+      "DEC":51.0819,
+      "RSTAR":0.56,
+      "TSTAR":4351,
+      "KMAG":14.258,
+      "TPLANET":298,
+      "T0":116.51701,
+      "UT0":0.00359,
+      "PER":52.661868,
+      "RA":19.23306,
+      "UPER":0.0005769,
+      "RPLANET":2.1,
+      "MSTAR":0.58,
+      "ROW":393
+   },
+   {
+      "KOI":448.02,
+      "A":0.193,
+      "DEC":40.8688,
+      "RSTAR":0.48,
+      "TSTAR":4264,
+      "KMAG":14.902,
+      "TPLANET":296,
+      "T0":127.47967,
+      "UT0":0.00157,
+      "PER":43.6089113,
+      "RA":19.80468,
+      "UPER":0.0002403,
+      "RPLANET":2.31,
+      "MSTAR":0.65,
+      "ROW":404
+   },
+   {
+      "KOI":536.01,
+      "A":0.58,
+      "DEC":48.4318,
+      "RSTAR":0.89,
+      "TSTAR":5614,
+      "KMAG":14.499,
+      "TPLANET":306,
+      "T0":111.59086,
+      "UT0":0.0042,
+      "PER":162.3394033,
+      "RA":19.06827,
+      "UPER":0.0022306,
+      "RPLANET":3.0,
+      "MSTAR":1.03,
+      "ROW":504
+   },
+   {
+      "KOI":622.01,
+      "A":0.534,
+      "DEC":51.2638,
+      "RSTAR":0.91,
+      "TSTAR":5171,
+      "KMAG":14.932,
+      "TPLANET":298,
+      "T0":146.49936,
+      "UT0":0.00257,
+      "PER":155.0429186,
+      "RA":19.72535,
+      "UPER":0.0013764,
+      "RPLANET":6.96,
+      "MSTAR":1.01,
+      "ROW":591
+   },
+   {
+      "KOI":683.01,
+      "A":0.863,
+      "DEC":43.2584,
+      "RSTAR":1.11,
+      "TSTAR":5887,
+      "KMAG":13.714,
+      "TPLANET":295,
+      "T0":110.51941,
+      "UT0":0.00181,
+      "PER":278.122206,
+      "RA":19.85495,
+      "UPER":0.0025523,
+      "RPLANET":5.99,
+      "MSTAR":1.02,
+      "ROW":655
+   },
+   {
+      "KOI":775.03,
+      "A":0.176,
+      "DEC":49.9757,
+      "RSTAR":0.52,
+      "TSTAR":4075,
+      "KMAG":15.095,
+      "TPLANET":310,
+      "T0":84.59631,
+      "UT0":0.00443,
+      "PER":36.4459073,
+      "RA":19.11587,
+      "UPER":0.0004933,
+      "RPLANET":1.86,
+      "MSTAR":0.55,
+      "ROW":765
+   },
+   {
+      "KOI":812.03,
+      "A":0.212,
+      "DEC":39.2783,
+      "RSTAR":0.56,
+      "TSTAR":4097,
+      "KMAG":15.954,
+      "TPLANET":293,
+      "T0":98.24474,
+      "UT0":0.00743,
+      "PER":46.1828814,
+      "RA":19.07194,
+      "UPER":0.0009125,
+      "RPLANET":2.02,
+      "MSTAR":0.59,
+      "ROW":801
+   }
 ]
   </pre>
 </div>
-</p>
-<h3>Other APIs coming soon</h3>
-<p>
-Asterank has processed NASA/JPL Horizons data and we've built our own internal tools for estimating economic value and composition.
 </p>
 </div>
 {% endblock %}

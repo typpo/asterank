@@ -12,7 +12,7 @@ db = conn.asterank
 asteroids = db.asteroids
 mpc_coll = db.mpc
 jpl = db.jpl
-kepler = db.kepler
+kepler_coll = db.kepler
 
 UPCOMING_SORT = 'upcoming'
 
@@ -93,7 +93,7 @@ def mpc(query, limit):
   return list(mpc_coll.find(query, {'_id': False}).limit(limit))
 
 def kepler(query, limit):
-  return list(kepler.find(query, {'_id': False}).limit(limit))
+  return list(kepler_coll.find(query, {'_id': False}).limit(limit))
 
 def asterank(query, limit):
   results = list(asteroids.find(query, {'_id': False}).limit(limit))
