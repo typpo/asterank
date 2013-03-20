@@ -90,6 +90,7 @@ app.get('/top', function(req, res) {
       res.send({results:result});
     }
     else {
+      res.setHeader('Cache-Control', 'max-age=864000'); // 10 days
       res.send({results:result});
     }
   });

@@ -31,18 +31,35 @@ def api_mpc():
   except:
     return Response({'error': 'bad request'}, mimetype='application/json')
 
+@app.route('/api/asterank')
+def api_asterank():
+  try:
+    query = json.loads(request.args.get('query'))
+    limit = min(1000, int(request.args.get('limit')))
+    json_resp = json.dumps(api.asterank(query, limit))
+    return Response(json_resp, mimetype='application/json')
+  except:
+    return Response({'error': 'bad request'}, mimetype='application/json')
+
 @app.route('/api/rankings')
 def rankings():
-  limit = int(request.args.get('limit')) or 10
-  results = api.rankings(request.args.get('sort_by'), limit)
-  json_resp = json.dumps(results)
-  return Response(json_resp, mimetype='application/json')
+  try:
+    limit = int(request.args.get('limit')) or 10
+    results = api.rankings(request.args.get('sort_by'), limit)
+    json_resp = json.dumps(results)
+    return Response(json_resp, mimetype='application/json', headers={ \
+      'Cache-Control': 'max-age=432000', # 5 days
+    })
+  except:
+    return Response({'error': 'bad request'}, mimetype='application/json')
 
 @app.route('/api/autocomplete')
 def autocomplete():
   results = api.autocomplete(request.args.get('query'), 10)
   json_resp = json.dumps(results)
-  return Response(json_resp, mimetype='application/json')
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'max-age=432000',  # 5 days
+  })
 
 @app.route('/api/compositions')
 def compositions():

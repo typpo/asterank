@@ -41,13 +41,14 @@ window.OrbitDiagram = (function() {
   }
 
   OrbitDiagram.prototype.plotOrbit = function(a, e, w, color) {
-    var b = a * Math.sqrt(1 - e * e);
+    var sqrtme = 1 - e * e;
+    var b = a * Math.sqrt(Math.max(0, sqrtme));
     //var q = a*(1-e);
     //var Q = a*(1+e);
     var f = a * e;
 
     var rx = b * this.DIAGRAM_AU_FACTOR;
-    var ry = a * this.DIAGRAM_AU_FACTOR;
+    var ry = Math.abs(a * this.DIAGRAM_AU_FACTOR);
     var foci = f * this.DIAGRAM_AU_FACTOR;
 
     return this.plotCoords(rx, ry, foci, w, color);

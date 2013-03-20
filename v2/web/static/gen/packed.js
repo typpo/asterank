@@ -752,7 +752,7 @@ this.plotSun();}
 OrbitDiagram.prototype.renderPlanets=function(){this.plotEarth();this.plotVenus();this.plotMercury();this.plotMars();}
 OrbitDiagram.prototype.render=function(a,e,w){this.prepareRender();this.renderPlanets();return this.renderAnother(a,e,w);}
 OrbitDiagram.prototype.renderAnother=function(a,e,w){return this.plotOrbit(a,e,w,'white');}
-OrbitDiagram.prototype.plotOrbit=function(a,e,w,color){var b=a*Math.sqrt(1-e*e);var f=a*e;var rx=b*this.DIAGRAM_AU_FACTOR;var ry=a*this.DIAGRAM_AU_FACTOR;var foci=f*this.DIAGRAM_AU_FACTOR;return this.plotCoords(rx,ry,foci,w,color);}
+OrbitDiagram.prototype.plotOrbit=function(a,e,w,color){var sqrtme=1-e*e;var b=a*Math.sqrt(Math.max(0,sqrtme));var f=a*e;var rx=b*this.DIAGRAM_AU_FACTOR;var ry=Math.abs(a*this.DIAGRAM_AU_FACTOR);var foci=f*this.DIAGRAM_AU_FACTOR;return this.plotCoords(rx,ry,foci,w,color);}
 OrbitDiagram.prototype.plotCoords=function(rx,ry,f,rotate_deg,color){color=color||'white';var cx=this.SUN_X;var cy=this.SUN_Y+f;return this.orbit_svg.append("svg:ellipse").style("stroke",color).style("fill",'none').attr("rx",rx).attr("ry",ry).attr("cx",cx).attr("cy",cy).attr("transform","rotate("+rotate_deg+", "+this.SUN_X+", "+this.SUN_Y+")")
 }
 OrbitDiagram.prototype.plotSun=function(){this.orbit_svg.append("svg:ellipse").style("stroke","yellow").style("fill","yellow").attr("rx",2).attr("ry",2).attr("cx",this.SUN_X).attr("cy",this.SUN_Y);}

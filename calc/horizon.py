@@ -33,11 +33,13 @@ THOLEN_MAPPINGS = {
   'A': 'A',
 }
 
+COMET_CLASSES = set(['COM', 'CTc', 'ETc', 'HTC', 'HYP', 'JFc', 'JFC', 'PAR'])
+
 def populateDb():
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
-  coll.drop()
+  #coll.drop()
   coll.ensure_index('full_name', unique=True, background=True)
   coll.ensure_index('score', background=True)
   coll.ensure_index('profit', background=True)
@@ -94,9 +96,12 @@ def populateDb():
         row['spec_B'] = newspec.replace('type', '').strip()
       elif row['pdes'] == '2012 DA14':
         row['spec_B'] = 'L'
+      elif row['class'] in COMET_CLASSES:
+        print 'Adjust comet'
+        row['spec_B'] = 'comet'
       else:
-        #continue # TODO temp
-        row['spec_B'] = 'S'
+        continue # TODO temp
+        #row['spec_B'] = 'S'
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])

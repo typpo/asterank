@@ -186,6 +186,9 @@ SPECTRA_INDEX = {
     'nickel': 10,
     'cobalt': 0.5,
   },
+  'comet': {
+      # no estimates for now, because assumed mass, etc. would be off
+  },
 }
 
 
