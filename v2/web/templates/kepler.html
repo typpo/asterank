@@ -14,7 +14,7 @@ function email() {
 
 <h3>Overview</h3>
 <p>
-Asterank is happy to offer a basic queryable database for NASA's Kepler Project.  It is a simple way to quickly apply constraints to a set of over 2,000 exoplanets.  The database supports comparators and specific criteria for all attributes provided by the <a href="http://planetquest.jpl.nasa.gov/kepler">Kepler Data Explorer</a>.
+Asterank offers a basic queryable database for NASA's Kepler Project.  It is a simple way to quickly apply constraints to a set of over 2,000 exoplanets and unconfirmed "objects of interest."  The database supports comparators and specific criteria for all attributes provided by the <a href="http://planetquest.jpl.nasa.gov/kepler">Kepler Data Explorer</a>.
 </p>
 <p>
 The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json format for a 'find' operation.  Information is updated nightly.
@@ -28,10 +28,60 @@ Requests are of the form:
 </code>
 </div>
 </p>
+<p>
+Data format:
+<table class="table table-bordered table-condensed" style="width:400px">
+<tr>
+<td>KOI</td><td>Object of Interest number</td>
+</tr>
+<tr>
+<td>A</td><td>Semi-major axis (AU)</td>
+</tr>
+<tr>
+<td>RPLANET</td><td>Planetary radius (Earth radii)</td>
+</tr>
+<tr>
+<td>RSTAR</td><td>Stellar radius (Sol radii)</td>
+</tr>
+<tr>
+<td>TSTAR</td><td>Effective temperature of host star as reported in KIC (k)</td>
+</tr>
+<tr>
+<td>KMAG</td><td>Kepler magnitude (kmag)</td>
+</tr>
+<tr>
+<td>TPLANET</td><td>Equilibrium temperature of planet, per <a href="http://xxx.lanl.gov/abs/1102.0541v1">Borucki et al.</a>  (k)</td>
+</tr>
+<tr>
+<td>T0</td><td>Time of transit center (BJD-2454900)</td>
+</tr>
+<tr>
+<td>UT0</td><td>Uncertainty in time of transit center (+-jd)</td>
+</tr>
+<tr>
+<td>UT0</td><td>Uncertainty in time of transit center (+-jd)</td>
+</tr>
+<tr>
+<td>PER</td><td>Period (days)</td>
+</tr>
+<tr>
+<td>UPER</td><td>Uncertainty in period (+-days)</td>
+</tr>
+<tr>
+<td>DEC</td><td>Declination (@J200)</td>
+</tr>
+<tr>
+<td>RA</td><td>Right ascension (@J200)</td>
+</tr>
+<tr>
+<td>MSTAR</td><td>Derived stellar mass (msol)</td>
+</tr>
+</table>
+</p>
 <h3>Sample Request</h3>
 <p>
 {% raw %}
-This request returns 10 exoplanets with estimated temperatures between 290 and 320 Kelvin.
+This request returns 10 Kepler Objects of Interest with estimated equilibrium temperatures between 290 and 320 Kelvin.
 
 <p><a href='/api/kepler?query={"TPLANET":{"$lt":320,"$gt":290}}&limit=10'>/api/kepler?query={"TPLANET":{"$lt":320,"$gt":290}}&limit=10</a></p>
 {% endraw %}

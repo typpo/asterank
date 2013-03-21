@@ -45,6 +45,18 @@ def api_kepler():
     resp.status_code = 500
     return resp
 
+@app.route('/api/exoplanets')
+def api_exoplanets():
+  try:
+    query = json.loads(request.args.get('query'))
+    limit = min(1000, int(request.args.get('limit')))
+    json_resp = json.dumps(api.exoplanets(query, limit))
+    return Response(json_resp, mimetype='application/json')
+  except:
+    resp = jsonify({'error': 'bad request'})
+    resp.status_code = 500
+    return resp
+
 @app.route('/api/asterank')
 def api_asterank():
   try:
