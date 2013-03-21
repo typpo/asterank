@@ -17,7 +17,7 @@ function email() {
 Asterank offers a basic queryable database for NASA's Kepler Project.  It is a simple way to quickly apply constraints to a set of over 2,000 exoplanets and unconfirmed "objects of interest."  The database supports comparators and specific criteria for all attributes provided by the <a href="http://planetquest.jpl.nasa.gov/kepler">Kepler Data Explorer</a>.
 </p>
 <p>
-The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json format for a 'find' operation.  Information is updated nightly.
+The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json format for a 'find' operation.  Information is refreshed nightly from the Kepler Data Explorer.
 </p>
 <h3>Format</h3>
 <p>
@@ -29,7 +29,7 @@ Requests are of the form:
 </div>
 </p>
 <p>
-Data format:
+Response data formats:
 <table class="table table-bordered table-condensed" style="width:400px">
 <tr>
 <td>KOI</td><td>Object of Interest number</td>
