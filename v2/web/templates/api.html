@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block content %}
+<script>
+function email() {
+  return 'i' + String.fromCharCode(97) + 'n.webster+asterank' + '@gm' + String.fromCharCode(97) + 'il.com';
+}
+</script>
+<div class="row-fluid basic-content">
+<h1>Asterank API</h1>
+
+<h3>Overview</h3>
+<p>
+The Asterank database is a thin layer over the <a href="http://ssd.jpl.nasa.gov/sbdb.cgi">NASA/JPL Small Body Database</a>, merged with JPL delta-v data, published asteroid mass data, and our own calculations.  You can learn more about Asterank data sources on the <a href="/about">About</a> page.
+</p>
+<p>
+The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json format for a 'find' operation.  Information is refreshed nightly from the Kepler Data Explorer.
+</p>
+<h3>Format</h3>
+<p>
+Requests are of the form:
+<div>
+<code>
+  http://asterank.com/api/asterank?query={query}&amp;limit={limit}
+</code>
+</div>
+</p>
+<p>
+Response data formats are largely derived from NASA/JPL's Small Body Database <a href="http://ssd.jpl.nasa.gov/sbdb_query.cgi">query browser</a>.  Exceptions to this are the delta-v field (dv), the mass field (GM), and the spectral type field (spec_B).  Additional Asterank scores are included: <strong>closeness</strong>, <strong>price</strong> ($), and overall <strong>score</strong>.
+</p>
+<h3>Sample Request</h3>
+<p>
+{% raw %}
+This request returns an asteroid with a roughly circular orbit, low inclination, and semi-major axis less than 1.5 AU:
+
+<p><a href='/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10'>/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=1</a></p>
+
+{% endraw %}
+</p>
+<p>
+Results:
+<div>
+  <pre style="background-color: #ccc; width: 500px">
+[
+   {
+      "sigma_tp":4.4133e-05,
+      "diameter":"",
+      "tp":2456656.02501109,
+      "epoch_mjd":56400.0,
+      "ad":1.459936639399153,
+      "producer":"Otto Matic",
+      "rms":0.57773,
+      "H_sigma":0.66439,
+      "closeness":4.659571917281135,
+      "spec_B":"T",
+      "K2":"",
+      "K1":"",
+      "M1":"",
+      "n_dop_obs_used":"",
+      "full_name":"138911 (2001 AE2)",
+      "M2":"",
+      "prov_des":"2001 AE2",
+      "equinox":"J2000",
+      "DT":"",
+      "diameter_sigma":"",
+      "saved":-8641518801655.289,
+      "albedo":"",
+      "moid_ld":90.96226078,
+      "two_body":"",
+      "neo":"Y",
+      "prefix":"",
+      "sigma_ad":3.3626e-09,
+      "score":3.4508560938390502e-06,
+      "data_arc":10120.0,
+      "profit":2146841.445758379,
+      "sigma_q":5.7701e-08,
+      "sigma_w":0.00015086,
+      "epoch":2456400.5,
+      "per":572.7291693097955,
+      "id":"a0138911",
+      "A1":"",
+      "PC":"",
+      "A3":"",
+      "A2":"",
+      "per_y":1.5680470070083,
+      "n_opp":"",
+      "epoch_cal":20130418.0,
+      "orbit_id":"JPL 82",
+      "sigma_a":3.1086e-09,
+      "sigma_om":0.00014823,
+      "price":17254280.46919525,
+      "sigma_e":4.2218e-08,
+      "condition_code":0.0,
+      "rot_per":"",
+      "G":"",
+      "last_obs":"2012-04-17",
+      "H":19.032,
+      "pha":"N",
+      "IR":"",
+      "inexact":true,
+      "spec_T":"",
+      "tp_cal":20131229.5250111,
+      "n_obs_used":381.0,
+      "moid":0.233734,
+      "extent":"",
+      "dv":4.057,
+      "ma":199.3848106194188,
+      "GM":"",
+      "pdes":138911.0,
+      "class":"AMO",
+      "a":1.349689648496459,
+      "t_jup":4.87,
+      "om":171.4867878184716,
+      "e":0.08168321586040721,
+      "name":"",
+      "i":1.661150372152747,
+      "sigma_per":1.9787e-06,
+      "BV":"",
+      "n":0.6285693470682512,
+      "q":1.239442657593766,
+      "sigma_i":3.6361e-06,
+      "w":43.09771100599832,
+      "sigma_ma":2.7756e-05,
+      "first_obs":"1984-08-02",
+      "n_del_obs_used":"",
+      "sigma_n":2.1716e-09,
+      "spkid":2138911.0,
+      "UB":""
+   }
+]
+  </pre>
+</div>
+</p>
+</div>
+{% endblock %}

@@ -125,5 +125,13 @@ def mpc():
 def kepler():
   return render_template('kepler.html')
 
+@app.route('/exoplanets')
+def exoplanets():
+  return render_template('exoplanets.html')
+
+@app.route('/api')
+def api_route():
+  return render_template('api.html')
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', use_reloader=True)
