@@ -799,7 +799,7 @@ else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/rankin
 +'&limit='
 +params.limit).success(function(data){$scope.rankings=data;rankings_cache.Set(params,data);$('#results-table-loader').hide();pubsub.publish('NewAsteroidRanking',[$scope.rankings]);});}} 
 $scope.UpdateKepler=function(){var params={sort_by:$scope.sort_by.search_value,limit:$scope.limit};var cache_result=rankings_cache.Get(params);if(cache_result){$scope.rankings=cache_result;pubsub.publish('NewAsteroidRanking',[$scope.rankings]);}
-else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/exoplanets?query={"a":{"$gt":0}}'
+else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/exoplanets?query={"a":{"$gt":-1}}'
 +'&limit='
 +params.limit).success(function(data){$scope.rankings=data;rankings_cache.Set(params,data);$('#results-table-loader').hide();pubsub.publish('NewAsteroidRanking',[$scope.rankings]);});}}
 $scope.AsteroidClick=function(obj){if(obj===$scope.selected){ $scope.selected=null;}

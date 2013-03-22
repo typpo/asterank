@@ -90,7 +90,7 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     else {
       $('#results-table-loader').show();
       $scope.rankings = [];
-      $http.get('/api/exoplanets?query={"a":{"$gt":0}}'
+      $http.get('/api/exoplanets?query={"a":{"$gt":-1}}'
           + '&limit='
           + params.limit)
         .success(function(data) {

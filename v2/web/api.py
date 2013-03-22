@@ -2,6 +2,7 @@ import json
 import re
 import datetime
 import pymongo
+import math
 from pymongo import MongoClient
 
 from calc.jpl_lookup import Asteroid as JPL_Asteroid
@@ -131,10 +132,11 @@ def exoplanets(query, limit):
       del query[key]
       query[REQ_TO_DB_MAP[key]] = val
 
-  results = list(exoplanets_coll.find(query, {'_id': False}).limit(limit))
+  results = list(exoplanets_coll.find(query, {'_id': False}).limit(limit*2))
 
   final = []
 
+  # TODO all this should be moved in processing
   for result in results:
     if result['koi_disposition'] != 'FALSE POSITIVE' \
         or result['koi_pdisposition'] != 'FALSE POSITIVE':
@@ -148,8 +150,9 @@ def exoplanets(query, limit):
     }
     for key, val in REQ_TO_DB_MAP.iteritems():
       appendme[key] = result[val]
+    # TODO real period, not transit period
+    appendme['P'] = appendme['a'] * 8000
     appendme['a'] *= 20
-    appendme['P'] *= 20
     if appendme['i'] != '':
       appendme['i'] -= 90
     for key, default in RESP_DEFAULTS.iteritems():
