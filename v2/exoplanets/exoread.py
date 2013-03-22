@@ -14,16 +14,22 @@ conn = MongoClient()
 db = conn.asterank
 coll = db.exo
 coll.drop()
-coll.ensure_index('pl_fulldes', unique=True)
+coll.ensure_index('kepoi_name', unique=True)  # kepid isn't actually unique...
 
 c = 0
 for row in reader:
-  row['pl_fulldes'] = '%s%s' % (row['pl_hostname'], row['pl_letter'])
+  #row['pl_fulldes'] = '%s%s' % (row['pl_hostname'], row['pl_letter'])
+  for key, val in row.iteritems():
+    try:
+      val = float(val)
+    except ValueError:
+      pass
+    row[key] = val
   coll.insert(row, continue_on_error=True)
   c += 1
 
 
 # put in db
 
-print 'Added', c, 'confirmed exoplanets'
+print 'Added', c, 'candidate exoplanets'
 print 'Done.'

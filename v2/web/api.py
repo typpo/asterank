@@ -97,7 +97,66 @@ def kepler(query, limit):
   return list(kepler_coll.find(query, {'_id': False}).limit(limit))
 
 def exoplanets(query, limit):
-  return list(exoplanets_coll.find(query, {'_id': False}).limit(limit))
+  #return list(exoplanets_coll.find(query, {'_id': False}).limit(limit))
+
+  REQ_TO_DB_MAP = {
+    'full_name': 'kepoi_name',
+    'prov_des': 'kepoi_name',
+    'a': 'koi_sma',
+    'e': 'koi_eccen',
+    'i': 'koi_incl',
+    'w_bar': 'koi_longp',
+    'P': 'koi_period',
+
+    # extras
+    'p_radius': 'koi_prad',  # planet radius (rearth)
+    'p_temp': 'koi_teq',  # equilibrium temperature value (k)
+    's_radius': 'koi_srad',  # stellar radius (rsun)
+    's_temp': 'koi_steff',  # stellar effective temp (k)
+    's_age': 'koi_sage',   # stellar age (Gyr)
+  }
+
+  RESP_DEFAULTS = {
+    'e': 0.01671122945845127,
+    'i': 0,
+    'w_bar': 102.93768193,
+
+    'ma': -2.4731102699999923,
+    'om': 0,
+  }
+
+  for key in query:
+    if key in REQ_TO_DB_MAP:
+      val = query[key]
+      del query[key]
+      query[REQ_TO_DB_MAP[key]] = val
+
+  results = list(exoplanets_coll.find(query, {'_id': False}).limit(limit))
+
+  final = []
+
+  for result in results:
+    if result['koi_disposition'] != 'FALSE POSITIVE' \
+        or result['koi_pdisposition'] != 'FALSE POSITIVE':
+      continue
+
+    appendme = {
+      # defaults...
+      'o': 0,  # long. ascending node
+      'ma': 0,   # mean anomaly
+      'epoch': 2451545.0,  # j2000
+    }
+    for key, val in REQ_TO_DB_MAP.iteritems():
+      appendme[key] = result[val]
+    appendme['a'] *= 20
+    appendme['P'] *= 20
+    if appendme['i'] != '':
+      appendme['i'] -= 90
+    for key, default in RESP_DEFAULTS.iteritems():
+      if key not in appendme or appendme[key] == '' or appendme[key] == 0:
+        appendme[key] = default
+    final.append(appendme)
+  return final
 
 def asterank(query, limit):
   results = list(asteroids.find(query, {'_id': False}).limit(limit))
