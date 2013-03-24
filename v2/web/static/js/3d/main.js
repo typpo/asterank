@@ -9,6 +9,7 @@
   var camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
   var jed_step_interval = opts.jed_step_interval || .25;
   var custom_object_fn = opts.custom_object_fn || null;
+  var object_texture_path = opts.object_texture_path || "/static/img/cloud4.png";
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -754,7 +755,8 @@
       epoch: { type: 'f', value: [] },
       value_color : { type: 'c', value: [] },
       size: { type: 'f', value: [] },
-      locked: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
+      locked: { type: 'f', value: [] },  // attributes can't be bool or int in some versions of opengl
+      is_planet: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
     };
 
     uniforms = {
@@ -762,8 +764,10 @@
       jed: { type: 'f', value: jed },
       earth_i: { type: "f", value: Ephemeris.earth.i },
       earth_om: { type: "f", value: Ephemeris.earth.om },
-      small_roid_texture:
+      planet_texture:
         { type: "t", value: THREE.ImageUtils.loadTexture("/static/img/cloud4.png") },
+      small_roid_texture:
+        { type: "t", value: THREE.ImageUtils.loadTexture(object_texture_path) },
       small_roid_circled_texture:
         { type: "t", value: THREE.ImageUtils.loadTexture("/static/img/cloud4-circled.png") }
     };
@@ -784,10 +788,12 @@
     for (var i = 0; i < added_objects.length; i++) {
       if (i < planets.length) {
         attributes.size.value[i] = 75;
+        attributes.is_planet.value[i] = 1.0;
       }
       else {
         //attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
         attributes.size.value[i] = added_objects[i].opts.object_size;
+        attributes.is_planet.value[i] = 0.0;
       }
 
       attributes.a.value[i] = added_objects[i].eph.a;

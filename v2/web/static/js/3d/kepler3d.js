@@ -9,13 +9,20 @@
     camera_fly_around: false,
     jed_step_interval: .1,
     custom_object_fn: function(obj) {
-      var pct_temp = obj['p_temp'] / (highest_temp - lowest_temp) * 100;
+      var heatcolor;
+      if (obj['p_temp'] < 323.16 && obj['p_temp'] > 273.16 && obj['p_radius'] < 100) {
+        // goldilocks green
+        heatcolor = new THREE.Color(0x00ff00);
+      }
+      else {
+        var pct_temp = obj['p_temp'] / (highest_temp - lowest_temp) * 100;
 
-      // red hottest, blue coolest (colloquial interpretation)
-      var heatcolor = new THREE.Color(getColorFromPercent(pct_temp, 0xff0000, 0x0000ff));
+        // red hottest, blue coolest (colloquial interpretation)
+        heatcolor = new THREE.Color(getColorFromPercent(pct_temp, 0xff0000, 0x0000ff));
+      }
 
       // size
-      var size = obj['p_radius'];
+      var size = obj['p_radius'] / 2;
 
       return {
         color: 0xcccccc,
@@ -24,7 +31,8 @@
         object_size: size
       };
 
-    }
+    },
+    object_texture_path: "/static/img/cloud_defined.png"
   });
 
   asterank3d.clearRankings();
