@@ -88,7 +88,7 @@
       This is a visualization of potential exoplanets discovered by NASA/JPL.  There are over 800 confirmed exoplanets and over 2,000 candidates.  Most have been discovered by NASA's Kepler Mission, which operates with the goal of finding habitable exoplanets.
       </p>
       <p style="font-weight:bold;">
-      The exoplanets are arranged around our sun for reference.  Cold planets are <span style="color:#388E8E">blue</span>, hot planets are <span style="color:red;">red</span>.  Planets that could support liquid water are <span style="color:green;">green</span>.
+      The exoplanets are arranged around our sun and its planets for reference.  Cold planets are <span style="color:#388E8E">blue</span>, hot planets are <span style="color:red;">red</span>.  Planets that could support liquid water are <span style="color:green;">green</span>.
       </p>
       <p>
       &raquo; <a href="#" onclick="$('#intro').remove();return false;">Close</a>
@@ -104,7 +104,7 @@
       </h3>
     </div>
 
-    <div id="webgl_container" style="width:100%; height:100%; position: absolute; left:0">
+    <div id="webgl_container" style="width:100%; position: absolute; left:0">
     </div>
 
     {% include "blocks/shaders.html" %}
@@ -112,7 +112,7 @@
 
 {% block scripts %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 {% assets filter="jsmin", output="gen/kepler3d-packed.js",
 "js/misc.js",
 "js/3d/lib/three.js/three.min.js",

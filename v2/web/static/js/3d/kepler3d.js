@@ -3,11 +3,14 @@
   var highest_temp = 0;
   var lowest_temp = Number.MAX_VALUE;
 
+  $('#webgl_container').height($(window).height() - $('#webgl_container').offset().top - 20);
+
   asterank3d = new Asterank3D({
     container: document.getElementById('webgl_container'),
-    camera_position: [0, -55, 25],
+    camera_position: [0, -65, 25],
     camera_fly_around: false,
-    jed_step_interval: .1,
+    sun_scale: 25,
+    jed_step_interval: .2,
     custom_object_fn: function(obj) {
       var heatcolor;
       if (obj['p_temp'] < 323.16 && obj['p_temp'] > 273.16 && obj['p_radius'] < 100) {

@@ -11,6 +11,7 @@
   var custom_object_fn = opts.custom_object_fn || null;
   var object_texture_path = opts.object_texture_path || "/static/img/cloud4.png";
   var not_supported_callback = opts.not_supported_callback || function() {};
+  var sun_scale = opts.sun_scale || 50;
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -232,8 +233,8 @@
         useScreenCoordinates: false,
         color: 0xffffff
       }));
-      sprite.scale.x = 50;
-      sprite.scale.y = 50;
+      sprite.scale.x = sun_scale;
+      sprite.scale.y = sun_scale;
       sprite.scale.z = 1;
       scene.add(sprite);
     }
