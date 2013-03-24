@@ -31,56 +31,7 @@
     -->
   </head>
   <body>
-    <div class="navbar navbar-fixed-top navbar-inverse">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="/">
-            <strong>
-              Asterank
-            </strong>
-          </a>
-          <ul class="nav">
-            <li>
-              <a href="/">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="/about">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="/3d">
-                Full 3D View
-              </a>
-            </li>
-            <li>
-              <a href="/api">
-                Asterank API
-              </a>
-            </li>
-            <li>
-              <a href="/mpc">
-                MPC API
-              </a>
-            </li>
-            <li>
-              <a href="/kepler">
-                Kepler API
-              </a>
-            </li>
-          </ul>
-          <ul class="nav pull-right">
-            <div class="share-buttons">
-              <div style="margin:0" class="fb-like" data-href="http://www.asterank.com" data-send="false" data-layout="button_count" data-show-faces="false"></div>
-              <a class="twitter-share-button" style="font-size:10px;" href="https://twitter.com/share" data-url="http://www.asterank.com" data-counturl="http://www.asterank.com" class="twitter-share-button" data-lang="en">Tweet</a>
-              <g:plusone size="small" style="margin-left:0"></g:plusone>
-            </div>
-          </ul>
-        </div>
-      </div>
-    </div> <!-- end navbar -->
+    {% include 'blocks/navbar.html' %}
 
     {% block content %}
     <div id="intro" style="position:absolute; top: 150px; left: 30%; z-index: 9999; background-color: #000; opacity: .8; width: 40%; max-width: 1000px; padding: 10px">
@@ -113,6 +64,7 @@
 {% block scripts %}
 
 <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="static/js/bootstrap-dropdown.js"></script>
 {% assets filter="jsmin", output="gen/kepler3d-packed.js",
 "js/misc.js",
 "js/3d/lib/three.js/three.min.js",
@@ -131,6 +83,9 @@
 
 
 {% endblock %}
+
+{% include 'blocks/tracking.html' %}
+{% include 'blocks/social_js.html' %}
 
   </body>
 </html>
