@@ -150,8 +150,8 @@ def exoplanets(query, limit):
     }
     for key, val in REQ_TO_DB_MAP.iteritems():
       appendme[key] = result[val]
-    # TODO real period, not transit period
-    appendme['P'] = appendme['a'] * 8000
+    # real period, not transit period
+    appendme['P'] = math.sqrt(appendme['a'] ** 3) * 365.25   # http://galacticfool.com/orbital-distance-and-orbital-period/
     appendme['a'] *= 20
     if appendme['i'] != '':
       appendme['i'] -= 90
