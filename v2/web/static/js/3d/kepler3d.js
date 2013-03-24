@@ -5,7 +5,7 @@
 
   asterank3d = new Asterank3D({
     container: document.getElementById('webgl_container'),
-    camera_position: [0, -75, 25],
+    camera_position: [0, -55, 25],
     camera_fly_around: false,
     jed_step_interval: .1,
     custom_object_fn: function(obj) {
