@@ -52,7 +52,7 @@ def api_exoplanets():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.exoplanets(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except ValueError:
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp

@@ -791,7 +791,7 @@ else{$http.get('/api/compositions').success(function(data){compositions_map=data
 function ShowOrbitalDiagram(){ var orbit_diagram=new OrbitDiagram('#orbit-2d-diagram',{});orbit_diagram.render($scope.asteroid.a,$scope.asteroid.e,$scope.asteroid.w);}}
 function AsteroidLookupCtrl($scope,$http,pubsub){$scope.lookup_query='';$scope.Init=function(){}
 $scope.Lookup=function(suggestion){pubsub.publish('UpdateRankingsWithFeaturedAsteroid',[suggestion.data]);}}
-function AsteroidTableCtrl($scope,$http,pubsub){'use strict'; $scope.rankings=[];$scope.sort_orders=[{text:'most cost effective',search_value:'score'},{text:'most valuable',search_value:'value'},{text:'most accessible',search_value:'accessibility'},{text:'upcoming passes',search_value:'upcoming'},{text:'kepler planets',search_value:'kepler'}];$scope.limit_options=[100,300,500,1000,4000]; $scope.Init=function(){ $scope.limit=$scope.limit_options[1];$scope.sort_by=$scope.sort_orders[0];$scope.UpdateRankings();}
+function AsteroidTableCtrl($scope,$http,pubsub){'use strict'; $scope.rankings=[];$scope.sort_orders=[{text:'kepler planets',search_value:'kepler'},{text:'most cost effective',search_value:'score'},{text:'most valuable',search_value:'value'},{text:'most accessible',search_value:'accessibility'},{text:'upcoming passes',search_value:'upcoming'},];$scope.limit_options=[100,300,500,1000,4000]; $scope.Init=function(){ $scope.limit=$scope.limit_options[1];$scope.sort_by=$scope.sort_orders[0];$scope.UpdateRankings();}
 var rankings_cache=new SimpleCache(function(item){return item.sort_by+'|'+item.limit;});$scope.UpdateRankings=function(){if($scope.sort_by.search_value==='kepler'){ $scope.UpdateKepler();return;}
 var params={sort_by:$scope.sort_by.search_value,limit:$scope.limit};var cache_result=rankings_cache.Get(params);if(cache_result){$scope.rankings=cache_result;pubsub.publish('NewAsteroidRanking',[$scope.rankings]);}
 else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/rankings?sort_by='
@@ -799,7 +799,7 @@ else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/rankin
 +'&limit='
 +params.limit).success(function(data){$scope.rankings=data;rankings_cache.Set(params,data);$('#results-table-loader').hide();pubsub.publish('NewAsteroidRanking',[$scope.rankings]);});}} 
 $scope.UpdateKepler=function(){var params={sort_by:$scope.sort_by.search_value,limit:$scope.limit};var cache_result=rankings_cache.Get(params);if(cache_result){$scope.rankings=cache_result;pubsub.publish('NewAsteroidRanking',[$scope.rankings]);}
-else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/exoplanets?query={"a":{"$gt":-1}}'
+else{$('#results-table-loader').show();$scope.rankings=[];$http.get('/api/exoplanets?query={"a":{"$ne":""}}'
 +'&limit='
 +params.limit).success(function(data){$scope.rankings=data;rankings_cache.Set(params,data);$('#results-table-loader').hide();pubsub.publish('NewAsteroidRanking',[$scope.rankings]);});}}
 $scope.AsteroidClick=function(obj){if(obj===$scope.selected){ $scope.selected=null;}

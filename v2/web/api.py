@@ -132,7 +132,8 @@ def exoplanets(query, limit):
       del query[key]
       query[REQ_TO_DB_MAP[key]] = val
 
-  results = list(exoplanets_coll.find(query, {'_id': False}).limit(limit*2))
+  results = list(exoplanets_coll.find(query, {'_id': False}) \
+      .sort('koi_sma', direction=pymongo.DESCENDING).limit(limit))   # TODO add sort to request
 
   final = []
 
@@ -151,8 +152,8 @@ def exoplanets(query, limit):
     for key, val in REQ_TO_DB_MAP.iteritems():
       appendme[key] = result[val]
     # real period, not transit period
+    #appendme['a'] *= 20
     appendme['P'] = math.sqrt(appendme['a'] ** 3) * 365.25   # http://galacticfool.com/orbital-distance-and-orbital-period/
-    appendme['a'] *= 20
     if appendme['i'] != '':
       appendme['i'] -= 90
     for key, default in RESP_DEFAULTS.iteritems():

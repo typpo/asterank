@@ -4,6 +4,10 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
   $scope.rankings = [];
   $scope.sort_orders = [
     {
+      text: 'kepler planets',
+      search_value: 'kepler'
+    },
+    {
       text: 'most cost effective',
       search_value: 'score'
     },
@@ -19,10 +23,6 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
       text: 'upcoming passes',
       search_value: 'upcoming'
     },
-    {
-      text: 'kepler planets',
-      search_value: 'kepler'
-    }
   ];
   $scope.limit_options = [100, 300, 500, 1000, 4000];
 
@@ -90,7 +90,7 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     else {
       $('#results-table-loader').show();
       $scope.rankings = [];
-      $http.get('/api/exoplanets?query={"a":{"$gt":-1}}'
+      $http.get('/api/exoplanets?query={"a":{"$ne":""}}'
           + '&limit='
           + params.limit)
         .success(function(data) {
