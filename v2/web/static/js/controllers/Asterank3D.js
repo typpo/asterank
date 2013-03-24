@@ -2,7 +2,9 @@ function Asterank3DCtrl($scope, pubsub) {
   $scope.running = true;
 
   $scope.Init = function() {
-    asterank3d = new Asterank3D(document.getElementById('webgl-container'));
+    asterank3d = new Asterank3D({
+      container: document.getElementById('webgl-container')
+    });
   }
 
   $scope.SunView = function() {

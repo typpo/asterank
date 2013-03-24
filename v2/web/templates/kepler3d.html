@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AsterankApp">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Asteroid Mining - Most Valuable and Profitable Asteroids Ranking - Asterank{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+    <meta name="description" content="">
+    <meta name="author" content="">
+-->
+    <!-- Le styles -->
+    {% assets filter="cssmin", output="gen/packed.css",
+    "css/bootstrap.css",
+    "css/main.css",
+    "css/bootstrap-responsive.css"
+    %}
+    <link href="{{ASSET_URL}}" rel="stylesheet />
+    {% endassets %}
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    <!--
+    <link rel="shortcut icon" href="static/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="static/ico/apple-touch-icon-57-precomposed.png">
+    -->
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="/">
+            <strong>
+              Asterank
+            </strong>
+          </a>
+          <ul class="nav">
+            <li>
+              <a href="/">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="/about">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="/3d">
+                Full 3D View
+              </a>
+            </li>
+            <li>
+              <a href="/api">
+                Asterank API
+              </a>
+            </li>
+            <li>
+              <a href="/mpc">
+                MPC API
+              </a>
+            </li>
+            <li>
+              <a href="/kepler">
+                Kepler API
+              </a>
+            </li>
+          </ul>
+          <ul class="nav pull-right">
+            <div class="share-buttons">
+              <div style="margin:0" class="fb-like" data-href="http://www.asterank.com" data-send="false" data-layout="button_count" data-show-faces="false"></div>
+              <a class="twitter-share-button" style="font-size:10px;" href="https://twitter.com/share" data-url="http://www.asterank.com" data-counturl="http://www.asterank.com" class="twitter-share-button" data-lang="en">Tweet</a>
+              <g:plusone size="small" style="margin-left:0"></g:plusone>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div> <!-- end navbar -->
+
+    {% block content %}
+    <div id="webgl_container" style="width:100%; height:100%; position: absolute; left:0">
+    </div>
+
+    {% include "blocks/shaders.html" %}
+    {% endblock %}
+
+{% block scripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+{% assets filter="jsmin", output="gen/kepler3d-packed.js",
+"js/lib/jquery.autocomplete.js",
+"js/lib/d3.v2.js",
+"js/cache.js",
+"js/misc.js",
+"js/3d/lib/three.js/three.min.js",
+"js/3d/lib/three.js/Detector.js",
+"js/3d/lib/three.js/TrackballControls.js",
+"js/3d/lib/threex/THREEx.WindowResize.js",
+"js/orbit.js",
+"js/3d/ellipse.js",
+"js/3d/ephemeris.js",
+"js/3d/util.js",
+"js/3d/main.js",
+"js/3d/kepler3d.js"
+%}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
+
+
+{% endblock %}
+
+  </body>
+</html>

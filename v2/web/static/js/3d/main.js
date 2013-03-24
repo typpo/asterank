@@ -1,7 +1,14 @@
-;function Asterank3D(container) {
+;function Asterank3D(opts) {
   "use strict";
 
   var me = this;
+
+  // options and defaults
+  var container = opts.container;
+  var default_camera_position = opts.camera_position || [0, -155, 32];
+  var camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
+  var jed_step_interval = opts.jed_step_interval || .25;
+  var custom_object_fn = opts.custom_object_fn || null;
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -26,7 +33,6 @@
   var camera, cameraControls;
   var pi = Math.PI;
   var using_webgl = false;
-  var camera_fly_around = true;
   var object_movement_on = true;
   var lastHovered;
   var added_objects = [];
@@ -408,8 +414,9 @@
   function clearLock(set_default_camera) {
     if (!locked_object) return;
 
-    if (set_default_camera)
+    if (set_default_camera) {
       setDefaultCameraPosition();
+    }
 
     cameraControls.target = new THREE.Vector3(0,0,0);
 
@@ -635,14 +642,23 @@
       }
       var roid = data[i];
       var locked = false;
-      var orbit = new Orbit3D(roid, {
-        color: 0xcccccc,
-        display_color: displayColorForObject(roid),
-        width: 2,
-        object_size: 1.5,
-        jed: jed,
-        particle_geometry: particle_system_geometry // will add itself to this geometry
-      }, useBigParticles);
+      var orbit;
+      if (custom_object_fn) {
+        var orbit_params = custom_object_fn(roid);
+        orbit_params.particle_geometry = particle_system_geometry; // will add itself to this geometry
+        orbit_params.jed = jed;
+        orbit = new Orbit3D(roid, orbit_params, useBigParticles);
+      }
+      else {
+        orbit = new Orbit3D(roid, {
+          color: 0xcccccc,
+          display_color: displayColorForObject(roid),
+          width: 2,
+          object_size: i < NUM_BIG_PARTICLES ? 50 : 15, //1.5,
+          jed: jed,
+          particle_geometry: particle_system_geometry // will add itself to this geometry
+        }, useBigParticles);
+      }
 
       // Add it to featured list
       // if (featured_count++ < NUM_BIG_PARTICLES) {
@@ -770,7 +786,8 @@
         attributes.size.value[i] = 75;
       }
       else {
-        attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
+        //attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
+        attributes.size.value[i] = added_objects[i].opts.object_size;
       }
 
       attributes.a.value[i] = added_objects[i].eph.a;
@@ -839,7 +856,8 @@
   }
 
   function setDefaultCameraPosition() {
-    cam.position.set(0, -155, 32);
+    cam.position.set(default_camera_position[0], default_camera_position[1],
+        default_camera_position[2]);
   }
 
   // animation loop
@@ -889,7 +907,7 @@
     if (using_webgl && (object_movement_on || force)) {
       // update shader vals for asteroid cloud
       uniforms.jed.value = jed;
-      jed += .25;
+      jed += jed_step_interval;
     }
 
     // actually render the scene

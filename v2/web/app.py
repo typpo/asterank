@@ -107,6 +107,12 @@ def horizons():
   else:
     return Response('{}', mimetype='application/json')
 
+# Kepler
+
+@app.route('/kepler3d')
+def kepler3d():
+  return render_template('kepler3d.html')
+
 # Misc Pages
 @app.route('/about')
 def about():
