@@ -55,6 +55,9 @@
 
     var ww = $(window).width();
 
+    // webgl view: fills bottom container, spans entire window
+    $('#webgl-container').height(bch).width(ww);
+
     $ls.width(ww * .3);
     $rs.width(ww - $ls.width()-75);
     $rs.height(tch);

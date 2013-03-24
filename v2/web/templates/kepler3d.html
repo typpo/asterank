@@ -83,6 +83,27 @@
     </div> <!-- end navbar -->
 
     {% block content %}
+    <div id="intro" style="position:absolute; top: 150px; left: 30%; z-index: 9999; background-color: #000; opacity: .8; width: 40%; max-width: 1000px; padding: 10px">
+      <p>
+      This is a visualization of potential exoplanets discovered by NASA/JPL.  There are over 800 confirmed exoplanets and over 2,000 candidates.  Most have been discovered by NASA's Kepler Mission, which operates with the goal of finding habitable exoplanets.
+      </p>
+      <p style="font-weight:bold;">
+      The exoplanets are arranged around our sun for reference.  Cold planets are <span style="color:#388E8E">blue</span>, hot planets are <span style="color:red;">red</span>.  Planets that could support liquid water are <span style="color:green;">green</span>.
+      </p>
+      <p>
+      &raquo; <a href="#" onclick="$('#intro').remove();return false;">Close</a>
+      </p>
+    </div>
+
+    <div id="webgl-not-supported" style="display:none;">
+      <h3>
+        Sorry, your browser or graphics card does not support this 3D visualization.
+      </h3>
+      <h3>
+        Using <a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a> may solve this problem.
+      </h3>
+    </div>
+
     <div id="webgl_container" style="width:100%; height:100%; position: absolute; left:0">
     </div>
 
@@ -93,9 +114,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 {% assets filter="jsmin", output="gen/kepler3d-packed.js",
-"js/lib/jquery.autocomplete.js",
-"js/lib/d3.v2.js",
-"js/cache.js",
 "js/misc.js",
 "js/3d/lib/three.js/three.min.js",
 "js/3d/lib/three.js/Detector.js",

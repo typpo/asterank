@@ -10,6 +10,7 @@
   var jed_step_interval = opts.jed_step_interval || .25;
   var custom_object_fn = opts.custom_object_fn || null;
   var object_texture_path = opts.object_texture_path || "/static/img/cloud4.png";
+  var not_supported_callback = opts.not_supported_callback || function() {};
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -165,22 +166,12 @@
     }
     else {
       //renderer	= new THREE.CanvasRenderer();
-      //if (typeof mixpanel !== 'undefined') mixpanel.track('not supported');
-      // TODO should be moved to controller....
-      $('#webgl-not-supported').show();
-      var $tc = $('#top-container');
-      var $bc = $('#bottom-container');
-      $tc.height($tc.height() + ($bc.height() - 250))
-      $bc.height(250);
-      var $rs = $('#right-side');
-      var $ls = $('#left-side');
-      $('#results-table-container').height($rs.height() + 250);
-      $rs.height($rs.height() + 250);
-      $ls.height($ls.height() + 250);
+      not_supported_callback();
       return;
     }
-    var containerHeight = $(window).height()/2;
-    var containerWidth = $(window).width();
+    var $container = $(container);
+    var containerHeight = $container.height();//$(window).height()/2;
+    var containerWidth = $container.width();  // $(window).width()
     renderer.setSize(containerWidth, containerHeight);
     container.appendChild(renderer.domElement);
 

@@ -3,7 +3,21 @@ function Asterank3DCtrl($scope, pubsub) {
 
   $scope.Init = function() {
     asterank3d = new Asterank3D({
-      container: document.getElementById('webgl-container')
+      container: document.getElementById('webgl-container'),
+      not_supported_callback: function() {
+        // TODO should be angularified
+        if (typeof mixpanel !== 'undefined') mixpanel.track('not supported');
+        $('#webgl-not-supported').show();
+        var $tc = $('#top-container');
+        var $bc = $('#bottom-container');
+        $tc.height($tc.height() + ($bc.height() - 250))
+        $bc.height(250);
+        var $rs = $('#right-side');
+        var $ls = $('#left-side');
+        $('#results-table-container').height($rs.height() + 250);
+        $rs.height($rs.height() + 250);
+        $ls.height($ls.height() + 250);
+      }
     });
   }
 

@@ -1,5 +1,5 @@
 
-(function() {
+;(function() {
   var highest_temp = 0;
   var lowest_temp = Number.MAX_VALUE;
 
@@ -32,7 +32,11 @@
       };
 
     },
-    object_texture_path: "/static/img/cloud_defined.png"
+    object_texture_path: "/static/img/cloud_defined.png",
+    not_supported_callback: function() {
+      $('#intro').remove();
+      $('#webgl-not-supported').show();
+    }
   });
 
   asterank3d.clearRankings();

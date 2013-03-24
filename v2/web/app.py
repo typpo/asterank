@@ -109,6 +109,7 @@ def horizons():
 
 # Kepler
 
+@app.route('/exoplanets')
 @app.route('/kepler3d')
 def kepler3d():
   return render_template('kepler3d.html')
