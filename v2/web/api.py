@@ -132,8 +132,9 @@ def exoplanets(query, limit):
       del query[key]
       query[REQ_TO_DB_MAP[key]] = val
 
+  # TODO add sort to request, limit is not used
   results = list(exoplanets_coll.find(query, {'_id': False}) \
-      .sort('koi_sma', direction=pymongo.DESCENDING).limit(limit))   # TODO add sort to request
+      .sort('koi_sma', direction=pymongo.DESCENDING))
 
   final = []
 

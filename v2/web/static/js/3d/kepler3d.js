@@ -7,10 +7,10 @@
 
   asterank3d = new Asterank3D({
     container: document.getElementById('webgl_container'),
-    camera_position: [0, -65, 25],
+    camera_position: [0, -65, 65],
     camera_fly_around: false,
     sun_scale: 25,
-    jed_step_interval: .2,
+    jed_step_interval: .15,
     custom_object_fn: function(obj) {
       var heatcolor;
       if (obj['p_temp'] < 323.16 && obj['p_temp'] > 273.16 && obj['p_radius'] < 100) {
@@ -44,7 +44,7 @@
 
   asterank3d.clearRankings();
 
-  $.getJSON('/api/exoplanets?query={"a":{"$ne":""}}&limit=800', function(data) {
+  $.getJSON('/api/exoplanets?query={"a":{"$ne":"", "$gt": 0.1}}&limit=3000', function(data) {
 
     $.each(data, function() {
       highest_temp = Math.max(highest_temp, this['p_temp']);
