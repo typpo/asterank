@@ -15,6 +15,7 @@ db = conn.asterank
 coll = db.exo
 coll.drop()
 coll.ensure_index('kepoi_name', unique=True)  # kepid isn't actually unique...
+# TODO ensure koi_sma descending index
 
 c = 0
 for row in reader:
