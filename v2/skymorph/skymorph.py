@@ -68,7 +68,7 @@ def parse_results_table(text):
     entries.append(new_entry)
   return entries
 
-def get_images(target, key):
+def get_image(key):
   redis_key = '%s:images:%s' % (REDIS_PREFIX, key)
   cached = redis.get(redis_key)
   if cached:
@@ -79,6 +79,7 @@ def get_images(target, key):
     if r.status_code == 200:
       return json_obj
 
+  # omitting target param, it doesn't seem necessary
   params = {
       'Headers_NEAT': '|Observation|Time|ObjRA|ObjDec|Plt RA|Plt Dec|Magnitude|V_RA|V_Dec|E_Maj|E_Min|E_PosAng|x|y|',
       'Check_NEAT': key,

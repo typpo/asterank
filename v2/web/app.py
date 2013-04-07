@@ -8,7 +8,7 @@ import base64
 import re
 
 import api
-import skymorph_api
+from skymorph import skymorph
 
 app = Flask(__name__)
 app.secret_key = 'not a secret key'
@@ -106,6 +106,18 @@ def horizons():
     return Response(json_resp, mimetype='application/json')
   else:
     return Response('{}', mimetype='application/json')
+
+# Skymorph routes
+
+@app.route('/api/skymorph/search')
+def skymorph_search():
+  ret = {'results': skymorph.search_target(request.args.get('target'))}
+  return jsonify(ret)
+
+@app.route('/api/skymorph/image')
+def skymorph_image():
+  ret = skymorph.get_image(request.args.get('key'))
+  return jsonify(ret)
 
 # Kepler
 
