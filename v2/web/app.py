@@ -161,6 +161,10 @@ def kepler():
 def exoplanets():
   return render_template('exoplanets.html')
 
+@app.route('/skymorph')
+def skymorph_docs():
+  return render_template('skymorph.html')
+
 @app.route('/api')
 def api_route():
   return render_template('api.html')

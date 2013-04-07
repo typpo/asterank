@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block content %}
+<script>
+function email() {
+  return 'i' + String.fromCharCode(97) + 'n.webster+asterank' + '@gm' + String.fromCharCode(97) + 'il.com';
+}
+</script>
+<div class="row-fluid basic-content">
+<h1>SkyMorph API</h1>
+
+<h3>Overview</h3>
+<p>
+The SkyMorph API wraps NASA's <a href="http://skyview.gsfc.nasa.gov/skymorph/skymorph.html">SkyMorph</a> archive in a RESTful JSON interface.
+</p>
+<p>
+Currently, it provides results from the NEAT survey.
+</p>
+<h3>Search Queries</h3>
+<p>
+<div>
+<code>
+  http://asterank.com/api/skymorph/search=&lt;parmams&gt;
+</code>
+</div>
+</p>
+
+<p>
+Query for a specific target:
+</p>
+
+<table class="table table-bordered table-condensed" style="width:400px">
+<tr>
+<td width="80">target</td>
+<td>Target object (lookup in MPC).  Required only if no orbital elements are provided.</td>
+</tr>
+</table>
+
+<p>
+Query based on orbital elements:
+</p>
+
+<table class="table table-bordered table-condensed" style="width:400px">
+<tr>
+<td>epoch</td>
+<td>Epoch ([M]JD or ISO)</td>
+</tr>
+<tr>
+<td>ecc</td>
+<td>eccentricity</td>
+</tr>
+<tr>
+<td>per</td>
+<td>Perihelion distance (AU)</td>
+</tr>
+<tr>
+<td>per_date</td>
+<td>Perihelion date ([M]JD or ISO)</td>
+</tr>
+<tr>
+<td>om</td>
+<td>Longitude of ascending node (deg)</td>
+</tr>
+<tr>
+<td>w</td>
+<td>Argument of perihelion (deg)</td>
+</tr>
+<tr>
+<td>i</td>
+<td>Inclination (deg)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Absolute magnitude</td>
+</tr>
+</table>
+
+<h3>Image Queries</h3>
+
+To get the image corresponding to an observation returned by a search query, use the <code>key</code> parameter of the observation.
+
+<p>
+<div>
+<code>
+  http://asterank.com/api/skymorph/image?key=&lt;key&gt;
+</code>
+</div>
+</p>
+<h3>Sample Usage</h3>
+<p>
+{% raw %}
+This request searches for observations of MPC object J99TS7A:
+
+<p><a href='/api/skymorph/search?target=J99TS7A'>/api/skymorph/search?target=J99TS7A</a></p>
+
+{% endraw %}
+</p>
+<p>
+Response:
+<div>
+  <pre style="background-color: #ccc; width: 500px">
+{
+  "results": [
+    {
+      "pos_err_major": "n.a.",
+      "triplet": "y",
+      "mag": 20.7,
+      "veloc_sn": -11.08,
+      "obs_id": "001204124410",
+      "center_dec": "+04 04 21.4",
+      "veloc_we": -4.28,
+      "predicted_dec": "+04 38 24.1",
+      "center_ra": "08 33 21.03",
+      "predicted_ra": "08 36 15.06",
+      "pos_err_minor": "n.a.",
+      "key": "|001204124410|51882.530787037|129.062741402712|4.64001695570385|128.337645|4.0726|20.70|-4.28|-11.08|n.a.|n.a.|n.a.|71.9154214757038|547.287989060186|y|",
+      "offset": 55.14,
+      "pos_err_ang": "n.a.",
+      "pixel_loc_y": 547.29,
+      "time": "2000-12-04 12:44:20",
+      "pixel_loc_x": 71.92
+    },
+    {
+      "pos_err_major": "n.a.",
+      "triplet": "y",
+      "mag": 20.69,
+      "veloc_sn": -11.07,
+      "obs_id": "001204131418",
+      "center_dec": "+04 04 38.1",
+      "veloc_we": -4.3,
+      "predicted_dec": "+04 38 18.5",
+      "center_ra": "08 33 20.10",
+      "predicted_ra": "08 36 14.91",
+      "pos_err_minor": "n.a.",
+      "key": "|001204131418|51882.551712963|129.062129001731|4.63846213373038|128.33376|4.07724|20.69|-4.30|-11.07|n.a.|n.a.|n.a.|62.8970527907925|563.965686638963|y|",
+      "offset": 55.07,
+      "pos_err_ang": "n.a.",
+      "pixel_loc_y": 563.97,
+      "time": "2000-12-04 13:14:28",
+      "pixel_loc_x": 62.9
+    }, ...
+  </pre>
+</div>
+</p>
+<p>
+Now, we want to retrieve imagery for the first observation:
+</p>
+<p><a href='/api/skymorph/image?key=|001204124410|51882.530787037|129.062741402712|4.64001695570385|128.337645|4.0726|20.70|-4.28|-11.08|n.a.|n.a.|n.a.|71.9154214757038|547.287989060186|y|'>/api/skymorph/image?key=|001204124410 ...</a></p>
+Response:
+<div>
+  <pre style="background-color: #ccc; width: 500px">
+{
+  "url": "http://skyview.gsfc.nasa.gov/tempspace/images/sm_neat_4581_1.gif",
+  "success": true
+}
+  </pre>
+</div>
+<p>
+The url in the response points to this image:
+</p>
+<img src="http://i.imgur.com/E4MaI5Z.gif"/>
+</div>
+{% endblock %}
