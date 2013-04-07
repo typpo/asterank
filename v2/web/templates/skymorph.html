@@ -78,6 +78,73 @@ Query based on orbital elements:
 </tr>
 </table>
 
+<p>
+Search response:
+</p>
+
+<table class="table table-bordered table-condensed" style="width:400px">
+<tr>
+<td>obs_id</td>
+<td>Observation id</td>
+</tr>
+<tr>
+<td>time</td>
+<td>Time in UTC (ISO)</td>
+</tr>
+<tr>
+<td>predicted_ra</td>
+<td>Predicted object position RA (DMS)</td>
+</tr>
+<tr>
+<td>predicted_dec</td>
+<td>Predicted object position dec (DMS)</td>
+</tr>
+<tr>
+<td>center_ra</td>
+<td>Observation center RA (DMS)</td>
+</tr>
+<tr>
+<td>center_dec</td>
+<td>Observation center dec (DMS)</td>
+</tr>
+<tr>
+<td>mag</td>
+<td>Absolute magnitude</td>
+</tr>
+<tr>
+<td>veloc_we</td>
+<td>Velocity west-east ("/hour)</td>
+</tr>
+<tr>
+<td>veloc_sn</td>
+<td>Velocity south-north ("/hour)</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>Offset (')</td>
+</tr>
+<tr>
+<td>pos_err_major</td>
+<td>Position error major (" or 'n.a.')</td>
+</tr>
+<tr>
+<td>pos_err_minor</td>
+<td>Position error minor (" or 'n.a.')</td>
+</tr>
+<tr>
+<td>pos_err_ang</td>
+<td>Position error angle</td>
+</tr>
+<tr>
+<td>pixel_loc_x</td>
+<td>Pixel X location</td>
+</tr>
+<tr>
+<td>pixel_loc_y</td>
+<td>Pixel Y location</td>
+</tr>
+</table>
+
 <h3>Image Queries</h3>
 
 To get the image corresponding to an observation returned by a search query, use the <code>key</code> parameter of the observation.
