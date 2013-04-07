@@ -12,7 +12,7 @@ import scoring
 import estimate
 from pymongo import Connection
 
-DATA_PATH = 'data/fulldb-20130220.csv'
+DATA_PATH = 'data/fulldb.20130406.csv'
 DV_PATH = 'data/deltav/db.csv'
 MASS_PATH = 'data/masses.txt'
 G = 6.67300e-20   # km^3 / kgs^2
@@ -95,13 +95,22 @@ def populateDb():
         # TODO should have our own merged spec row, instead we overwrite spec_B
         row['spec_B'] = newspec.replace('type', '').strip()
       elif row['pdes'] == '2012 DA14':
+        print 'Adjust 2012 DA14'
         row['spec_B'] = 'L'
       elif row['class'] in COMET_CLASSES:
-        print 'Adjust comet'
         row['spec_B'] = 'comet'
       else:
         continue # TODO temp
         #row['spec_B'] = 'S'
+
+      """
+      elif row['pdes'] == '2008 HU4':
+        print 'Adjust 2008 HU4'
+        row['spec_B'] = 'C'
+        row['GM'] =  3.0268194e-14   # 500 tons
+        row['diameter'] = 8          # 8 meters
+      """
+
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
