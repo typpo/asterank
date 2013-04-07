@@ -111,7 +111,20 @@ def horizons():
 
 @app.route('/api/skymorph/search')
 def skymorph_search():
-  ret = {'results': skymorph.search_target(request.args.get('target'))}
+  if request.args.get('target'):
+    ret = {'results': skymorph.search_target(request.args.get('target'))}
+  else:
+    search_results = skymorph.search_ephem( \
+        request.args.get('epoch'),
+        request.args.get('ecc'),
+        request.args.get('per'),
+        request.args.get('per_date'),
+        request.args.get('om'),
+        request.args.get('w'),
+        request.args.get('i'),
+        request.args.get('H'),
+        )
+    ret = {'results': search_results}
   return jsonify(ret)
 
 @app.route('/api/skymorph/image')

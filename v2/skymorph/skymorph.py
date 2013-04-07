@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 
 SEARCH_TARGET_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/mobssel.pl?target=%s&NEAT=on&OE_EPOCH=&OE_EC=&OE_QR=&OE_TP=&OE_OM=&OE_W=&OE_IN=&OE_H='
 
+SEARCH_EPHEM_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/mobssel.pl?target=&NEAT=on&OE_EPOCH=%s&OE_EC=%s&OE_QR=%s&OE_TP=%s&OE_OM=%s&OE_W=%s&OE_IN=%s&OE_H=%s'
+
 IMAGE_QUERY_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/mobsdisp.pl'
 
 NEAT_FIELDS = ['obs_id', 'triplet', 'time', 'predicted_ra', 'predicted_dec', \
@@ -39,6 +41,18 @@ def search_target(target):
     return json.loads(cached)
   else:
     r = requests.get(SEARCH_TARGET_URL % (target))
+    results = parse_results_table(r.text)
+    redis.set(redis_key, json.dumps(results))
+    return results
+
+def search_ephem(epoch, ecc, per, per_date, om, w, inc, h):
+  params_joined = ','.join([epoch, ecc, per, per_date, om, w, inc, h])
+  redis_key = '%s:ephem:%s' % (REDIS_PREFIX, params_joined)
+  cached = redis.get(redis_key)
+  if cached:
+    return json.loads(cached)
+  else:
+    r = requests.get(SEARCH_EPHEM_URL % (epoch, ecc, per, per_date, om, w, inc, h))
     results = parse_results_table(r.text)
     redis.set(redis_key, json.dumps(results))
     return results
