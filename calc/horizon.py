@@ -93,7 +93,7 @@ def populateDb():
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
         # TODO should have our own merged spec row, instead we overwrite spec_B
-        row['spec_B'] = newspec.replace('type', '').strip()
+        row['spec_B'] = newspec.strip()
       elif row['pdes'] == '2012 DA14':
         print 'Adjust 2012 DA14'
         row['spec_B'] = 'L'
@@ -111,6 +111,8 @@ def populateDb():
         row['diameter'] = 8          # 8 meters
       """
 
+    if row['spec_B'] == 'C type':
+      row['spec_B'] = 'C'
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])

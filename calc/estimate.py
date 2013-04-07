@@ -19,62 +19,97 @@ SPECTRA_INDEX = {
     'iron': 10,
   },
   'C': {
-    'water': 1.55495461,
-    #'nickel-iron': 0.0869229283,
-    'platinum': 0.01,
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .2,
+    'iron': .166,
+    'nickel': .014,
+    'cobalt': .002,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
+
+    # Original estimates:
+
+    #'water': 1.55495461,
+    #'platinum': 0.01,
 
     # lewis estimates
-    'iron': 62.196,
-    'nickel': 1.26,
-    'cobalt': 0.18,
+    #'iron': 62.196,
+    #'nickel': 1.26,
+    #'cobalt': 0.18,
   },
   'Ch': {
-    'water': 1.55495461,
-    #'nickel-iron': 0.0869229283,
-    'platinum': 0.01,
-    # lewis estimates
-    'iron': 62.196,
-    'nickel': 1.26,
-    'cobalt': 0.18,
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .2,
+    'iron': .166,
+    'nickel': .014,
+    'cobalt': .002,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
   },
   'Cg': {
-    'water': 1.55495461,
-    #'nickel-iron': 0.0869229283,
-    'platinum': 0.01,
-    # lewis estimates
-    'iron': 62.196,
-    'nickel': 1.26,
-    'cobalt': 0.18,
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .2,
+    'iron': .166,
+    'nickel': .014,
+    'cobalt': .002,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
   },
   'Cgh': {
-    'water': 1.55495461,
-    #'nickel-iron': 0.0869229283,
-    'platinum': 0.01,
-    # lewis estimates
-    'iron': 62.196,
-    'nickel': 1.26,
-    'cobalt': 0.18,
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .2,
+    'iron': .166,
+    'nickel': .014,
+    'cobalt': .002,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
   },
   'C type': {
-    'water': 1.55495461,
-    #'nickel-iron': 0.0869229283,
-    'platinum': 0.01,
-    # lewis estimates
-    'iron': 62.196,
-    'nickel': 1.26,
-    'cobalt': 0.18,
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .2,
+    'iron': .166,
+    'nickel': .014,
+    'cobalt': .002,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
   },
   'Cb': {   # transition object between C and B
-    'hydrogen': 0.1175,
+    #'hydrogen': 0.1175,
     #'iron': 12.5,
-    'water': 0.775,
+    #'water': 0.775,
     #'nickel-iron': 0.0434,
-    'platinum': 0.005,
+    #'platinum': 0.005,
 
     # lewis estimates
-    'iron': 36,
-    'nickel': 0.63,
-    'cobalt': 0.09,
+    #'iron': 36,
+    #'nickel': 0.63,
+    #'cobalt': 0.09,
+
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .1,
+    'iron': .083,
+    'nickel': .007,
+    'cobalt': .001,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
   },
   'D': {
     'water': 0.000023,
@@ -83,14 +118,25 @@ SPECTRA_INDEX = {
 
   },
   'K': {  # cross between S and C
-    'water': 0.775,
+    #'water': 0.775,
     #'nickel-iron': 0.0434,
-    'platinum': 0.005,
+    #'platinum': 0.005,
 
     # lewis estimates
-    'iron': 31.098,
-    'nickel': 0.13,
-    'cobalt': 0.09,
+    #'iron': 31.098,
+    #'nickel': 0.13,
+    #'cobalt': 0.09,
+
+    # from Keck report at http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf
+    'water': .1,
+    'iron': .083,
+    'nickel': .007,
+    'cobalt': .001,
+
+    # volatiles
+    'hydrogen': 0.235,
+    'nitrogen': 0.001,
+    'ammonia': 0.001,
   },
   'L': {
     'magnesium silicate': 1e-30,
@@ -216,7 +262,7 @@ MATERIALS_INDEX = {
   'nickel': {
     '$_per_kg': 0.00002,
   },
-  'nickel-iron': {  # I dunno, just average them
+  'nickel-iron': {  # value unclear.  averaged.
     '$_per_kg': 1.01e-5,
   },
   'cobalt': {
