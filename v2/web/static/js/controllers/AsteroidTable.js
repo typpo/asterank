@@ -18,10 +18,6 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     {
       text: 'upcoming passes',
       search_value: 'upcoming'
-    },
-    {
-      text: 'kepler planets',
-      search_value: 'kepler'
     }
   ];
   $scope.limit_options = [100, 300, 500, 1000, 4000];
@@ -41,12 +37,6 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
   });
 
   $scope.UpdateRankings = function() {
-    if ($scope.sort_by.search_value === 'kepler') {
-      // special kepler case
-      $scope.UpdateKepler();
-      return;
-    }
-
     var params = {
       sort_by: $scope.sort_by.search_value,
       limit: $scope.limit
@@ -75,35 +65,6 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     }
 
   } // end UpdateRankings
-
-  $scope.UpdateKepler = function() {
-    var params = {
-      sort_by: $scope.sort_by.search_value,
-      limit: $scope.limit
-    };
-    var cache_result = rankings_cache.Get(params);
-    if (cache_result) {
-      $scope.rankings = cache_result;
-      // publish to subscribers (incl. 3d view)
-      pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
-    }
-    else {
-      $('#results-table-loader').show();
-      $scope.rankings = [];
-      $http.get('/api/exoplanets?query={"a":{"$ne":""}}'
-          + '&limit='
-          + params.limit)
-        .success(function(data) {
-        $scope.rankings = data;
-        rankings_cache.Set(params, data);
-        $('#results-table-loader').hide();
-
-        // publish to subscribers (incl. 3d view)
-        pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
-      });
-    }
-
-  }
 
   $scope.AsteroidClick = function(obj) {
     if (obj === $scope.selected) {
