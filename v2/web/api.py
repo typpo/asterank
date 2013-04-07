@@ -5,8 +5,8 @@ import pymongo
 import math
 from pymongo import MongoClient
 
-from calc.jpl_lookup import Asteroid as JPL_Asteroid
 import calc.horizon as horizon
+from calc.jpl_lookup import Asteroid as JPL_Asteroid
 
 conn = MongoClient()
 db = conn.asterank

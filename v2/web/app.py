@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify
 from flask.ext.assets import Environment, Bundle
 import urllib
@@ -9,6 +8,7 @@ import base64
 import re
 
 import api
+import skymorph_api
 
 app = Flask(__name__)
 app.secret_key = 'not a secret key'
@@ -139,6 +139,3 @@ def exoplanets():
 @app.route('/api')
 def api_route():
   return render_template('api.html')
-
-if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', use_reloader=True)
