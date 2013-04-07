@@ -6,3 +6,4 @@ jsmin
 cssmin
 BeautifulSoup4
 requests
+redis
