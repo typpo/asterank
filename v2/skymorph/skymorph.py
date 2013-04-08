@@ -11,12 +11,16 @@ SEARCH_TARGET_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/mobssel.pl?ta
 
 SEARCH_EPHEM_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/mobssel.pl?target=&NEAT=on&OE_EPOCH=%s&OE_EC=%s&OE_QR=%s&OE_TP=%s&OE_OM=%s&OE_W=%s&OE_IN=%s&OE_H=%s'
 
+SEARCH_POS_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/obssel.pl?position=%s,%s&time=%s&time_delta=1'
+
 IMAGE_QUERY_URL = 'http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/mobsdisp.pl'
 
-NEAT_FIELDS = ['obs_id', 'triplet', 'time', 'predicted_ra', 'predicted_dec', \
+NEAT_FIELDS_LARGE = ['obs_id', 'triplet', 'time', 'predicted_ra', 'predicted_dec', \
     'center_ra', 'center_dec', 'mag', 'veloc_we', 'veloc_sn', 'offset', \
     'pos_err_major', 'pos_err_minor', 'pos_err_ang', 'pixel_loc_x', \
     'pixel_loc_y', 'key']
+
+NEAT_FIELDS_SMALL = ['obs_id', 'ra', 'dec', 'time', 'exposure', 'triplet', 'key']
 
 NUMERIC_NEAT_FIELDS = set(['mag', 'offset', 'veloc_we', 'veloc_sn', \
     'pixel_loc_x', 'pixel_loc_y'])
@@ -41,7 +45,7 @@ def search_target(target):
     return json.loads(cached)
   else:
     r = requests.get(SEARCH_TARGET_URL % (target))
-    results = parse_results_table(r.text)
+    results = parse_results_table(r.text, NEAT_FIELDS_LARGE)
     redis.set(redis_key, json.dumps(results))
     return results
 
@@ -53,15 +57,26 @@ def search_ephem(epoch, ecc, per, per_date, om, w, inc, h):
     return json.loads(cached)
   else:
     r = requests.get(SEARCH_EPHEM_URL % (epoch, ecc, per, per_date, om, w, inc, h))
-    results = parse_results_table(r.text)
+    results = parse_results_table(r.text, NEAT_FIELDS_LARGE)
     redis.set(redis_key, json.dumps(results))
     return results
 
 def search_position(ra, dec, time):
   # http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/obssel.pl?position=08+36+15.06%2C04+38+24.1&time=2000-12-04+12%3A44%3A20&time_delta=1
-  pass
+  params_joined = ','.join([ra, dec, time])
+  redis_key = '%s:pos:%s' % (REDIS_PREFIX, params_joined)
+  cached = redis.get(redis_key)
+  if cached:
+    return json.loads(cached)
+  else:
+    if dec.startswith('+'):
+      dec = dec[1:]   # with comma separator (used in url), + is assumed
+    r = requests.get(SEARCH_POS_URL % (ra, dec, time))
+    results = parse_results_table(r.text, NEAT_FIELDS_SMALL)
+    redis.set(redis_key, json.dumps(results))
+    return results
 
-def parse_results_table(text):
+def parse_results_table(text, neat_fields):
   soup = BeautifulSoup(text)
 
   main_table = soup.find('table')
@@ -75,7 +90,7 @@ def parse_results_table(text):
     newentries.append([[col.find('input') for col in row][0]['value']])   # value for follow-up query
     newentries = [x[0].strip().replace(u'\xa0', u' ').replace(u'\xc2', u' ')\
         for x in newentries if len(x) == 1 and x[0].strip() != '']
-    new_entry = {NEAT_FIELDS[i]: newentries[i] for i in range(len(NEAT_FIELDS))}
+    new_entry = {neat_fields[i]: newentries[i] for i in range(len(neat_fields))}
 
     for numfield in NUMERIC_NEAT_FIELDS:
       try:

@@ -20,16 +20,17 @@ The SkyMorph API wraps NASA's <a href="http://skyview.gsfc.nasa.gov/skymorph/sky
 Currently, it provides results from the NEAT survey.
 </p>
 <h3>Search Queries</h3>
+
+<p>
+Query for a specific target:
+</p>
+
 <p>
 <div>
 <code>
   http://asterank.com/api/skymorph/search=&lt;parmams&gt;
 </code>
 </div>
-</p>
-
-<p>
-Query for a specific target:
 </p>
 
 <table class="table table-bordered table-condensed" style="width:400px">
@@ -41,6 +42,14 @@ Query for a specific target:
 
 <p>
 Query based on orbital elements:
+</p>
+
+<p>
+<div>
+<code>
+  http://asterank.com/api/skymorph/search_orbit=&lt;parmams&gt;
+</code>
+</div>
 </p>
 
 <table class="table table-bordered table-condensed" style="width:400px">
@@ -55,6 +64,53 @@ Query based on orbital elements:
 <tr>
 <td>per</td>
 <td>Perihelion distance (AU)</td>
+</tr>
+<tr>
+<td>per_date</td>
+<td>Perihelion date ([M]JD or ISO)</td>
+</tr>
+<tr>
+<td>om</td>
+<td>Longitude of ascending node (deg)</td>
+</tr>
+<tr>
+<td>w</td>
+<td>Argument of perihelion (deg)</td>
+</tr>
+<tr>
+<td>i</td>
+<td>Inclination (deg)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Absolute magnitude</td>
+</tr>
+</table>
+
+<p>
+Query based on position and time (+/- 1 day):
+</p>
+
+<p>
+<div>
+<code>
+  http://asterank.com/api/skymorph/search_position=&lt;parmams&gt;
+</code>
+</div>
+</p>
+
+<table class="table table-bordered table-condensed" style="width:400px">
+<tr>
+<td>ra</td>
+<td>Right ascension (DMS)</td>
+</tr>
+<tr>
+<td>Dec</td>
+<td>Declination (DMS)</td>
+</tr>
+<tr>
+<td>time</td>
+<td>Date and time (UTC)</td>
 </tr>
 <tr>
 <td>per_date</td>

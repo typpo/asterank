@@ -110,21 +110,32 @@ def horizons():
 # Skymorph routes
 
 @app.route('/api/skymorph/search')
-def skymorph_search():
-  if request.args.get('target'):
-    ret = {'results': skymorph.search_target(request.args.get('target'))}
-  else:
-    search_results = skymorph.search_ephem( \
-        request.args.get('epoch'),
-        request.args.get('ecc'),
-        request.args.get('per'),
-        request.args.get('per_date'),
-        request.args.get('om'),
-        request.args.get('w'),
-        request.args.get('i'),
-        request.args.get('H'),
-        )
-    ret = {'results': search_results}
+def skymorph_search_target():
+  return {'results': skymorph.search_target(request.args.get('target'))}
+
+@app.route('/api/skymorph/search_orbit')
+def skymorph_search_orbit():
+  search_results = skymorph.search_ephem( \
+      request.args.get('epoch'),
+      request.args.get('ecc'),
+      request.args.get('per'),
+      request.args.get('per_date'),
+      request.args.get('om'),
+      request.args.get('w'),
+      request.args.get('i'),
+      request.args.get('H'),
+      )
+  ret = {'results': search_results}
+  return jsonify(ret)
+
+@app.route('/api/skymorph/search_position')
+def skymorph_search_time():
+  search_results = skymorph.search_position( \
+      request.args.get('ra'),
+      request.args.get('dec'),
+      request.args.get('time'),
+      )
+  ret = {'results': search_results}
   return jsonify(ret)
 
 @app.route('/api/skymorph/image')
