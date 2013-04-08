@@ -57,6 +57,10 @@ def search_ephem(epoch, ecc, per, per_date, om, w, inc, h):
     redis.set(redis_key, json.dumps(results))
     return results
 
+def search_position(ra, dec, time):
+  # http://skyview.gsfc.nasa.gov/cgi-bin/skymorph/obssel.pl?position=08+36+15.06%2C04+38+24.1&time=2000-12-04+12%3A44%3A20&time_delta=1
+  pass
+
 def parse_results_table(text):
   soup = BeautifulSoup(text)
 
