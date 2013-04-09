@@ -27,7 +27,7 @@ NUMERIC_NEAT_FIELDS = set(['mag', 'offset', 'veloc_we', 'veloc_sn', \
 
 URL_BASE = 'http://skyview.gsfc.nasa.gov/'
 
-# The html is so bad that BeautifulSoup won't work
+# The html is so bad that BeautifulSoup won't work, so we parse with a regex
 IMAGE_PARSING_REGEX = re.compile("img src='(.*?)'")
 
 ##### Redis Config
