@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify
+from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response
 from flask.ext.assets import Environment, Bundle
 import urllib
 import urlparse
@@ -141,7 +141,12 @@ def skymorph_search_time():
 @app.route('/api/skymorph/image')
 def skymorph_image():
   ret = skymorph.get_image(request.args.get('key'))
-  return jsonify(ret)
+  if ret:
+    response = make_response(ret)
+    response.headers["Content-type"] = "image/gif"
+    return response
+  else:
+    return jsonify(ret)
 
 # Kepler
 

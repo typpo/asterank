@@ -102,6 +102,13 @@ def parse_results_table(text, neat_fields):
   return entries
 
 def get_image(key):
+  info = get_image_info(key)
+  if info and 'url' in info:
+    r = requests.get(info['url'])
+    return resp.content
+  return info
+
+def get_image_info(key):
   redis_key = '%s:images:%s' % (REDIS_PREFIX, key)
   cached = redis.get(redis_key)
   if cached:
