@@ -172,6 +172,10 @@ def kepler():
 def exoplanets():
   return render_template('exoplanets.html')
 
+@app.route('/neat')
+def neat_docs():
+  return redirect('/skymorph')
+
 @app.route('/skymorph')
 def skymorph_docs():
   return render_template('skymorph.html')
