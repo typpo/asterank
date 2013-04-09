@@ -105,7 +105,7 @@ def get_image(key):
   info = get_image_info(key)
   if info and 'url' in info:
     r = requests.get(info['url'])
-    return resp.content
+    return r.content
   return info
 
 def get_image_info(key):
