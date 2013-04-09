@@ -135,7 +135,7 @@ Query based on position and time (+/- 1 day):
 </table>
 
 <p>
-Search response:
+Target/orbital elements search response:
 </p>
 
 <table class="table table-bordered table-condensed" style="width:400px">
@@ -202,6 +202,31 @@ Search response:
 <tr>
 <td>key</td>
 <td>Encoded string for requesting observation imagery</td>
+</tr>
+</table>
+
+<p>Position query search response:</p>
+
+<table class="table table-bordered table-condensed" style="width:400px">
+<tr>
+<td>obs_id</td>
+<td>Observation id</td>
+</tr>
+<tr>
+<td>time</td>
+<td>Time in UTC (ISO)</td>
+</tr>
+<tr>
+<td>ra</td>
+<td>Right ascension (DMS)</td>
+</tr>
+<tr>
+<td>dec</td>
+<td>Declination (DMS)</td>
+</tr>
+<tr>
+<td>exposure</td>
+<td>Exposure time (min).  Only included in position query response.</td>
 </tr>
 </table>
 
@@ -289,5 +314,12 @@ Response:
 The url in the response points to this image:
 </p>
 <img src="http://i.imgur.com/E4MaI5Z.gif"/>
+
+<h3>Planned Improvements</h3>
+<ul>
+  <li>Making RGB triplets available</li>
+  <li>Better support for batch requests/image retrieval jobs</li>
+  <li>Image urls returned in initial search response</li>
+</ul>
 </div>
 {% endblock %}
