@@ -111,7 +111,7 @@ def horizons():
 
 @app.route('/api/skymorph/search')
 def skymorph_search_target():
-  return {'results': skymorph.search_target(request.args.get('target'))}
+  return jsonify({'results': skymorph.search_target(request.args.get('target'))})
 
 @app.route('/api/skymorph/search_orbit')
 def skymorph_search_orbit():
