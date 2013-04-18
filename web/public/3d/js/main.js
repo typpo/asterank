@@ -174,6 +174,7 @@ $(function() {
     //camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
     //camera.position.set(-145, 41, -31);
+    //camera.position.set(216.58875511476026, 44.75240856486801, -131.8184276512322);
     // 77, -155, 23
 
     THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
@@ -309,8 +310,8 @@ $(function() {
     // Sky
     if (using_webgl) {
       //$('#loading-text').html('skybox');
-      var path = "/images/dark-s_";
-      var format = '.jpg';
+      var path = "/images/skybox/";
+      var format = '.png';
       var urls = [
           path + 'px' + format, path + 'nx' + format,
           path + 'py' + format, path + 'ny' + format,
@@ -344,9 +345,9 @@ $(function() {
   function setNeutralCameraPosition() {
     // Follow floating path around
     var timer = 0.0001 * Date.now();
-    cam.position.x = Math.sin(timer) * 25;
+    cam.position.x = 100 + Math.sin(timer) * 25;
     //cam.position.y = Math.sin( timer ) * 100;
-    cam.position.z = -100 + Math.cos(timer) * 20;
+    cam.position.z = -200 + Math.cos(timer) * 20;
   }
 
   // camera highlight fns
@@ -779,7 +780,9 @@ $(function() {
   }
 
   function setDefaultCameraPosition() {
-    cam.position.set(0, -155, 32);
+    //cam.position.set(0, -155, 32);
+    cam.position.set(124.23132343607715, -111.62556181253606, -169.19831569975761);
+    cam.rotation.set(2.5584062748058365, 0.5498325932081787, 2.8441455521140275);
   }
 
   // animation loop
