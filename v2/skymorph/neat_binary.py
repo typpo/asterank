@@ -1,3 +1,7 @@
+#
+# Direct processing for binary NEAT imagery
+#
+
 import png
 import os
 import sys
