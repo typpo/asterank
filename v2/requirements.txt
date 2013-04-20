@@ -7,3 +7,4 @@ cssmin
 BeautifulSoup4
 requests
 redis
+pypng
