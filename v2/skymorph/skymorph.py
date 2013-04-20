@@ -3,8 +3,10 @@ import urlparse
 import requests
 import json
 import neat_binary
+from util import md5_storage_hash
 from redis import StrictRedis
 from bs4 import BeautifulSoup
+from shove import Shove
 
 ##### Constants
 
@@ -36,6 +38,9 @@ IMAGE_PARSING_REGEX = re.compile("img src='(.*?)'")
 ##### Redis Config
 REDIS_PREFIX = 'skymorph'
 redis = StrictRedis(host='localhost', port=6379, db=3)
+
+##### Disk cache config
+store = Shove('file://skymorph_store', 'file://skymorph_cache')
 
 ##### Functions
 
@@ -111,6 +116,9 @@ def get_fast_image(key):
   # Pros: faster.
   # Cons: not "official" skymorph post-processing. The initial bytes are the same,
   # but the sharpness/contrast improvements are done by the API, not by NASA.
+  storage_key = 'fast_%s' % (md5_storage_hash(key))
+  if storage_key in store:
+    return store[storage_key]
   data = [x for x in key.split('|') if x.strip() != '']
   id = data[0]
   x = float(data[12])
@@ -118,14 +126,23 @@ def get_fast_image(key):
   width = height = IMAGE_SIZE
   x0 = max(0, x - IMAGE_SIZE/2.)
   y0 = max(0, y - IMAGE_SIZE/2.)
-  return neat_binary.process_from_internet(id, x0, y0, width, height)
+  ret = neat_binary.process_from_internet(id, x0, y0, width, height)
+  store[storage_key] = ret
+  return ret
 
 def get_image(key):
+  storage_key = 'skymorph_%s' % (md5_storage_hash(key))
+  if storage_key in store:
+    return store[storage_key]
   info = get_image_info(key)
   if info and 'url' in info:
     r = requests.get(info['url'])
-    return r.content
-  return info
+    ret = r.content
+  else:
+    ret = info
+  store[storage_key] = ret
+  print ret
+  return ret
 
 def get_image_info(key):
   redis_key = '%s:images:%s' % (REDIS_PREFIX, key)
