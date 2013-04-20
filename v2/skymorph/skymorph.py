@@ -105,16 +105,20 @@ def parse_results_table(text, neat_fields):
   return entries
 
 def get_fast_image(key):
-  data = key.split('|')
+  # This is not terribly fast, but if the archive's image is not fast,
+  # this will load much much faster. If the image is cached, it will load
+  # at about the same speed.
+  # Pros: faster.
+  # Cons: not "official" skymorph post-processing. The initial bytes are the same,
+  # but the sharpness/contrast improvements are done by the API, not by NASA.
+  data = [x for x in key.split('|') if x.strip() != '']
   id = data[0]
-  x = data[11]
-  y = data[12]
+  x = float(data[12])
+  y = float(data[13])
   width = height = IMAGE_SIZE
-  x0 = x - IMAGE_SIZE/2
-  y0 = y - IMAGE_SIZE/2
-  ret = process_from_internet(id, x0, y0, width, height)
-  # TODO return ret binary as image
-
+  x0 = max(0, x - IMAGE_SIZE/2.)
+  y0 = max(0, y - IMAGE_SIZE/2.)
+  return neat_binary.process_from_internet(id, x0, y0, width, height).getvalue()
 
 def get_image(key):
   info = get_image_info(key)

@@ -148,6 +148,16 @@ def skymorph_image():
   else:
     return jsonify(ret)
 
+@app.route('/api/skymorph/fast_image')
+def skymorph_fast_image():
+  ret = skymorph.get_fast_image(request.args.get('key'))
+  if ret:
+    response = make_response(ret)
+    response.headers["Content-type"] = "image/png"
+    return response
+  else:
+    return jsonify(ret)
+
 # Kepler
 
 @app.route('/exoplanets')

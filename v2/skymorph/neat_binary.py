@@ -11,22 +11,27 @@ BASE_URL = 'http://kaspar.jpl.nasa.gov/cgi-bin'
 ENDPOINT = '/extract_subset.pl'
 QUERY_FORMAT = '?Id=%s&X0=%d&Y0=%d&Nx=%d&Ny=%d'
 
-def process_from_internet(id, x0, y0, width, height, output_path):
+def process_from_internet(id, x0, y0, width, height):
   print 'Loading ...'
   formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
   URL = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
   req = urllib2.urlopen(URL)
   buffer = io.BytesIO(req.read())
   print 'Processing ...'
-  return process(buffer, output_path)
+
+  output_buffer = io.BytesIO()
+  process(buffer, output_buffer)
+  return output_buffer
 
 def process_file(path, output_path):
   f = open(path, 'rb')
   ret = process(f, output_path)
   f.close()
-  return ret
+  return output_path
 
-def process(f, output_path):
+# f: incoming buffer for initial byte data
+# final_output: can be a file path or a buffer
+def process(f, final_output):
   header_vals = []
   for c in range(5):
     bytes = f.read(4)
@@ -45,6 +50,9 @@ def process(f, output_path):
   bytes_per_pixel = bits_per_pixel / 8
 
   print 'Parsing %dx%d file at %d bytes per pixel' % (width, height, bytes_per_pixel)
+  if width > 10000:
+    print 'Too big. Something went wrong!'
+    return None
 
   rows = []
   last_colored_int = 0
@@ -80,7 +88,10 @@ def process(f, output_path):
   # Improve contrast to bring out faint stars
   enhancer = ImageEnhance.Contrast(im)
   im = enhancer.enhance(20)
-  im.save(output_path)
+  if type(final_output) == str:
+    im.save(final_output)    # use specified file format
+  else:
+    im.save(final_output, 'png')
 
 if __name__ == "__main__":
   if len(sys.argv) > 2:
