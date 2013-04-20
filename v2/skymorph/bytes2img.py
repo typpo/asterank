@@ -44,6 +44,7 @@ for y in range(height):
     else:
       last_colored_int = intval
     if abs(intval - bit_range / 2) < 1000:
+      # increase contrast
       intval = 0
     row.append(intval)
   rows.append(row)
