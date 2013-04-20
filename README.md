@@ -1,12 +1,22 @@
 ## Asterank
 
-Asterank (www.asterank.com) is a thought experiment that seeks to educate and inpsire people on the viability of commercially exploiting objects in our solar system's asteroid belt.  Using publicly available data and a handful of scientific papers, it is a best guess at evaluating the economic prospects of mining some 580,000 cataloged asteroids.  It also provides accurate interactive visualizations of our inner solar system.
+The main purpose of Asterank (www.asterank.com) is to make space-related data readily accessible to the public.
 
-Asterank has been featured on Universe Today, The Daily Mail, the JavaScript and HTML5 Weeklies, and other sites and newsletters.
+Another goal of the site is to educate and inspire by demonstrating the importance of asteroid discovery and exploration.  Using publicly available data and scientific papers, it evaluates the economic prospects of mining nearly 600,000 cataloged asteroids.  It also provides accurate interactive visualizations of our inner solar system and Near-Earth Asteroids (NEAs).
+
+Asterank is a platform for developers interested in space.  It includes APIs for many data sources, including NASA/JPL Horizons, NASA SkyMorph/NEAT sky survey imagery, the Kepler Project, and the Minor Planet Center.
+
+Asterank has been featured by BBC News, Popular Science, and other sites and newsletters.
 
 ## Notes and Todo
 
-Certain areas could use some cleanup and polish.  In particular, the ranking and estimate logic could be formalized and improved overall.  The rendering engine can be improved to display more particles and expose a lot more of the information we have.
+Certain areas could use some cleanup and polish.
+
+ * More APIs and associated visualizations
+ * Incorporate SkyMorph imagery into main asteroid data view
+ * Add spacecraft trajectories
+ * Ranking and estimate logic could be formalized and improved overall
+ * The rendering engine can be improved to display more particles and expose a lot more of the information we have.
 
 ## License (MIT)
 
