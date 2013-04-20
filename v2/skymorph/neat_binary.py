@@ -7,6 +7,7 @@ import os
 import sys
 import urllib2
 import tempfile
+from PIL import Image, ImageEnhance
 
 BASE_URL = 'http://kaspar.jpl.nasa.gov/cgi-bin'
 ENDPOINT = '/extract_subset.pl'
@@ -68,22 +69,31 @@ def process(path, output_path):
         intval = last_colored_int
       else:
         last_colored_int = intval
-      if abs(intval - bit_range / 2) < 1000:
-        # increase contrast
-        intval = 0
       row.append(intval)
     rows.append(row)
 
   f.close()  # close input
 
-# Write output
+  # Write output
   f = open(output_path, 'wb')
   w = png.Writer(width, height, greyscale=True, bytes_per_sample=bytes_per_pixel)
   w.write(f, rows)
   f.close()
+
+  # Post process for sharpness
+  im = Image.open(output_path)
+
+  # Solves "image has wrong mode" error
+  im.convert('I')
+  im = im.point(lambda i:i*(1./256)).convert('L')
+
+  enhancer = ImageEnhance.Contrast(im)
+  im = enhancer.enhance(20)
+  im.save(output_path)
 
 if __name__ == "__main__":
   if len(sys.argv) > 2:
     process(sys.argv[1], sys.argv[2])
   else:
     process_from_internet('001204131418', 0, 300, 500, 500, 'output.png')
+    #process_from_internet('001230104606', 2063.06, 1965.86, 500, 500, 'output.png')

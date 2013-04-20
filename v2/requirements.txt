@@ -8,3 +8,4 @@ BeautifulSoup4
 requests
 redis
 pypng
+pillow
