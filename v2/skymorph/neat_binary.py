@@ -14,10 +14,10 @@ ENDPOINT = '/extract_subset.pl'
 QUERY_FORMAT = '?Id=%s&X0=%d&Y0=%d&Nx=%d&Ny=%d'
 
 def process_from_internet(id, x0, y0, width, height, output_path):
+  print 'Loading ...'
   formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
   URL = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
   req = urllib2.urlopen(URL)
-  print 'Loading ...'
   buffer = io.BytesIO(req.read())
   print 'Processing ...'
   process(buffer, output_path)
@@ -86,7 +86,7 @@ def process(f, output_path):
 
 if __name__ == "__main__":
   if len(sys.argv) > 2:
-    process(sys.argv[1], sys.argv[2])
+    process_file(sys.argv[1], sys.argv[2])
   else:
     process_from_internet('001204131418', 0, 300, 500, 500, 'output.png')
     #process_from_internet('001230104606', 2063.06, 1965.86, 500, 500, 'output.png')
