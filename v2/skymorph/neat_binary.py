@@ -6,35 +6,29 @@ import png
 import os
 import sys
 import urllib2
-import tempfile
+import io
 from PIL import Image, ImageEnhance
 
 BASE_URL = 'http://kaspar.jpl.nasa.gov/cgi-bin'
 ENDPOINT = '/extract_subset.pl'
 QUERY_FORMAT = '?Id=%s&X0=%d&Y0=%d&Nx=%d&Ny=%d'
 
-def load_url(id, x0, y0, width, height):
+def process_from_internet(id, x0, y0, width, height, output_path):
   formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
   URL = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
   req = urllib2.urlopen(URL)
-  CHUNK = 16 * 1024
-  file = tempfile.NamedTemporaryFile(delete=False)
-  with file as fp:
-    while True:
-      chunk = req.read(CHUNK)
-      if not chunk: break
-      fp.write(chunk)
-  return os.path.abspath(file.name)
+  print 'Loading ...'
+  buffer = io.BytesIO(req.read())
+  print 'Processing ...'
+  process(buffer, output_path)
 
-def process_from_internet(id, x0, y0, width, height, output_path):
-  print 'Loading url...'
-  path = load_url(id, x0, y0, width, height)
-  print 'Building image...'
-  process(path, output_path)
-  os.remove(path)
-
-def process(path, output_path):
+def process_file(path, output_path):
   f = open(path, 'rb')
+  ret = process(f, output_path)
+  f.close()
+  return ret
+
+def process(f, output_path):
   header_vals = []
   for c in range(5):
     bytes = f.read(4)
@@ -72,21 +66,20 @@ def process(path, output_path):
       row.append(intval)
     rows.append(row)
 
-  f.close()  # close input
-
-  # Write output
-  f = open(output_path, 'wb')
+  # Write initial output
+  output_buffer = io.BytesIO()
   w = png.Writer(width, height, greyscale=True, bytes_per_sample=bytes_per_pixel)
-  w.write(f, rows)
-  f.close()
+  w.write(output_buffer, rows)
 
-  # Post process for sharpness
-  im = Image.open(output_path)
+  # Post process for sharpness ...
+  output_buffer.seek(0)
+  im = Image.open(output_buffer)
 
   # Solves "image has wrong mode" error
   im.convert('I')
   im = im.point(lambda i:i*(1./256)).convert('L')
 
+  # Improve contrast to bring out faint stars
   enhancer = ImageEnhance.Contrast(im)
   im = enhancer.enhance(20)
   im.save(output_path)
