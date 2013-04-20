@@ -118,7 +118,7 @@ def get_fast_image(key):
   width = height = IMAGE_SIZE
   x0 = max(0, x - IMAGE_SIZE/2.)
   y0 = max(0, y - IMAGE_SIZE/2.)
-  return neat_binary.process_from_internet(id, x0, y0, width, height).getvalue()
+  return neat_binary.process_from_internet(id, x0, y0, width, height)
 
 def get_image(key):
   info = get_image_info(key)

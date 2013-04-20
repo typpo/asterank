@@ -6,12 +6,18 @@ import sys
 import urllib2
 import io
 from PIL import Image, ImageEnhance
+from shove import Shove
 
 BASE_URL = 'http://kaspar.jpl.nasa.gov/cgi-bin'
 ENDPOINT = '/extract_subset.pl'
 QUERY_FORMAT = '?Id=%s&X0=%d&Y0=%d&Nx=%d&Ny=%d'
 
+store = Shove('file://fast_image_store', 'file://fast_image_cache')
+
 def process_from_internet(id, x0, y0, width, height):
+  storage_key = 'fast_%s_%d_%d_%d_%d' % (id, x0, y0, width, height)
+  if storage_key in store:
+    return store[storage_key]
   print 'Loading ...'
   formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
   URL = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
@@ -21,7 +27,11 @@ def process_from_internet(id, x0, y0, width, height):
 
   output_buffer = io.BytesIO()
   process(buffer, output_buffer)
-  return output_buffer
+
+  # Files processed for internet are stored on disk
+  store[storage_key] = output_buffer.getvalue()
+  return output_buffer.getvalue()
+
 
 def process_file(path, output_path):
   f = open(path, 'rb')
