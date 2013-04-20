@@ -1,6 +1,4 @@
-#
-# Direct processing for binary NEAT imagery
-#
+# Direct, fast processing for binary NEAT imagery
 
 import png
 import os
@@ -20,7 +18,7 @@ def process_from_internet(id, x0, y0, width, height, output_path):
   req = urllib2.urlopen(URL)
   buffer = io.BytesIO(req.read())
   print 'Processing ...'
-  process(buffer, output_path)
+  return process(buffer, output_path)
 
 def process_file(path, output_path):
   f = open(path, 'rb')

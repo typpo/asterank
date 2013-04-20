@@ -2,6 +2,7 @@ import re
 import urlparse
 import requests
 import json
+import neat_binary
 from redis import StrictRedis
 from bs4 import BeautifulSoup
 
@@ -26,6 +27,8 @@ NUMERIC_NEAT_FIELDS = set(['mag', 'offset', 'veloc_we', 'veloc_sn', \
     'pixel_loc_x', 'pixel_loc_y'])
 
 URL_BASE = 'http://skyview.gsfc.nasa.gov/'
+
+IMAGE_SIZE = 500   # pixels
 
 # The html is so bad that BeautifulSoup won't work, so we parse with a regex
 IMAGE_PARSING_REGEX = re.compile("img src='(.*?)'")
@@ -101,6 +104,18 @@ def parse_results_table(text, neat_fields):
     entries.append(new_entry)
   return entries
 
+def get_fast_image(key):
+  data = key.split('|')
+  id = data[0]
+  x = data[11]
+  y = data[12]
+  width = height = IMAGE_SIZE
+  x0 = x - IMAGE_SIZE/2
+  y0 = y - IMAGE_SIZE/2
+  ret = process_from_internet(id, x0, y0, width, height)
+  # TODO return ret binary as image
+
+
 def get_image(key):
   info = get_image_info(key)
   if info and 'url' in info:
@@ -123,7 +138,7 @@ def get_image_info(key):
   params = {
       'Headers_NEAT': '|Observation|Time|ObjRA|ObjDec|Plt RA|Plt Dec|Magnitude|V_RA|V_Dec|E_Maj|E_Min|E_PosAng|x|y|',
       'Check_NEAT': key,
-      'Npixel': 500,
+      'Npixel': IMAGE_SIZE,
       'Singlets': 'on',
       'Scaling': 'Log',
       'Extremum': 'Dft',
