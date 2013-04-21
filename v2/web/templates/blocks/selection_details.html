@@ -37,7 +37,7 @@
     <div id="imagery">
       <h4>Imagery from NEAT sky survey</h4>
       <div ng-show="images.length > 0">
-        <a ng-click="blink()">Blink</a>
+        <a ng-click="blink()">Blink images</a>
         <div class="image-container" ng-repeat="image in images">
           <h4>{{ image.time }}:</h4>
           <img ng-src="/api/skymorph/image?key={{ image.key }}"/>
