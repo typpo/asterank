@@ -180,7 +180,7 @@ def kepler3d():
 @app.route('/api/user_objects', methods=['GET', 'POST'])
 def user_objects():
   if request.method == 'GET':
-    return jsonify(api.retrieve_user_objects(300))   # limit set at 300 for now
+    return jsonify({'results': api.retrieve_user_objects(300)})   # limit set to 300 objects for now
 
   postdata = json.loads(request.data)
   if 'object' not in postdata:
