@@ -119,6 +119,10 @@ def horizons():
 def skymorph_search_target():
   return jsonify({'results': skymorph.search_target(request.args.get('target'))})
 
+@app.route('/api/skymorph/images_for')
+def skymorph_images_for():
+  return jsonify({'keys': skymorph.images_for(request.args.get('target'))})
+
 @app.route('/api/skymorph/search_orbit')
 def skymorph_search_orbit():
   search_results = skymorph.search_ephem( \

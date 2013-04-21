@@ -88,8 +88,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   });
 
   function ShowData(data) {
-    // MPC/Horizons data
-    // JPL data
+    // JPL data from main view
     for (var attr in data) {
       if (!data.hasOwnProperty(attr)) continue;
       if (typeof data[attr] !== 'object') {
@@ -104,6 +103,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       }
     }
 
+    // JPL data includes MPC data
     for (var attr in MPC_FIELDS_TO_INCLUDE) {
       if (!MPC_FIELDS_TO_INCLUDE.hasOwnProperty(attr)) continue;
       var val = MPC_FIELDS_TO_INCLUDE[attr];
@@ -117,7 +117,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     // special fields: next pass and close approaches
     $scope.approaches = data['Close Approaches'];
 
-    // composition
+    // Composition data
     if (compositions_map) {
       // Object.keys not supported < ie9, so shim is required (see misc.js)
       $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec_B]);
@@ -129,6 +129,14 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
           Object.keys(compositions_map[$scope.asteroid.spec_B]);
       });
     }
+
+    // Imagery data!
+    console.log('loading imagery for ' + $scope.asteroid.prov_des);
+    $http.get('/api/skymorph/images_for?target=' + $scope.asteroid.prov_des).success(function(data) {
+      console.log('got imgs');
+      $scope.images =
+        Object.keys(compositions_map[$scope.asteroid.spec_B]);
+    });
   }
 
   function ShowOrbitalDiagram() {

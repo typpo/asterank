@@ -3,6 +3,7 @@ import urlparse
 import requests
 import json
 import neat_binary
+from threading import Thread
 from util import md5_storage_hash
 from redis import StrictRedis
 from bs4 import BeautifulSoup
@@ -43,6 +44,19 @@ redis = StrictRedis(host='localhost', port=6379, db=3)
 store = Shove('file://skymorph_store', 'file://skymorph_cache')
 
 ##### Functions
+
+def images_for(target):
+  results = search_target(target)
+  threads = []
+  keys = []
+  for result in results[-10:]:
+    keys.append(result['key'])
+    t = Thread(target=get_image, args=(result['key'], ))
+    t.start()
+    threads.append(t)
+  for thread in threads:
+    thread.join()
+  return keys
 
 def search_target(target):
   target = target.upper()
@@ -141,7 +155,6 @@ def get_image(key):
   else:
     ret = info
   store[storage_key] = ret
-  print ret
   return ret
 
 def get_image_info(key):
