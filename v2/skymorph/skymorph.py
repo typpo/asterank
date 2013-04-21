@@ -1,3 +1,4 @@
+import math
 import re
 import urlparse
 import requests
@@ -28,6 +29,8 @@ NEAT_FIELDS_SMALL = ['obs_id', 'ra', 'dec', 'time', 'exposure', 'triplet', 'key'
 
 NUMERIC_NEAT_FIELDS = set(['mag', 'offset', 'veloc_we', 'veloc_sn', \
     'pixel_loc_x', 'pixel_loc_y'])
+
+DMS_NEAT_FIELDS = set(['center_dec', 'center_ra', 'predicted_dec', 'predicted_ra'])
 
 URL_BASE = 'http://skyview.gsfc.nasa.gov/'
 
@@ -125,6 +128,19 @@ def parse_results_table(text, neat_fields):
         new_entry[numfield] = float(new_entry[numfield])
       except:
         new_entry[numfield] = -1
+
+    # Disabled for now, this will break backwards compatibility with some clients
+    """
+    for dmsfield in DMS_NEAT_FIELDS:
+      try:
+        d, m, s = new_entry[dmsfield].split(' ')
+        d = float(d)
+        m = float(m)
+        s = float(s)
+        new_entry[dmsfield] = math.copysign(1, d) * (abs(d) + (m / 60.0) + (s / 3600.0));
+      except:
+        pass
+    """
 
     entries.append(new_entry)
   return entries
