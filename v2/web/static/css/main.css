@@ -136,7 +136,7 @@ hr.top-bottom-divider {
 }
 
 /** Custom input stuff */
-
+/*
 #filepicker-iframe {
   position: absolute;
   top: 20%;
@@ -147,7 +147,7 @@ hr.top-bottom-divider {
   background-color: #fff;
   z-index: 999;
 }
-
+*/
 
 /* Autocomplete stuff */
 #asteroid-lookup-suggestions {

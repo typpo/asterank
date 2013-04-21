@@ -19,6 +19,15 @@ function CustomInputCtrl($scope, $http, pubsub) {
 
   $scope.StartCustomOrbit = function() {
     $scope.show_custom_input = true;
+
+    // Filepicker - neccessary to initialize widget
+    setTimeout(function() {
+      // Unfortunately setTimeout hack is necessary because of how bootstrap
+      // constructs and shows dialogs
+      var element = document.getElementById('filepicker-widget')
+      console.log(element);
+      filepicker.constructWidget(element);
+    }, 0);
   }
 
   $scope.UseCustomInput = function() {
@@ -36,6 +45,7 @@ function CustomInputCtrl($scope, $http, pubsub) {
   }
 
   // File picker functions
+  /*
   $scope.ShowFilePicker = function() {
     $scope.picking_file = true;
     filepicker.pickAndStore({
@@ -47,5 +57,14 @@ function CustomInputCtrl($scope, $http, pubsub) {
     }, function() {
       $scope.picking_file = false;
     });
+  }
+  */
+
+  $scope.FilepickerCallback = function(e) {
+    if (!e.fpfiles) return;
+    for (var i=0; i < e.fpfiles.length; i++) {
+      var file = e.fpfiles[i];
+
+    }
   }
 }
