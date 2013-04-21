@@ -187,3 +187,11 @@ code {
   font-weight: bold;
   color: aquamarine;
 }
+
+.modal {
+  background-color: #555;
+}
+
+.modal-footer {
+  background-color: #555;
+}

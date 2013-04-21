@@ -70,7 +70,7 @@
     sizeContainers();
   });
 
-  var mod = angular.module('AsterankApp', ['filters']);
+  var mod = angular.module('AsterankApp', ['filters', 'ui.bootstrap']);
 
   angular.module('filters',[])
     .filter('fuzzynum', function(){

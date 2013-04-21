@@ -149,35 +149,39 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     // special fields: next pass and close approaches
     $scope.approaches = data['Close Approaches'];
 
-    // Composition data
-    if (compositions_map) {
-      // Object.keys not supported < ie9, so shim is required (see misc.js)
-      $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec_B]);
+    if ($scope.asteroid.custom_object) {
+      $scope.images = [];
+      $scope.images_loading = false;
     }
     else {
-      $http.get('/api/compositions').success(function(data) {
-        compositions_map = data;
-        $scope.composition =
-          Object.keys(compositions_map[$scope.asteroid.spec_B]);
+      // Composition data
+      if (compositions_map) {
+        // Object.keys not supported < ie9, so shim is required (see misc.js)
+        $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec_B]);
+      }
+      else {
+        $http.get('/api/compositions').success(function(data) {
+          compositions_map = data;
+          $scope.composition =
+            Object.keys(compositions_map[$scope.asteroid.spec_B]);
+        });
+      }
+
+      // Imagery data!
+      var imagery_req_url = '/api/skymorph/images_for?target=' + $scope.asteroid.prov_des;
+      var requesting_images_for = $scope.asteroid.prov_des;
+      $http.get(imagery_req_url).success(function(data) {
+        if ($scope.asteroid.prov_des == requesting_images_for) {
+          $scope.images = data.images;
+          $scope.images_loading = false;
+        }
       });
     }
-
-    // Imagery data!
-    var imagery_req_url = '/api/skymorph/images_for?target=' + $scope.asteroid.prov_des;
-    var requesting_images_for = $scope.asteroid.prov_des;
-    $http.get(imagery_req_url).success(function(data) {
-      if ($scope.asteroid.prov_des == requesting_images_for) {
-        $scope.images = data.images;
-        $scope.images_loading = false;
-      }
-    });
   }
 
   function ShowOrbitalDiagram() {
     // Orbital diagram
-    var orbit_diagram = new OrbitDiagram('#orbit-2d-diagram', {
-
-    });
+    var orbit_diagram = new OrbitDiagram('#orbit-2d-diagram', {});
     orbit_diagram.render(
         $scope.asteroid.a,
         $scope.asteroid.e,
