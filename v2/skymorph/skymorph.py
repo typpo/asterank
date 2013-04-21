@@ -137,8 +137,11 @@ def get_fast_image(key):
   # Cons: not "official" skymorph post-processing. The initial bytes are the same,
   # but the sharpness/contrast improvements are done by the API, not by NASA.
   storage_key = 'fast_%s' % (md5_storage_hash(key))
+  store_mutex.acquire()
   if storage_key in store:
+    store_mutex.release()
     return store[storage_key]
+  store_mutex.release()
   data = [x for x in key.split('|') if x.strip() != '']
   id = data[0]
   x = float(data[12])
@@ -154,8 +157,11 @@ def get_fast_image(key):
 
 def get_image(key):
   storage_key = 'skymorph_%s' % (md5_storage_hash(key))
+  store_mutex.acquire()
   if storage_key in store:
+    store_mutex.release()
     return store[storage_key]
+  store_mutex.release()
   info = get_image_info(key)
   if info and 'url' in info:
     r = requests.get(info['url'])
