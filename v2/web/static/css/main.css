@@ -149,6 +149,10 @@ hr.top-bottom-divider {
 }
 */
 
+.link-orbit-container {
+  float: left;
+}
+
 /* Autocomplete stuff */
 #asteroid-lookup-suggestions {
   position: relative;

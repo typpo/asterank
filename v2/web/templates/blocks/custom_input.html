@@ -1,4 +1,4 @@
-<span id="custom-modal" ng-controller="CustomInputCtrl">
+<span id="custom-modal" ng-controller="CustomInputCtrl" ng-init="Init()">
   or <a href="#" ng-click="StartCustomOrbit()">plot a custom orbit</a>.
   <div modal="show_custom_input" close="CloseCustomInput()" options="opts" style="display:none;">
       <div class="modal-header">
@@ -71,6 +71,9 @@
         </form>
       </div>
       <div class="modal-footer">
+        <div class="link-orbit-container">
+        Link this orbit: <input ng-model="direct_url" type="text" value="http://asterank.com/"/>
+        </div>
         <button class="btn btn-success" ng-click="UseCustomInput()">Ok</button>
         <button class="btn cancel" ng-click="CloseCustomInput()">Cancel</button>
       </div>

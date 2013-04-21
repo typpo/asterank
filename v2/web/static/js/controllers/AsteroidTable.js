@@ -2,6 +2,7 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
   'use strict';
   // Config
   $scope.rankings = [];
+  $scope.loading_initial_rankings = true;
   $scope.sort_orders = [
     {
       text: 'most cost effective',
@@ -46,6 +47,7 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
       $scope.rankings = cache_result;
       // publish to subscribers (incl. 3d view)
       pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
+      BroadcastInitialRankingsLoaded();
     }
     else {
       $('#results-table-loader').show();
@@ -61,6 +63,7 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
 
         // publish to subscribers (incl. 3d view)
         pubsub.publish('NewAsteroidRanking', [$scope.rankings]);
+        BroadcastInitialRankingsLoaded();
       });
     }
 
@@ -95,5 +98,12 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     // load details
     pubsub.publish('AsteroidDetailsClick', [asteroid]);
   });
+
+  function BroadcastInitialRankingsLoaded() {
+    if ($scope.loading_initial_rankings) {
+      pubsub.publish('InitialRankingsLoaded');
+      $scope.loading_initial_rankings = false;
+    }
+  }
 }
 

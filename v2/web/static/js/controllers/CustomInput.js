@@ -1,4 +1,5 @@
 function CustomInputCtrl($scope, $http, pubsub) {
+  var SERIALIZED_URL_PARAM = 's';
   $scope.object = {
     a: Ephemeris.earth.a,
     e: Ephemeris.earth.e,
@@ -13,9 +14,29 @@ function CustomInputCtrl($scope, $http, pubsub) {
   };
   $scope.num_custom_objects = 1;
 
-  pubsub.subscribe('ShowCustomInputCtrl', function() {
-    $scope.StartCustomOrbit();
-  });
+  $scope.Init = function() {
+    pubsub.subscribe('ShowCustomInputCtrl', function() {
+      $scope.StartCustomOrbit();
+    });
+
+    $scope.$watch('object', function (oldVal, newVal) {
+      // Update deeplink
+      $scope.direct_url = 'http://asterank.com/?s='
+        + encodeURIComponent(JSON.stringify($scope.object));
+    }, true);
+
+    // Check if there's a custom object in the url
+    var serialized = getURLParameter(SERIALIZED_URL_PARAM);
+    if (serialized) {
+      // Insert above any new rankings
+      pubsub.subscribe('InitialRankingsLoaded', function() {
+        console.log('assteroid serail');
+        var parsed_obj = JSON.parse(decodeURIComponent(serialized));
+        $scope.obj = parsed_obj;
+        $scope.UseCustomInput();
+      });
+    }
+  }
 
   $scope.StartCustomOrbit = function() {
     $scope.show_custom_input = true;
@@ -25,7 +46,6 @@ function CustomInputCtrl($scope, $http, pubsub) {
       // Unfortunately setTimeout hack is necessary because of how bootstrap
       // constructs and shows dialogs
       var element = document.getElementById('filepicker-widget')
-      console.log(element);
       filepicker.constructWidget(element);
     }, 0);
   }
@@ -64,7 +84,7 @@ function CustomInputCtrl($scope, $http, pubsub) {
     if (!e.fpfiles) return;
     for (var i=0; i < e.fpfiles.length; i++) {
       var file = e.fpfiles[i];
-
+      var key = file.key;
     }
   }
 }
