@@ -57,8 +57,18 @@ function CustomInputCtrl($scope, $http, pubsub) {
     $scope.num_custom_objects++;
     pubsub.publish('UpdateRankingsWithFeaturedAsteroid', [custom_obj]);
     $scope.CloseCustomInput();
+  }
 
-    // TODO save on server side
+  $scope.SaveAndUseCustomInput = function() {
+    // Save on server side
+    $http.post('/api/user_objects', {
+      object: $scope.object,
+      keys: $scope.image_keys
+    }).success(function(data) {
+      console.log('Object saved', data);
+    });
+
+    $scope.UseCustomInput();
   }
 
   $scope.CloseCustomInput = function() {

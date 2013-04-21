@@ -170,9 +170,10 @@ def asterank(query, limit):
   #results = [{key: asteroid[key] for key in key_whitelist} for asteroid in results]
   return results
 
-def insert_user_object(obj):
+def insert_user_object(obj, image_keys):
+  obj['s3_image_keys'] = image_keys if image_keys else []
   user_objects_coll.insert(obj)
   return {'success': True}
 
 def retrieve_user_objects(limit):
-  return list(user_objects_coll.find(query, {'_id': False}).limit(limit))
+  return list(user_objects_coll.find({}, {'_id': False}).limit(limit))

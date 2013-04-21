@@ -177,15 +177,18 @@ def kepler3d():
 
 # User custom objects
 
-@app.route('/api/user_objects', methods=['GET'])
-def user_objects_get():
-  return jsonify(api.retrieve_user_objects)
+@app.route('/api/user_objects', methods=['GET', 'POST'])
+def user_objects():
+  if request.method == 'GET':
+    return jsonify(api.retrieve_user_objects(300))   # limit set at 300 for now
 
-@app.route('/api/user_objects', methods=['POST'])
-def user_objects_post():
-  obj = json.loads(request.form['object'])
-  obj['s3_image_keys'] = json.loads(request.form['keys'])
-  return jsonify(api.insert_user_object(obj))
+  postdata = json.loads(request.data)
+  if 'object' not in postdata:
+    return jsonify({})
+
+  obj = postdata['object']
+  image_keys = postdata.get('keys', None)
+  return jsonify(api.insert_user_object(obj, image_keys))
 
 # Other Pages
 @app.route('/about')
