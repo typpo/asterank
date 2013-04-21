@@ -3,7 +3,7 @@ import urlparse
 import requests
 import json
 import neat_binary
-from threading import Thread
+from threading import Thread, Lock
 from util import md5_storage_hash
 from redis import StrictRedis
 from bs4 import BeautifulSoup
@@ -42,6 +42,7 @@ redis = StrictRedis(host='localhost', port=6379, db=3)
 
 ##### Disk cache config
 store = Shove('file://skymorph_store', 'file://skymorph_cache')
+store_mutex = Lock()
 
 ##### Functions
 
@@ -146,7 +147,9 @@ def get_fast_image(key):
   x0 = max(0, x - IMAGE_SIZE/2.)
   y0 = max(0, y - IMAGE_SIZE/2.)
   ret = neat_binary.process_from_internet(id, x0, y0, width, height)
+  store_mutex.acquire()
   store[storage_key] = ret
+  store_mutex.release()
   return ret
 
 def get_image(key):
@@ -159,7 +162,9 @@ def get_image(key):
     ret = r.content
   else:
     ret = info
+  store_mutex.acquire()
   store[storage_key] = ret
+  store_mutex.release()
   return ret
 
 def get_image_info(key):
