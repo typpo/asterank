@@ -4,6 +4,7 @@
 # Normally we do this on-demand when the user selects an asteroid,
 # but we pre-crawl info for the more popular ones.
 #
+# TODO this only crawls objects with prov_des set in JPL SBDB
 
 import skymorph
 import pymongo
@@ -17,6 +18,9 @@ asteroids = db.asteroids
 jpl = db.jpl
 def process(asteroid):
   prov_des = asteroid['prov_des']
+  if prov_des.strip() == '':
+    return
+  print 'crawl', prov_des
   skymorph.images_for(prov_des)
 
 
