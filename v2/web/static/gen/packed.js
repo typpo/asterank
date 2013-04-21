@@ -795,7 +795,7 @@ ShowOrbitalDiagram(); pubsub.publish('Lock3DView',[asteroid]);});function ShowDa
 for(var attr in MPC_FIELDS_TO_INCLUDE){if(!MPC_FIELDS_TO_INCLUDE.hasOwnProperty(attr))continue;var val=MPC_FIELDS_TO_INCLUDE[attr];$scope.stats.push({name:attr,units:val.units,value:$scope.asteroid[attr]});} 
 $scope.approaches=data['Close Approaches']; if(compositions_map){$scope.composition=Object.keys(compositions_map[$scope.asteroid.spec_B]);}
 else{$http.get('/api/compositions').success(function(data){compositions_map=data;$scope.composition=Object.keys(compositions_map[$scope.asteroid.spec_B]);});}
-var imagery_req_url='/api/skymorph/images_for?target='+$scope.asteroid.prov_des;$http.get(imagery_req_url).success(function(data){$scope.images=data.images;$scope.images_loading=false;});}
+var imagery_req_url='/api/skymorph/images_for?target='+$scope.asteroid.prov_des;var requesting_images_for=$scope.asteroid.prov_des;$http.get(imagery_req_url).success(function(data){if($scope.asteroid.prov_des==requesting_images_for){$scope.images=data.images;$scope.images_loading=false;}});}
 function ShowOrbitalDiagram(){ var orbit_diagram=new OrbitDiagram('#orbit-2d-diagram',{});orbit_diagram.render($scope.asteroid.a,$scope.asteroid.e,$scope.asteroid.w);}}
 function AsteroidLookupCtrl($scope,$http,pubsub){'use strict';var PRESELECT_URL_PARAM='object';$scope.lookup_query='';$scope.Init=function(){var preselected=getURLParameter(PRESELECT_URL_PARAM);if(preselected){$scope.autocomplete_default_text=preselected;$http.get('/api/autocomplete?query='+preselected).success(function(data){if(!data.length||data.length<1){alert('Sorry, could not load object "'+preselected+'"');return;}
 pubsub.publish('UpdateRankingsWithFeaturedAsteroid',[data[0]]);});}}

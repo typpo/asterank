@@ -164,9 +164,12 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
 
     // Imagery data!
     var imagery_req_url = '/api/skymorph/images_for?target=' + $scope.asteroid.prov_des;
+    var requesting_images_for = $scope.asteroid.prov_des;
     $http.get(imagery_req_url).success(function(data) {
-      $scope.images = data.images;
-      $scope.images_loading = false;
+      if ($scope.asteroid.prov_des == requesting_images_for) {
+        $scope.images = data.images;
+        $scope.images_loading = false;
+      }
     });
   }
 
