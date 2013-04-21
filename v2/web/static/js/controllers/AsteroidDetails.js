@@ -74,7 +74,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     function do_next_blink() {
       $('#imagery .image-container').hide();
       var showme = containers.shift();
-      $(showme).parent().show();
+      $(showme).parent().parent().show();  // parent container div
       containers.push(showme);
     }
     do_next_blink();
