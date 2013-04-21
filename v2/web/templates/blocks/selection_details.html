@@ -34,12 +34,13 @@
     </ul>
     </div>
     {% raw %}
-    <div id="imagery">
+    <div id="imagery" style="margin-bottom: 15px">
       <h4>Imagery from NEAT sky survey</h4>
       <div ng-show="images.length > 0">
-        <a ng-click="blink()">Blink images</a>
+        <a ng-click="blink()">Blink checked images</a>
         <div class="image-container" ng-repeat="image in images">
-          <h4>{{ image.time }}:</h4>
+          <input type="checkbox" style="margin-bottom:5px" />
+          <span style="font-size: 16px; font-weight:bold;">{{ image.time }}:</span>
           <img ng-src="/api/skymorph/image?key={{ image.key }}"/>
         </div>
       </div>

@@ -65,11 +65,16 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   var compositions_map = null;
 
   $scope.blink = function() {
-    var containers = $.makeArray($('#imagery .image-container').hide());
+    if ($('#imagery .image-container input:checked').length < 2) {
+      alert('Please check off at least 2 images you want to blink.');
+      return;
+    }
+    var $checked_containers = $('#imagery .image-container input:checked');
+    var containers = $.makeArray($checked_containers);
     function do_next_blink() {
       $('#imagery .image-container').hide();
       var showme = containers.shift();
-      $(showme).show();
+      $(showme).parent().show();
       containers.push(showme);
     }
     do_next_blink();
