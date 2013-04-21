@@ -1,4 +1,4 @@
-<div id="selection-details" ng-controller="AsteroidDetailsCtrl" ng-show="asteroid != null">
+<div id="selection-details" ng-controller="AsteroidDetailsCtrl" ng-show="asteroid != null" ng-init="Init()">
   <h3 ng-bind="asteroid.full_name"></h3>
   <p ng-show="stats.length < 1">
     Please be patient as data is loaded from JPL...
@@ -35,7 +35,7 @@
     </div>
     {% raw %}
     <div id="imagery">
-      <h4>Images</h4>
+      <h4>Imagery from NEAT sky survey</h4>
       <div ng-show="images.length > 0">
         <a ng-click="blink()">Blink</a>
         <div class="image-container" ng-repeat="image in images">
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div ng-show="images_loading">
-        Requesting and processing images from NASA.  This can take some time.
+        Requesting and processing images from NASA.  This can take some time...
       </div>
       <div ng-show="!images_loading && images.length < 1">
         Sorry, couldn't get any imagery for this object.

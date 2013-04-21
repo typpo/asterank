@@ -73,7 +73,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       containers.push(showme);
     }
     do_next_blink();
-    setInterval(do_next_blink, 1000);
+    blink_interval = setInterval(do_next_blink, 1000);
   }
 
   pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
