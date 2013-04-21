@@ -765,7 +765,8 @@ return OrbitDiagram;})();function SimpleCache(hash_fn){var me=this;hash_fn=hash_
 me.Set=function(key,val){cache[hash_fn(key)]=val;}}
 if(!Object.keys){Object.keys=(function(){var hasOwnProperty=Object.prototype.hasOwnProperty,hasDontEnumBug=!({toString:null}).propertyIsEnumerable('toString'),dontEnums=['toString','toLocaleString','valueOf','hasOwnProperty','isPrototypeOf','propertyIsEnumerable','constructor'],dontEnumsLength=dontEnums.length;return function(obj){if(typeof obj!=='object'&&typeof obj!=='function'||obj===null)throw new TypeError('Object.keys called on non-object');var result=[];for(var prop in obj){if(hasOwnProperty.call(obj,prop))result.push(prop);}
 if(hasDontEnumBug){for(var i=0;i<dontEnumsLength;i++){if(hasOwnProperty.call(obj,dontEnums[i]))result.push(dontEnums[i]);}}
-return result;}})()};(function(){'use strict';var fuzzes=[{word:'trillion',num:1000000000000},{word:'billion',num:1000000000},{word:'million',num:1000000}];function toFuzz(n){if(n<0.1){return 0;}
+return result;}})()};function getURLParameter(name){return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g,'%20'))||null;}
+(function(){'use strict';var fuzzes=[{word:'trillion',num:1000000000000},{word:'billion',num:1000000000},{word:'million',num:1000000}];function toFuzz(n){if(n<0.1){return 0;}
 for(var i=0;i<fuzzes.length;i++){var x=fuzzes[i];if(n/x.num>=1){var prefix=(n/x.num);if(i==0&&prefix>100)
 return'>100 '+x.word;return prefix.toFixed(2)+' '+x.word;}}
 return n;}
@@ -790,7 +791,8 @@ for(var attr in MPC_FIELDS_TO_INCLUDE){if(!MPC_FIELDS_TO_INCLUDE.hasOwnProperty(
 $scope.approaches=data['Close Approaches']; if(compositions_map){$scope.composition=Object.keys(compositions_map[$scope.asteroid.spec_B]);}
 else{$http.get('/api/compositions').success(function(data){compositions_map=data;$scope.composition=Object.keys(compositions_map[$scope.asteroid.spec_B]);});}}
 function ShowOrbitalDiagram(){ var orbit_diagram=new OrbitDiagram('#orbit-2d-diagram',{});orbit_diagram.render($scope.asteroid.a,$scope.asteroid.e,$scope.asteroid.w);}}
-function AsteroidLookupCtrl($scope,$http,pubsub){$scope.lookup_query='';$scope.Init=function(){}
+function AsteroidLookupCtrl($scope,$http,pubsub){'use strict';var PRESELECT_URL_PARAM='object';$scope.lookup_query='';$scope.Init=function(){var preselected=getURLParameter(PRESELECT_URL_PARAM);if(preselected){$scope.autocomplete_default_text=preselected;$http.get('/api/autocomplete?query='+preselected).success(function(data){if(!data.length||data.length<1){alert('Sorry, could not load object "'+preselected+'"');return;}
+pubsub.publish('UpdateRankingsWithFeaturedAsteroid',[data[0]]);});}}
 $scope.Lookup=function(suggestion){pubsub.publish('UpdateRankingsWithFeaturedAsteroid',[suggestion.data]);}}
 function AsteroidTableCtrl($scope,$http,pubsub){'use strict'; $scope.rankings=[];$scope.sort_orders=[{text:'most cost effective',search_value:'score'},{text:'most valuable',search_value:'value'},{text:'most accessible',search_value:'accessibility'},{text:'upcoming passes',search_value:'upcoming'}];$scope.limit_options=[100,300,500,1000,4000]; $scope.Init=function(){ $scope.limit=$scope.limit_options[1];$scope.sort_by=$scope.sort_orders[0];$scope.UpdateRankings();}
 var rankings_cache=new SimpleCache(function(item){return item.sort_by+'|'+item.limit;});$scope.UpdateRankings=function(){var params={sort_by:$scope.sort_by.search_value,limit:$scope.limit};var cache_result=rankings_cache.Get(params);if(cache_result){$scope.rankings=cache_result;pubsub.publish('NewAsteroidRanking',[$scope.rankings]);}

@@ -16,10 +16,16 @@ app.secret_key = 'not a secret key'
 # bundling
 assets = Environment(app)
 
-# main routes/api routes
+# main routes
 @app.route("/")
 def index():
   return render_template('index.html')
+
+@app.route("/asteroid")
+def asteroid_view():
+  return render_template('asteroid.html')
+
+# General api routes
 
 @app.route('/api/mpc')
 def api_mpc():
