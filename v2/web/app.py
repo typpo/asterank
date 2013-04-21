@@ -121,7 +121,7 @@ def skymorph_search_target():
 
 @app.route('/api/skymorph/images_for')
 def skymorph_images_for():
-  return jsonify({'keys': skymorph.images_for(request.args.get('target'))})
+  return jsonify({'images': skymorph.images_for(request.args.get('target'))})
 
 @app.route('/api/skymorph/search_orbit')
 def skymorph_search_orbit():

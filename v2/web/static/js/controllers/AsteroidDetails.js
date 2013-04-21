@@ -46,9 +46,22 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
   $scope.showing_stats = [];   // stats to show
   $scope.approaches = [];      // upcoming approaches
   $scope.composition = [];
+  $scope.images_loading = true;
 
   var jpl_cache = new SimpleCache();
   var compositions_map = null;
+
+  $scope.blink = function() {
+    var containers = $.makeArray($('#imagery .image-container').hide());
+    function do_next_blink() {
+      $('#imagery .image-container').hide();
+      var showme = containers.shift();
+      $(showme).show();
+      containers.push(showme);
+    }
+    do_next_blink();
+    setInterval(do_next_blink, 1000);
+  }
 
   pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
     if ($scope.asteroid
@@ -131,11 +144,10 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     }
 
     // Imagery data!
-    console.log('loading imagery for ' + $scope.asteroid.prov_des);
-    $http.get('/api/skymorph/images_for?target=' + $scope.asteroid.prov_des).success(function(data) {
-      console.log('got imgs');
-      $scope.images =
-        Object.keys(compositions_map[$scope.asteroid.spec_B]);
+    var imagery_req_url = '/api/skymorph/images_for?target=' + $scope.asteroid.prov_des;
+    $http.get(imagery_req_url).success(function(data) {
+      $scope.images = data.images;
+      $scope.images_loading = false;
     });
   }
 

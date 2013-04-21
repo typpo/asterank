@@ -48,15 +48,18 @@ store = Shove('file://skymorph_store', 'file://skymorph_cache')
 def images_for(target):
   results = search_target(target)
   threads = []
-  keys = []
+  ret = []
   for result in results[-10:]:
-    keys.append(result['key'])
+    ret.append({
+      'key': result['key'],
+      'time': result['time'],
+      })
     t = Thread(target=get_image, args=(result['key'], ))
     t.start()
     threads.append(t)
   for thread in threads:
     thread.join()
-  return keys
+  return ret
 
 def search_target(target):
   target = target.upper()
