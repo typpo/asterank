@@ -175,7 +175,19 @@ def skymorph_fast_image():
 def kepler3d():
   return render_template('kepler3d.html')
 
-# Misc Pages
+# User custom objects
+
+@app.route('/api/user_objects', methods=['GET'])
+def user_objects_get():
+  return jsonify(api.retrieve_user_objects)
+
+@app.route('/api/user_objects', methods=['POST'])
+def user_objects_post():
+  obj = json.loads(request.form['object'])
+  obj['s3_image_keys'] = json.loads(request.form['keys'])
+  return jsonify(api.insert_user_object(obj))
+
+# Other Pages
 @app.route('/about')
 def about():
   return render_template('about.html')

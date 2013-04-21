@@ -15,6 +15,7 @@ mpc_coll = db.mpc
 jpl = db.jpl
 kepler_coll = db.kepler
 exoplanets_coll = db.exo
+user_objects_coll = db.user_objects
 
 UPCOMING_SORT = 'upcoming'
 
@@ -168,3 +169,10 @@ def asterank(query, limit):
   #key_whitelist = set(['a', 'e', 'i', 'om', 'ma', 'spec_B', 'GM', 'dv', ])  # TODO complete
   #results = [{key: asteroid[key] for key in key_whitelist} for asteroid in results]
   return results
+
+def insert_user_object(obj):
+  user_objects_coll.insert(obj)
+  return {'success': True}
+
+def retrieve_user_objects(limit):
+  return list(user_objects_coll.find(query, {'_id': False}).limit(limit))

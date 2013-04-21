@@ -57,6 +57,8 @@ function CustomInputCtrl($scope, $http, pubsub) {
     $scope.num_custom_objects++;
     pubsub.publish('UpdateRankingsWithFeaturedAsteroid', [custom_obj]);
     $scope.CloseCustomInput();
+
+    // TODO save on server side
   }
 
   $scope.CloseCustomInput = function() {
@@ -71,9 +73,11 @@ function CustomInputCtrl($scope, $http, pubsub) {
   // File picker functions
   $scope.FilepickerCallback = function(e) {
     if (!e.fpfiles) return;
+    var keys = [];
     for (var i=0; i < e.fpfiles.length; i++) {
       var file = e.fpfiles[i];
-      var key = file.key;
+      keys.push(file.key);
     }
+    $scope.image_keys = keys;
   }
 }
