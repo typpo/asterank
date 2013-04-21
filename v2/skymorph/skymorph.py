@@ -141,7 +141,6 @@ def get_image(key):
   else:
     ret = info
   store[storage_key] = ret
-  print ret
   return ret
 
 def get_image_info(key):
