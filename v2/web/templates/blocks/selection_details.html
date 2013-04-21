@@ -39,8 +39,8 @@
       <div ng-show="images.length > 0">
         <a href="#" ng-click="blink()">Blink checked images</a>
         <div class="image-container" ng-repeat="image in images">
-          <input type="checkbox" style="margin-bottom:5px" />
-          <span style="font-size: 16px; font-weight:bold;">{{ image.time }}:</span>
+          <label><input type="checkbox" style="margin-bottom:5px" />
+          <span style="font-size: 16px; font-weight:bold;">{{ image.time }}:</span></label>
           <img ng-src="/api/skymorph/image?key={{ image.key }}"/>
         </div>
       </div>
