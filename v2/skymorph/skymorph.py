@@ -105,6 +105,8 @@ def parse_results_table(text, neat_fields):
   soup = BeautifulSoup(text)
 
   main_table = soup.find('table')
+  if not main_table:
+    return []
   rows = main_table.findAll('tr')[2:]
 
   cols_per_row = [row.findAll('td') for row in rows]
