@@ -10,14 +10,18 @@ DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
 DEFAULT_MOID = 2  # TODO get avg moid
 DEFAULT_DV = 6.5 #km/s
+DEFAULT_COMET_DV = 50  # km/s
 
 def closeness_weight(obj):
+  if obj['spec_B'] == 'comet':
+    return -1
+
   emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
 
   # penalize aphelion distance
   aph = obj['ad']
   if aph > 50:
-    return float('-1')
+    return -1
   aph_score = 1/(1+math.exp(0.9*aph))
 
   major_axis = obj['a']
@@ -26,7 +30,13 @@ def closeness_weight(obj):
   ph = obj['q']
   ph_score = 1/(1+math.exp(0.9*ph))
 
-  dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
+  if 'dv' in obj:
+    dv = obj['dv']
+  else:
+    if obj['spec_B'] == 'comet':
+      dv = DEFAULT_COMET_DV
+    else:
+      dv = DEFAULT_DV
   #dv_score = pow(math.e, -0.9 * dv)
   dv_score = 1 + (1/(1+math.exp(0.9*dv-4)))
   dv_score *= 2
