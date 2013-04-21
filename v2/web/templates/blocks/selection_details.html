@@ -34,21 +34,25 @@
     </ul>
     </div>
     {% raw %}
-    <div id="imagery" style="margin-bottom: 15px" ng-show="!asteroid.custom_object">
-      <h4>Imagery from NEAT sky survey</h4>
-      <div ng-show="images.length > 0">
-        <a href="#" ng-click="blink()">Blink checked images</a>
-        <div class="image-container" ng-repeat="image in images">
-          <label><input type="checkbox" style="margin-bottom:5px" />
-          <span style="font-size: 16px; font-weight:bold;">{{ image.time }}:</span></label>
-          <img ng-src="/api/skymorph/image?key={{ image.key }}"/>
+    <div style="margin-bottom: 15px">
+      <div id="imagery" ng-show="!asteroid.custom_object">
+        <h4>Imagery from NEAT sky survey</h4>
+        <div ng-show="images.length > 0">
+          <a href="#" ng-click="blink()">Blink checked images</a>
+          <div class="image-container" ng-repeat="image in images">
+            <label>
+            <input type="checkbox" style="margin-bottom:5px" />
+            <span style="font-size: 16px; font-weight:bold;">{{ image.time }}:</span>
+            <img ng-src="/api/skymorph/image?key={{ image.key }}"/>
+            </label>
+          </div>
         </div>
-      </div>
-      <div ng-show="images_loading">
-        Requesting and processing images from NASA.  This can take some time...
-      </div>
-      <div ng-show="!images_loading && images.length < 1">
-        Sorry, couldn't get any imagery for this object.
+        <div ng-show="images_loading">
+          Requesting and processing images from NASA.  This can take some time...
+        </div>
+        <div ng-show="!images_loading && images.length < 1">
+          Sorry, couldn't get any imagery for this object.
+        </div>
       </div>
     </div>
     {% endraw %}
