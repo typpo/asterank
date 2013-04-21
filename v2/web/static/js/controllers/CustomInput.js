@@ -34,4 +34,18 @@ function CustomInputCtrl($scope, $http, pubsub) {
   $scope.CloseCustomInput = function() {
     $scope.show_custom_input = false;
   }
+
+  // File picker functions
+  $scope.ShowFilePicker = function() {
+    $scope.picking_file = true;
+    filepicker.pickAndStore({
+      container: 'filepicker-iframe',
+      mimetype: 'image/*'
+    }, function(url) {
+      $scope.picking_file = false;
+      console.log(url);
+    }, function() {
+      $scope.picking_file = false;
+    });
+  }
 }

@@ -9,56 +9,62 @@
           <div class="control-group">
             <label class="control-label" for="custom_orbit_a">Semi-major axis</label>
             <div class="controls">
-              <input ng-model="object.a" type="text">
+              <input ng-model="object.a" type="text" id="custom_orbit_a">
               <span class="add-on">AU</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_e">Eccentricity</label>
             <div class="controls">
-              <input ng-model="object.e" type="text">
+              <input ng-model="object.e" type="text" id="custom_orbit_e">
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_i">Inclination</label>
             <div class="controls">
-              <input ng-model="object.i" type="text">
+              <input ng-model="object.i" type="text" id="custom_orbit_i">
               <span class="add-on">deg</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_om">Long. Ascending Node</label>
             <div class="controls">
-              <input ng-model="object.om" type="text">
+              <input ng-model="object.om" type="text" id="custom_orbit_om">
               <span class="add-on">deg</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_w">Long. Perihelion</label>
             <div class="controls">
-              <input ng-model="object.w" type="text">
+              <input ng-model="object.w" type="text" id="custom_orbit_w">
               <span class="add-on">deg</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_ma">Mean anomaly</label>
             <div class="controls">
-              <input ng-model="object.ma" type="text">
+              <input ng-model="object.ma" type="text" id="custom_orbit_ma">
               <span class="add-on">deg</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_epoch">Epoch</label>
             <div class="controls">
-              <input ng-model="object.epoch" type="text">
+              <input ng-model="object.epoch" type="text" id="custom_orbit_epoch">
               <span class="add-on">JED</span>
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="custom_orbit_period">Period</label>
             <div class="controls">
-              <input ng-model="object.per" type="text">
+              <input ng-model="object.per" type="text" id="custom_orbit_period">
               <span class="add-on">days</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="custom_orbit_upload">Real object?</label>
+            <div class="controls">
+              <button class="btn" ng-click="ShowFilePicker()">Upload imagery</button>
             </div>
           </div>
         </form>
@@ -69,3 +75,7 @@
       </div>
   </div>
 </span>
+
+<iframe id="filepicker-iframe" ng-show="picking_file">
+
+</iframe>

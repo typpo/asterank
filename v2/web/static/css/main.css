@@ -135,6 +135,20 @@ hr.top-bottom-divider {
   text-align: center;
 }
 
+/** Custom input stuff */
+
+#filepicker-iframe {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 600px;
+  height: 475px;
+  margin-left: -300px;
+  background-color: #fff;
+  z-index: 999;
+}
+
+
 /* Autocomplete stuff */
 #asteroid-lookup-suggestions {
   position: relative;
@@ -188,10 +202,16 @@ code {
   color: aquamarine;
 }
 
+/* Modals */
 .modal {
-  background-color: #555;
+  background-color: #333;
 }
 
 .modal-footer {
-  background-color: #555;
+  background-color: #333;
 }
+
+.modal-body {
+  max-height: 490px;
+}
+
