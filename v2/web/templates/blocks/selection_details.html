@@ -34,7 +34,7 @@
     </ul>
     </div>
     {% raw %}
-    <div id="imagery" style="margin-bottom: 15px">
+    <div id="imagery" style="margin-bottom: 15px" ng-show="!asteroid.custom_object">
       <h4>Imagery from NEAT sky survey</h4>
       <div ng-show="images.length > 0">
         <a href="#" ng-click="blink()">Blink checked images</a>
