@@ -151,22 +151,22 @@ def skymorph_search_time():
 @app.route('/api/skymorph/image')
 def skymorph_image():
   ret = skymorph.get_image(request.args.get('key'))
-  if ret:
+  if type(ret) == dict:
+    return jsonify(ret)
+  else:
     response = make_response(ret)
     response.headers["Content-type"] = "image/gif"
     return response
-  else:
-    return jsonify(ret)
 
 @app.route('/api/skymorph/fast_image')
 def skymorph_fast_image():
   ret = skymorph.get_fast_image(request.args.get('key'))
-  if ret:
+  if type(ret) == dict:
+    return jsonify(ret)
+  else:
     response = make_response(ret)
     response.headers["Content-type"] = "image/png"
     return response
-  else:
-    return jsonify(ret)
 
 # Kepler
 
