@@ -41,12 +41,25 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
     }
   };
 
+  var blink_interval;    // js interval used to blink sky survey images
+
   $scope.asteroid = null;
   $scope.asteroid_details = null;
-  $scope.showing_stats = [];   // stats to show
-  $scope.approaches = [];      // upcoming approaches
-  $scope.composition = [];
-  $scope.images_loading = true;
+
+  $scope.Init = function() {
+    $scope.ResetView();
+  }
+
+  $scope.ResetView = function() {
+    $scope.showing_stats = [];   // stats to show
+    $scope.approaches = [];      // upcoming approaches
+    $scope.composition = [];
+    $scope.images = [];
+    $scope.images_loading = true;
+    if (blink_interval) {
+      clearInterval(blink_interval);
+    }
+  }
 
   var jpl_cache = new SimpleCache();
   var compositions_map = null;
@@ -75,6 +88,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
 
     // Update detailed click view
     $scope.asteroid = asteroid;
+    $scope.ResetView();
 
     // Flat fields that we just want to display
     $scope.stats = [];
