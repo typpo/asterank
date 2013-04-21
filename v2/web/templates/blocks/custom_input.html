@@ -71,8 +71,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <div class="link-orbit-container">
-        Link this orbit: <input ng-model="direct_url" type="text" value="http://asterank.com/"/>
+        <div id="link-orbit-container" class="link-orbit-container">
+        Link this orbit: <input ng-click="OrbitLinkFocused()" ng-model="direct_url" type="text" value="http://asterank.com/"/>
         </div>
         <button class="btn btn-success" ng-click="UseCustomInput()">Ok</button>
         <button class="btn cancel" ng-click="CloseCustomInput()">Cancel</button>

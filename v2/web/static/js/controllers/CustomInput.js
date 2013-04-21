@@ -30,7 +30,6 @@ function CustomInputCtrl($scope, $http, pubsub) {
     if (serialized) {
       // Insert above any new rankings
       pubsub.subscribe('InitialRankingsLoaded', function() {
-        console.log('assteroid serail');
         var parsed_obj = JSON.parse(decodeURIComponent(serialized));
         $scope.obj = parsed_obj;
         $scope.UseCustomInput();
@@ -64,22 +63,12 @@ function CustomInputCtrl($scope, $http, pubsub) {
     $scope.show_custom_input = false;
   }
 
-  // File picker functions
-  /*
-  $scope.ShowFilePicker = function() {
-    $scope.picking_file = true;
-    filepicker.pickAndStore({
-      container: 'filepicker-iframe',
-      mimetype: 'image/*'
-    }, function(url) {
-      $scope.picking_file = false;
-      console.log(url);
-    }, function() {
-      $scope.picking_file = false;
-    });
+  $scope.OrbitLinkFocused= function() {
+    // remember, jquery in angular is bad
+    $('#link-orbit-container input').select();
   }
-  */
 
+  // File picker functions
   $scope.FilepickerCallback = function(e) {
     if (!e.fpfiles) return;
     for (var i=0; i < e.fpfiles.length; i++) {
