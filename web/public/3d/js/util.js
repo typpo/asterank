@@ -18,6 +18,9 @@ function timedChunk(particles, positions, fn, context, callback){
   setTimeout(tick, 25);
 }
 
+// MIT License.
+// Copyright 2012 Ian Webster (asterank.com)
+
 function toJED(d){
   // TODO precompute constants
   return Math.floor((d.getTime() / (1000 * 60 * 60 * 24)) - 0.5) + 2440588;
