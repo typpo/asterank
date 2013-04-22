@@ -1,3 +1,6 @@
+// MIT License.
+// Copyright 2012 Ian Webster (asterank.com)
+
 var Ephemeris = getEphemeris();
 var pi = Math.PI;
 var PIXELS_PER_AU = 50;

@@ -1,3 +1,6 @@
+// MIT License.
+// Copyright 2012 Ian Webster (asterank.com)
+
 $(function() {
   "use strict";
 

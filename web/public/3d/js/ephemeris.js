@@ -1,3 +1,6 @@
+// MIT License.
+// Copyright 2012 Ian Webster (asterank.com)
+
 window.Ephemeris = {
   asteroid_2012_da14: {
     full_name: '2012 DA14',
