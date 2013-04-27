@@ -21,9 +21,13 @@ assets = Environment(app)
 def index():
   return render_template('index.html')
 
-@app.route("/asteroid")
-def asteroid_view():
-  return render_template('asteroid.html')
+@app.route("/3d")
+def view_3d():
+  return render_template('full3d.html')
+
+@app.route("/3d/notsupported.html")
+def notsupported_3d():
+  return render_template('notsupported.html')
 
 # General api routes
 
