@@ -201,11 +201,9 @@
     //THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
     THREEx.WindowResize(renderer, camera, container);    // handle window resize
     // Fullscreen api
-    /*
     if (THREEx.FullScreen.available()) {
       THREEx.FullScreen.bindKey();
     }
-    */
 
     scene.add(camera);
 

@@ -15,6 +15,9 @@ app.secret_key = 'not a secret key'
 
 # bundling
 assets = Environment(app)
+# This filter can be helping for debugging javascript.
+def noop_filter(_in, out, **kw):
+  out.write(_in.read())
 
 # main routes
 @app.route("/")
@@ -23,7 +26,7 @@ def index():
 
 @app.route("/3d")
 def view_3d():
-  return render_template('full3d.html')
+  return render_template('full3d.html', noop=noop_filter)
 
 @app.route("/3d/notsupported.html")
 def notsupported_3d():

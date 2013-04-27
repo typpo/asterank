@@ -80,16 +80,18 @@
 		</div>
 	</div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  {% assets filter="jsmin", output="gen/packed_full3d.js",
+  {% assets filter=noop, output="gen/packed_full3d.js",
   "js/3d/lib/three.js/three.min.js",
   "js/3d/lib/three.js/Detector.js",
   "js/3d/lib/three.js/TrackballControls.js",
   "js/3d/lib/threex/THREEx.WindowResize.js",
   "js/3d/lib/threex/THREEx.FullScreen.js",
+  "js/3d/lib/dat.gui.js",
   "js/3d/ellipse.js",
   "js/3d/ephemeris.js",
   "js/3d/util.js",
-  "js/3d/main.js"
+  "js/3d/main.js",
+  "js/3d/full3d_loader.js"
   %}
 <script type="text/javascript" src="{{ASSET_URL}}"></script>
 {% endassets %}
