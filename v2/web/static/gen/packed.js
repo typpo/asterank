@@ -991,14 +991,13 @@ if(typeof datgui!=='undefined'){ var now=new Date().getTime();if(now-display_dat
 break;case'debug':console.log(data.value);break;default:console.log('Invalid data type',data.type);}}
 function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');$.getJSON('/api/rankings?sort_by='+sort+'&n='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
-+'&use3d=true&compact=true&limit=100',function(data){processAsteroidRankings(data);});}
++'&use3d=true&compact=true&limit=100',function(data){me.processAsteroidRankings(data);});}
 me.clearRankings=function(){clearRankings();}
 function clearRankings(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
 clearLock(true);if(particleSystem){scene.remove(particleSystem);particleSystem=null;}
 if(asteroids_loaded){stopSimulation();}
 if(lastHovered){scene.remove(lastHovered);}}
-me.processAsteroidRankings=function(data){return processAsteroidRankings(data);}
-function processAsteroidRankings(data){if(!data){alert('Sorry, something went wrong and the server failed to return data.');return;}
+me.processAsteroidRankings=function(data){if(!data){alert('Sorry, something went wrong and the server failed to return data.');return;}
 var n=data.length; added_objects=planets.slice();particle_system_geometry=new THREE.Geometry();for(var i=0;i<planets.length;i++){ particle_system_geometry.vertices.push(new THREE.Vector3(0,0,0));}
 var useBigParticles=!using_webgl;var featured_count=0;var featured_html='';for(var i=0;i<n;i++){if(i===NUM_BIG_PARTICLES){if(!using_webgl){ break;}
 useBigParticles=false;}

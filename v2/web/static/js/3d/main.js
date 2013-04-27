@@ -576,7 +576,7 @@
     $.getJSON('/api/rankings?sort_by=' + sort + '&n='
         + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
         + '&use3d=true&compact=true&limit=100', function(data) {
-          processAsteroidRankings(data);
+          me.processAsteroidRankings(data);
     });
   }
 
@@ -604,10 +604,6 @@
   }
 
   me.processAsteroidRankings = function(data) {
-    return processAsteroidRankings(data);
-  }
-
-  function processAsteroidRankings(data) {
     if (!data) {
       alert('Sorry, something went wrong and the server failed to return data.');
       return;
@@ -654,20 +650,21 @@
       }
 
       // Add it to featured list
-      // if (featured_count++ < NUM_BIG_PARTICLES) {
       feature_map[roid.full_name] = {
         'orbit': orbit,
         'idx': added_objects.length
       };
-      /*
+      // TODO(@ian) all this specific objects-of-interest/featured stuff
+      // needs to be moved out of 3d code !!
+      if (featured_count++ < NUM_BIG_PARTICLES) {
         featured_html += '<tr data-full-name="'
           + roid.full_name
           + '"><td><a href="#">'
           + (roid.prov_des || roid.full_name)
           + '</a></td><td>'
-          + (roid.price < 1 ? 'N/A' : '$' + roid.fuzzed_price)
+          + (roid.price < 1 ? 'N/A' : '$' + fuzzy_price(roid.price))
           + '</td></tr>';
-          */
+      }
 
       // Add to list of objects in scene
       added_objects.push(orbit);
@@ -911,5 +908,36 @@
     // actually render the scene
     renderer.render(scene, camera);
   }
+
+  /** Fuzzy price **/
+
+  var fuzzes = [
+    {
+      word: 'trillion',
+      num: 1000000000000
+    },
+    {
+      word: 'billion',
+      num: 1000000000
+    },
+    {
+      word: 'million',
+      num: 1000000
+    }
+  ];
+
+  function fuzzy_price(n) {
+    for (var i=0; i < fuzzes.length; i++) {
+      var x = fuzzes[i];
+      if (n / x.num >= 1) {
+        var prefix = (n / x.num);
+        if (i==0 && prefix > 100)
+          return '>100 ' + x.word;
+        return prefix.toFixed(2) + ' ' + x.word;
+      }
+    }
+    return n;
+  }
+
 }
 if (!window.console) window.console = {log: function() {}};
