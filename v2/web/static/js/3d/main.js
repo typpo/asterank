@@ -30,9 +30,9 @@
   /** Constants **/
   var WEB_GL_ENABLED = true
     , MAX_NUM_ORBITS = 4000
-    , CANVAS_NUM_ORBITS = 15  // gimped version orbits
+    , CANVAS_NUM_ORBITS = 15    // gimped version orbits
     , PIXELS_PER_AU = 50
-    , NUM_BIG_PARTICLES = 30   // show this many asteroids with orbits
+    , NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
 
   /** Other variables **/
   var stats, scene, renderer, composer
