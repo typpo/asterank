@@ -28,7 +28,7 @@
   })();
 
   /** Constants **/
-  var WEB_GL_ENABLED = false;
+  var WEB_GL_ENABLED = true;
 
   var MAX_NUM_ORBITS = 4000;
   var CANVAS_NUM_ORBITS = 15;  // gimped version orbits
