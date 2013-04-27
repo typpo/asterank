@@ -103,13 +103,16 @@
   function initGUI() {
     var ViewUI = function() {
       this['Cost effective'] = function() {
+        me.clearRankings();
         runAsteroidQuery('score');
       };
       this['Most valuable'] = function() {
-        runAsteroidQuery('price');
+        me.clearRankings();
+        runAsteroidQuery('value');
       };
       this['Most accessible'] = function() {
-        runAsteroidQuery('closeness');
+        me.clearRankings();
+        runAsteroidQuery('accessibility');
       };
       this['Speed'] = opts.jed_delta;
       this['Planet orbits'] = planet_orbits_visible;
@@ -584,10 +587,6 @@
   }
 
   me.clearRankings = function() {
-    clearRankings();
-  }
-
-  function clearRankings() {
     // Remove any old setup
     for (var i=0; i < added_objects.length; i++) {
       scene.remove(added_objects[i].getParticle());
