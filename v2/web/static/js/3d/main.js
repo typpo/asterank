@@ -6,7 +6,7 @@
   // options and defaults
   opts.default_camera_position = opts.camera_position || [0, -155, 32];
   opts.camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
-  opts.jed_step_interval = opts.jed_step_interval || .25;
+  opts.jed_delta = opts.jed_delta || .25;
   opts.custom_object_fn = opts.custom_object_fn || null;
   opts.object_texture_path = opts.object_texture_path || "/static/img/cloud4.png";
   opts.not_supported_callback = opts.not_supported_callback || function() {};
@@ -108,9 +108,9 @@
       this['Most accessible'] = function() {
         runAsteroidQuery('closeness');
       };
-      this.movement = object_movement_on;
-      this['planet orbits'] = planet_orbits_visible;
-      this['display date'] = '12/26/2012';
+      this['Speed'] = opts.jed_delta;
+      this['Planet orbits'] = planet_orbits_visible;
+      this['Display date'] = '12/26/2012';
     };
 
     window.onload = function() {
@@ -119,14 +119,17 @@
       gui.add(text, 'Cost effective');
       gui.add(text, 'Most valuable');
       gui.add(text, 'Most accessible');
-      gui.add(text, 'movement').onChange(function() {
-        object_movement_on = !object_movement_on;
-        toggleSimulation(object_movement_on);
+      gui.add(text, 'Speed', 0, 5).onChange(function(val) {
+        opts.jed_delta = val;
+        var was_moving = object_movement_on;
+        object_movement_on = opts.jed_delta > 0;
+        if (was_moving != object_movement_on)
+          toggleSimulation(object_movement_on);
       });
-      gui.add(text, 'planet orbits').onChange(function() {
+      gui.add(text, 'Planet orbits').onChange(function() {
         togglePlanetOrbits();
       });
-      gui.add(text, 'display date').onChange(function(val) {
+      gui.add(text, 'Display date').onChange(function(val) {
         var newdate = Date.parse(val);
         if (newdate) {
           var newjed = toJED(newdate);
@@ -209,10 +212,7 @@
 
     scene.add(camera);
 
-    cameraControls	= new THREE.TrackballControls(
-        camera,
-        opts.container
-        )
+    cameraControls	= new THREE.TrackballControls(camera, opts.container);
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
@@ -902,7 +902,7 @@
     if (using_webgl && (object_movement_on || force)) {
       // update shader vals for asteroid cloud
       uniforms.jed.value = jed;
-      jed += opts.jed_step_interval;
+      jed += opts.jed_delta;
     }
 
     // actually render the scene
