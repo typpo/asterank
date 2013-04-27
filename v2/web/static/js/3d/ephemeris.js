@@ -85,7 +85,7 @@ window.Ephemeris = {
   }
 };
 
-for (x in Ephemeris) {
+for (var x in Ephemeris) {
   if (Ephemeris.hasOwnProperty(x) && Ephemeris[x].w_bar && Ephemeris[x].L) {
     Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
   }
