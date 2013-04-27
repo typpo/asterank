@@ -21,67 +21,6 @@ server {
         proxy_read_timeout 40;
         proxy_pass http://localhost:9990/;
     }
-    location /old {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/;
-    }
-    location /images {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/images;
-    }
-    location /top {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/top;
-    }
-    location /3d {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/3d;
-    }
-    # for old site
-    location /css {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/css;
-    }
-    location /generated {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:9590/generated;
-    }
 
     # galaxies
     location /galaxies {
