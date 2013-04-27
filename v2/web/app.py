@@ -87,6 +87,7 @@ def rankings():
   try:
     limit = int(request.args.get('limit')) or 10
     results = api.rankings(request.args.get('sort_by'), limit)
+    # TODO add a compact option
     json_resp = json.dumps(results)
     return Response(json_resp, mimetype='application/json', headers={ \
       'Cache-Control': 'max-age=432000', # 5 days

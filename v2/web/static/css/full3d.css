@@ -126,3 +126,11 @@ body {
 
   border: 1px #ccc solid;
 }
+
+#container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%
+}
