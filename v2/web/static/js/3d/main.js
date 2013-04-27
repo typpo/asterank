@@ -27,7 +27,7 @@
 
   var WEB_GL_ENABLED = true;
 
-  var MAX_NUM_ORBITS = 4000;
+  var MAX_NUM_ORBITS = 100;   // TODO(@ian) switch back
   var CANVAS_NUM_ORBITS = 15;  // gimped version orbits
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
@@ -573,9 +573,9 @@
 
     // Get new data points
     $('#loading-text').html('asteroids database');
-    $.getJSON('/api/rankings?sort_by=' + sort + '&n='
+    $.getJSON('/api/rankings?sort_by=' + sort + '&limit='
         + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
-        + '&use3d=true&compact=true&limit=100', function(data) {
+        + '&use3d=true&compact=true', function(data) {
           me.processAsteroidRankings(data);
     });
   }
@@ -798,7 +798,7 @@
       // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
       attributes.value_color.value[i] = added_objects[i].opts.display_color;
       attributes.locked.value[i] = 0.0;
-    }
+    }  // end added_objects loop
     setAttributeNeedsUpdateFlags();
 
     particleSystem = new THREE.ParticleSystem(
