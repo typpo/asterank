@@ -71,7 +71,7 @@
   var uniforms;
 
   init();
-  //initGUI();
+  initGUI();
 
   $('#btn-toggle-movement').on('click', function() {
     object_movement_on = !object_movement_on;
