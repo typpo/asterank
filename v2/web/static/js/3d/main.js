@@ -12,6 +12,8 @@
   opts.not_supported_callback = opts.not_supported_callback || function() {};
   opts.sun_scale = opts.sun_scale || 50;
   opts.show_dat_gui = opts.show_dat_gui || false;
+  opts.top_object_color = opts.top_object_color
+      ? new THREE.Color(opts.top_object_color) : new THREE.Color(0xffff00);
 
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
@@ -639,9 +641,11 @@
         orbit = new Orbit3D(roid, orbit_params, useBigParticles);
       }
       else {
+        var display_color = i < NUM_BIG_PARTICLES
+            ? opts.top_object_color : displayColorForObject(roid)
         orbit = new Orbit3D(roid, {
           color: 0xcccccc,
-          display_color: displayColorForObject(roid),
+          display_color: display_color,
           width: 2,
           object_size: i < NUM_BIG_PARTICLES ? 50 : 15, //1.5,
           jed: jed,

@@ -21,7 +21,8 @@ UPCOMING_SORT = 'upcoming'
 
 VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT])
 
-ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'a', 'e', 'i', 'om', 'ma', 'n', 'w', 'per', 'epoch']
+ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
+    'om', 'ma', 'n', 'w', 'per', 'epoch']
 
 # some of these were poorly named, so we map better names, but the database stays the
 # same for backwards compatibility
