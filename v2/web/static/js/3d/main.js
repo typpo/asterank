@@ -27,7 +27,7 @@
 
   var WEB_GL_ENABLED = true;
 
-  var MAX_NUM_ORBITS = 100;   // TODO(@ian) switch back
+  var MAX_NUM_ORBITS = 4000;
   var CANVAS_NUM_ORBITS = 15;  // gimped version orbits
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
@@ -575,7 +575,7 @@
     $('#loading-text').html('asteroids database');
     $.getJSON('/api/rankings?sort_by=' + sort + '&limit='
         + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
-        + '&use3d=true&compact=true', function(data) {
+        + '&orbits_only=true', function(data) {
           me.processAsteroidRankings(data);
     });
   }
