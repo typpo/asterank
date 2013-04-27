@@ -15,6 +15,7 @@
   opts.top_object_color = opts.top_object_color
       ? new THREE.Color(opts.top_object_color) : new THREE.Color(0xffff00);
 
+  // requestAnimFrame polyfill
   window.requestAnimFrame = (function(){
     return  window.requestAnimationFrame       ||
             window.webkitRequestAnimationFrame ||
@@ -26,7 +27,7 @@
             };
   })();
 
-
+  /** Constants **/
   var WEB_GL_ENABLED = true;
 
   var MAX_NUM_ORBITS = 4000;
@@ -34,43 +35,44 @@
   var PIXELS_PER_AU = 50;
   var NUM_BIG_PARTICLES = 30;   // show this many asteroids with orbits
 
-  var stats, scene, renderer, composer;
-  var camera, cameraControls;
-  var pi = Math.PI;
-  var using_webgl = false;
-  var object_movement_on = true;
-  var lastHovered;
-  var added_objects = [];
-  var planets = [];
-  var planet_orbits_visible = true;
-  var jed = toJED(new Date());
-  var particle_system_geometry = null;
-  var asteroids_loaded = false;
-  var display_date_last_updated = 0;
-  var first_loaded = false;
+  /** Other variables **/
+  var stats, scene, renderer, composer
+    , camera, cameraControls
+    , pi = Math.PI
+    , using_webgl = false
+    , object_movement_on = true
+    , lastHovered
+    , added_objects = []
+    , planets = []
+    , planet_orbits_visible = true
+    , jed = toJED(new Date())
+    , particle_system_geometry = null
+    , asteroids_loaded = false
+    , display_date_last_updated = 0
+    , first_loaded = false
 
   // Lock/feature stuff
-  var feature_map = {};       // map from object full name to Orbit3D instance
-  var locked_object = null;
-  var locked_object_ellipse = null;
-  var locked_object_idx = -1;
-  var locked_object_size = -1;
-  var locked_object_color = -1;
+  var feature_map = {}       // map from object full name to Orbit3D instance
+    , locked_object = null
+    , locked_object_ellipse = null
+    , locked_object_idx = -1
+    , locked_object_size = -1
+    , locked_object_color = -1
 
   // 2012 da14
   var featured_2012_da14 = getParameterByName('2012_DA14') === '1';
 
   // workers stuff
-  var works = [];
-  var workers = [];
-  var NUM_WORKERS = 3;
-  var worker_path = '/static/js/3d/position_worker.js';
-  var workers_initialized = false;
-  var particleSystem;
+  var works = []
+    , workers = []
+    , NUM_WORKERS = 3
+    , worker_path = '/static/js/3d/position_worker.js'
+    , workers_initialized = false
+    , particleSystem
 
   // glsl stuff
-  var attributes;
-  var uniforms;
+  var attributes
+    , uniforms
 
   init();
   if (opts.show_dat_gui) {
