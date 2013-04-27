@@ -29,6 +29,7 @@ $(function() {
   var using_webgl = false;
   var camera_fly_around = true;
   var object_movement_on = true;
+  var jed_delta = .25;
   var lastHovered;
   var added_objects = [];
   var planets = [];
@@ -90,9 +91,9 @@ $(function() {
       this['Most accessible'] = function() {
         runAsteroidQuery('closeness');
       };
-      this.movement = object_movement_on;
-      this['planet orbits'] = planet_orbits_visible;
-      this['display date'] = '12/26/2012';
+      this['Speed'] = jed_delta;
+      this['Planet orbits'] = planet_orbits_visible;
+      this['Display date'] = '12/26/2012';
     };
 
     window.onload = function() {
@@ -101,14 +102,17 @@ $(function() {
       gui.add(text, 'Cost effective');
       gui.add(text, 'Most valuable');
       gui.add(text, 'Most accessible');
-      gui.add(text, 'movement').onChange(function() {
-        object_movement_on = !object_movement_on;
-        toggleSimulation(object_movement_on);
+      gui.add(text, 'Speed', 0, 5).onChange(function(val) {
+        jed_delta = val;
+        var was_moving = object_movement_on;
+        object_movement_on = jed_delta > 0;
+        if (was_moving != object_movement_on)
+          toggleSimulation(object_movement_on);
       });
-      gui.add(text, 'planet orbits').onChange(function() {
+      gui.add(text, 'Planet orbits').onChange(function() {
         togglePlanetOrbits();
       });
-      gui.add(text, 'display date').onChange(function(val) {
+      gui.add(text, 'Display date').onChange(function(val) {
         var newdate = Date.parse(val);
         if (newdate) {
           var newjed = toJED(newdate);
@@ -188,7 +192,10 @@ $(function() {
 
     scene.add(camera);
 
-    cameraControls	= new THREE.TrackballControlsX(camera)
+    // Make sure TrackballControls only captures events coming from the canvas
+    // so it doesn't interfere with the dat controls.
+    var controlElement = document.querySelector('#container canvas');
+    cameraControls	= new THREE.TrackballControlsX(camera, controlElement);
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
@@ -507,7 +514,7 @@ $(function() {
           var now = new Date().getTime();
           if (now - display_date_last_updated > 500) {
             var georgian_date = fromJED(data.value.jed);
-            datgui['display date'] = georgian_date.getMonth()+1 + "/"
+            datgui['Display date'] = georgian_date.getMonth()+1 + "/"
               + georgian_date.getDate() + "/" + georgian_date.getFullYear();
             display_date_last_updated = now;
           }
@@ -823,7 +830,7 @@ $(function() {
     var now = new Date().getTime();
     if (now - display_date_last_updated > 500 && typeof datgui !== 'undefined') {
       var georgian_date = fromJED(jed);
-      datgui['display date'] = georgian_date.getMonth()+1 + "/"
+      datgui['Display date'] = georgian_date.getMonth()+1 + "/"
         + georgian_date.getDate() + "/" + georgian_date.getFullYear();
       display_date_last_updated = now;
     }
@@ -831,7 +838,7 @@ $(function() {
     if (using_webgl && (object_movement_on || force)) {
       // update shader vals for asteroid cloud
       uniforms.jed.value = jed;
-      jed += .25;
+      jed += jed_delta;
     }
 
     // actually render the scene
