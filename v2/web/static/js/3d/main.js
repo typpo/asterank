@@ -94,7 +94,7 @@
   // 2012 Da14 feature
   if (featured_2012_da14) {
     jed = toJED(new Date('2012-11-01'));
-    mixpanel.track('2012_da14 special');
+    if (typeof mixpanel !== 'undefined') mixpanel.track('2012_da14 special');
   }
 
   function initGUI() {
@@ -894,7 +894,7 @@
     var now = new Date().getTime();
     if (now - display_date_last_updated > 500 && typeof datgui !== 'undefined') {
       var georgian_date = fromJED(jed);
-      datgui['display date'] = georgian_date.getMonth()+1 + "/"
+      datgui['Display date'] = georgian_date.getMonth()+1 + "/"
         + georgian_date.getDate() + "/" + georgian_date.getFullYear();
       display_date_last_updated = now;
     }

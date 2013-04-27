@@ -43,9 +43,12 @@ def rankings(sort_by, limit, orbits_only=False):
     fields = {field: True for field in ORBIT_FIELDS}
   fields['_id'] = False
 
-  return list(asteroids.find({}, fields) \
+  ret = list(asteroids.find({}, fields) \
           .sort(sort_by, direction=pymongo.DESCENDING) \
           .limit(limit))
+  # remove empty fields
+  return [{key:val for key,val in obj.iteritems() if val != ''} \
+      for obj in ret]
 
 def autocomplete(query, limit):
   query = query.replace('+', ' ')
