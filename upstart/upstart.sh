@@ -6,13 +6,12 @@ mkdir -p /var/log/asterank
 
 echo "starting `date`"
 
-# main
+# main app
 ./v2/gunicorn.sh 2>> /var/log/asterank/err.log 1>> /var/log/asterank/out.log &
 
-# node
-export NODE_ENV=production
-supervisor -w web/app.js web/app.js 2>> /var/log/asterank/node.err.log 1>> /var/log/asterank/node.out.log &
+# other apps go here...
 
+# block
 for job in `jobs -p`
 do
 echo $job

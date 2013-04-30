@@ -13,7 +13,6 @@ Asterank has been featured by BBC News, Popular Science, and other sites and new
 Certain areas could use some cleanup and polish.
 
  * More APIs and associated visualizations
- * Incorporate SkyMorph imagery into main asteroid data view
  * Add spacecraft trajectories
  * Ranking and estimate logic could be formalized and improved overall
  * The rendering engine can be improved to display more particles and expose a lot more of the information we have.
