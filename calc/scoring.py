@@ -101,4 +101,4 @@ def price(obj):
 
 def profit(obj):
   my_dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
-  return obj['price'] * obj['closeness'] / 6 * estimate.profitRatio(my_dv)
+  return obj['price'] * obj['closeness'] / 6 * estimate.profitRatio(DEFAULT_DV, my_dv)
