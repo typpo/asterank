@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
+{% block head %}
+  {% assets filter="cssmin", output="gen/packed-stackblink.css",
+  "css/stackblink.css"
+  %}
+  <link href="{{ASSET_URL}}" rel="stylesheet" />
+  {% endassets %}
+{% endblock %}
+
 {% block html_tag %}ng-app="StackblinkApp"{% endblock %}
 
 {% block scripts %}
 
-{% assets filter="jsmin", output="gen/packed-discovery.js",
+{% assets filter="jsmin", output="gen/packed-stackblink.js",
 "js/lib/kinetic-v4.4.3.min.js",
 "js/stackblink/app.js",
 "js/stackblink/controllers/Kinetic.js"

@@ -41,6 +41,9 @@
             Est. Profit ($)
           </th>
           <th>
+            &Delta;v
+          </th>
+          <th>
             Class
           </th>
         </tr>
@@ -53,6 +56,7 @@
           <td><span ng-bind="asteroid.e | number:3"></span></td>
           <td><span ng-bind="asteroid.price | fuzzynum"></span></td>
           <td><span ng-bind="asteroid.profit | fuzzynum"></span></td>
+          <td><span ng-bind="asteroid.dv"></span></td>
           <td><span ng-bind="asteroid.class"></span> <span ng-show="asteroid.pha == 'Y'">(PHA)</span></td>
         </tr>
       </tbody>
