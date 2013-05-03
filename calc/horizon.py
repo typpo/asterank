@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Basic client to browse and search NASA JPL Horizons data
+# Loads NASA JPL Horizons data into db
 #
 
 import sys
@@ -12,11 +12,13 @@ import scoring
 import estimate
 from pymongo import Connection
 
+# Constants and settings
 DATA_PATH = 'data/fulldb.20130406.csv'
 DV_PATH = 'data/deltav/db.csv'
 MASS_PATH = 'data/masses.txt'
 G = 6.67300e-20   # km^3 / kgs^2
 
+# Approximate mapping from Tholen to SMASS
 THOLEN_MAPPINGS = {
   'M': 'M',
   'E': 'M',
@@ -69,7 +71,6 @@ def populateDb():
     massd[name] = avg
   del massd['']
 
-
   # load delta v data
   f = open(DV_PATH, 'r')
   lines = f.readlines()
@@ -100,16 +101,8 @@ def populateDb():
       elif row['class'] in COMET_CLASSES:
         row['spec_B'] = 'comet'
       else:
-        continue # TODO temp
-        #row['spec_B'] = 'S'
-
-      """
-      elif row['pdes'] == '2008 HU4':
-        print 'Adjust 2008 HU4'
-        row['spec_B'] = 'C'
-        row['GM'] =  3.0268194e-14   # 500 tons
-        row['diameter'] = 8          # 8 meters
-      """
+        continue # NOTE disable this to create the full db (about 600k objects)
+        row['spec_B'] = 'S'
 
     if row['spec_B'] == 'C type':
       row['spec_B'] = 'C'
@@ -150,7 +143,7 @@ def populateDb():
     row['closeness'] = scoring.closeness_weight(row)
     row['profit'] = scoring.profit(row)
 
-    # TODO move this into scoring once I get it right
+    # TODO this belongs in scoring
     score = min(row['price'], 1e14) / 5e12
     if score < 0.0001:
       # It's worthless, so closeness doesn't matter
@@ -178,9 +171,6 @@ def telnetLookup():
   t = telnetlib.Telnet()
   t.open('horizons.jpl.nasa.gov', 6775)
   print t.read_very_eager()
-
-def test():
-  print "I'm here"
 
 if __name__ == "__main__":
   if len(sys.argv) != 2:
