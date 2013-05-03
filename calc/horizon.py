@@ -72,17 +72,11 @@ def populateDb():
   del massd['']
 
   # load delta v data
-  f = open(DV_PATH, 'r')
-  lines = f.readlines()
-  f.close()
-
   print 'Loading delta-v data...'
+  reader = csv.DictReader(open(DV_PATH, 'r'))
   deltav_map = {}
-  for line in lines:
-    parts = line.split(',')
-    des = parts[0]
-    dv = float(parts[1])
-    deltav_map[des] = dv
+  for row in reader:
+    deltav_map[row['pdes']] = row['dv']
 
   print 'Loading small body data...this may take a while'
   print DATA_PATH
