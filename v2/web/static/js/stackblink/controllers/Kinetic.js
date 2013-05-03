@@ -1,5 +1,6 @@
 function KineticCtrl($scope) {
   $scope.images = [];
+  $scope.blinking = false;
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
@@ -47,6 +48,7 @@ function KineticCtrl($scope) {
   }
 
   $scope.Blink = function() {
+    $scope.blinking = true;
     for (var i=0; i < $scope.images.length; i++) {
       $scope.images[i].hide();
     }
@@ -59,10 +61,24 @@ function KineticCtrl($scope) {
       next_idx++;
 
       $scope.stage.draw();
+
+      if ($scope.blinking) {
+        $scope.blink_timeout = setTimeout(next_img, 1000);
+      }
     }
 
     next_img();
-    $scope.blink_interval = setInterval(next_img, 1000);
+    //$scope.blink_interval = setInterval(next_img, 1000);
+  }
+
+  $scope.StopBlink = function() {
+    //clearInterval($scope.blink_interval);
+    clearTimeout($scope.blink_timeout);
+    for (var i=0; i < $scope.images.length; i++) {
+      $scope.images[i].show();
+    }
+    $scope.stage.draw();
+    $scope.blinking = false;
   }
 
   $scope.Init = function() {

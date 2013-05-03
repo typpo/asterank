@@ -1,7 +1,10 @@
 (function() {
   angular.module('StackblinkApp', [])
     .directive('kinetic', function() {
-      var kineticContainer = '<button ng-click="Blink()">Blink</button><div id="container"></div>';
+      var kineticContainer =
+        '<button class="btn" ng-click="Blink()" ng-show="!blinking">Start Blink</button>'
+        + '<button class="btn" ng-click="StopBlink()" ng-show="blinking">Stop Blink</button>'
+        + '<div id="container"></div>';
       return {
         restrict: 'E',
         compile: function (tElement, tAttrs, transclude) {
