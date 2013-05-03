@@ -89,6 +89,12 @@ def process(f, final_output):
   # Improve contrast to bring out faint stars
   enhancer = ImageEnhance.Contrast(im)
   im = enhancer.enhance(20)
+
+  # Mark object
+  # draw = ImageDraw.Draw(image)
+  # draw.ellipse((x-r, y-r, x+r, y+r))
+
+  # Save
   if type(final_output) == str:
     im.save(final_output)    # use specified file format
   else:

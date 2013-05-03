@@ -176,6 +176,11 @@ def skymorph_fast_image():
     response.headers["Content-type"] = "image/png"
     return response
 
+# Stack/blink Discover routes
+@app.route('/discover')
+def discover():
+  return render_template('discover.html')
+
 # Kepler
 
 @app.route('/exoplanets')
