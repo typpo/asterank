@@ -66,13 +66,13 @@ df['F'] = df.ul + df.ur
 # Delta V.
 df['dv'] = (30*df.F) + .5
 
-df_test = pp.read_csv(DV_TEST_PATH, header=None,
-                      names=('pdes', 'dv_expected'),
-                      index_col='pdes')
+# Import Benner's delta v calculations.
+df_test = pp.read_csv(DV_TEST_PATH, index_col='pdes')
 
-results = df.join(df_test, how='inner')
-results['dv_diff'] = (np.abs(results.dv - results.dv_expected) /
-                      results.dv_expected)
+results = df.join(df_test, how='inner', rsuffix='_benner')
+results['dv_diff'] = (np.abs(results.dv - results.dv_benner) /
+                      results.dv_benner)
+
 
 print('\n\n% deviation from known delta-vs:')
 print(results.dv_diff.describe())
@@ -90,9 +90,12 @@ print('\n\n30 asteroids with highest error:')
 outliers = results.sort(columns=['dv_diff'])[-30:]
 for pdes, row in outliers.iterrows():
   print('%s \t %.3f km/s (expected %.3f km/s) (error %%%.2f)' % (
-      pdes, row['dv'], row['dv_expected'], row['dv_diff']*100))
+      pdes, row['dv'], row['dv_benner'], row['dv_diff']*100))
 
-results = results.sort(columns=['dv'])
+df = df.sort(columns=['dv'])
 print('\n\n30 asteroids with lowest delta-v:')
-for pdes, row in results[:30].iterrows():
-  print('%s \t%.3f km/s (%%%.3f error)' % (pdes, row['dv'], row['dv_diff'] * 100))
+for pdes, row in df[:30].iterrows():
+  print('%s \t%.3f km/s' % (pdes, row['dv']))
+
+print('\nWriting results to data/deltav/db2.csv.')
+df.to_csv('data/deltav/db2.csv', cols=('dv',))
