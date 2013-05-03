@@ -8,17 +8,19 @@ http://echo.jpl.nasa.gov/~lance/delta_v/deltav.13.pl as well
 """
 
 import numpy as np
+import operator
 import pandas as pp
 
 DATA_PATH = 'data/fulldb.20130406.csv'
 DV_TEST_PATH = 'data/deltav/db.csv'
 
-mp = pp.read_csv(DATA_PATH, index_col='pdes')
+df = pp.read_csv(DATA_PATH, index_col='pdes')
 
-mp.i = mp.i * np.pi / 180      # inclination in radians
-mp['Q'] = mp.a * (1.0 + mp.e)  # aphelion
+df.i = df.i * np.pi / 180      # inclination in radians
+df['Q'] = df.a * (1.0 + df.e)  # aphelion
 
 def AtensDeltaV(df):
+  """Delta V calculation for Atens asteroids, where a < 1."""
   df['ut2'] = 2 - 2*np.cos(df.i/2)*np.sqrt(2*df.Q - df.Q**2)
   df['uc2'] = 3/df.Q - 1 - (2/df.Q)*np.sqrt(2 - df.Q)
   df['ur2'] = 3/df.Q - 1/df.a - (
@@ -26,6 +28,7 @@ def AtensDeltaV(df):
   return df
 
 def ApollosDeltaV(df):
+  """Delta V calculation for Apollo asteroids, where q <= 1, a >= 1."""
   df['ut2'] = 3 - 2/(df.Q + 1) - 2*np.cos(df.i/2)*np.sqrt(2*df.Q/(df.Q+1))
   df['uc2'] = 3/df.Q - 2/(df.Q+1) - (2/df.Q)*np.sqrt(2/(df.Q+1))
   df['ur2'] = 3/df.Q - 1/df.a - (
@@ -33,65 +36,63 @@ def ApollosDeltaV(df):
   return df
 
 def AmorsDeltaV(df):
+  """Delta V calculation for Amors asteroids, where q > 1 and a >= 1."""
   df['ut2'] = 3 - 2/(df.Q+1) - 2*np.cos(df.i/2)*np.sqrt(2*df.Q/(df.Q+1))
   df['uc2'] = 3/df.Q - 2/(df.Q+1) - (
       (2/df.Q)*np.cos(df.i/2)*np.sqrt(2/(df.Q+1)))
   df['ur2'] = 3/df.Q - 1/df.a - (2/df.Q)*np.sqrt(df.a*(1-df.e**2)/df.Q)
   return df
 
-atens = AtensDeltaV(mp[mp.a < 1])
-apollos = ApollosDeltaV(mp[(mp.q <= 1) & (mp.a >= 1)])
-amors = AmorsDeltaV(mp[(mp.q > 1) & (mp.a >= 1)])
+atens = AtensDeltaV(df[df.a < 1])
+apollos = ApollosDeltaV(df[(df.q <= 1) & (df.a >= 1)])
+amors = AmorsDeltaV(df[(df.q > 1) & (df.a >= 1)])
 
-mp = pp.concat((atens, apollos, amors))
+df = pp.concat((atens, apollos, amors))
 
 v_earth = 29.784       # earth orbital velocity
 U0 = 7.727 / v_earth;  # Normalized LEO velocity @ 300km
 S = np.sqrt(2) * U0    # Normalied escape velocity from LEO
 
-mp['ul'] = np.sqrt(mp.ut2 + S**2) - U0
-mp['ur'] = np.sqrt(mp.uc2 - (
-    2*np.sqrt(mp.ur2*mp.uc2)*np.cos(mp.i/2)) + mp.ur2)
-mp['F'] = mp.ul + mp.ur
-mp['DV'] = (30*mp.F) + .5
+# Impulse for leaving LEO.
+df['ul'] = np.sqrt(df.ut2 + S**2) - U0
 
-# TODO test against the actual data from
-#    http://echo.jpl.nasa.gov/~lance/delta_v/delta_v.rendezvous.html
-#   and compare their i and e values when off.
+# Impulse for rendevouzing at asteroid.
+df['ur'] = np.sqrt(df.uc2 - (
+    2*np.sqrt(df.ur2*df.uc2)*np.cos(df.i/2)) + df.ur2)
 
-mp_test = pp.read_csv(DV_TEST_PATH, header=None,
+# Figure of merit, from Shoemaker and Helin.
+df['F'] = df.ul + df.ur
+
+# Delta V.
+df['dv'] = (30*df.F) + .5
+
+df_test = pp.read_csv(DV_TEST_PATH, header=None,
                       names=('pdes', 'dv_expected'),
                       index_col='pdes')
 
-results = mp.join(mp_test, how='inner')
-results['dv_diff'] = results.DV - results.dv_expected
+results = df.join(df_test, how='inner')
+results['dv_diff'] = (np.abs(results.dv - results.dv_expected) /
+                      results.dv_expected)
 
-print('Comparing to %d known delta-vs.' % len(results))
-print('Deviation from %d known delta-vs:' % len(results))
+print('\n\n% deviation from known delta-vs:')
 print(results.dv_diff.describe())
 
-print('\n\nDisplaying asteroids that are more than 1m/s different:')
+print('\n\n% deviation for Atens:')
+print(results[results.a < 1].dv_diff.describe())
 
-outliers = results[np.abs(results.dv_diff) > 1]
+print('\n\n% deviation for Apollos:')
+print(results[(results.q <= 1) & (results.a >= 1)].dv_diff.describe())
+
+print('\n\n% deviation for Amors:')
+print(results[(results.q > 1) & (results.a >= 1)].dv_diff.describe())
+
+print('\n\n30 asteroids with highest error:')
+outliers = results.sort(columns=['dv_diff'])[-30:]
 for pdes, row in outliers.iterrows():
-  print('[%s] %s - %s - %s' % (
-      row['class'], pdes, row['dv_expected'], row['DV']))
+  print('%s \t %.3f km/s (expected %.3f km/s) (error %%%.2f)' % (
+      pdes, row['dv'], row['dv_expected'], row['dv_diff']*100))
 
-#TEST_CASES = (
-#    ('2006 RH120', 3.813),
-#    ('2007 UN12', 3.823),
-#    ('2009 BD', 3.870),
-#    ('2011 MD', 4.113),
-#    ('2012 XK134', 4.478),
-#    ('209215', 4.511), # pdes should be 2003 WP25
-#    ('2013 CL129', 4.974),
-#    ('2008 EJ85', 5.245),
-#    ('2006 XW', 5.647),
-#    ('337252', 6.110), # 2000 SD8
-#    ('2003 UW5', 6.424),
-#    ('2013 EP', 6.777))
-#
-#
-#for pdes, expected in TEST_CASES:
-#    print('[%s] %s - %s - %s' % (
-#            mp.ix[pdes]['class'], pdes, expected, mp.ix[pdes]['DV']))
+results = results.sort(columns=['dv'])
+print('\n\n30 asteroids with lowest delta-v:')
+for pdes, row in results[:30].iterrows():
+  print('%s \t%.3f km/s (%%%.3f error)' % (pdes, row['dv'], row['dv_diff'] * 100))
