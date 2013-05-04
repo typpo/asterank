@@ -49,11 +49,11 @@ store_mutex = Lock()
 
 ##### Functions
 
-def images_for(target):
+def images_for(target, n=10):
   results = search_target(target)
   threads = []
   ret = []
-  for result in results[-10:]:
+  for result in results[-1*10:]:
     ret.append({
       'key': result['key'],
       'time': result['time'],
