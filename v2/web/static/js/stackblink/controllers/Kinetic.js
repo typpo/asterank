@@ -5,7 +5,7 @@ function KineticCtrl($scope) {
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
-    width: window.innerWidth - 50,
+    width: 600,
     height: 600
   });
 
