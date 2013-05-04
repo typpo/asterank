@@ -1,4 +1,4 @@
-function KineticCtrl($scope) {
+function KineticCtrl($scope, $http) {
   $scope.images = [];
   $scope.blinking = false;
   $scope.blink_interval = 1000;
@@ -90,6 +90,29 @@ function KineticCtrl($scope) {
       $scope.images[i].show();
     }
     $scope.stage.draw();
+    $scope.blinking = false;
+    $scope.state = 'STACKING';
+  }
+
+  $scope.Next = function() {
+    $http.get('/api/stackblink/get_group').success(function(data) {
+      if (!data || !data.results) {
+        alert('Sorry, communication with the server failed.');
+        return;
+      }
+
+      for (var i=0; i < data.results.length; i++) {
+        var image_info = data.results[i];
+        $scope.DrawImage(image_info.pos_x, image_info.pos_y, image_info.image_url);
+      }
+    });
+  }
+
+  $scope.Reset = function() {
+    // reset canvas
+    // TODO
+
+    // reset state
     $scope.blinking = false;
     $scope.state = 'STACKING';
   }

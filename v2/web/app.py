@@ -8,6 +8,7 @@ import base64
 import re
 
 import api
+import stackblink
 from skymorph import skymorph
 
 app = Flask(__name__)
