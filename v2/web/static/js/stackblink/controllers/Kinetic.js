@@ -1,7 +1,7 @@
 function KineticCtrl($scope, $http) {
   $scope.images = [];
   $scope.blinking = false;
-  $scope.blink_interval = 1000;
+  $scope.blink_interval = 800;
   $scope.state = 'STACKING';
 
   $scope.stage = new Kinetic.Stage({

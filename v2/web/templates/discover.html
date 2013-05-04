@@ -23,16 +23,19 @@
 {% endblock %}
 
 {% block content %}
+<div ng-show="state == 'STACKING'">
+  <h2>Step 1: Drag &amp; drop images to line up stars.</h2>
+</div>
+<div ng-show="state == 'BLINKING'">
+  <h2>Step 2: Are there any moving objects?</h2>
+</div>
 <kinetic></kinetic>
 
 <div id="control-bar">
   <div ng-show="state == 'STACKING'">
-  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="s">Images are stacked (s)</a>
+  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">They're aligned (a)</a>
   </div>
   <div ng-show="state == 'BLINKING'">
-    <div>
-      <h3>Any moving objects?</h3>
-    </div>
     <div>
     <a href="#" class="stackblink-button" keyboard-shortcut="y">Yes (y)</a>
     <a href="#" class="stackblink-button" keyboard-shortcut="n">No (n)</a>

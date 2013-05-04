@@ -4,7 +4,7 @@
       var kineticContainer =
         '<form class="form form-inline" ng-show="blinking">'
         + '<span>'
-        + 'Blink interval: <input type="range" min="100" max="4000" step="10" value="1000" ng-model="blink_interval" />'
+        + 'Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" />'
         + '<span ng-bind="blink_interval"></span> ms'
         + '</span>'
         + '</form>'

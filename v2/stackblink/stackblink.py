@@ -18,5 +18,11 @@ def fetch_group():
   return rets
 
 def update_group(id, positions, interesting):
+  # add crowdsourced info to group
+  pass
+
+def create_known_groups():
+  # scrape top X objects for imagery
+  # a "group" is defined as a series of images taken within half an hour of each other
   pass
 
