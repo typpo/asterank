@@ -28,6 +28,7 @@ body {
   position: fixed;
   top: 50px;
   right: 10px;
+  text-align: center;
 }
 
 #control-bar div {

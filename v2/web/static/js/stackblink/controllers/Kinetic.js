@@ -2,11 +2,12 @@ function KineticCtrl($scope) {
   $scope.images = [];
   $scope.blinking = false;
   $scope.blink_interval = 1000;
+  $scope.state = 'STACKING';
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
-    width: 600,
-    height: 600
+    width: window.innerWidth - 50,
+    height: 800
   });
 
   $scope.DrawImageCascade = function(img_url) {
@@ -58,8 +59,9 @@ function KineticCtrl($scope) {
     imageobj.src = img_url;
   }
 
-  $scope.Blink = function() {
+  $scope.StartBlink = function() {
     $scope.blinking = true;
+    $scope.state = 'BLINKING';
     for (var i=0; i < $scope.images.length; i++) {
       $scope.images[i].hide();
     }
@@ -89,6 +91,7 @@ function KineticCtrl($scope) {
     }
     $scope.stage.draw();
     $scope.blinking = false;
+    $scope.state = 'STACKING';
   }
 
   $scope.Init = function() {

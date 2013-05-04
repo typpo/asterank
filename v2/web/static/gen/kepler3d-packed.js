@@ -115,7 +115,7 @@ init();if(opts.show_dat_gui){initGUI();}
 $('#btn-toggle-movement').on('click',function(){object_movement_on=!object_movement_on;});$('#controls .js-sort').on('click',function(){runAsteroidQuery($(this).data('sort'));$('#controls .js-sort').css('font-weight','normal');$(this).css('font-weight','bold');});me.pause=function(){object_movement_on=false;}
 me.play=function(){object_movement_on=true;} 
 if(featured_2012_da14){jed=toJED(new Date('2012-11-01'));if(typeof mixpanel!=='undefined')mixpanel.track('2012_da14 special');}
-function initGUI(){var ViewUI=function(){this['Cost effective']=function(){runAsteroidQuery('score');};this['Most valuable']=function(){runAsteroidQuery('price');};this['Most accessible']=function(){runAsteroidQuery('closeness');};this['Speed']=opts.jed_delta;this['Planet orbits']=planet_orbits_visible;this['Display date']='12/26/2012';};window.onload=function(){var text=new ViewUI();var gui=new dat.GUI();gui.add(text,'Cost effective');gui.add(text,'Most valuable');gui.add(text,'Most accessible');gui.add(text,'Speed',0,5).onChange(function(val){opts.jed_delta=val;var was_moving=object_movement_on;object_movement_on=opts.jed_delta>0;if(was_moving!=object_movement_on)
+function initGUI(){var ViewUI=function(){this['Cost effective']=function(){me.clearRankings();runAsteroidQuery('score');};this['Most valuable']=function(){me.clearRankings();runAsteroidQuery('value');};this['Most accessible']=function(){me.clearRankings();runAsteroidQuery('accessibility');};this['Speed']=opts.jed_delta;this['Planet orbits']=planet_orbits_visible;this['Display date']='12/26/2012';};window.onload=function(){var text=new ViewUI();var gui=new dat.GUI();gui.add(text,'Cost effective');gui.add(text,'Most valuable');gui.add(text,'Most accessible');gui.add(text,'Speed',0,5).onChange(function(val){opts.jed_delta=val;var was_moving=object_movement_on;object_movement_on=opts.jed_delta>0;if(was_moving!=object_movement_on)
 toggleSimulation(object_movement_on);});gui.add(text,'Planet orbits').onChange(function(){togglePlanetOrbits();});gui.add(text,'Display date').onChange(function(val){var newdate=Date.parse(val);if(newdate){var newjed=toJED(newdate);changeJED(newjed);if(!object_movement_on){render(true);}}}).listen();window.datgui=text;};}
 function togglePlanetOrbits(){if(planet_orbits_visible){for(var i=0;i<planets.length;i++){scene.remove(planets[i].getEllipse());}}
 else{for(var i=0;i<planets.length;i++){scene.add(planets[i].getEllipse());}}
@@ -165,8 +165,7 @@ break;case'debug':console.log(data.value);break;default:console.log('Invalid dat
 function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');$.getJSON('/api/rankings?sort_by='+sort+'&limit='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
 +'&orbits_only=true',function(data){me.processAsteroidRankings(data);});}
-me.clearRankings=function(){clearRankings();}
-function clearRankings(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
+me.clearRankings=function(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
 clearLock(true);if(particleSystem){scene.remove(particleSystem);particleSystem=null;}
 if(asteroids_loaded){stopSimulation();}
 if(lastHovered){scene.remove(lastHovered);}}
