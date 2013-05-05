@@ -30,7 +30,7 @@ def update_group(id, positions, interesting):
 def create_known_groups():
   # scrape top X objects for imagery
   # a "group" is defined as a series of images taken within 45 minutes of each other
-  NUM_CRAWL = 1000
+  NUM_CRAWL = 100
   connection = Connection('localhost', 27017)
   db = connection.asterank
   asteroids = db.asteroids
@@ -65,9 +65,13 @@ def create_known_groups():
       last_time = time
 
     groups_final_datastructure = []
+    gcount = 1
     for group in groups:
       threads = []
       group_results = []
+      rcount = 1
+      if len(group) < 1:
+        continue
       for result in group:
         group_results.append({
           'key': result['key'],
@@ -78,9 +82,13 @@ def create_known_groups():
           'center_ra': skymorph.dms_str_to_float(result['center_ra']),
           'center_dec': skymorph.dms_str_to_float(result['center_dec']),
           })
-        t = Thread(target=skymorph.get_image, args=(result['key'], ))
-        t.start()
-        threads.append(t)
+        #t = Thread(target=skymorph.get_image, args=(result['key'], ))
+        #t.start()
+        #threads.append(t)
+        skymorph.get_image(result['key'])
+        print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
+        rcount += 1
+      gcount +=1
       if len(group_results) > 0:
         groups_final_datastructure.append({
           'score': 0,
@@ -90,21 +98,30 @@ def create_known_groups():
           'known_target': True,
           'reviews': [],
           })
-        for thread in threads:
-          thread.join()
+        #for thread in threads:
+        #  thread.join()
 
     return {
       'target': target,
       'groups': groups_final_datastructure,
     }
 
+  c = 0
   for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
+    print 'price #', c
+    c += 1
     target_object = process(asteroid)
     stackblink.insert(target_object)
+  c = 0
   for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
+    print 'score #', c
+    c += 1
     target_object = process(asteroid)
     stackblink.insert(target_object)
+  c = 0
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
+    print 'closeness #', c
+    c += 1
     target_object = process(asteroid)
     stackblink.insert(target_object)
 
