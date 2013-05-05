@@ -30,7 +30,7 @@ def update_group(id, positions, interesting):
 def create_known_groups():
   # scrape top X objects for imagery
   # a "group" is defined as a series of images taken within 45 minutes of each other
-  NUM_CRAWL = 100
+  NUM_CRAWL = 80
   connection = Connection('localhost', 27017)
   db = connection.asterank
   asteroids = db.asteroids
