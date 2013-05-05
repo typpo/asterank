@@ -10,7 +10,7 @@ import skymorph
 import pymongo
 from pymongo import Connection
 
-NUM_CRAWL = 1000
+NUM_CRAWL = 100
 connection = Connection('localhost', 27017)
 db = connection.asterank
 
