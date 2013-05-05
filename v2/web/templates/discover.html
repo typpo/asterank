@@ -33,7 +33,12 @@
 
 <div id="control-bar">
   <div ng-show="state == 'STACKING'">
+  <div>
   <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">They're aligned (a)</a>
+  </div>
+  <div>
+  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">Bad quality (q)</a>
+  </div>
   </div>
   <div ng-show="state == 'BLINKING'">
     <div>
