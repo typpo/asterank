@@ -19,7 +19,7 @@ def get_control_groups():
   # Choose a random target
   count = stackblink.count()
   control_object = stackblink.find({}, {'_id': False}).limit(-1) \
-      .skip(random.randint(0, count)).next()
+      .skip(random.randint(0, count-1)).next()
   # TODO  handle no groups
   return control_object
 
@@ -73,7 +73,8 @@ def create_known_groups():
         group_results.append({
           'key': result['key'],
           'time': result['time'],
-
+          'pos_x': 0,
+          'pos_y': 0,
           # this will bite me in the ass because these are floats now,
           # but there are some cached responses in which these fields are strs
           'center_ra': skymorph.dms_str_to_float(result['center_ra']),
@@ -82,15 +83,13 @@ def create_known_groups():
         #t = Thread(target=skymorph.get_image, args=(result['key'], ))
         #t.start()
         #threads.append(t)
-        skymorph.get_image(result['key'])
+        skymorph.get_fast_image(result['key'])
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
         rcount += 1
       gcount +=1
       if len(group_results) > 0:
         groups_final_datastructure.append({
           'score': 0,
-          'pos_x': 0,
-          'pos_y': 0,
           'images': group_results,
           'known_target': True,
           'reviews': [],

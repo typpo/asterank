@@ -68,6 +68,7 @@ function KineticCtrl($scope, $http) {
     }
     var next_idx = 0;
     var next_img = function() {
+      if (!$scope.blinking) return;
       if (next_idx != 0)
         $scope.images[(next_idx-1) % $scope.images.length].hide();
       var showidx = next_idx % $scope.images.length;
@@ -106,7 +107,7 @@ function KineticCtrl($scope, $http) {
         var group = data.groups[i];
         console.log(group);
         angular.forEach(group.images, function(image_info) {
-          var url = 'http://asterank.com/api/skymorph/image?key=' + image_info.key;
+          var url = '/api/skymorph/fast_image?key=' + image_info.key;
           if (group.reviews.length < 1) {
             $scope.DrawImageCascade(url);
           }
@@ -115,7 +116,7 @@ function KineticCtrl($scope, $http) {
             $scope.DrawImage(image_info.pos_x, image_info.pos_y, url);
           }
         });
-        return;
+        return;  // TODO temporary
       }
     });
   }

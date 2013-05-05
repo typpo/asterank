@@ -5,18 +5,38 @@ import os
 import sys
 import urllib2
 import io
+from threading import Thread, Lock
+from shove import Shove
 from PIL import Image, ImageEnhance
 
+##### Constant
 BASE_URL = 'http://kaspar.jpl.nasa.gov/cgi-bin'
 ENDPOINT = '/extract_subset.pl'
 QUERY_FORMAT = '?Id=%s&X0=%d&Y0=%d&Nx=%d&Ny=%d'
 
+##### Disk cache config
+# TODO these should be changed to absolute paths so we can get rid of the
+# symlinks in stackblink
+store = Shove('file://neat_binary_store', 'file://neat_binary_cache')
+store_mutex = Lock()
+
 def process_from_internet(id, x0, y0, width, height):
   print 'Loading ...'
-  formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
-  URL = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
-  req = urllib2.urlopen(URL)
-  buffer = io.BytesIO(req.read())
+  key = '%s_%d_%d_%d_%d' % (id, x0, y0, width, height)
+  store_mutex.acquire()
+  if key in store:
+    print 'NEAT binary cache hit'
+    buffer = store[key]
+    store_mutex.release()
+  else:
+    store_mutex.release()
+    formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
+    url = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
+    req = urllib2.urlopen(url)
+    buffer = io.BytesIO(req.read())
+    store_mutex.acquire()
+    store[key] = buffer
+    store_mutex.release()
   print 'Processing ...'
 
   output_buffer = io.BytesIO()
