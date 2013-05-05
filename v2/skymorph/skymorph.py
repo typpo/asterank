@@ -44,6 +44,8 @@ REDIS_PREFIX = 'skymorph'
 redis = StrictRedis(host='localhost', port=6379, db=3)
 
 ##### Disk cache config
+# TODO these should be changed to absolute paths so we can get rid of the
+# symlinks in stackblink
 store = Shove('file://skymorph_store', 'file://skymorph_cache')
 store_mutex = Lock()
 

@@ -24,10 +24,11 @@
 
 {% block content %}
 <div ng-show="state == 'STACKING'">
-  <h2>Step 1: Drag &amp; drop images to line up stars.</h2>
+  <h2>Step 1: Click &amp; drag images to line up stars.</h2>
+  If one or more of the images is <em>impossible</em> to line up due to poor quality, select "bad quality."
 </div>
 <div ng-show="state == 'BLINKING'">
-  <h2>Step 2: Are there any moving objects?</h2>
+  <h2>Step 2: See any moving objects?</h2>
 </div>
 <kinetic></kinetic>
 
