@@ -1,5 +1,6 @@
 import sys
 import os
+import random
 import pymongo
 from pymongo import Connection
 from datetime import datetime
@@ -7,34 +8,30 @@ from threading import Thread
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from skymorph import skymorph
 
-def fetch_group():
+connection = Connection('localhost', 27017)
+db = connection.asterank
+asteroids = db.asteroids
+stackblink = db.stackblink
+
+def get_control_groups():
   # Returns a group of images for stacking/blinking
 
-  rets = []
-  # internally, each image has a score weighted by yesses and nos.  Eventually
-  # people's votes will count for more or less.
-  rets.append({
-    'image_url': 'http://...',
-
-    # best guess at initial positioning, based on past feedback
-    'pos_x': 0,
-    'pos_y': 0,
-
-    })
-  return rets
+  # Choose a random target
+  count = stackblink.count()
+  control_object = stackblink.find({}, {'_id': False}).limit(-1) \
+      .skip(random.randint(0, count)).next()
+  # TODO  handle no groups
+  return control_object
 
 def update_group(id, positions, interesting):
   # add crowdsourced info to group
+  # update pos_x, pos_y, reviews, score
   pass
 
 def create_known_groups():
   # scrape top X objects for imagery
   # a "group" is defined as a series of images taken within 45 minutes of each other
   NUM_CRAWL = 80
-  connection = Connection('localhost', 27017)
-  db = connection.asterank
-  asteroids = db.asteroids
-  stackblink = db.stackblink
 
   def process(asteroid):
     target = asteroid['prov_des']

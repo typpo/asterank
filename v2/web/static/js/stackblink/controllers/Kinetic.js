@@ -48,6 +48,7 @@ function KineticCtrl($scope, $http) {
       img.on('dragend', function(e) {
         var x = e.targetNode.getX()
         ,   y = e.targetNode.getY();
+        layer.moveToTop();
         console.log('img #' + imageidx + ':', x, y);
       });
 
@@ -95,15 +96,26 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.Next = function() {
-    $http.get('/api/stackblink/get_group').success(function(data) {
-      if (!data || !data.results) {
+    $http.get('/api/stackblink/get_control_groups').success(function(data) {
+      if (!data || !data.groups) {
         alert('Sorry, communication with the server failed.');
         return;
       }
 
-      for (var i=0; i < data.results.length; i++) {
-        var image_info = data.results[i];
-        $scope.DrawImage(image_info.pos_x, image_info.pos_y, image_info.image_url);
+      for (var i=0; i < data.groups.length; i++) {
+        var group = data.groups[i];
+        console.log(group);
+        angular.forEach(group.images, function(image_info) {
+          var url = 'http://asterank.com/api/skymorph/image?key=' + image_info.key;
+          if (group.reviews.length < 1) {
+            $scope.DrawImageCascade(url);
+          }
+          else {
+            alert('this should not happen yet');
+            $scope.DrawImage(image_info.pos_x, image_info.pos_y, url);
+          }
+        });
+        return;
       }
     });
   }
@@ -118,6 +130,8 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.Init = function() {
+    $scope.Reset();
+    $scope.Next();
     /*
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326052432|50898.2254861111|111.236381910219|20.0569029379104|111.46854|20.36166|20.10|32.97|-6.28|0.05|0.04|69.49|2575.44655863328|2826.62792908936|y|');
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326053840|50898.2353009259|111.238841847182|20.0565244828237|111.473295|20.36019|20.10|32.99|-6.28|0.05|0.04|69.49|2581.01249388904|2824.01213461076|y|');
@@ -133,7 +147,9 @@ function KineticCtrl($scope, $http) {
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|020811060632|52497.2546527778|242.346939597734|-15.9766488327123|242.011935|-15.83452|19.60|22.96|-17.72|0.14|0.09|79.03|1180.89508721214|2425.22751656948|y|');
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|020811062159|52497.2653819444|242.348720774806|-15.977931088641|242.00769|-15.82993|19.60|22.97|-17.72|0.14|0.09|79.03|1165.54925846943|2441.13862176737|y|');
     */
+    /*
     $scope.DrawImageCascade('http://www.asterank.com/api/skymorph/image?key=|980125084345|50838.3638310185|125.205629235086|19.0000617925272|125.805075|19.38883|17.21|-120.81|19.77|0.12|0.09|-7.50|3461.14286885139|3062.18843658054|y|');
     $scope.DrawImageCascade('http://www.asterank.com/api/skymorph/image?key=|980125085746|50838.3735648148|125.19762024079|19.0012706490652|125.809365|19.38706|17.21|-120.80|19.77|0.12|0.09|-7.50|3491.20920724698|3055.32035097508|y|');
+    */
   }
 }
