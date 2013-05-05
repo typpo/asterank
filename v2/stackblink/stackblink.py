@@ -87,6 +87,7 @@ def create_known_groups():
           'pos_x': 0,
           'pos_y': 0,
           'images': group_results,
+          'known_target': True,
           'reviews': [],
           })
         for thread in threads:
