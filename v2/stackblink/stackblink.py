@@ -31,7 +31,7 @@ def update_group(id, positions, interesting):
 def create_known_groups():
   # scrape top X objects for imagery
   # a "group" is defined as a series of images taken within 45 minutes of each other
-  NUM_CRAWL = 80
+  NUM_CRAWL = 20
 
   def process(asteroid):
     target = asteroid['prov_des']
@@ -103,12 +103,6 @@ def create_known_groups():
     return groups_final_datastructure   # a list of groups
 
   c = 0
-  for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
-    print 'price #', c
-    c += 1
-    new_image_groups = process(asteroid)
-    stackblink.insert(new_image_groups)
-  c = 0
   for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'score #', c
     c += 1
@@ -117,6 +111,12 @@ def create_known_groups():
   c = 0
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'closeness #', c
+    c += 1
+    new_image_groups = process(asteroid)
+    stackblink.insert(new_image_groups)
+  c = 0
+  for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
+    print 'price #', c
     c += 1
     new_image_groups = process(asteroid)
     stackblink.insert(new_image_groups)
