@@ -1,5 +1,11 @@
+import sys
+import os
+import pymongo
+from pymongo import Connection
+from datetime import datetime
+from threading import Thread
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from skymorph import skymorph
-from pymongo import MongoClient
 
 def fetch_group():
   # Returns a group of images for stacking/blinking
@@ -29,7 +35,6 @@ def create_known_groups():
   db = connection.asterank
 
   asteroids = db.asteroids
-  jpl = db.jpl
   def process(asteroid):
     target = asteroid['prov_des']
     if target.strip() == '':
@@ -42,26 +47,47 @@ def create_known_groups():
 
     #skymorph.images_for(prov_des)
 
-    results = search_target(target)
-    threads = []
+    results = skymorph.search_target(target)
+    groups = []
+    last_group = []
+    last_time = None
+    for result in results:
+      time = datetime.strptime(result['time'], '%Y-%m-%d %H:%M:%S')
+      if last_time:
+        tdelta = time - last_time if time > last_time else last_time - time
+        if tdelta.total_seconds() / 60 > 45:
+          # not within 45 minutes of each other
+          groups.append(last_group)
+          last_group = []
+        else:
+          last_group.append(result)
+      last_time = time
+
     ret = []
-    for result in results[-1*10:]:
-      ret.append({
-        'key': result['key'],
-        'time': result['time'],
-        })
-      t = Thread(target=get_image, args=(result['key'], ))
-      t.start()
-      threads.append(t)
-    for thread in threads:
-      thread.join()
+    for group in groups:
+      threads = []
+      group_results = []
+      for result in group:
+        group_results.append({
+          'key': result['key'],
+          'time': result['time'],
+          })
+        t = Thread(target=skymorph.get_image, args=(result['key'], ))
+        t.start()
+        threads.append(t)
+      ret.append(group_results)
+      for thread in threads:
+        thread.join()
+
     return ret
 
-
   for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
-    process(asteroid)
+    image_groups = process(asteroid)
   for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
-    process(asteroid)
+    image_groups = process(asteroid)
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
-    process(asteroid)
+    image_groups = process(asteroid)
+
+if __name__ == "__main__":
+  create_known_groups()
 
