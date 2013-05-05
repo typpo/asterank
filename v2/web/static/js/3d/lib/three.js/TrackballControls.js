@@ -405,7 +405,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 		}
 
-    sign = delta < 0 ? -1 : 1;
+    var sign = delta < 0 ? -1 : 1;
     delta = sign * Math.min(Math.abs(delta), 1.);
 		_zoomStart.y += ( 1 / delta ) * 0.05;
 

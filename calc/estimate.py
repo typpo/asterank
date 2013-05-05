@@ -300,6 +300,6 @@ def savedPerKg(type):
     ret += cto * pct / 100
   return ret - (cto / 3)  # assume it costs 1/3 as much to mine and get off the asteroid
 
-def profitRatio(dv):
-  # Baseline profit is 10%
-  return .65 / dv
+def profitRatio(baseline_dv, dv):
+  # Baseline profit is 10%, but it changes based on dv
+  return baseline_dv / dv

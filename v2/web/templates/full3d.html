@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+	<head>
+		<title>3D Interactive Asteroid Space Visualization - Asterank</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    {% assets filter="cssmin", output="gen/packed_full3d.css",
+    "css/full3d.css"
+    %}
+    <link href="{{ASSET_URL}}" rel="stylesheet" />
+    {% endassets %}
+	</head>
+<body>
+  <noscript>Sorry, this page requires Canvas/WebGL, so you'll need to enable JavaScript.</noscript>
+
+  {% include "blocks/shaders.html" %}
+
+  <div id="sidebar">
+    <p>
+    <a href="/">&laquo; Main site</a>
+    </p>
+    <div class="fb-like" data-href="http://www.asterank.com/3d" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+    <a style="font-size:10px;" href="https://twitter.com/share" data-url="http://asterank.com/3d/" data-counturl="http://asterank.com/3d/" class="twitter-share-button" data-lang="en">Tweet</a>
+<div>
+    <g:plusone size="small" count="false"></g:plusone>
+</div>
+
+    <hr/>
+    <div id="objects-of-interest-container" style="text-align:center;display:none;">
+      <span>Significant Objects<br>&amp; estimated value</span>
+      <table id="objects-of-interest">
+        <tr id="sun-selector" data-full-name="sun" style="background-color:green;">
+          <td colspan="2"><a href="#">Sun</a> (default view)</td>
+        </tr>
+        <tr id="earth-selector" data-full-name="earth">
+          <td colspan="2"><a href="#">Earth</a></td>
+        </tr>
+        <tr id="da14-selector" data-full-name="2012 DA14">
+          <td><a href="#">2012 DA14</a></td>
+          <td>$665 million</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+	<!-- three.js container -->
+  <div id="container"></div>
+	<!-- info on screen display -->
+  <div id="loading">
+    <!--<img src="/images/loader.gif"/> Loading <span id="loading-text"></span>...-->
+    <img src="/static/img/loader.gif"/> Loading asteroids from database...
+  </div>
+  <div id="not-supported" style="display:none;">
+    <p>
+    <strong>Sorry, your browser or graphics card doesn't support webgl.  Most features of the simulation will not be available.</strong>
+    </p>
+    <p>
+    You may be able to see the simulation if you..
+    </p>
+    <h2><a href="http://google.com/chrome">Get Chrome</a><br>or<br><a href="http://getfirefox.com">Get Firefox</a></h2>
+    <p>
+    <input type="submit" onClick="window.location='/3d/notsupported.html';" value="See video preview (recommended)"/><br>
+    <input type="submit" onClick="$('#not-supported').hide();return false;" value="Ignore for now"/>
+    </p>
+  </div>
+	<div id="info">
+    <div id="caption-container">
+      <div id="main-caption" class="top">
+      </div>
+      <div id="other-caption" class="top">
+      </div>
+    </div>
+		<div class="bottom" id="inlineDoc" >
+      <span style="font-size:12px;color:#fff">
+      <strong>Rotate</strong>: left click + drag; <strong>Pan</strong>: right click + drag
+      <br>
+      <strong>Zoom</strong>: scroll/middle click + drag; <strong>Fullscreen</strong>: press f
+      <br>
+      Location of all objects shown is scientifically accurate.</span>
+		</div>
+	</div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  {% assets filter="jsmin", output="gen/packed_full3d.js",
+  "js/3d/lib/three.js/three.min.js",
+  "js/3d/lib/three.js/Detector.js",
+  "js/3d/lib/three.js/TrackballControls.js",
+  "js/3d/lib/threex/THREEx.WindowResize.js",
+  "js/3d/lib/threex/THREEx.FullScreen.js",
+  "js/3d/lib/dat.gui.js",
+  "js/3d/ellipse.js",
+  "js/3d/ephemeris.js",
+  "js/3d/util.js",
+  "js/3d/main.js",
+  "js/3d/full3d_loader.js"
+  %}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
+<script type="text/javascript">
+if(~document.location.href.indexOf('asterank.com')) {
+(function() {
+(function(d,c){var a,b,g,e;a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===d.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';b=d.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);c._i=[];c.init=function(a,d,f){var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";g="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config".split(" ");
+for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
+})();
+mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");mixpanel.track('3d');
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-32180949-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+}
+else {
+  mixpanel = {track: function() {}};
+}</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=230286373664292";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</body>
+</html>

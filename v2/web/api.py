@@ -21,6 +21,9 @@ UPCOMING_SORT = 'upcoming'
 
 VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT])
 
+ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
+    'om', 'ma', 'n', 'w', 'per', 'epoch']
+
 # some of these were poorly named, so we map better names, but the database stays the
 # same for backwards compatibility
 FIELD_ALIASES = {
@@ -28,16 +31,25 @@ FIELD_ALIASES = {
   'accessibility': 'closeness',
 }
 
-def rankings(sort_by, limit):
+def rankings(sort_by, limit, orbits_only=False):
   if sort_by not in VALID_SORTS:
     return None
   if sort_by == UPCOMING_SORT:
     return upcoming_passes()
   if sort_by in FIELD_ALIASES:
     sort_by = FIELD_ALIASES[sort_by]
-  return list(asteroids.find({}, {'_id': False}) \
+
+  fields = {}
+  if orbits_only:
+    fields = {field: True for field in ORBIT_FIELDS}
+  fields['_id'] = False
+
+  ret = list(asteroids.find({}, fields) \
           .sort(sort_by, direction=pymongo.DESCENDING) \
           .limit(limit))
+  # remove empty fields
+  return [{key:val for key,val in obj.iteritems() if val != ''} \
+      for obj in ret]
 
 def autocomplete(query, limit):
   query = query.replace('+', ' ')

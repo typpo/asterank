@@ -49,11 +49,11 @@ store_mutex = Lock()
 
 ##### Functions
 
-def images_for(target):
+def images_for(target, n=10):
   results = search_target(target)
   threads = []
   ret = []
-  for result in results[-10:]:
+  for result in results[-1*10:]:
     ret.append({
       'key': result['key'],
       'time': result['time'],
@@ -130,20 +130,21 @@ def parse_results_table(text, neat_fields):
         new_entry[numfield] = -1
 
     # Disabled for now, this will break backwards compatibility with some clients
-    """
     for dmsfield in DMS_NEAT_FIELDS:
-      try:
-        d, m, s = new_entry[dmsfield].split(' ')
-        d = float(d)
-        m = float(m)
-        s = float(s)
-        new_entry[dmsfield] = math.copysign(1, d) * (abs(d) + (m / 60.0) + (s / 3600.0));
-      except:
-        pass
-    """
+      new_entry[dmsfield] = dms_str_to_float(new_entry[dmsfield])
 
     entries.append(new_entry)
   return entries
+
+def dms_str_to_float(dmsfield):
+  try:
+    d, m, s = dmsfield.split(' ')
+    d = float(d)
+    m = float(m)
+    s = float(s)
+    return math.copysign(1, d) * (abs(d) + (m / 60.0) + (s / 3600.0));
+  except:
+    return dmsfield
 
 def get_fast_image(key):
   # This is not terribly fast, but if the archive's image is not fast,

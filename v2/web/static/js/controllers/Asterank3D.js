@@ -17,7 +17,8 @@ function Asterank3DCtrl($scope, pubsub) {
         $('#results-table-container').height($rs.height() + 250);
         $rs.height($rs.height() + 250);
         $ls.height($ls.height() + 250);
-      }
+      },
+      top_object_color: 0xffffff
     });
   }
 

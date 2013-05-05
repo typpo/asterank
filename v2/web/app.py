@@ -8,6 +8,7 @@ import base64
 import re
 
 import api
+import stackblink
 from skymorph import skymorph
 
 app = Flask(__name__)
@@ -15,15 +16,22 @@ app.secret_key = 'not a secret key'
 
 # bundling
 assets = Environment(app)
+# This filter can be helping for debugging javascript.
+def noop_filter(_in, out, **kw):
+  out.write(_in.read())
 
 # main routes
 @app.route("/")
 def index():
   return render_template('index.html')
 
-@app.route("/asteroid")
-def asteroid_view():
-  return render_template('asteroid.html')
+@app.route("/3d")
+def view_3d():
+  return render_template('full3d.html', noop=noop_filter)
+
+@app.route("/3d/notsupported.html")
+def notsupported_3d():
+  return render_template('notsupported.html')
 
 # General api routes
 
@@ -79,7 +87,8 @@ def api_asterank():
 def rankings():
   try:
     limit = int(request.args.get('limit')) or 10
-    results = api.rankings(request.args.get('sort_by'), limit)
+    orbital_info_only = request.args.get('orbits_only')
+    results = api.rankings(request.args.get('sort_by'), limit, orbital_info_only)
     json_resp = json.dumps(results)
     return Response(json_resp, mimetype='application/json', headers={ \
       'Cache-Control': 'max-age=432000', # 5 days
@@ -167,6 +176,11 @@ def skymorph_fast_image():
     response = make_response(ret)
     response.headers["Content-type"] = "image/png"
     return response
+
+# Stack/blink Discover routes
+@app.route('/discover')
+def discover():
+  return render_template('discover.html')
 
 # Kepler
 

@@ -10,7 +10,6 @@
 
   var Orbit3D = function(eph, opts, bigParticle) {
     opts = opts || {};
-    opts.color = opts.color || 0xffee00;
     opts.width = opts.width || 1;
     opts.object_size = opts.object_size || 1;
     opts.jed =  opts.jed || 2451545.0;
