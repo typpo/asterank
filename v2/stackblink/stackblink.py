@@ -107,19 +107,22 @@ def create_known_groups():
     print 'score #', c
     c += 1
     new_image_groups = process(asteroid)
-    stackblink.insert(new_image_groups)
+    if new_image_groups:
+      stackblink.insert(new_image_groups)
   c = 0
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'closeness #', c
     c += 1
     new_image_groups = process(asteroid)
-    stackblink.insert(new_image_groups)
+    if new_image_groups:
+      stackblink.insert(new_image_groups)
   c = 0
   for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'price #', c
     c += 1
     new_image_groups = process(asteroid)
-    stackblink.insert(new_image_groups)
+    if new_image_groups:
+      stackblink.insert(new_image_groups)
 
 if __name__ == "__main__":
   create_known_groups()
