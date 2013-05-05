@@ -98,26 +98,22 @@ function KineticCtrl($scope, $http) {
 
   $scope.Next = function() {
     $http.get('/api/stackblink/get_control_groups').success(function(data) {
-      if (!data || !data.groups) {
+      console.log(data);
+      if (!data || !data.images) {
         alert('Sorry, communication with the server failed.');
         return;
       }
 
-      for (var i=0; i < data.groups.length; i++) {
-        var group = data.groups[i];
-        console.log(group);
-        angular.forEach(group.images, function(image_info) {
-          var url = '/api/skymorph/fast_image?key=' + image_info.key;
-          if (group.reviews.length < 1) {
-            $scope.DrawImageCascade(url);
-          }
-          else {
-            alert('this should not happen yet');
-            $scope.DrawImage(image_info.pos_x, image_info.pos_y, url);
-          }
-        });
-        return;  // TODO temporary
-      }
+      angular.forEach(data.images, function(image_info) {
+        var url = '/api/skymorph/fast_image?key=' + image_info.key;
+        if (data.reviews.length < 1) {
+          $scope.DrawImageCascade(url);
+        }
+        else {
+          alert('this should not happen yet');
+          $scope.DrawImage(image_info.pos_x, image_info.pos_y, url);
+        }
+      });
     });
   }
 

@@ -90,36 +90,36 @@ def create_known_groups():
       if len(group_results) > 0:
         groups_final_datastructure.append({
           'score': 0,
+          'interesting': 0,
+          'not_interesting': 0,
           'images': group_results,
-          'known_target': True,
           'reviews': [],
+          'target': target,
+          'known_target': True,
           })
         #for thread in threads:
         #  thread.join()
 
-    return {
-      'target': target,
-      'groups': groups_final_datastructure,
-    }
+    return groups_final_datastructure   # a list of groups
 
   c = 0
   for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'price #', c
     c += 1
-    target_object = process(asteroid)
-    stackblink.insert(target_object)
+    new_image_groups = process(asteroid)
+    stackblink.insert(new_image_groups)
   c = 0
   for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'score #', c
     c += 1
-    target_object = process(asteroid)
-    stackblink.insert(target_object)
+    new_image_groups = process(asteroid)
+    stackblink.insert(new_image_groups)
   c = 0
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'closeness #', c
     c += 1
-    target_object = process(asteroid)
-    stackblink.insert(target_object)
+    new_image_groups = process(asteroid)
+    stackblink.insert(new_image_groups)
 
 if __name__ == "__main__":
   create_known_groups()
