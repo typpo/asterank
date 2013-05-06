@@ -32,7 +32,12 @@ def process_from_internet(id, x0, y0, width, height):
     store_mutex.release()
     formatted_query = QUERY_FORMAT % (id, x0, y0, width, height)
     url = '%s%s%s' % (BASE_URL, ENDPOINT, formatted_query)
-    req = urllib2.urlopen(url)
+    try:
+      req = urllib2.urlopen(url) # TODO 1998 XB errored out here
+    except urllib2.HTTPError:
+      print url, 'errored out'
+      return None
+
     buffer = io.BytesIO(req.read())
     store_mutex.acquire()
     store[key] = buffer

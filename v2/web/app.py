@@ -184,7 +184,10 @@ def discover():
 
 @app.route('/api/stackblink/get_control_groups')
 def get_control_groups():
-  return jsonify(stackblink.get_control_groups())
+  json_resp = json.dumps(stackblink.get_control_groups())
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'no-cache',
+  })
 
 # Kepler
 
