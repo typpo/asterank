@@ -1,3 +1,6 @@
 #!/bin/sh
 # Shorthand for populating asteroids database from JPL Horizons
-exec "`dirname $0`/horizon.py" populateDb
+
+cd `dirname $0`
+cd ..
+exec "calc/horizon.py" populateDb

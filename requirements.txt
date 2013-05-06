@@ -10,5 +10,5 @@ redis
 pypng
 pillow
 shove
-pandas
 numpy
+pandas
