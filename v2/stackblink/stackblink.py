@@ -67,7 +67,7 @@ def create_known_groups():
       threads = []
       group_results = []
       rcount = 1
-      if len(group) < 1:
+      if len(group) < 2:
         continue
       for result in group:
         group_results.append({
