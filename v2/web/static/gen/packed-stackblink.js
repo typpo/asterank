@@ -15,5 +15,5 @@ $scope.Next=function(){$scope.Reset();$http.get('/api/stackblink/get_control_gro
 angular.forEach(data.images,function(image_info){var url='http://asterank.com/api/skymorph/fast_image?key='+image_info.key;if(data.reviews.length<1){$scope.DrawImageCascade(url);}
 else{alert('this should not happen yet');$scope.DrawImage(image_info.pos_x,image_info.pos_y,url);}});});}
 $scope.Reset=function(){ if($scope.blinking){$scope.StopBlink();}
-$scope.stage.clear();angular.forEach($scope.images,function(image){image.remove();});$scope.images=[];$scope.stage.draw(); $scope.blinking=false;$scope.state='STACKING';}
+$scope.stage.clear();angular.forEach($scope.images,function(image){ image.remove();});$scope.images=[];$scope.stage.draw(); $scope.blinking=false;$scope.state='STACKING';}
 $scope.Init=function(){$scope.Next();}}

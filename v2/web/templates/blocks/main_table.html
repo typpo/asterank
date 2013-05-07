@@ -53,7 +53,7 @@
       <tbody>
         <tr ng-repeat="asteroid in rankings" ng-click="AsteroidClick(asteroid)" ng-class="{info: selected.full_name == asteroid.full_name}">
           <td><span ng-bind="asteroid.name | ifempty:asteroid.prov_des"></span></td>
-          <td><span ng-bind="asteroid.spec_B"></span></td>
+          <td><span ng-bind="asteroid.spec"></span></td>
           <td><span ng-bind="asteroid.a | number:3"></span></td>
           <td><span ng-bind="asteroid.e | number:3"></span></td>
           <td><span ng-bind="asteroid.price | fuzzynum"></span></td>

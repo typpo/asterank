@@ -157,13 +157,13 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       // Composition data
       if (compositions_map) {
         // Object.keys not supported < ie9, so shim is required (see misc.js)
-        $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec_B]);
+        $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec]);
       }
       else {
         $http.get('/api/compositions').success(function(data) {
           compositions_map = data;
           $scope.composition =
-            Object.keys(compositions_map[$scope.asteroid.spec_B]);
+            Object.keys(compositions_map[$scope.asteroid.spec]);
         });
       }
 

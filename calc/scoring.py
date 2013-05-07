@@ -13,7 +13,7 @@ DEFAULT_DV = 6.5 #km/s
 DEFAULT_COMET_DV = 50  # km/s
 
 def closeness_weight(obj):
-  if obj['spec_B'] == 'comet':
+  if obj['spec'] == 'comet':
     return -1
 
   emoid = DEFAULT_MOID if isinstance(obj['moid'], basestring) else obj['moid']
@@ -33,7 +33,7 @@ def closeness_weight(obj):
   if 'dv' in obj:
     dv = obj['dv']
   else:
-    if obj['spec_B'] == 'comet':
+    if obj['spec'] == 'comet':
       dv = DEFAULT_COMET_DV
     else:
       dv = DEFAULT_DV
@@ -94,7 +94,7 @@ def price(obj):
   #density = mass / vol
   """
 
-  stype = obj['spec_B']
+  stype = obj['spec']
   value = estimate.valuePerKg(stype) * mass
   saved = estimate.savedPerKg(stype) * mass
   return (value, saved)

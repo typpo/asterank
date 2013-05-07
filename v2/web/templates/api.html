@@ -31,7 +31,7 @@ Requests are of the form:
 </div>
 </p>
 <p>
-Response data formats are largely derived from NASA/JPL's Small Body Database <a href="http://ssd.jpl.nasa.gov/sbdb_query.cgi">query browser</a>.  Exceptions to this are the delta-v field (dv), the mass field (GM), and the spectral type field (spec_B).  Additional Asterank scores are included: <strong>closeness</strong>, <strong>price</strong> ($), and overall <strong>score</strong>.
+Response data formats are largely derived from NASA/JPL's Small Body Database <a href="http://ssd.jpl.nasa.gov/sbdb_query.cgi">query browser</a>.  Exceptions to this are the delta-v field (dv), the mass field (GM), and the normalized spectral type field (spec).  Additional Asterank scores are included: <strong>closeness</strong>, <strong>price</strong> ($), and overall <strong>score</strong>.
 </p>
 <h3>Sample Request</h3>
 <p>
@@ -57,7 +57,7 @@ Results:
       "rms":0.57773,
       "H_sigma":0.66439,
       "closeness":4.659571917281135,
-      "spec_B":"T",
+      "spec":"T",
       "K2":"",
       "K1":"",
       "M1":"",

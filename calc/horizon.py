@@ -84,22 +84,22 @@ def populateDb():
   designation_regex = re.compile('.*\(([^\)]*)\)')
   n = 0
   for row in reader:
-    if row['spec_B'] == '':
+    row['spec'] = row['spec_B']
+    if row['spec'] == '':
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
-        # TODO should have our own merged spec row, instead we overwrite spec_B
-        row['spec_B'] = newspec.strip()
+        row['spec'] = newspec.strip()
       elif row['pdes'] == '2012 DA14':
         print 'Adjust 2012 DA14'
-        row['spec_B'] = 'L'
+        row['spec'] = 'L'
       elif row['class'] in COMET_CLASSES:
-        row['spec_B'] = 'comet'
+        row['spec'] = 'comet'
       else:
         continue # NOTE disable this to create the full db (about 600k objects)
-        row['spec_B'] = 'S'
+        row['spec'] = 'S'
 
-    if row['spec_B'] == 'C type':
-      row['spec_B'] = 'C'
+    if row['spec'] == 'C type':
+      row['spec'] = 'C'
 
     # match it with its delta-v
     m = designation_regex.match(row['full_name'])
@@ -123,6 +123,7 @@ def populateDb():
         row[key] = fv
     row['spec_T'] = row['spec_T'].replace(':', '')
     row['spec_B'] = row['spec_B'].replace(':', '')
+    row['spec'] = row['spec'].replace(':', '')
 
     # match mass
     if row['full_name'] in massd:

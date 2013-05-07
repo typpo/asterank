@@ -9,7 +9,7 @@ function CustomInputCtrl($scope, $http, pubsub) {
     ma: Ephemeris.earth.ma,
     epoch: Ephemeris.earth.epoch,
     per: Ephemeris.earth.P,
-    spec_B: '?',    // necessary for composition lookup
+    spec: '?',    // necessary for composition lookup
     custom_object: true
   };
   $scope.num_custom_objects = 1;

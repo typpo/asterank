@@ -178,7 +178,7 @@ def exoplanets(query, limit):
 
 def asterank(query, limit):
   results = list(asteroids.find(query, {'_id': False}).limit(limit))
-  #key_whitelist = set(['a', 'e', 'i', 'om', 'ma', 'spec_B', 'GM', 'dv', ])  # TODO complete
+  #key_whitelist = set(['a', 'e', 'i', 'om', 'ma', 'spec', 'GM', 'dv', ])  # TODO complete
   #results = [{key: asteroid[key] for key in key_whitelist} for asteroid in results]
   return results
 
