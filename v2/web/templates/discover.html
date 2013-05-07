@@ -23,31 +23,24 @@
 {% endblock %}
 
 {% block content %}
-<div ng-show="state == 'STACKING'">
-  <h2>Step 1: Click &amp; drag images to line up stars.</h2>
+<div class="instruction-container" ng-show="state == 'STACKING'">
+  <span class="instruction">Step 1: Click &amp; drag images to line up stars.</span>
 </div>
-<div ng-show="state == 'BLINKING'">
-  <h2>Step 2: See any moving objects?</h2>
+<div class="instruction-container" ng-show="state == 'BLINKING'">
+  <span class="instruction">Step 2: See any moving objects?</span>
+  <span class="blink-options">Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" /></span>
+</div>
+<div id="control-bar-inline">
+  <div ng-show="state == 'STACKING'">
+  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">They're aligned (a)</a>
+  <a href="#" class="stackblink-button" ng-click="BadQuality()" keyboard-shortcut="q">Bad quality (q)</a>
+  </div>
+  <div ng-show="state == 'BLINKING'">
+    <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
+    <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
+    <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a>
+  </div>
 </div>
 <kinetic></kinetic>
 
-<div id="control-bar">
-  <div ng-show="state == 'STACKING'">
-  <div>
-  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">They're aligned (a)</a>
-  </div>
-  <div>
-  <a href="#" class="stackblink-button" ng-click="BadQuality()" keyboard-shortcut="q">Bad quality (q)</a>
-  </div>
-  </div>
-  <div ng-show="state == 'BLINKING'">
-    <div>
-    <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
-    <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
-    </div>
-    <div>
-    <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a>
-    </div>
-  </div>
-</div>
 {% endblock %}

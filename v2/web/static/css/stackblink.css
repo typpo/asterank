@@ -26,11 +26,29 @@ body {
 
 #control-bar {
   position: fixed;
-  top: 50px;
-  right: 10px;
+  top: 90px;
+  right: 20%;
   text-align: center;
 }
 
 #control-bar div {
   margin-top: 10px;
+}
+
+#control-bar-inline {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.instruction {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.instruction-container {
+  margin: 5px;
+}
+
+.blink-options {
+  margin-left: 20px;
 }

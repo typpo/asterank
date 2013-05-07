@@ -2,13 +2,7 @@
   angular.module('StackblinkApp', [])
     .directive('kinetic', function() {
       var kineticContainer =
-        '<form class="form form-inline" ng-show="blinking">'
-        + '<span>'
-        + 'Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" />'
-        + '<span ng-bind="blink_interval"></span> ms'
-        + '</span>'
-        + '</form>'
-        + '<div id="container"></div>';
+        '<div id="container"></div>';
       return {
         restrict: 'E',
         compile: function (tElement, tAttrs, transclude) {

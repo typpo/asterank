@@ -86,7 +86,6 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.StopBlink = function() {
-    //clearInterval($scope.blink_interval);
     clearTimeout($scope.blink_timeout);
     for (var i=0; i < $scope.images.length; i++) {
       $scope.images[i].show();
@@ -135,7 +134,16 @@ function KineticCtrl($scope, $http) {
 
   $scope.Reset = function() {
     // reset canvas
+    if ($scope.blinking) {
+      $scope.StopBlink();
+    }
     $scope.stage.clear();
+    angular.forEach($scope.images, function(image) {
+      // necessary because kinetic.clear() doesn't actually remove each layer
+      image.remove();
+    });
+    $scope.images = [];
+    $scope.stage.draw();
 
     // reset state
     $scope.blinking = false;
