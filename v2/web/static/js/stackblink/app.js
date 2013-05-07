@@ -33,4 +33,6 @@
         }
       };
     });
+
+    mixpanel.track('discover');
 })();
