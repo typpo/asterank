@@ -27,11 +27,8 @@ body {
 #right-bar {
   position: fixed;
   top: 90px;
-  right: 20%;
-}
-
-#control-bar div {
-  margin-top: 10px;
+  right: 5px;
+  width: 300px;
 }
 
 #control-bar-inline {
