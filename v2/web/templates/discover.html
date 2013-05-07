@@ -25,7 +25,6 @@
 {% block content %}
 <div ng-show="state == 'STACKING'">
   <h2>Step 1: Click &amp; drag images to line up stars.</h2>
-  If one or more of the images is <em>impossible</em> to line up due to poor quality, select "bad quality."
 </div>
 <div ng-show="state == 'BLINKING'">
   <h2>Step 2: See any moving objects?</h2>
@@ -38,13 +37,13 @@
   <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">They're aligned (a)</a>
   </div>
   <div>
-  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">Bad quality (q)</a>
+  <a href="#" class="stackblink-button" ng-click="BadQuality()" keyboard-shortcut="q">Bad quality (q)</a>
   </div>
   </div>
   <div ng-show="state == 'BLINKING'">
     <div>
-    <a href="#" class="stackblink-button" keyboard-shortcut="y">Yes (y)</a>
-    <a href="#" class="stackblink-button" keyboard-shortcut="n">No (n)</a>
+    <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
+    <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
     </div>
     <div>
     <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a>

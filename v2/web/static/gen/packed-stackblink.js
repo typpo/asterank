@@ -14,8 +14,11 @@ $scope.images[(next_idx-1)%$scope.images.length].hide();var showidx=next_idx%$sc
 next_img();}
 $scope.StopBlink=function(){clearTimeout($scope.blink_timeout);for(var i=0;i<$scope.images.length;i++){$scope.images[i].show();}
 $scope.stage.draw();$scope.blinking=false;$scope.state='STACKING';}
-$scope.Next=function(){$http.get('/api/stackblink/get_control_groups').success(function(data){console.log(data);if(!data||!data.images){alert('Sorry, communication with the server failed.');return;}
-angular.forEach(data.images,function(image_info){var url='/api/skymorph/fast_image?key='+image_info.key;if(data.reviews.length<1){$scope.DrawImageCascade(url);}
+$scope.BadQuality=function(){ $scope.Next();}
+$scope.Interesting=function(){ $scope.Next();}
+$scope.NotInteresting=function(){ $scope.Next();}
+$scope.Next=function(){$scope.Reset();$http.get('/api/stackblink/get_control_groups').success(function(data){console.log(data);if(!data||!data.images){alert('Sorry, communication with the server failed.');return;}
+angular.forEach(data.images,function(image_info){var url='http://asterank.com/api/skymorph/fast_image?key='+image_info.key;if(data.reviews.length<1){$scope.DrawImageCascade(url);}
 else{alert('this should not happen yet');$scope.DrawImage(image_info.pos_x,image_info.pos_y,url);}});});}
-$scope.Reset=function(){ $scope.blinking=false;$scope.state='STACKING';}
-$scope.Init=function(){$scope.Reset();$scope.Next();}}
+$scope.Reset=function(){ $scope.stage.clear(); $scope.blinking=false;$scope.state='STACKING';}
+$scope.Init=function(){$scope.Next();}}

@@ -96,7 +96,23 @@ function KineticCtrl($scope, $http) {
     $scope.state = 'STACKING';
   }
 
+  $scope.BadQuality = function() {
+    // TODO report
+    $scope.Next();
+  }
+
+  $scope.Interesting = function() {
+    // TODO report
+    $scope.Next();
+  }
+
+  $scope.NotInteresting = function() {
+    // TODO report
+    $scope.Next();
+  }
+
   $scope.Next = function() {
+    $scope.Reset();
     $http.get('/api/stackblink/get_control_groups').success(function(data) {
       console.log(data);
       if (!data || !data.images) {
@@ -105,7 +121,7 @@ function KineticCtrl($scope, $http) {
       }
 
       angular.forEach(data.images, function(image_info) {
-        var url = '/api/skymorph/fast_image?key=' + image_info.key;
+        var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
         if (data.reviews.length < 1) {
           $scope.DrawImageCascade(url);
         }
@@ -119,7 +135,7 @@ function KineticCtrl($scope, $http) {
 
   $scope.Reset = function() {
     // reset canvas
-    // TODO
+    $scope.stage.clear();
 
     // reset state
     $scope.blinking = false;
@@ -127,7 +143,6 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.Init = function() {
-    $scope.Reset();
     $scope.Next();
     /*
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326052432|50898.2254861111|111.236381910219|20.0569029379104|111.46854|20.36166|20.10|32.97|-6.28|0.05|0.04|69.49|2575.44655863328|2826.62792908936|y|');
