@@ -24,11 +24,10 @@ body {
   top:1px;
 }
 
-#control-bar {
+#right-bar {
   position: fixed;
   top: 90px;
   right: 20%;
-  text-align: center;
 }
 
 #control-bar div {
