@@ -27,10 +27,10 @@ body {
 #right-bar {
   position: fixed;
   top: 90px;
-  left: 700px;
+  left: 825px;
   width: 300px;
   background-color: #555;
-  padding: 7px;
+  padding: 11px;
   padding-left: 15px;
 }
 
