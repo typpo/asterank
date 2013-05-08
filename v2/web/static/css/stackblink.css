@@ -27,8 +27,17 @@ body {
 #right-bar {
   position: fixed;
   top: 90px;
-  right: 5px;
+  left: 700px;
   width: 300px;
+  background-color: #555;
+  padding: 7px;
+  padding-left: 15px;
+}
+
+#right-bar .hide-intro {
+  float: right;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 #control-bar-inline {

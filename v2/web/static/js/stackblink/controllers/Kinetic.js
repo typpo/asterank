@@ -3,6 +3,7 @@ function KineticCtrl($scope, $http) {
   $scope.blinking = false;
   $scope.blink_interval = 800;
   $scope.state = 'STACKING';
+  $scope.show_intro = true;
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
@@ -152,6 +153,7 @@ function KineticCtrl($scope, $http) {
 
   $scope.Init = function() {
     $scope.Next();
+    mixpanel.track('discover');
     /*
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326052432|50898.2254861111|111.236381910219|20.0569029379104|111.46854|20.36166|20.10|32.97|-6.28|0.05|0.04|69.49|2575.44655863328|2826.62792908936|y|');
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326053840|50898.2353009259|111.238841847182|20.0565244828237|111.473295|20.36019|20.10|32.99|-6.28|0.05|0.04|69.49|2581.01249388904|2824.01213461076|y|');
@@ -171,5 +173,9 @@ function KineticCtrl($scope, $http) {
     $scope.DrawImageCascade('http://www.asterank.com/api/skymorph/image?key=|980125084345|50838.3638310185|125.205629235086|19.0000617925272|125.805075|19.38883|17.21|-120.81|19.77|0.12|0.09|-7.50|3461.14286885139|3062.18843658054|y|');
     $scope.DrawImageCascade('http://www.asterank.com/api/skymorph/image?key=|980125085746|50838.3735648148|125.19762024079|19.0012706490652|125.809365|19.38706|17.21|-120.80|19.77|0.12|0.09|-7.50|3491.20920724698|3055.32035097508|y|');
     */
+  }
+
+  $scope.HideIntro = function() {
+    $scope.show_intro = false;
   }
 }
