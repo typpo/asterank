@@ -27,3 +27,4 @@ echo "Downloading indexes.  This will take a while..."
 sudo mv index-* /usr/local/astrometry/data
 
 popd
+rm astrometry.net-0.43.tar.gz
