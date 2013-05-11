@@ -12,3 +12,5 @@ build
 pip-log.txt
 nohup.out
 .DS_Store
+
+data/deltav/db2.csv
