@@ -35,10 +35,11 @@ def process(png_data, ra, dec, key):
   print 'Solving field for', key, '...'
   result = _timeout_command('solve-field --no-plots --cpulimit 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
       % (png_path, ra, dec, output_dir), 30)
-  print 'Done solving field'
 
   if not result:
+    print 'Could not solve field'
     return None
+  print 'Done solving field'
 
   wcs_path = output_dir + '/solution.new'
   f_wcs = open(wcs_path, 'r')
@@ -96,12 +97,12 @@ def _timeout_command(command, timeout):
   if it doesn't normally exit within timeout seconds and return None"""
   start = datetime.datetime.now()
   process = subprocess.Popen(command, stdout=subprocess.PIPE, \
-      stderr=subprocess.PIPE, shell=True)
+      stderr=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
   while process.poll() is None:
     time.sleep(0.1)
     now = datetime.datetime.now()
-    if (now - start).seconds> timeout:
-      os.kill(process.pid, signal.SIGKILL)
+    if (now - start).seconds > timeout:
+      os.killpg(process.pid, signal.SIGTERM)
       os.waitpid(-1, os.WNOHANG)
       return None
   return process.stdout.read()
