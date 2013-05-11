@@ -30,7 +30,8 @@ NEAT_FIELDS_SMALL = ['obs_id', 'ra', 'dec', 'time', 'exposure', 'triplet', 'key'
 NUMERIC_NEAT_FIELDS = set(['mag', 'offset', 'veloc_we', 'veloc_sn', \
     'pixel_loc_x', 'pixel_loc_y'])
 
-DMS_NEAT_FIELDS = set(['center_dec', 'center_ra', 'predicted_dec', 'predicted_ra'])
+DMS_NEAT_FIELDS = set(['center_dec', 'predicted_dec'])
+HMS_NEAT_FIELDS = set(['center_ra', 'predicted_ra'])
 
 URL_BASE = 'http://skyview.gsfc.nasa.gov/'
 
@@ -124,19 +125,29 @@ def parse_results_table(text, neat_fields):
     newentries = [x[0].strip().replace(u'\xa0', u' ').replace(u'\xc2', u' ')\
         for x in newentries if len(x) == 1 and x[0].strip() != '']
     new_entry = {neat_fields[i]: newentries[i] for i in range(len(neat_fields))}
-
     for numfield in NUMERIC_NEAT_FIELDS:
       try:
         new_entry[numfield] = float(new_entry[numfield])
       except:
         new_entry[numfield] = -1
 
-    # Disabled for now, this will break backwards compatibility with some clients
     for dmsfield in DMS_NEAT_FIELDS:
       new_entry[dmsfield] = dms_str_to_float(new_entry[dmsfield])
+    for hmsfield in HMS_NEAT_FIELDS:
+      new_entry[hmsfield] = hms_str_to_float(new_entry[hmsfield])
 
     entries.append(new_entry)
   return entries
+
+def hms_str_to_float(hmsfield):
+  try:
+    h, m, s = hmsfield.split(' ')
+    h = float(h)
+    m = float(m)
+    s = float(s)
+    return h * 15 + m / 4 + s / 240
+  except:
+    return hmsfield
 
 def dms_str_to_float(dmsfield):
   try:
@@ -158,6 +169,7 @@ def get_fast_image(key):
   storage_key = 'fast_%s' % (md5_storage_hash(key))
   store_mutex.acquire()
   if storage_key in store:
+    print 'found', storage_key
     store_mutex.release()
     return store[storage_key]
   store_mutex.release()
