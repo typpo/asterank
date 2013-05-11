@@ -63,7 +63,7 @@ def create_known_groups():
           'pos_y': 0,
           # this will bite me in the ass because these are floats now,
           # but there are some cached responses in which these fields are strs
-          'center_ra': skymorph.dms_str_to_float(result['center_ra']),
+          'center_ra': skymorph.hms_str_to_float(result['center_ra']),
           'center_dec': skymorph.dms_str_to_float(result['center_dec']),
           })
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
