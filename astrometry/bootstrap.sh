@@ -1,13 +1,14 @@
-#/bin/bash
+#/bin/bash -e
 # Astrometry setup for ubuntu/debian-like systems
 
 # Dependencies
 sudo apt-get install libcairo2-dev libnetpbm10-dev netpbm \
                           libpng12-dev libjpeg-dev python-numpy \
-                          zlib-devel python-pyfits cfitsio-dev \
-                          libnetpbm10-dev
+                          python-pyfits cfitsio-dev \
+                          libnetpbm10-dev swig
+#zlib-devel
 
-wget http://astrometry.net/downloads/astrometry.net-0.43.tar.gz
+wget -O astrometry.net-0.43.tar.gz http://astrometry.net/downloads/astrometry.net-0.43.tar.gz
 tar xzvf astrometry.net-0.43.tar.gz
 pushd astrometry.net-0.43
 
@@ -22,7 +23,7 @@ echo "export PATH=$PATH:/usr/loca/astrometry/bin" >> ~/.bashrc
 
 # Download all the indexes...
 echo "Downloading indexes.  This will take a while..."
-./download_indexes.sh
-make install-indexes
+../download_indexes.sh
+sudo mv index-* /usr/local/astrometry/data
 
 popd
