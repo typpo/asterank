@@ -32,7 +32,7 @@ def process(png_data, ra, dec, key):
 
   png_path = f.name
   call('solve-field --no-plots --cpulimit 30 -l 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
-      % (png_path, ra, dec, output_dir), shell=True)
+      % (png_path, ra, dec, output_dir), shell=True, timeout=30)
   print 'Done solving field'
 
   wcs_path = output_dir + '/solution.new'
