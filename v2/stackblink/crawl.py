@@ -57,27 +57,32 @@ def create_known_groups():
       if len(group) < 2:
         continue
       for result in group:
-        group_results.append({
+        center_ra = skymorph.hms_str_to_float(result['center_ra'])
+        center_dec = skymorph.dms_str_to_float(result['center_dec'])
+        new_group_result = {
           'key': result['key'],
           'time': result['time'],
           'pos_x': 0,
           'pos_y': 0,
           # this will bite me in the ass because these are floats now,
           # but there are some cached responses in which these fields are strs
-          'center_ra': skymorph.hms_str_to_float(result['center_ra']),
-          'center_dec': skymorph.dms_str_to_float(result['center_dec']),
-          })
+          'center_ra': center_ra,
+          'center_dec': center_dec,
+          }
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
         png_data = skymorph.get_fast_image(result['key'])
-        print result['key']
-        print result['center_ra']
-        print result['center_dec']
-        astrometry.process(png_data, group_results[0]['center_ra'], \
-            group_results[0]['center_dec'], result['key'])
-        return
+        wcs_text = astrometry.process(png_data, center_ra, center_dec, result['key'])
+        group_results.append(new_group_result)
         rcount += 1
       gcount +=1
-      if len(group_results) > 0:
+      if len(group_results) > 1:
+        ref_ra = group_results[0]['center_ra']
+        ref_dec  = group_results[0]['center_dec']
+        for result in group_results:
+          offset = astrometry.get_pixel_offset(result['key'], group_results[0]['key'], \
+              ref_ra, ref_dec)
+          result['offset_x'] = offset[0]
+          result['offset_y'] = offset[1]
         groups_final_datastructure.append({
           'score': 0,
           'interesting': 0,
@@ -99,7 +104,6 @@ def create_known_groups():
     new_image_groups = process(asteroid)
     if new_image_groups:
       stackblink.insert(new_image_groups)
-    return
   c = 0
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'closeness #', c
