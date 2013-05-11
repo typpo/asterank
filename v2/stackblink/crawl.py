@@ -81,6 +81,10 @@ def create_known_groups():
         for result in group_results:
           offset = astrometry.get_pixel_offset(result['key'], group_results[0]['key'], \
               ref_ra, ref_dec)
+          if not offset:
+            print '!! ERROR: skipping image for', target, \
+                'because it has not had its astrometry processed.', result['key']
+            continue
           result['offset_x'] = offset[0]
           result['offset_y'] = offset[1]
         groups_final_datastructure.append({

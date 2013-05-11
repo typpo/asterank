@@ -9,7 +9,7 @@ from astLib import astWCS
 
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from skymorph.util import md5_storage_hash   # TODO refactor this
+from util import md5_storage_hash
 
 store = Shove( \
     'file:///var/asterank/neat_astrometry_store', \
