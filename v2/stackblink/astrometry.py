@@ -62,9 +62,17 @@ def get_pixel_offset(image_key1, image_key2, reference_ra, reference_dec):
     print "get_pixel_offset: couldn't find matching keys in store - are you sure they've been processed?"
     return None
 
-  wcs1 = astWCS.WCS(StringIO(store[shove_key1]))
-  wcs2 = astWCS.WCS(StringIO(store[shove_key2]))
+  try:
+    wcs1 = astWCS.WCS(StringIO(store[shove_key1]))
+    x1, y1 = wcs1.wcs2pix(reference_ra, reference_dec)
+  except:
+    del store[shove_key1]
+    return None
+  try:
+    wcs2 = astWCS.WCS(StringIO(store[shove_key2]))
+    x2, y2 = wcs2.wcs2pix(reference_ra, reference_dec)
+  except:
+    del store[shove_key2]
+    return None
 
-  x1, y1 = wcs1.wcs2pix(reference_ra, reference_dec)
-  x2, y2 = wcs2.wcs2pix(reference_ra, reference_dec)
   return x2-x1, y2-y1
