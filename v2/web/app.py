@@ -29,6 +29,10 @@ def index():
 def view_3d():
   return render_template('full3d.html', noop=noop_filter)
 
+@app.route("/3d/")
+def view_3d_slash():
+  return render_template('full3d.html', noop=noop_filter)
+
 @app.route("/3d/notsupported.html")
 def notsupported_3d():
   return render_template('notsupported.html')
