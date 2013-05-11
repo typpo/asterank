@@ -71,8 +71,9 @@ def create_known_groups():
           }
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
         png_data = skymorph.get_image(result['key'])
-        print result['key']
-        wcs_text = astrometry.process(png_data, center_ra, center_dec, result['key'])
+        if not astrometry.process(png_data, center_ra, center_dec, result['key']):
+          # couldn't solve this star field
+          continue
         group_results.append(new_group_result)
         rcount += 1
       gcount +=1

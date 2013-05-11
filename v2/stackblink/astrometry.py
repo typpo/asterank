@@ -1,8 +1,8 @@
+import subprocess, datetime, os, time, signal
 import tempfile
 import time
 import shutil
 from StringIO import StringIO
-from subprocess import call
 from shove import Shove
 
 from astLib import astWCS
@@ -31,9 +31,14 @@ def process(png_data, ra, dec, key):
   output_dir = tempfile.mkdtemp(prefix='astrometry_results_')
 
   png_path = f.name
-  call('solve-field --no-plots --cpulimit 30 -l 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
-      % (png_path, ra, dec, output_dir), shell=True, timeout=30)
+
+  print 'Solving field for', key, '...'
+  result = _timeout_command('solve-field --no-plots --cpulimit 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
+      % (png_path, ra, dec, output_dir), 30)
   print 'Done solving field'
+
+  if not result:
+    return None
 
   wcs_path = output_dir + '/solution.new'
   f_wcs = open(wcs_path, 'r')
@@ -85,3 +90,18 @@ def get_pixel_offset(image_key1, image_key2, reference_ra, reference_dec):
   """
 
   return x2-x1, y2-y1
+
+def _timeout_command(command, timeout):
+  """call shell-command and either return its output or kill it
+  if it doesn't normally exit within timeout seconds and return None"""
+  start = datetime.datetime.now()
+  process = subprocess.Popen(command, stdout=subprocess.PIPE, \
+      stderr=subprocess.PIPE, shell=True)
+  while process.poll() is None:
+    time.sleep(0.1)
+    now = datetime.datetime.now()
+    if (now - start).seconds> timeout:
+      os.kill(process.pid, signal.SIGKILL)
+      os.waitpid(-1, os.WNOHANG)
+      return None
+  return process.stdout.read()
