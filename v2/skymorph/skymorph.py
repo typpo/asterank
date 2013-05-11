@@ -169,7 +169,6 @@ def get_fast_image(key):
   storage_key = 'fast_%s' % (md5_storage_hash(key))
   store_mutex.acquire()
   if storage_key in store:
-    print 'found', storage_key
     store_mutex.release()
     return store[storage_key]
   store_mutex.release()

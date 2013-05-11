@@ -3,6 +3,7 @@ import sys
 import os
 import random
 import pymongo
+import astrometry
 from pymongo import Connection
 from datetime import datetime
 from threading import Thread
@@ -68,6 +69,12 @@ def create_known_groups():
           })
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
         png_data = skymorph.get_fast_image(result['key'])
+        print result['key']
+        print result['center_ra']
+        print result['center_dec']
+        astrometry.process(png_data, group_results[0]['center_ra'], \
+            group_results[0]['center_dec'], result['key'])
+        return
         rcount += 1
       gcount +=1
       if len(group_results) > 0:
@@ -92,6 +99,7 @@ def create_known_groups():
     new_image_groups = process(asteroid)
     if new_image_groups:
       stackblink.insert(new_image_groups)
+    return
   c = 0
   for asteroid in asteroids.find().sort('closeness', pymongo.DESCENDING).limit(NUM_CRAWL):
     print 'closeness #', c
