@@ -31,11 +31,11 @@ def process(png_data, ra, dec, key):
   output_dir = tempfile.mkdtemp(prefix='astrometry_results_')
 
   png_path = f.name
-  call('solve-field --no-plots --cpulimit 60 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
+  call('solve-field --no-plots --cpulimit 30 -l 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
       % (png_path, ra, dec, output_dir), shell=True)
   print 'Done solving field'
 
-  wcs_path = output_dir + '/solution.wcs'
+  wcs_path = output_dir + '/solution.new'
   f_wcs = open(wcs_path, 'r')
   wcs_text = f_wcs.read()
   f_wcs.close()
@@ -62,17 +62,26 @@ def get_pixel_offset(image_key1, image_key2, reference_ra, reference_dec):
     print "get_pixel_offset: couldn't find matching keys in store - are you sure they've been processed?"
     return None
 
+  wcs1 = astWCS.WCS(StringIO(store[shove_key1]))
+  x1, y1 = wcs1.wcs2pix(reference_ra, reference_dec)
+  wcs2 = astWCS.WCS(StringIO(store[shove_key2]))
+  x2, y2 = wcs2.wcs2pix(reference_ra, reference_dec)
+
+  """
   try:
     wcs1 = astWCS.WCS(StringIO(store[shove_key1]))
     x1, y1 = wcs1.wcs2pix(reference_ra, reference_dec)
   except:
+    print store[shove_key1]
     del store[shove_key1]
     return None
   try:
     wcs2 = astWCS.WCS(StringIO(store[shove_key2]))
     x2, y2 = wcs2.wcs2pix(reference_ra, reference_dec)
   except:
+    print store[shove_key2]
     del store[shove_key2]
     return None
+  """
 
   return x2-x1, y2-y1
