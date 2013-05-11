@@ -120,6 +120,65 @@ function KineticCtrl($scope, $http) {
         return;
       }
 
+      if (data.reviews.length < 1) {
+        var k1 = data.images[0].key.split('|');
+        var k2 = data.images[1].key.split('|');
+
+        var x1 = parseFloat(k1[12]);
+        var x2 = parseFloat(k2[12]);
+        var y1 = parseFloat(k1[13]);
+        var y2 = parseFloat(k2[13]);
+
+        var dx = x1 - x2;
+        var dy = y1 - y2;
+
+        // For our purposes,
+        // ra = x
+        // dec = y
+
+        /*
+         // center ra and dec
+        var dec1 = parseFloat(k1[5]);
+        var dec2 = parseFloat(k2[5]);
+        var ra1 = parseFloat(k1[6]);
+        var ra2 = parseFloat(k2[6]);
+        */
+        // predicted ra and dec?
+        var dec1 = parseFloat(k1[4]);
+        var dec2 = parseFloat(k2[4]);
+        var ra1 = parseFloat(k1[3]);
+        var ra2 = parseFloat(k2[3]);
+
+        console.log('ra1', ra1);
+        console.log('dec1', dec1);
+        //var diff_in_center_x = data.images[0].center_ra - data.images[1].center_ra;
+        //var diff_in_center_y = data.images[0].center_dec - data.images[1].center_dec;
+        var diff_in_ra= ra1-ra2;
+        // RA correction for declination
+        var pi = Math.PI;
+        diff_in_ra = diff_in_ra * Math.cos((dec1+dec2)/2*pi/180) * 180/pi;
+        var diff_in_dec = dec1-dec2;
+
+        console.log('ra delta', ra1-ra2);
+        console.log('ra diff (arcsec)', diff_in_ra*3600);
+        console.log('dec diff (arcsec)', diff_in_dec*3600);
+        console.log('x diff', dx);
+        console.log('y diff', dy);
+        console.log(data.images[1].time);
+
+        var x_pixels_per_degree = dx / diff_in_ra;
+        var y_pixels_per_degree = dy / diff_in_dec;
+
+        console.log('x pixels per arcsec:', x_pixels_per_degree/3600);
+        console.log('y pixels per arcsec:', y_pixels_per_degree/3600);
+
+        var offset_x = diff_in_ra * x_pixels_per_degree;  // degrees to arcsec to pixels
+        var offset_y = diff_in_dec * y_pixels_per_degree;  // degrees to arcsec to pixels
+        console.log('offset x', offset_x);
+        console.log('offset y', offset_y);
+
+      }
+
       angular.forEach(data.images, function(image_info) {
         var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
         if (data.reviews.length < 1) {

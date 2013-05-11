@@ -12,3 +12,5 @@ pillow
 shove
 numpy
 pandas
+pyfits
+astLib
