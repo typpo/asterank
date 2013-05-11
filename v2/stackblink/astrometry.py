@@ -34,7 +34,7 @@ def process(png_data, ra, dec, key):
 
   print 'Solving field for', key, '...'
   result = _timeout_command('solve-field --no-plots --cpulimit 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
-      % (png_path, ra, dec, output_dir), 30)
+      % (png_path, ra, dec, output_dir), 60)
 
   if not result:
     print 'Could not solve field'
