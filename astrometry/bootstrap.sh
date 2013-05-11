@@ -19,7 +19,7 @@ make extra
 sudo make install
 
 echo "Adding /usr/local/astrometry/bin to your path..."
-echo "export PATH=$PATH:/usr/loca/astrometry/bin" >> ~/.bashrc
+echo "export PATH=$PATH:/usr/local/astrometry/bin" >> ~/.bashrc
 
 # Download all the indexes...
 echo "Downloading indexes.  This will take a while..."
