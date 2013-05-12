@@ -226,7 +226,6 @@
     cameraControls.maxDistance = 1100;
     cameraControls.dynamicDampingFactor = 0.5;
 
-
     // Rendering stuff
 
     // "sun" - 0,0 marker
