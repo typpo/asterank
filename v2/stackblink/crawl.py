@@ -14,6 +14,7 @@ connection = Connection('localhost', 27017)
 db = connection.asterank
 asteroids = db.asteroids
 stackblink = db.stackblink
+stackblink.ensure_index('key')
 
 def create_known_groups():
   # scrape top X objects for imagery
@@ -70,8 +71,8 @@ def create_known_groups():
           'center_dec': center_dec,
           }
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
-        png_data = skymorph.get_image(result['key'])
-        if type(png_data) == dict or \
+        png_data = skymorph.get_fast_image(result['key'])
+        if not png_data or type(png_data) == dict or \
             not astrometry.process(png_data, center_ra, center_dec, result['key']):
           # couldn't solve this star field
           continue
@@ -90,6 +91,7 @@ def create_known_groups():
             continue
           result['offset_x'] = offset[0]
           result['offset_y'] = offset[1]
+          print 'Offsets:', offset
         groups_final_datastructure.append({
           'score': 0,
           'interesting': 0,

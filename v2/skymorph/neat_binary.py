@@ -62,6 +62,9 @@ def process(f, final_output):
   for c in range(5):
     bytes = f.read(4)
     hexstr = ''.join(["{0:x}".format(ord(b)) for b in bytes])
+    if hexstr == '':
+      print 'Bad hex string. Something went wrong!'
+      return None
     intval = int(hexstr, 16)
     header_vals.append(intval)
 

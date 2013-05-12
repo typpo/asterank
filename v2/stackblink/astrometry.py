@@ -37,12 +37,19 @@ def process(png_data, ra, dec, key):
       % (png_path, ra, dec, output_dir), 60)
 
   if not result:
-    print 'Could not solve field'
+    print '\033[91m Could not solve field\033[0m'
     return None
   print 'Done solving field'
 
   wcs_path = output_dir + '/solution.new'
-  f_wcs = open(wcs_path, 'r')
+  try:
+    f_wcs = open(wcs_path, 'r')
+  except:
+    print "\033[91m Couldn't open solution file\033[0m"
+    print wcs_path
+    x = raw_input('Investigate, then press enter: ')
+
+    return None
   wcs_text = f_wcs.read()
   f_wcs.close()
 
