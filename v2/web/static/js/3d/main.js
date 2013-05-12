@@ -342,7 +342,7 @@
 
     // Sky
     if (using_webgl) {
-      //$('#loading-text').html('skybox');
+      var materialArray = [];
       var path = "/static/img/dark-s_";
       var format = '.jpg';
       var urls = [
@@ -350,22 +350,16 @@
           path + 'py' + format, path + 'ny' + format,
           path + 'pz' + format, path + 'nz' + format
         ];
-      var reflectionCube = THREE.ImageUtils.loadTextureCube( urls );
-      reflectionCube.format = THREE.RGBFormat;
-
-      var shader = THREE.ShaderLib[ "cube" ];
-      shader.uniforms[ "tCube" ].value = reflectionCube;
-
-      var material = new THREE.ShaderMaterial( {
-        fragmentShader: shader.fragmentShader,
-        vertexShader: shader.vertexShader,
-        uniforms: shader.uniforms,
-        depthWrite: false,
-        side: THREE.BackSide
-      } ),
-
-      mesh = new THREE.Mesh( new THREE.CubeGeometry( 5000, 5000, 5000 ), material );
-      scene.add(mesh);
+      for (var i = 0; i < 6; i++)
+          materialArray.push( new THREE.MeshBasicMaterial({
+              map: THREE.ImageUtils.loadTexture(urls[i]),
+              side: THREE.BackSide
+          }));
+      var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
+      var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+      var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+      skyBox.rotation.z = pi*6/8;  // get the milky way in the right place
+      scene.add( skyBox );
     }
 
     $(opts.container).on('mousedown', function() {
