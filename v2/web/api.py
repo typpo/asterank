@@ -44,12 +44,21 @@ def rankings(sort_by, limit, orbits_only=False):
     fields = {field: True for field in ORBIT_FIELDS}
   fields['_id'] = False
 
-  ret = list(asteroids.find({}, fields) \
+  results = list(asteroids.find({}, fields) \
           .sort(sort_by, direction=pymongo.DESCENDING) \
           .limit(limit))
   # remove empty fields
-  return [{key:val for key,val in obj.iteritems() if val != ''} \
-      for obj in ret]
+  ret = []
+  for obj in results:
+    appendme = {key:val for key,val in obj.iteritems() if val != ''}
+    # Some sanitation for a python json serialization bug where very
+    # small numbers are serialized to -Infinity, breaking client JSON parsing.
+    if appendme['price'] < 1:
+      appendme['price'] = 0
+    if appendme['profit'] < 1:
+      appendme['profit'] = 0
+    ret.append(appendme)
+  return ret
 
 def autocomplete(query, limit):
   query = query.replace('+', ' ')

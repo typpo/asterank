@@ -314,7 +314,7 @@ if(typeof datgui!=='undefined'){ var now=new Date().getTime();if(now-display_dat
 break;case'debug':console.log(data.value);break;default:console.log('Invalid data type',data.type);}}
 function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');$.getJSON('/api/rankings?sort_by='+sort+'&limit='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
-+'&orbits_only=true',function(data){me.processAsteroidRankings(data);});}
++'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){});}
 me.clearRankings=function(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
 clearLock(true);if(particleSystem){scene.remove(particleSystem);particleSystem=null;}
 if(asteroids_loaded){stopSimulation();}

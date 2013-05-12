@@ -582,6 +582,9 @@
         + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
         + '&orbits_only=true', function(data) {
           me.processAsteroidRankings(data);
+    }).error(function() {
+      alert("Sorry, we've encountered an error and we can't load the simulation");
+      mixpanel.track('3d error', {type: 'json'});
     });
   }
 
