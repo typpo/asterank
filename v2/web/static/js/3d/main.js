@@ -136,7 +136,7 @@
         togglePlanetOrbits();
       });
       gui.add(text, 'Display date').onChange(function(val) {
-        var newdate = Date.parse(val);
+        var newdate = new Date(Date.parse(val));
         if (newdate) {
           var newjed = toJED(newdate);
           changeJED(newjed);
