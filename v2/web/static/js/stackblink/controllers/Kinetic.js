@@ -1,4 +1,6 @@
 function KineticCtrl($scope, $http) {
+  var DEFAULT_PADDING = 100;
+
   $scope.images = [];
   $scope.blinking = false;
   $scope.blink_interval = 800;
@@ -10,6 +12,12 @@ function KineticCtrl($scope, $http) {
     width: window.innerWidth - 50,
     height: 800
   });
+
+  $scope.DrawImageWithOffset = function(offset_x, offset_y, img_url) {
+    var x = DEFAULT_PADDING + offset_x
+      , y = DEFAULT_PADDING + offset_y;
+    return $scope.DrawImage(x, y, img_url);
+  }
 
   $scope.DrawImageCascade = function(img_url) {
     var offset = 50 * $scope.images.length;
@@ -181,6 +189,7 @@ function KineticCtrl($scope, $http) {
 
       angular.forEach(data.images, function(image_info) {
         var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
+        /*
         if (data.reviews.length < 1) {
           $scope.DrawImageCascade(url);
         }
@@ -188,6 +197,8 @@ function KineticCtrl($scope, $http) {
           alert('this should not happen yet');
           $scope.DrawImage(image_info.pos_x, image_info.pos_y, url);
         }
+        */
+        $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
     });
   }
