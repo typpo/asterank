@@ -15,7 +15,7 @@ store = Shove( \
     'file:///var/asterank/neat_astrometry_store', \
     'file:///var/asterank/neat_astrometry_cache')
 
-def process(png_data, ra, dec, key):
+def process(png_data, ra, dec, key, key_prefix=''):
   """
   Returns astrometry data for a given sky image.
   """
@@ -37,12 +37,16 @@ def process(png_data, ra, dec, key):
       % (png_path, ra, dec, output_dir), 60)
 
   if not result:
-    print 'Could not solve field'
+    print '\033[91m Could not solve field\033[0m'
     return None
   print 'Done solving field'
 
   wcs_path = output_dir + '/solution.new'
-  f_wcs = open(wcs_path, 'r')
+  try:
+    f_wcs = open(wcs_path, 'r')
+  except:
+    print "\033[91m No solution\033[0m"
+    return None
   wcs_text = f_wcs.read()
   f_wcs.close()
 
