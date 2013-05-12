@@ -285,7 +285,7 @@ scene.add(jupiter.getParticle());planets=[mercury,venus,earth,mars,jupiter];if(f
 scene.add(asteroid_2012_da14.getParticle());feature_map['2012 DA14']={orbit:asteroid_2012_da14,idx:5};planets.push(asteroid_2012_da14);} 
 if(using_webgl){var path="/static/img/dark-s_";var format='.jpg';var urls=[path+'px'+format,path+'nx'+format,path+'py'+format,path+'ny'+format,path+'pz'+format,path+'nz'+format];var reflectionCube=THREE.ImageUtils.loadTextureCube(urls);reflectionCube.format=THREE.RGBFormat;var shader=THREE.ShaderLib["cube"];shader.uniforms["tCube"].value=reflectionCube;var material=new THREE.ShaderMaterial({fragmentShader:shader.fragmentShader,vertexShader:shader.vertexShader,uniforms:shader.uniforms,depthWrite:false,side:THREE.BackSide}),mesh=new THREE.Mesh(new THREE.CubeGeometry(5000,5000,5000),material);scene.add(mesh);}
 $(opts.container).on('mousedown',function(){opts.camera_fly_around=false;});window.renderer=renderer;}
-function setNeutralCameraPosition(){ var timer=0.0001*Date.now();cam.position.x=Math.sin(timer)*25;cam.position.z=-100+Math.cos(timer)*20;} 
+function setNeutralCameraPosition(){ var timer=0.0001*Date.now();cam.position.x=-15+Math.sin(timer)*25;cam.position.z=100+Math.cos(timer)*20;} 
 function setHighlight(full_name){var mapped_obj=feature_map[full_name];if(!mapped_obj){alert("Sorry, something went wrong and I can't highlight this object.");return;}
 var orbit_obj=mapped_obj.orbit;if(!orbit_obj){alert("Sorry, something went wrong and I can't highlight this object.");return;}
 var idx=mapped_obj.idx; if(using_webgl){attributes.value_color.value[idx]=new THREE.Color(0x0000ff);attributes.size.value[idx]=30.0;attributes.locked.value[idx]=1.0;setAttributeNeedsUpdateFlags();}} 
@@ -314,7 +314,7 @@ if(typeof datgui!=='undefined'){ var now=new Date().getTime();if(now-display_dat
 break;case'debug':console.log(data.value);break;default:console.log('Invalid data type',data.type);}}
 function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');$.getJSON('/api/rankings?sort_by='+sort+'&limit='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
-+'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){});}
++'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){alert("Sorry, we've encountered an error and we can't load the simulation");mixpanel.track('3d error',{type:'json'});});}
 me.clearRankings=function(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
 clearLock(true);if(particleSystem){scene.remove(particleSystem);particleSystem=null;}
 if(asteroids_loaded){stopSimulation();}

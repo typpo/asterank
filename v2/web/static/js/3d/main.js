@@ -380,7 +380,7 @@
     var timer = 0.0001 * Date.now();
     cam.position.x = Math.sin(timer) * 25;
     //cam.position.y = Math.sin( timer ) * 100;
-    cam.position.z = -100 + Math.cos(timer) * 20;
+    cam.position.z = 100 + Math.cos(timer) * 20;
   }
 
   // camera highlight fns
