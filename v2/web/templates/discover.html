@@ -24,7 +24,7 @@
 
 {% block content %}
 <div class="instruction-container" ng-show="state == 'STACKING'">
-  <span class="instruction">Step 1: Click &amp; drag images to line up stars.</span>
+  <span class="instruction">Step 1: Verify quality &amp; correct image alignment.</span>
 </div>
 <div class="instruction-container" ng-show="state == 'BLINKING'">
   <span class="instruction">Step 2: See any moving objects?</span>
@@ -32,7 +32,7 @@
 </div>
 <div id="control-bar-inline">
   <div ng-show="state == 'STACKING'">
-  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">They're aligned (a)</a>
+  <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">Images aligned (a)</a>
   <a href="#" class="stackblink-button" ng-click="BadQuality()" keyboard-shortcut="q">Bad quality (q)</a>
   </div>
   <div ng-show="state == 'BLINKING'">
@@ -52,8 +52,8 @@ Asterank has compiled hundreds of thousands of sky survey images for public revi
 <p>
 To discover an asteroid:
 <ol>
-<li>Move images on top of one another, lining up stars.</li>
-<li>You'll be shown the difference between images and asked to detect movement.</li>
+<li>Move images on top of one another, lining up stars. <em>(This is done automatically now)</em></li>
+<li>You'll be shown an animation of the night sky. Do you see any moving objects?</li>
 <li>The first user to mark an interesting image gets discovery credit and potential naming rights.</li>
 </ol>
 </p>
