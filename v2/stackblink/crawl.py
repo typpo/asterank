@@ -73,7 +73,8 @@ def create_known_groups():
         print 'Fetching img %d of %d (group %d/%d)' % (rcount, len(group), gcount, len(groups))
         png_data = skymorph.get_fast_image(result['key'])
         if not png_data or type(png_data) == dict or \
-            not astrometry.process(png_data, center_ra, center_dec, result['key']):
+            not astrometry.process(png_data, center_ra, center_dec, \
+              result['key'], key_prefix='fast_image_'):
           # couldn't solve this star field
           continue
         group_results.append(new_group_result)
