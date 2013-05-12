@@ -19,7 +19,7 @@ stackblink.ensure_index('key')
 def create_known_groups():
   # scrape top X objects for imagery
   # a "group" is defined as a series of images taken within 45 minutes of each other
-  NUM_CRAWL = 20
+  NUM_CRAWL = 40
 
   def process(asteroid):
     target = asteroid['prov_des']
@@ -81,8 +81,11 @@ def create_known_groups():
         rcount += 1
       gcount +=1
       if len(group_results) > 1:
-        ref_ra = group_results[0]['center_ra']
-        ref_dec  = group_results[0]['center_dec']
+        # extract from wcs instead of using center ra and dec from skymorph because it
+        # is more accurate, necessary for lining up.
+        ref_ra, ref_dec = astrometry.get_center_ra_dec(group_results[0]['key'])
+        #ref_ra = group_results[0]['center_ra']
+        #ref_dec  = group_results[0]['center_dec']
         for result in group_results:
           offset = astrometry.get_pixel_offset(result['key'], group_results[0]['key'], \
               ref_ra, ref_dec)

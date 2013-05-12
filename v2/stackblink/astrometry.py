@@ -15,7 +15,7 @@ store = Shove( \
     'file:///var/asterank/neat_astrometry_store', \
     'file:///var/asterank/neat_astrometry_cache')
 
-def process(png_data, ra, dec, key, key_prefix=''):
+def process(png_data, estimated_ra, estimated_dec, key, key_prefix=''):
   """
   Returns astrometry data for a given sky image.
   """
@@ -34,7 +34,7 @@ def process(png_data, ra, dec, key, key_prefix=''):
 
   print 'Solving field for', key, '...'
   result = _timeout_command('solve-field --no-plots --cpulimit 30 -o solution --scale-units degwidth --scale-low 0 --scale-high 2 %s --ra %f --dec %f --radius 1 -D %s' \
-      % (png_path, ra, dec, output_dir), 60)
+      % (png_path, estimated_ra, estimated_dec, output_dir), 60)
 
   if not result:
     print '\033[91m Could not solve field\033[0m'
@@ -58,6 +58,15 @@ def process(png_data, ra, dec, key, key_prefix=''):
   shutil.rmtree(output_dir)
 
   return wcs_text
+
+def get_center_ra_dec(key):
+  shovekey = 'neat_wcs_%s' % md5_storage_hash(key)
+  if shovekey not in store:
+    print "get_center_ra_dec: couldn't find matching key in store"
+    return None
+  wcs = astWCS.WCS(StringIO(store[shovekey]))
+  return wcs.getCentreWCSCoords()
+
 
 def get_pixel_offset(image_key1, image_key2, reference_ra, reference_dec):
   """
