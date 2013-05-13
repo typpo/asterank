@@ -4,7 +4,12 @@
   var me = this;
 
   // options and defaults
-  opts.default_camera_position = opts.camera_position || [0, -155, 32];
+  //opts.default_camera_position = opts.camera_position || [-23, 168, -76];
+  //opts.default_camera_position = opts.camera_position || [0, -155, 32];
+  opts.default_camera_position = opts.camera_position || [0, 155, 32];
+  //opts.default_camera_position = opts.camera_position || [96, 144, 72];
+  //opts.default_camera_position = opts.camera_position || [65.22970312254904, 193.81630564233313, 98.45479575249281];
+  //opts.default_camera_rotation = opts.camera_rotation || [-1.1007851453433237, 0.291511304900361, 2.9567279354302483];
   opts.camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
   opts.jed_delta = opts.jed_delta || .25;
   opts.custom_object_fn = opts.custom_object_fn || null;
@@ -125,7 +130,7 @@
       gui.add(text, 'Cost effective');
       gui.add(text, 'Most valuable');
       gui.add(text, 'Most accessible');
-      gui.add(text, 'Speed', 0, 5).onChange(function(val) {
+      gui.add(text, 'Speed', 0, 1).onChange(function(val) {
         opts.jed_delta = val;
         var was_moving = object_movement_on;
         object_movement_on = opts.jed_delta > 0;
@@ -203,6 +208,13 @@
     var cameraW	= cameraH / containerHeight * containerWidth;
     window.cam = camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 1, 5000);
     setDefaultCameraPosition();
+    //camera.rotation.setZ(-Math.PI)
+    /*
+    camera.rotation.set(
+        opts.default_camera_rotation[0],
+        opts.default_camera_rotation[1],
+        opts.default_camera_rotation[2]);
+    */
     //camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
     //camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
@@ -216,15 +228,25 @@
       THREEx.FullScreen.bindKey();
     }
 
+    camera.lookAt(new THREE.Vector3(0,0,0));
     scene.add(camera);
 
-    cameraControls	= new THREE.TrackballControls(camera, opts.container);
+    cameraControls = new THREE.TrackballControls(camera, opts.container);
     cameraControls.staticMoving = true;
     cameraControls.panSpeed = 2;
     cameraControls.zoomSpeed = 3;
     cameraControls.rotateSpeed = 3;
     cameraControls.maxDistance = 1100;
     cameraControls.dynamicDampingFactor = 0.5;
+    window.cc = cameraControls;
+    // This is one of the stupidest things I've ever done
+    cameraControls.forceRotate(
+        new THREE.Vector3(0.09133858267716535, 0.4658716047427351, 0.1826620371691377),
+        new THREE.Vector3(-0.12932885444884135, 0.35337196181704117,  0.023557202790282953));
+    cameraControls.forceRotate(
+        new THREE.Vector3(0.5557858773636077, 0.7288978222072244, 0.17927802044881952),
+        new THREE.Vector3(-0.0656536826099882, 0.5746939531732201, 0.7470641189675084));
+
 
     // Rendering stuff
 
@@ -351,10 +373,10 @@
           path + 'pz' + format, path + 'nz' + format
         ];
       for (var i = 0; i < 6; i++)
-          materialArray.push( new THREE.MeshBasicMaterial({
-              map: THREE.ImageUtils.loadTexture(urls[i]),
-              side: THREE.BackSide
-          }));
+        materialArray.push( new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture(urls[i]),
+            side: THREE.BackSide
+        }));
       var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
       var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
       var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
@@ -375,6 +397,11 @@
     cam.position.x = Math.sin(timer) * 25;
     //cam.position.y = Math.sin( timer ) * 100;
     cam.position.z = 100 + Math.cos(timer) * 20;
+  }
+
+  function setDefaultCameraPosition() {
+    cam.position.set(opts.default_camera_position[0], opts.default_camera_position[1],
+        opts.default_camera_position[2]);
   }
 
   // camera highlight fns
@@ -610,6 +637,7 @@
     // add planets
     added_objects = planets.slice();
     particle_system_geometry = new THREE.Geometry();
+
     for (var i=0; i < planets.length; i++) {
       // FIXME this is a workaround for the poor handling of PSG vertices in ellipse.js
       // needs to be cleaned up
@@ -840,19 +868,6 @@
 
   function changeJED(new_jed) {
     jed = new_jed;
-    /*
-    for (var i=0; i < workers.length; i++) {
-      workers[i].postMessage({
-        command: 'set_jed',
-        jed: new_jed
-      });
-    }
-    */
-  }
-
-  function setDefaultCameraPosition() {
-    cam.position.set(opts.default_camera_position[0], opts.default_camera_position[1],
-        opts.default_camera_position[2]);
   }
 
   // animation loop
