@@ -6,7 +6,6 @@ server {
     rewrite ^(.*) http://www.asterank.com$1 permanent;
 }
 
-
 server {
     listen   80;
     server_name www.asterank.com 97.107.131.22;
