@@ -4,8 +4,6 @@
 
 THREE.TrackballControls = function ( object, domElement ) {
 
-	THREE.EventDispatcher.call( this );
-
 	var _this = this;
 	var STATE = { NONE: -1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM: 4, TOUCH_PAN: 5 };
 
@@ -57,6 +55,12 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 	_panStart = new THREE.Vector2(),
 	_panEnd = new THREE.Vector2();
+
+	// for reset
+
+	this.target0 = this.target.clone();
+	this.position0 = this.object.position.clone();
+	this.up0 = this.object.up.clone();
 
 	// events
 
@@ -126,6 +130,12 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 	};
 
+  this.forceRotate = function(start, end) {
+    _rotateStart = start;
+    _rotateEnd = end;
+    this.rotateCamera();
+  }
+
 	this.rotateCamera = function () {
 
 		var angle = Math.acos( _rotateStart.dot( _rotateEnd ) / _rotateStart.length() / _rotateEnd.length() );
@@ -165,7 +175,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 			var factor = _touchZoomDistanceStart / _touchZoomDistanceEnd;
 			_touchZoomDistanceStart = _touchZoomDistanceEnd;
-			_eye.multiplyScalar( factor/30 );
+			_eye.multiplyScalar( factor );
 
 		} else {
 
@@ -265,6 +275,17 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 		_this.checkDistances();
 
+    /*
+    // http://stackoverflow.com/questions/14250208/three-js-how-to-rotate-an-object-to-lookat-one-point-and-orient-towards-anothe
+    var pointToOrientXTowards = new THREE.Vector3(0,-156,33);
+    var pointToLookAt = _this.target;
+    //var v1 = pointToOrientXTowards.position.clone().subSelf( cam.position ).normalize(); // CHANGED
+    var v1 = pointToOrientXTowards.clone().sub( _this.object.position ).normalize(); // CHANGED
+    var v2 = pointToLookAt.clone().sub( _this.object.position ).normalize(); // CHANGED
+    var v3 = new THREE.Vector3().crossVectors( v1, v2 ).normalize(); // CHANGED
+    _this.object.up.copy( v3 ); // CHANGED
+    _this.object.lookAt(pointToLookAt);
+    */
 		_this.object.lookAt( _this.target );
 
 		if ( lastPosition.distanceToSquared( _this.object.position ) > 0 ) {
@@ -274,6 +295,25 @@ THREE.TrackballControls = function ( object, domElement ) {
 			lastPosition.copy( _this.object.position );
 
 		}
+
+	};
+
+	this.reset = function () {
+
+		_state = STATE.NONE;
+		_prevState = STATE.NONE;
+
+		_this.target.copy( _this.target0 );
+		_this.object.position.copy( _this.position0 );
+		_this.object.up.copy( _this.up0 );
+
+		_eye.subVectors( _this.object.position, _this.target );
+
+		_this.object.lookAt( _this.target );
+
+		_this.dispatchEvent( changeEvent );
+
+		lastPosition.copy( _this.object.position );
 
 	};
 
@@ -333,6 +373,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 		if ( _state === STATE.ROTATE && !_this.noRotate ) {
 
 			_rotateStart = _rotateEnd = _this.getMouseProjectionOnBall( event.clientX, event.clientY );
+      //console.log(_rotateStart);
 
 		} else if ( _state === STATE.ZOOM && !_this.noZoom ) {
 
@@ -373,6 +414,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 	}
 
 	function mouseup( event ) {
+      //console.log(_rotateEnd);
 
 		if ( _this.enabled === false ) return;
 
@@ -405,9 +447,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 		}
 
-    var sign = delta < 0 ? -1 : 1;
-    delta = sign * Math.min(Math.abs(delta), 1.);
-		_zoomStart.y += ( 1 / delta ) * 0.05;
+		_zoomStart.y += delta * 0.01;
 
 	}
 
@@ -512,3 +552,5 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.handleResize();
 
 };
+
+THREE.TrackballControls.prototype = Object.create( THREE.EventDispatcher.prototype );
