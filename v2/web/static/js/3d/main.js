@@ -18,7 +18,7 @@
   opts.sun_scale = opts.sun_scale || 50;
   opts.show_dat_gui = opts.show_dat_gui || false;
   opts.top_object_color = opts.top_object_color
-      ? new THREE.Color(opts.top_object_color) : new THREE.Color(0xffff00);
+      ? new THREE.Color(opts.top_object_color) : new THREE.Color(0xDBDB70);
 
   // requestAnimFrame polyfill
   window.requestAnimFrame = (function(){
