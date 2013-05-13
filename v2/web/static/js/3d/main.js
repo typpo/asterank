@@ -380,7 +380,7 @@
       var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
       var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
       var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
-      skyBox.rotation.z = pi*6/8;  // get the milky way in the right place
+      skyBox.rotation.z = pi*25/32;  // get the milky way in the right place
       scene.add( skyBox );
     }
 
