@@ -1,0 +1,9 @@
+According to http://arxiv.org/abs/1304.5082
+Yarnoz, Sanchez, McInnes (Celestial Mechanics and Dynamical Astronomy):
+
+diameter (m) D = 1329km * 10 ^ (-H/5) * p_v ^ (-1/2)
+
+H = absolute magnitude
+p_v = albedo, assumed to range from .05-.5 (dark-icy)
+
+also helpful: http://en.wikipedia.org/wiki/Standard_asteroid_physical_characteristics
