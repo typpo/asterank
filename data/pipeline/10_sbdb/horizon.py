@@ -4,6 +4,7 @@
 #
 
 import sys
+import argparse
 import csv
 import re
 import json
@@ -12,11 +13,8 @@ import scoring
 import estimate
 from pymongo import Connection
 
-# Constants and settings
-DATA_PATH = 'data/fulldb.20130406.csv'
-DV_PATH = 'data/deltav/db.csv'
-MASS_PATH = 'data/masses.txt'
 G = 6.67300e-20   # km^3 / kgs^2
+DATA_PATH = DV_PATH = MASS_PATH = ''
 
 # Approximate mapping from Tholen to SMASS
 THOLEN_MAPPINGS = {
@@ -38,6 +36,16 @@ THOLEN_MAPPINGS = {
 COMET_CLASSES = set(['COM', 'CTc', 'ETc', 'HTC', 'HYP', 'JFc', 'JFC', 'PAR'])
 
 def populateDb():
+  _run(partial=False)
+
+def populatePartialDb():
+  _run(partial=True)
+
+def _run(partial=False):
+  # Constants and settings
+  # TODO this method should be factored out
+
+  # Fill database
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
@@ -95,7 +103,8 @@ def populateDb():
       elif row['class'] in COMET_CLASSES:
         row['spec'] = 'comet'
       else:
-        continue # NOTE disable this to create the full db (about 600k objects)
+        if partial:
+          continue  # don't build the full db of 600k objects
         row['spec'] = 'S'
 
     if row['spec'] == 'C type':
@@ -162,17 +171,21 @@ def materials():
   print json.dumps(estimate.MATERIALS_INDEX)
   return estimate.MATERIALS_INDEX
 
-def telnetLookup():
-  t = telnetlib.Telnet()
-  t.open('horizons.jpl.nasa.gov', 6775)
-  print t.read_very_eager()
-
 if __name__ == "__main__":
-  if len(sys.argv) != 2:
-    print 'usage: horizons <fn name>'
-    sys.exit(1)
+  parser = argparse.ArgumentParser(description='Load data from NASA/JPL SBDB')
+  parser.add_argument('--data_path', help='path to sbdb export', default='data/fulldb.20130406.csv')
+  parser.add_argument('--dv_path', help='path to delta-v calculations', default='data/deltav/db.csv')
+  parser.add_argument('--mass_path', help='path to mass data', default='data/masses.txt')
+  parser.add_argument('fn', choices=['populateDb', 'populatePartialDb', 'compositions', 'materials'])
+
+  args = vars(parser.parse_args())
+
+  DATA_PATH = args['data_path']
+  DV_PATH = args['dv_path']
+  MASS_PATH = args['mass_path']
+
   l = locals()
-  fnname = sys.argv[1]
+  fnname = args['fn']
   if fnname in l:
     l[fnname]()
   else:
