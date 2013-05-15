@@ -18,8 +18,10 @@ exoplanets_coll = db.exo
 user_objects_coll = db.user_objects
 
 UPCOMING_SORT = 'upcoming'
+SIZE_SORT = 'size'
 
-VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT])
+VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
+    SIZE_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
     'om', 'ma', 'n', 'w', 'per', 'epoch']
@@ -36,6 +38,8 @@ def rankings(sort_by, limit, orbits_only=False):
     return None
   if sort_by == UPCOMING_SORT:
     return upcoming_passes()
+  if sort_by == SIZE_SORT:
+    return ranking_by_size(limit)
   if sort_by in FIELD_ALIASES:
     sort_by = FIELD_ALIASES[sort_by]
 
@@ -90,6 +94,10 @@ def upcoming_passes():
     ret.append(roid)
 
   return ret
+
+def ranking_by_size(limit):
+  return list(asteroids.find({'diameter': {'$ne': ''}}) \
+      .sort('diameter', direction=pymongo.ASCENDING).limit(limit));
 
 def jpl_lookup(query):
   result = jpl.find_one({'tag_name': query}, {'_id': False})
