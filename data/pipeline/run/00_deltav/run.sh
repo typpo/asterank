@@ -2,7 +2,7 @@
 
 # Boilerplate
 cd `dirname $0`
-OUT="`git rev-parse --show-toplevel`/data/out"
+OUT="`git rev-parse --show-toplevel`/data/pipeline/out"
 mkdir -p $OUT/deltav
 
 # Run dv calculations

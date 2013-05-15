@@ -2,8 +2,8 @@
 
 # Boilerplate
 pushd `dirname $0`
-OUT="`git rev-parse --show-toplevel`/data/out"
-STATIC="`git rev-parse --show-toplevel`/data/static"
+OUT="`git rev-parse --show-toplevel`/data/pipeline/out"
+STATIC="`git rev-parse --show-toplevel`/data/pipeline/static"
 mkdir -p $OUT/kepler
 
 # TODO http://archive.stsci.edu/kepler/planet_candidates.html?print=1
