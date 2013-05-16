@@ -7,12 +7,17 @@ http://echo.jpl.nasa.gov/~lance/delta_v/deltav.13.pl as well
 
 """
 
+import sys
 import numpy as np
 import operator
 import pandas as pp
 
-DATA_PATH = 'data/fulldb.20130406.csv'
-DV_TEST_PATH = 'data/deltav/db.csv'
+if len(sys.argv) < 3:
+  DATA_PATH = 'data/fulldb.20130406.csv'
+  DV_TEST_PATH = 'data/deltav/db.csv'
+else:
+  DATA_PATH = sys.argv[1]
+  DV_TEST_PATH = sys.argv[2]
 
 df = pp.read_csv(DATA_PATH, index_col='pdes')
 

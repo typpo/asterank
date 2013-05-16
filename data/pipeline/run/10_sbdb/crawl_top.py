@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# This crawls JPL pages for top asteroid results.
+# This crawls JPL SBDB pages for top asteroid results.
 # Normally we do this on-demand when the user selects an asteroid,
 # but we pre-crawl info for the more popular ones.
 #

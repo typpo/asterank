@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+find . | grep run.sh | sort | while read ln; do
+  echo "Processing $ln ...";
+  $ln || { echo "Failed."; exit 1; }
+  echo "Success."
+done;
+
