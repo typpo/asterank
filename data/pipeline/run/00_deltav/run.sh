@@ -9,3 +9,5 @@ mkdir -p $OUT/deltav
 DV_OUT="$OUT/deltav/deltav.csv"
 SBDB_OUT="$OUT/sbdb/sbdb.csv"
 python benner_dv.py > $DV_OUT
+
+echo "Delta v calculations done: $DV_OUT"
