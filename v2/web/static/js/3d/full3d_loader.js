@@ -9,4 +9,8 @@
     run_asteroid_query: true,
     show_dat_gui: true
   });
+
+  $('#hide_sidebar').on('click', function() {
+    $('#sidebar').hide();
+  });
 })();

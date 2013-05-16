@@ -365,4 +365,4 @@ renderer.render(scene,camera);}
 var fuzzes=[{word:'trillion',num:1000000000000},{word:'billion',num:1000000000},{word:'million',num:1000000}];function fuzzy_price(n){for(var i=0;i<fuzzes.length;i++){var x=fuzzes[i];if(n/x.num>=1){var prefix=(n/x.num);if(i==0&&prefix>100)
 return'>100 '+x.word;return prefix.toFixed(2)+' '+x.word;}}
 return n;}}
-if(!window.console)window.console={log:function(){}};;(function(){'use strict';var asterank3d=new Asterank3D({container:document.getElementById('container'),not_supported_callback:function(){$('#loading').hide();$('#not-supported').show();},run_asteroid_query:true,show_dat_gui:true});})();
+if(!window.console)window.console={log:function(){}};;(function(){'use strict';var asterank3d=new Asterank3D({container:document.getElementById('container'),not_supported_callback:function(){$('#loading').hide();$('#not-supported').show();},run_asteroid_query:true,show_dat_gui:true});$('#hide_sidebar').on('click',function(){$('#sidebar').hide();});})();
