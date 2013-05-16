@@ -30,6 +30,8 @@ def process(asteroid):
   a.data['tag_name'] = desig
   jpl.insert(a.data)
 
+for asteroid in asteroids.find().sort('smallest', pymongo.ASCENDING).limit(NUM_CRAWL):
+  process(asteroid)
 for asteroid in asteroids.find().sort('price', pymongo.DESCENDING).limit(NUM_CRAWL):
   process(asteroid)
 for asteroid in asteroids.find().sort('score', pymongo.DESCENDING).limit(NUM_CRAWL):
