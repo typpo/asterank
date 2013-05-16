@@ -9,6 +9,19 @@
     %}
     <link href="{{ASSET_URL}}" rel="stylesheet" />
     {% endassets %}
+
+    <script>
+      window.passthrough_vars = {
+        {% if passthrough_vars and passthrough_vars.offline_mode %}
+        offline_mode: true,
+        rankings: {
+          score: {{ passthrough_vars.score_rankings|safe }},
+          value: {{ passthrough_vars.value_rankings|safe }},
+          accessibility: {{ passthrough_vars.accessibility_rankings|safe }}
+        }
+        {% endif %}
+      };
+    </script>
 	</head>
 <body>
   <noscript>Sorry, this page requires Canvas/WebGL, so you'll need to enable JavaScript.</noscript>

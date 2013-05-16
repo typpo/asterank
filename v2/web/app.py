@@ -33,6 +33,16 @@ def view_3d():
 def view_3d_slash():
   return render_template('full3d.html', noop=noop_filter)
 
+@app.route("/offline_3d")
+def view_3d_offline():
+  pt_vars = {};
+  pt_vars['offline_mode'] = True
+  pt_vars['score_rankings'] = json.dumps(api.rankings('score', 4000, True), allow_nan=False)
+  pt_vars['value_rankings'] = json.dumps(api.rankings('value', 4000, True), allow_nan=False)
+  pt_vars['accessibility_rankings'] = json.dumps(api.rankings('accessibility', 4000, True), allow_nan=False)
+
+  return render_template('full3d.html', noop=noop_filter, passthrough_vars=pt_vars)
+
 @app.route("/3d/notsupported.html")
 def notsupported_3d():
   return render_template('notsupported.html')

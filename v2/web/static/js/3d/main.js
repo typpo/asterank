@@ -600,14 +600,23 @@
 
     // Get new data points
     $('#loading-text').html('asteroids database');
-    $.getJSON('/api/rankings?sort_by=' + sort + '&limit='
-        + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
-        + '&orbits_only=true', function(data) {
-          me.processAsteroidRankings(data);
-    }).error(function() {
-      alert("Sorry, we've encountered an error and we can't load the simulation");
-      mixpanel.track('3d error', {type: 'json'});
-    });
+    if (passthrough_vars.offline_mode) {
+      setTimeout(function() {
+        // Timeout for rest of class to initialize...
+        var data = window.passthrough_vars.rankings[sort];
+        me.processAsteroidRankings(data);
+      }, 0);
+    }
+    else {
+      $.getJSON('/api/rankings?sort_by=' + sort + '&limit='
+          + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
+          + '&orbits_only=true', function(data) {
+            me.processAsteroidRankings(data);
+      }).error(function() {
+        alert("Sorry, we've encountered an error and we can't load the simulation");
+        mixpanel.track('3d error', {type: 'json'});
+      });
+    }
   }
 
   me.clearRankings = function() {

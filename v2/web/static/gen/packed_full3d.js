@@ -311,9 +311,10 @@ function handleSimulationResults(e,particles){var data=e.data;switch(data.type){
 if(typeof datgui!=='undefined'){ var now=new Date().getTime();if(now-display_date_last_updated>500){var georgian_date=fromJED(data.value.jed);datgui['display date']=georgian_date.getMonth()+1+"/"
 +georgian_date.getDate()+"/"+georgian_date.getFullYear();display_date_last_updated=now;}}
 break;case'debug':console.log(data.value);break;default:console.log('Invalid data type',data.type);}}
-function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');$.getJSON('/api/rankings?sort_by='+sort+'&limit='
+function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');if(passthrough_vars.offline_mode){setTimeout(function(){var data=window.passthrough_vars.rankings[sort];me.processAsteroidRankings(data);},0);}
+else{$.getJSON('/api/rankings?sort_by='+sort+'&limit='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
-+'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){alert("Sorry, we've encountered an error and we can't load the simulation");mixpanel.track('3d error',{type:'json'});});}
++'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){alert("Sorry, we've encountered an error and we can't load the simulation");mixpanel.track('3d error',{type:'json'});});}}
 me.clearRankings=function(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
 clearLock(true);if(particleSystem){scene.remove(particleSystem);particleSystem=null;}
 if(asteroids_loaded){stopSimulation();}

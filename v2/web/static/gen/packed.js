@@ -963,7 +963,7 @@ scene.add(mars.getParticle());var jupiter=new Orbit3D(Ephemeris.jupiter,{color:0
 scene.add(jupiter.getParticle());planets=[mercury,venus,earth,mars,jupiter];if(featured_2012_da14){ var asteroid_2012_da14=new Orbit3D(Ephemeris.asteroid_2012_da14,{color:0xff0000,width:1,jed:jed,object_size:1.7,texture_path:'/static/img/cloud4.png',display_color:new THREE.Color(0xff0000),particle_geometry:particle_system_geometry,name:'2012 DA14'},!using_webgl);scene.add(asteroid_2012_da14.getEllipse());if(!using_webgl)
 scene.add(asteroid_2012_da14.getParticle());feature_map['2012 DA14']={orbit:asteroid_2012_da14,idx:5};planets.push(asteroid_2012_da14);} 
 if(using_webgl){var materialArray=[];var path="/static/img/dark-s_";var format='.jpg';var urls=[path+'px'+format,path+'nx'+format,path+'py'+format,path+'ny'+format,path+'pz'+format,path+'nz'+format];for(var i=0;i<6;i++)
-materialArray.push(new THREE.MeshBasicMaterial({map:THREE.ImageUtils.loadTexture(urls[i]),side:THREE.BackSide}));var skyGeometry=new THREE.CubeGeometry(5000,5000,5000);var skyMaterial=new THREE.MeshFaceMaterial(materialArray);var skyBox=new THREE.Mesh(skyGeometry,skyMaterial);window.sb=skyBox;skyBox.rotation.z=pi*25/32; scene.add(skyBox);}
+materialArray.push(new THREE.MeshBasicMaterial({map:THREE.ImageUtils.loadTexture(urls[i]),side:THREE.BackSide}));var skyGeometry=new THREE.CubeGeometry(5000,5000,5000);var skyMaterial=new THREE.MeshFaceMaterial(materialArray);var skyBox=new THREE.Mesh(skyGeometry,skyMaterial);skyBox.rotation.z=pi*25/32; skyBox.rotation.x=pi/11;scene.add(skyBox);}
 $(opts.container).on('mousedown',function(){opts.camera_fly_around=false;});window.renderer=renderer;}
 function setNeutralCameraPosition(){ var timer=0.0001*Date.now();cam.position.x=Math.sin(timer)*25;cam.position.z=100+Math.cos(timer)*20;}
 function setDefaultCameraPosition(){cam.position.set(opts.default_camera_position[0],opts.default_camera_position[1],opts.default_camera_position[2]);} 
@@ -993,9 +993,10 @@ function handleSimulationResults(e,particles){var data=e.data;switch(data.type){
 if(typeof datgui!=='undefined'){ var now=new Date().getTime();if(now-display_date_last_updated>500){var georgian_date=fromJED(data.value.jed);datgui['display date']=georgian_date.getMonth()+1+"/"
 +georgian_date.getDate()+"/"+georgian_date.getFullYear();display_date_last_updated=now;}}
 break;case'debug':console.log(data.value);break;default:console.log('Invalid data type',data.type);}}
-function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');$.getJSON('/api/rankings?sort_by='+sort+'&limit='
+function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');if(passthrough_vars.offline_mode){setTimeout(function(){var data=window.passthrough_vars.rankings[sort];me.processAsteroidRankings(data);},0);}
+else{$.getJSON('/api/rankings?sort_by='+sort+'&limit='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
-+'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){alert("Sorry, we've encountered an error and we can't load the simulation");mixpanel.track('3d error',{type:'json'});});}
++'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){alert("Sorry, we've encountered an error and we can't load the simulation");mixpanel.track('3d error',{type:'json'});});}}
 me.clearRankings=function(){ for(var i=0;i<added_objects.length;i++){scene.remove(added_objects[i].getParticle());}
 clearLock(true);if(particleSystem){scene.remove(particleSystem);particleSystem=null;}
 if(asteroids_loaded){stopSimulation();}
