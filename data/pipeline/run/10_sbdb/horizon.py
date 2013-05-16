@@ -111,14 +111,16 @@ def _run(partial=False):
       row['spec'] = 'C'
 
     # match it with its delta-v
+    # TODO(@ian) don't overwrite prov_des, create some unified name field instead.
     m = designation_regex.match(row['full_name'])
     if 'pdes' in row and 'prov_des' not in row:
       row['prov_des'] = row['pdes']  # backwards compatibility for NASA change
     if m:
-      row['prov_des'] = m.groups()[0]
+      # Set delta-v first
       dv = deltav_map.get(row['prov_des'], None)
       if dv:
         row['dv'] = dv
+      row['prov_des'] = m.groups()[0]
     else:
       row['prov_des'] = ''
 

@@ -40,11 +40,9 @@
           <th>
             Est. Profit ($)
           </th>
-<!--
           <th>
             &Delta;v (km/s)
           </th>
--->
           <th ng-show="sort_by.search_value == 'smallest'">
             Diameter (km)
           </th>
@@ -61,7 +59,7 @@
           <td><span ng-bind="asteroid.e | number:3"></span></td>
           <td><span ng-bind="asteroid.price | fuzzynum"></span></td>
           <td><span ng-bind="asteroid.profit | fuzzynum"></span></td>
-          <!--<td><span ng-bind="asteroid.dv"></span></td>-->
+          <td><span ng-bind="asteroid.dv | number:3"></span></td>
           <td ng-show="sort_by.search_value == 'smallest'"><span ng-bind="asteroid.diameter"></span></td>
           <td><span ng-bind="asteroid.class"></span> <span ng-show="asteroid.pha == 'Y'">(PHA)</span></td>
         </tr>

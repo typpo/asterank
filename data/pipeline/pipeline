@@ -1,8 +1,15 @@
 #!/bin/bash -e
 
-find . | grep run.sh | sort | while read ln; do
+if [ $# -gt 0 ]; then
+  filter=$1
+else
+  filter="run.sh"  #dummy value, always matches
+fi
+
+find . | grep $filter| grep run.sh | grep -v .swp | sort | while read ln; do
   echo "Processing $ln ...";
   $ln || { echo "Failed."; exit 1; }
   echo "Success."
 done;
 
+echo "Pipeline complete."
