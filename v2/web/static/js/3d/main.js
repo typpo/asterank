@@ -19,6 +19,7 @@
   opts.show_dat_gui = opts.show_dat_gui || false;
   opts.top_object_color = opts.top_object_color
       ? new THREE.Color(opts.top_object_color) : new THREE.Color(0xDBDB70);
+  opts.milky_way_visible = opts.milky_way_visible || true;
 
   // requestAnimFrame polyfill
   window.requestAnimFrame = (function(){
@@ -54,6 +55,7 @@
     , asteroids_loaded = false
     , display_date_last_updated = 0
     , first_loaded = false
+    , skyBox = null
 
   // Lock/feature stuff
   var feature_map = {}       // map from object full name to Orbit3D instance
@@ -121,6 +123,7 @@
       };
       this['Speed'] = opts.jed_delta;
       this['Planet orbits'] = planet_orbits_visible;
+      this['Milky Way'] = opts.milky_way_visible;
       this['Display date'] = '12/26/2012';
     };
 
@@ -139,6 +142,9 @@
       });
       gui.add(text, 'Planet orbits').onChange(function() {
         togglePlanetOrbits();
+      });
+      gui.add(text, 'Milky Way').onChange(function() {
+        toggleMilkyWay();
       });
       gui.add(text, 'Display date').onChange(function(val) {
         var newdate = new Date(Date.parse(val));
@@ -167,6 +173,10 @@
       }
     }
     planet_orbits_visible = !planet_orbits_visible;
+  }
+
+  function toggleMilkyWay() {
+    skyBox.visible = opts.milky_way_visible = !opts.milky_way_visible;
   }
 
   // init the scene
@@ -379,7 +389,7 @@
         }));
       var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
       var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-      var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+      skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
       skyBox.rotation.z = pi*25/32;  // get the milky way in the right place
       skyBox.rotation.x = pi/11;
       scene.add( skyBox );
