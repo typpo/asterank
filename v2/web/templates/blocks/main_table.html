@@ -45,6 +45,9 @@
             &Delta;v (km/s)
           </th>
 -->
+          <th ng-show="sort_by.search_value == 'smallest'">
+            Diameter (km)
+          </th>
           <th>
             Class
           </th>
@@ -59,6 +62,7 @@
           <td><span ng-bind="asteroid.price | fuzzynum"></span></td>
           <td><span ng-bind="asteroid.profit | fuzzynum"></span></td>
           <!--<td><span ng-bind="asteroid.dv"></span></td>-->
+          <td ng-show="sort_by.search_value == 'smallest'"><span ng-bind="asteroid.diameter"></span></td>
           <td><span ng-bind="asteroid.class"></span> <span ng-show="asteroid.pha == 'Y'">(PHA)</span></td>
         </tr>
       </tbody>

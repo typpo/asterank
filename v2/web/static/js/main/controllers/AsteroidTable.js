@@ -19,6 +19,10 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     {
       text: 'upcoming passes',
       search_value: 'upcoming'
+    },
+    {
+      text: 'smallest',
+      search_value: 'smallest'
     }
   ];
   $scope.limit_options = [100, 300, 500, 1000, 4000];
