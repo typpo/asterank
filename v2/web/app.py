@@ -107,7 +107,8 @@ def rankings():
     return Response(json_resp, mimetype='application/json', headers={ \
       'Cache-Control': 'max-age=432000', # 5 days
     })
-  except:
+  except Exception,e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp

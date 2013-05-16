@@ -18,10 +18,10 @@ exoplanets_coll = db.exo
 user_objects_coll = db.user_objects
 
 UPCOMING_SORT = 'upcoming'
-SIZE_SORT = 'size'
+SMALL_SIZE_SORT = 'smallest'
 
 VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
-    SIZE_SORT])
+    SMALL_SIZE_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
     'om', 'ma', 'n', 'w', 'per', 'epoch']
@@ -34,23 +34,24 @@ FIELD_ALIASES = {
 }
 
 def rankings(sort_by, limit, orbits_only=False):
-  if sort_by not in VALID_SORTS:
-    return None
-  if sort_by == UPCOMING_SORT:
-    return upcoming_passes()
-  if sort_by == SIZE_SORT:
-    return ranking_by_size(limit)
-  if sort_by in FIELD_ALIASES:
-    sort_by = FIELD_ALIASES[sort_by]
-
   fields = {}
   if orbits_only:
     fields = {field: True for field in ORBIT_FIELDS}
   fields['_id'] = False
 
-  results = list(asteroids.find({}, fields) \
-          .sort(sort_by, direction=pymongo.DESCENDING) \
-          .limit(limit))
+  if sort_by not in VALID_SORTS:
+    return None
+  if sort_by == UPCOMING_SORT:
+    return upcoming_passes()
+  if sort_by in FIELD_ALIASES:
+    sort_by = FIELD_ALIASES[sort_by]
+
+  if sort_by == SMALL_SIZE_SORT:
+    results = ranking_by_smallest(limit, fields)
+  else:
+    results = list(asteroids.find({}, fields) \
+            .sort(sort_by, direction=pymongo.DESCENDING) \
+            .limit(limit))
   # remove empty fields
   ret = []
   for obj in results:
@@ -95,8 +96,8 @@ def upcoming_passes():
 
   return ret
 
-def ranking_by_size(limit):
-  return list(asteroids.find({'diameter': {'$ne': ''}}) \
+def ranking_by_smallest(limit, fields):
+  return list(asteroids.find({'diameter': {'$ne': ''}}, fields) \
       .sort('diameter', direction=pymongo.ASCENDING).limit(limit));
 
 def jpl_lookup(query):

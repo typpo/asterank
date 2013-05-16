@@ -121,6 +121,10 @@
         me.clearRankings();
         runAsteroidQuery('accessibility');
       };
+      this['Smallest'] = function() {
+        me.clearRankings();
+        runAsteroidQuery('smallest');
+      };
       this['Speed'] = opts.jed_delta;
       this['Planet orbits'] = planet_orbits_visible;
       this['Milky Way'] = opts.milky_way_visible;
@@ -133,6 +137,7 @@
       gui.add(text, 'Cost effective');
       gui.add(text, 'Most valuable');
       gui.add(text, 'Most accessible');
+      gui.add(text, 'Smallest');
       gui.add(text, 'Speed', 0, 1).onChange(function(val) {
         opts.jed_delta = val;
         var was_moving = object_movement_on;
