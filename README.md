@@ -14,19 +14,25 @@ Asterank is configured to run with virtualenv.  Virtual environment setup:
 
   1. Install virtualenv for python, eg. on debian:
 
+    ```
     sudo apt-get install python-virtualenv
+    ```
 
   2. Enter the Asterank directory.  Then, create the virtual environment and install packages:
 
+    ```
     virtualenv  venv
     source venv/bin/activate
     pip install -r requirements.txt
+    ```
 
   3. The web app requires mongodb.  `sudo apt-get install mongodb`.
 
   4. The main app is a Flask web application.  You should be able to run it now.
 
+    ```
     ./v2/web/app.py
+    ```
 
 You'll quickly notice that there's no data.  Continue reading for instructions on how to import data.
 
