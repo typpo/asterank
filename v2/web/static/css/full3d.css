@@ -38,7 +38,7 @@ body {
   padding: 5px 10px;
   font-size: 13px;
 }
-#sidebar {
+.sidebar {
   z-index: 10;
   position: absolute;
   left: 0;
@@ -52,18 +52,18 @@ body {
   border-bottom-right-radius: 15px;
   border-right: 1px solid #ccc;
 }
-#sidebar a {
+.sidebar a {
   color: #f0f0f0;
 }
 
-#sidebar table {
+.sidebar table {
   font-size: 11px;
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin-top: 6px;
   margin-bottom: 10px;
 }
-#sidebar table td {
+.sidebar table td {
   border: 1px solid #ccc;
   padding: 4px;
   cursor: pointer;

@@ -983,8 +983,7 @@
   function loadTexture(path) {
     if (passthrough_vars.offline_mode) {
       // same origin policy workaround
-      var img = $('img[src="' + path + '"]').get(0);
-      var b64_data = getBase64Image(img);
+      var b64_data = $('img[data-src="' + path + '"]').attr('src');
 
       var new_image = document.createElement( 'img' );
       var texture = new THREE.Texture( new_image );
@@ -996,26 +995,5 @@
     }
     return THREE.ImageUtils.loadTexture(path);
   }
-
-  function getBase64Image(img) {
-    // Create an empty canvas element
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Copy the image contents to the canvas
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to
-    // guess the original format, but be aware the using "image/jpg"
-    // will re-encode the image.
-    var dataURL = canvas.toDataURL("image/png");
-    return dataURL;
-
-    //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-  }
-
 }
 if (!window.console) window.console = {log: function() {}};

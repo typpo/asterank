@@ -27,10 +27,17 @@
 <body>
   <noscript>Sorry, this page requires Canvas/WebGL, so you'll need to enable JavaScript.</noscript>
 
+  {% if offline_mode %}
+    {% include "blocks/offline_image_data.html" %}
+  {% endif %}
+
   {% include "blocks/shaders.html" %}
 
-  <div id="sidebar">
-    <span id="hide_sidebar" style="float:right;cursor:pointer;">&times;</span>
+  <div id="show_sidebar_container" class="sidebar">
+    <span id="show_sidebar" style="float:right;cursor:pointer;">+</span>
+  </div>
+  <div id="sidebar" class="sidebar">
+    <span id="hide_sidebar" style="float:right;cursor:pointer;">-</span>
     <p>
     <a href="/">&laquo; Main site</a>
     </p>
