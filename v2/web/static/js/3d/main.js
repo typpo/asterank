@@ -4,6 +4,7 @@
   var me = this;
 
   // options and defaults
+  opts.static_prefix = opts.static_prefix || '/static';
   //opts.default_camera_position = opts.camera_position || [-23, 168, -76];
   //opts.default_camera_position = opts.camera_position || [0, -155, 32];
   opts.default_camera_position = opts.camera_position || [0, 155, 32];
@@ -13,7 +14,7 @@
   opts.camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
   opts.jed_delta = opts.jed_delta || .25;
   opts.custom_object_fn = opts.custom_object_fn || null;
-  opts.object_texture_path = opts.object_texture_path || "/static/img/cloud4.png";
+  opts.object_texture_path = opts.object_texture_path || opts.static_prefix + "/img/cloud4.png";
   opts.not_supported_callback = opts.not_supported_callback || function() {};
   opts.sun_scale = opts.sun_scale || 50;
   opts.show_dat_gui = opts.show_dat_gui || false;
@@ -72,7 +73,7 @@
   var works = []
     , workers = []
     , NUM_WORKERS = 3
-    , worker_path = '/static/js/3d/position_worker.js'
+    , worker_path = opts.static_prefix + '/js/3d/position_worker.js'
     , workers_initialized = false
     , particleSystem
 
@@ -268,7 +269,7 @@
     // "sun" - 0,0 marker
     if (using_webgl) {
       $('#loading-text').html('sun');
-      var texture = THREE.ImageUtils.loadTexture("/static/img/sunsprite.png");
+      var texture = loadTexture(opts.static_prefix + '/img/sunsprite.png');
       var sprite = new THREE.Sprite(new THREE.SpriteMaterial({
         map: texture,
         blending: THREE.AdditiveBlending,
@@ -299,7 +300,7 @@
     var mercury = new Orbit3D(Ephemeris.mercury,
         {
           color: 0x913CEE, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/static/img/texture-mercury.jpg',
+          texture_path: opts.static_prefix + '/img/texture-mercury.jpg',
           display_color: new THREE.Color(0x913CEE),
           particle_geometry: particle_system_geometry,
           name: 'Mercury'
@@ -310,7 +311,7 @@
     var venus = new Orbit3D(Ephemeris.venus,
         {
           color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/static/img/texture-venus.jpg',
+          texture_path: opts.static_prefix + '/img/texture-venus.jpg',
           display_color: new THREE.Color(0xFF7733),
           particle_geometry: particle_system_geometry,
           name: 'Venus'
@@ -321,7 +322,7 @@
     var earth = new Orbit3D(Ephemeris.earth,
         {
           color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/static/img/texture-earth.jpg',
+          texture_path: opts.static_prefix + '/img/texture-earth.jpg',
           display_color: new THREE.Color(0x009ACD),
           particle_geometry: particle_system_geometry,
           name: 'Earth'
@@ -336,7 +337,7 @@
     var mars = new Orbit3D(Ephemeris.mars,
         {
           color: 0xA63A3A, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/static/img/texture-mars.jpg',
+          texture_path: opts.static_prefix + '/img/texture-mars.jpg',
           display_color: new THREE.Color(0xA63A3A),
           particle_geometry: particle_system_geometry,
           name: 'Mars'
@@ -347,7 +348,7 @@
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {
           color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/static/img/texture-jupiter.jpg',
+          texture_path: opts.static_prefix + '/img/texture-jupiter.jpg',
           display_color: new THREE.Color(0xFF7F50),
           particle_geometry: particle_system_geometry,
           name: 'Jupiter'
@@ -362,7 +363,7 @@
       var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
           {
             color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
-          texture_path: '/static/img/cloud4.png',
+          texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
           display_color: new THREE.Color(0xff0000),
           particle_geometry: particle_system_geometry,
           name: '2012 DA14'
@@ -380,7 +381,7 @@
     // Sky
     if (using_webgl) {
       var materialArray = [];
-      var path = "/static/img/dark-s_";
+      var path = opts.static_prefix + "/img/dark-s_";
       var format = '.jpg';
       var urls = [
           path + 'px' + format, path + 'nx' + format,
@@ -389,7 +390,7 @@
         ];
       for (var i = 0; i < 6; i++)
         materialArray.push( new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture(urls[i]),
+            map: loadTexture(urls[i]),
             side: THREE.BackSide
         }));
       var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
@@ -807,11 +808,11 @@
       earth_i: { type: "f", value: Ephemeris.earth.i },
       earth_om: { type: "f", value: Ephemeris.earth.om },
       planet_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/static/img/cloud4.png") },
+        { type: "t", value: loadTexture(opts.static_prefix + "/img/cloud4.png") },
       small_roid_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture(opts.object_texture_path) },
+        { type: "t", value: loadTexture(opts.object_texture_path) },
       small_roid_circled_texture:
-        { type: "t", value: THREE.ImageUtils.loadTexture("/static/img/cloud4-circled.png") }
+        { type: "t", value: loadTexture(opts.static_prefix + "/img/cloud4-circled.png") }
     };
     var vertexshader = document.getElementById( 'vertexshader' ).textContent
                           .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
@@ -977,6 +978,43 @@
       }
     }
     return n;
+  }
+
+  function loadTexture(path) {
+    if (passthrough_vars.offline_mode) {
+      // same origin policy workaround
+      var img = $('img[src="' + path + '"]').get(0);
+      var b64_data = getBase64Image(img);
+
+      var new_image = document.createElement( 'img' );
+      var texture = new THREE.Texture( new_image );
+      new_image.onload = function()  {
+        texture.needsUpdate = true;
+      };
+      new_image.src = b64_data;
+      return texture;
+    }
+    return THREE.ImageUtils.loadTexture(path);
+  }
+
+  function getBase64Image(img) {
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to
+    // guess the original format, but be aware the using "image/jpg"
+    // will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL;
+
+    //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }
 
 }

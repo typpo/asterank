@@ -17,7 +17,8 @@
         rankings: {
           score: {{ passthrough_vars.score_rankings|safe }},
           value: {{ passthrough_vars.value_rankings|safe }},
-          accessibility: {{ passthrough_vars.accessibility_rankings|safe }}
+          accessibility: {{ passthrough_vars.accessibility_rankings|safe }},
+          smallest: {{ passthrough_vars.smallest_rankings|safe }}
         }
         {% endif %}
       };
@@ -33,11 +34,13 @@
     <p>
     <a href="/">&laquo; Main site</a>
     </p>
+{% if not offline_mode %}
     <div class="fb-like" data-href="http://www.asterank.com/3d/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
     <a style="font-size:10px;" href="https://twitter.com/share" data-url="http://asterank.com/3d/" data-counturl="http://asterank.com/3d/" class="twitter-share-button" data-lang="en">Tweet</a>
 <div>
     <g:plusone size="small" count="false"></g:plusone>
 </div>
+{% endif %}
 
     <hr/>
     <div id="objects-of-interest-container" style="text-align:center;display:none;">
@@ -112,6 +115,8 @@
   %}
 <script type="text/javascript" src="{{ASSET_URL}}"></script>
 {% endassets %}
+
+{% if not offline_mode %}
 <script type="text/javascript">
 if(~document.location.href.indexOf('asterank.com')) {
 (function() {
@@ -147,5 +152,6 @@ else {
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 </script>
+{% endif %}
 </body>
 </html>

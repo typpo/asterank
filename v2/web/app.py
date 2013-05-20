@@ -40,8 +40,10 @@ def view_3d_offline():
   pt_vars['score_rankings'] = json.dumps(api.rankings('score', 4000, True), allow_nan=False)
   pt_vars['value_rankings'] = json.dumps(api.rankings('value', 4000, True), allow_nan=False)
   pt_vars['accessibility_rankings'] = json.dumps(api.rankings('accessibility', 4000, True), allow_nan=False)
+  pt_vars['smallest_rankings'] = json.dumps(api.rankings('smallest', 4000, True), allow_nan=False)
 
-  return render_template('full3d.html', noop=noop_filter, passthrough_vars=pt_vars)
+  return render_template('full3d.html', noop=noop_filter, passthrough_vars=pt_vars,  \
+      offline_mode=True)
 
 @app.route("/3d/notsupported.html")
 def notsupported_3d():
