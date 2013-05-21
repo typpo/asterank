@@ -616,7 +616,7 @@
 
     // Get new data points
     $('#loading-text').html('asteroids database');
-    if (passthrough_vars.offline_mode) {
+    if (typeof passthrough_vars !== 'undefined' && passthrough_vars.offline_mode) {
       setTimeout(function() {
         // Timeout for rest of class to initialize...
         var data = window.passthrough_vars.rankings[sort];
@@ -981,7 +981,7 @@
   }
 
   function loadTexture(path) {
-    if (passthrough_vars.offline_mode) {
+    if (typeof passthrough_vars !== 'undefined' && passthrough_vars.offline_mode) {
       // same origin policy workaround
       var b64_data = $('img[data-src="' + path + '"]').attr('src');
 
