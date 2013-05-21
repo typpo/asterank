@@ -994,7 +994,7 @@ function handleSimulationResults(e,particles){var data=e.data;switch(data.type){
 if(typeof datgui!=='undefined'){ var now=new Date().getTime();if(now-display_date_last_updated>500){var georgian_date=fromJED(data.value.jed);datgui['display date']=georgian_date.getMonth()+1+"/"
 +georgian_date.getDate()+"/"+georgian_date.getFullYear();display_date_last_updated=now;}}
 break;case'debug':console.log(data.value);break;default:console.log('Invalid data type',data.type);}}
-function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');if(passthrough_vars.offline_mode){setTimeout(function(){var data=window.passthrough_vars.rankings[sort];me.processAsteroidRankings(data);},0);}
+function runAsteroidQuery(sort){sort=sort||'score';$('#loading').show(); $('#loading-text').html('asteroids database');if(typeof passthrough_vars!=='undefined'&&passthrough_vars.offline_mode){setTimeout(function(){var data=window.passthrough_vars.rankings[sort];me.processAsteroidRankings(data);},0);}
 else{$.getJSON('/api/rankings?sort_by='+sort+'&limit='
 +(using_webgl?MAX_NUM_ORBITS:CANVAS_NUM_ORBITS)
 +'&orbits_only=true',function(data){me.processAsteroidRankings(data);}).error(function(){alert("Sorry, we've encountered an error and we can't load the simulation");mixpanel.track('3d error',{type:'json'});});}}
@@ -1047,7 +1047,6 @@ renderer.render(scene,camera);}
 var fuzzes=[{word:'trillion',num:1000000000000},{word:'billion',num:1000000000},{word:'million',num:1000000}];function fuzzy_price(n){for(var i=0;i<fuzzes.length;i++){var x=fuzzes[i];if(n/x.num>=1){var prefix=(n/x.num);if(i==0&&prefix>100)
 return'>100 '+x.word;return prefix.toFixed(2)+' '+x.word;}}
 return n;}
-function loadTexture(path){if(passthrough_vars.offline_mode){ var b64_data=$('img[data-src="'+path+'"]').attr('src');var new_image=document.createElement('img');var texture=new THREE.Texture(new_image);new_image.onload=function(){texture.needsUpdate=true;};new_image.src=b64_data;return texture;}
-return THREE.ImageUtils.loadTexture(path);}
-function getBase64Image(img){ var canvas=document.createElement("canvas");canvas.width=img.width;canvas.height=img.height; var ctx=canvas.getContext("2d");ctx.drawImage(img,0,0);var dataURL=canvas.toDataURL("image/png");return dataURL;}}
+function loadTexture(path){if(typeof passthrough_vars!=='undefined'&&passthrough_vars.offline_mode){ var b64_data=$('img[data-src="'+path+'"]').attr('src');var new_image=document.createElement('img');var texture=new THREE.Texture(new_image);new_image.onload=function(){texture.needsUpdate=true;};new_image.src=b64_data;return texture;}
+return THREE.ImageUtils.loadTexture(path);}}
 if(!window.console)window.console={log:function(){}};

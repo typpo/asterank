@@ -1,4 +1,4 @@
-<div id="selection-details" ng-controller="AsteroidDetailsCtrl" ng-show="asteroid != null" ng-init="Init()">
+<div id="selection-details" ng-controller="AsteroidDetailsCtrl" ng-show="asteroid != null" ng-init="Init()" ng-cloak>
   <h3 ng-bind="asteroid.full_name"></h3>
   <p ng-show="stats.length < 1">
     Please be patient as data is loaded from JPL...
