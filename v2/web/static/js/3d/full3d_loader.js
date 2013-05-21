@@ -16,7 +16,7 @@
     var $canvi = $('canvas');
     if ($canvi.length > 1) {
       // workaround for three.js bug in file:// mode
-      $canvi[0].remove();
+      $('canvas:first').remove();
     }
   }
 
