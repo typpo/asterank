@@ -49,6 +49,22 @@ def view_3d_offline():
 def notsupported_3d():
   return render_template('notsupported.html')
 
+@app.route("/asteroid-<asteroid_slug>")
+def asteroid_details(asteroid_slug=None):
+  # slug is a slug of asteroid prov des
+  if not asteroid_slug:
+    return 'Sorry, could not find this asteroid in our database.', 404
+  unslug = asteroid_slug.replace('-', ' ')
+  candidates = api.autocomplete(unslug, 1)  # TODO better way
+  if len(candidates) < 1:
+    return 'Sorry, could not find this asteroid in our database.', 404
+
+  asteroid = candidates[0]
+  jpl_result = api.jpl_lookup(asteroid['prov_des'])
+  composition_result = api.compositions()[asteroid['spec']]
+
+  return render_template('asteroid.html', asteroid=asteroid, jpl=jpl_result, composition=composition_result)
+
 # General api routes
 
 @app.route('/api/mpc')

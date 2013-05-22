@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% set canonical_name = asteroid.name or asteroid.full_name %}
+
+{% if asteroid.class == 'MBA' %}
+  {% set canonical_orbit_type = 'main belt' %}
+  {% set orbit_explanation = 'orbit is between Mars and Jupiter' %}
+{% elif asteroid.class == 'APO' %}
+  {% set canonical_orbit_type = 'Apollo' %}
+  {% set orbit_explanation = 'orbit crosses Earth\'s, with a semimajor axis greater than 1 but perihelion closer to the sun than Earth' %}
+{% elif asteroid.class == 'ATE' %}
+  {% set canonical_orbit_type = 'Aten' %}
+  {% set orbit_explanation = 'orbit is entirely contained within Earth\'s, with a semimajor axis less than 1' %}
+{% elif asteroid.class == 'AMO' %}
+  {% set canonical_orbit_type = 'Amor' %}
+  {% set orbit_explanation = 'orbit may approach Earth\'s, but its orbit is larger ' %}
+{% endif %}
+
+{% block title %}{{ canonical_name }} information - orbit, physical parameters{% endblock %}
+
+{% block content %}
+<h1>{{ canonical_name }}</h1>
+
+{{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}" and its provisional designation is "{{ asteroid.prov_des }}".
+
+
+{% set num_close_approaches = jpl['Close Approaches']|length %}
+{% if num_close_approaches > 0 %}
+<h2>Close Approaches</h2>
+<p>
+NASA/JPL has computed {{ num_close_approaches }} close approaches for this object.
+{% if num_close_approaches > 1 %}
+They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close Approaches'][num_close_approaches-1].date }}.
+{% endif %}
+</p>
+
+<p>
+[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">Close approaches table</a>
+</p>
+<table id="close-approaches-table" class="table table-compact" style="display:none;">
+  <tr>
+    <th>Date</th>
+    <th>Body</th>
+    <th>Max dist. (AU)</th>
+    <th>Min dist. (AU)</th>
+    <th>Relative veloc. (km/s)</th>
+  </tr>
+
+{% for approach in jpl['Close Approaches'] %}
+<tr>
+<td>
+{{ approach.date }}
+</td>
+<td>
+{{ approach.body }}
+</td>
+<td>
+{{ approach.max_dist_au }}
+</td>
+<td>
+{{ approach.min_dist_au }}
+</td>
+<td>
+{{ approach.v_relative }}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+<h2>Orbital Parameters</h2>
+
+<table class="table" style="width:300px;">
+<tr>
+  <td>
+    Semi-major axis (AU)
+  </td>
+  <td>
+    {{ asteroid.a }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Eccentricity
+  </td>
+  <td>
+    {{ asteroid.e }}
+  </td>
+</tr>
+</table>
+
+<h2>Physical Characteristics</h2>
+
+<h2>Composition</h2>
+This asteroid may contain: {{ composition | join(', ') }}.
+
+
+{% endblock %}
