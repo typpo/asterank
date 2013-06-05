@@ -153,7 +153,57 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 </tr>
 </table>
 
-<h2>Physical Characteristics</h2>
+<h2>Physical Parameters</h2>
+<table class="table" style="width:300px;">
+<tr>
+  <td>
+    Absolute Magnitude
+  </td>
+  <td>
+    {{ asteroid.H }}
+  </td>
+</tr>
+{% if asteroid.diameter %}
+<tr>
+  <td>
+    Diameter (km)
+  </td>
+  <td>
+    {{ asteroid.diameter }}
+  </td>
+</tr>
+{% endif %}
+{% if asteroid.albedo %}
+<tr>
+  <td>
+    Geometric albedo
+  </td>
+  <td>
+    {{ asteroid.albedo }}
+  </td>
+</tr>
+{% endif %}
+{% if asteroid.extent %}
+<tr>
+  <td>
+    Extent (km)
+  </td>
+  <td>
+    {{ asteroid.extent }}
+  </td>
+</tr>
+{% endif %}
+{% if asteroid.rot_per %}
+<tr>
+  <td>
+    Rotation Period (h)
+  </td>
+  <td>
+    {{ asteroid.rot_per }}
+  </td>
+</tr>
+{% endif %}
+</table>
 
 <h2>Composition</h2>
 This asteroid may contain: {{ composition | join(', ') }}.
