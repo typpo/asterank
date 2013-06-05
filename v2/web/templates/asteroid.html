@@ -68,7 +68,7 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 </table>
 {% endif %}
 
-<h2>Orbital Parameters</h2>
+<h2>Orbital Elements</h2>
 
 <table class="table" style="width:300px;">
 <tr>
@@ -85,6 +85,70 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
   </td>
   <td>
     {{ asteroid.e }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Perihelion (AU)
+  </td>
+  <td>
+    {{ asteroid.q }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Aphelion (AU)
+  </td>
+  <td>
+    {{ asteroid.ad }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Inclination (deg)
+  </td>
+  <td>
+    {{ asteroid.i }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Period (days)
+  </td>
+  <td>
+    {{ asteroid.per }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Mean motion (deg/day)
+  </td>
+  <td>
+    {{ asteroid.n }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Long. of Ascending Node
+  </td>
+  <td>
+    {{ asteroid.om }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Argument of Perihelion
+  </td>
+  <td>
+    {{ asteroid.w }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Epoch (JED)
+  </td>
+  <td>
+    {{ asteroid.epoch }}
   </td>
 </tr>
 </table>
