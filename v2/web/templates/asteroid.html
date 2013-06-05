@@ -23,6 +23,12 @@
 
 {{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}" and its provisional designation is "{{ asteroid.prov_des }}".
 
+<div>
+  <ul>
+    <li><a href="/?object={{canonical_name}}">View in 3D</a></li>
+    <li><a href="/api/skymorph/search?target={{canonical_name}}">Search for Observations and Imagery</a></li>
+  </ul>
+</div>
 
 {% set num_close_approaches = jpl['Close Approaches']|length %}
 {% if num_close_approaches > 0 %}
@@ -35,7 +41,7 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 </p>
 
 <p>
-[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">Close approaches table</a>
+[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">View predicted close approaches</a>
 </p>
 <table id="close-approaches-table" class="table table-compact" style="display:none;">
   <tr>
@@ -207,6 +213,5 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 
 <h2>Composition</h2>
 This asteroid may contain: {{ composition | join(', ') }}.
-
 
 {% endblock %}
