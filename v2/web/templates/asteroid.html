@@ -25,8 +25,8 @@
 
 <div>
   <ul>
-    <li><a href="/?object={{canonical_name}}">View in 3D</a></li>
-    <li><a href="/api/skymorph/search?target={{canonical_name}}">Search for Observations and Imagery</a></li>
+    <li><a href="/?object={{canonical_name}}">View orbit in 3D</a></li>
+    <li><a href="/api/skymorph/search?target={{canonical_name}}">Search for observations and images of {{canonical_name}}</a></li>
   </ul>
 </div>
 
@@ -41,7 +41,7 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 </p>
 
 <p>
-[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">View predicted close approaches</a>
+[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">Predicted close approaches</a>
 </p>
 <table id="close-approaches-table" class="table table-compact" style="display:none;">
   <tr>
