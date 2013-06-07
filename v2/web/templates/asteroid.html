@@ -211,7 +211,9 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 {% endif %}
 </table>
 
+{% if Composition %}
 <h2>Composition</h2>
 This asteroid may contain: {{ composition | join(', ') }}.
+{% endif %}
 
 {% endblock %}
