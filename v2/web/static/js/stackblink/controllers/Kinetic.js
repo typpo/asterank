@@ -4,8 +4,9 @@ function KineticCtrl($scope, $http) {
   $scope.images = [];
   $scope.blinking = false;
   $scope.blink_interval = 800;
-  $scope.state = 'STACKING';
+  $scope.state = 'INITIALIZING';
   $scope.show_intro = true;
+  $scope.images_loaded = 0;
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
@@ -64,7 +65,10 @@ function KineticCtrl($scope, $http) {
       layer.add(img);
       $scope.stage.add(layer);
 
-      $scope.images[imageidx] = img;
+      $scope.$apply(function() {
+        $scope.images[imageidx] = img;
+        $scope.images_loaded++;
+      });
     };
     imageobj.src = img_url;
   }
@@ -100,8 +104,8 @@ function KineticCtrl($scope, $http) {
       $scope.images[i].show();
     }
     $scope.stage.draw();
-    $scope.blinking = false;
-    $scope.state = 'STACKING';
+    $scope.blinking = true;
+    $scope.state = 'BLINKING';
   }
 
   $scope.BadQuality = function() {
@@ -132,6 +136,15 @@ function KineticCtrl($scope, $http) {
         var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
+
+      var started_blink = false;
+      $scope.$watch('images_loaded', function(newval, oldval) {
+        // wait for all images to load
+        if (newval == data.images.length && !started_blink) {
+          started_blink = true;
+          $scope.StartBlink();
+        }
+      });
     });
   }
 
@@ -149,8 +162,9 @@ function KineticCtrl($scope, $http) {
     $scope.stage.draw();
 
     // reset state
-    $scope.blinking = false;
-    $scope.state = 'STACKING';
+    $scope.blinking = true;
+    $scope.state = 'BLINKING';
+    $scope.images_loaded = 0;
   }
 
   $scope.Init = function() {

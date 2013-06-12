@@ -24,10 +24,10 @@
 
 {% block content %}
 <div class="instruction-container" ng-show="state == 'STACKING'">
-  <span class="instruction">Step 1: Verify quality &amp; correct image alignment.</span>
+  <span class="instruction">Verify quality &amp; correct image alignment.</span>
 </div>
 <div class="instruction-container" ng-show="state == 'BLINKING'">
-  <span class="instruction">Step 2: See any moving objects?</span>
+  <span class="instruction">See any moving objects?</span>
   <span class="blink-options">Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" /></span>
 </div>
 <div id="control-bar-inline">
@@ -38,7 +38,7 @@
   <div ng-show="state == 'BLINKING'">
     <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
     <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
-    <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a>
+    {# <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a> #}
   </div>
 </div>
 <kinetic></kinetic>
@@ -52,9 +52,9 @@ Asterank has compiled hundreds of thousands of sky survey images for public revi
 <p>
 To discover an asteroid:
 <ol>
-<li>Move images on top of one another, lining up stars. <em>(This is done automatically now)</em></li>
-<li>You'll be shown an animation of the night sky. Do you see any moving objects?</li>
-<li>The first user to mark an interesting image gets discovery credit and potential naming rights.</li>
+<li>You're shown an animation of the night sky.</li>
+<li>Do you see any moving objects in the animation?</li>
+<li>The first user to notice an interesting object gets potential discovery credit and naming rights.</li>
 </ol>
 </p>
 </div>
