@@ -107,16 +107,19 @@ function KineticCtrl($scope, $http) {
   $scope.BadQuality = function() {
     // TODO report
     $scope.Next();
+    mixpanel.track('discover action - bad quality');
   }
 
   $scope.Interesting = function() {
     // TODO report
     $scope.Next();
+    mixpanel.track('discover action - interesting');
   }
 
   $scope.NotInteresting = function() {
     // TODO report
     $scope.Next();
+    mixpanel.track('discover action - not interesting');
   }
 
   $scope.Next = function() {
@@ -155,7 +158,7 @@ function KineticCtrl($scope, $http) {
 
   $scope.Init = function() {
     $scope.Next();
-    mixpanel.track('discover');
+    mixpanel.track('discover loaded');
     /*
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326052432|50898.2254861111|111.236381910219|20.0569029379104|111.46854|20.36166|20.10|32.97|-6.28|0.05|0.04|69.49|2575.44655863328|2826.62792908936|y|');
     $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326053840|50898.2353009259|111.238841847182|20.0565244828237|111.473295|20.36019|20.10|32.99|-6.28|0.05|0.04|69.49|2581.01249388904|2824.01213461076|y|');
