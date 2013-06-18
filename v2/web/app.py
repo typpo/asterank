@@ -222,6 +222,17 @@ def get_control_groups():
     'Cache-Control': 'no-cache',
   })
 
+@app.route('/api/stackblink/record')
+def stackblink_record():
+  json_resp = json.dumps(stackblink.record( \
+      request.args.get('email') \
+      request.args.get('keys'), \
+      request.args.get('interesting')))
+
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'no-cache',
+  })
+
 # Kepler
 
 @app.route('/exoplanets')

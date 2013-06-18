@@ -2,10 +2,16 @@ function KineticCtrl($scope, $http) {
   var DEFAULT_PADDING = 100;
 
   $scope.images = [];
+
   $scope.blinking = false;
   $scope.blink_interval = 800;
   $scope.state = 'STACKING';
   $scope.show_intro = true;
+  $scope.num_images_reviewed = '?';
+  $scope.email = null;
+
+  // What we're currently showing
+  var image_group_keys = [];
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
@@ -90,7 +96,6 @@ function KineticCtrl($scope, $http) {
         $scope.blink_timeout = setTimeout(next_img, $scope.blink_interval);
       }
     }
-
     next_img();
   }
 
@@ -105,25 +110,42 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.BadQuality = function() {
-    // TODO report
+    // NYI
     $scope.Next();
     mixpanel.track('discover action - bad quality');
   }
 
   $scope.Interesting = function() {
-    // TODO report
-    $scope.Next();
+    UserResponse(true);
     mixpanel.track('discover action - interesting');
   }
 
   $scope.NotInteresting = function() {
-    // TODO report
+    UserResponse(false);
     $scope.Next();
     mixpanel.track('discover action - not interesting');
   }
 
+  // Records user response on server side
+  function UserResponse(interesting) {
+    if ($scope.NeedsEmail()) {
+      $scope.PromptForEmail();
+    }
+
+    $http.post('/api/stackblink/record', {
+      email: $scope.email,
+      keys: image_group_keys,
+      interesting: interesting
+    }).success(function(data) {
+      console.log(data);
+      $scope.num_images_reviewed = data.images_reviewed;
+    });
+    $scope.Next();
+  }
+
   $scope.Next = function() {
     $scope.Reset();
+    // TODO non-control groups!
     $http.get('/api/stackblink/get_control_groups').success(function(data) {
       console.log(data);
       if (!data || !data.images) {
@@ -131,8 +153,10 @@ function KineticCtrl($scope, $http) {
         return;
       }
 
+      image_group_keys = [];
       angular.forEach(data.images, function(image_info) {
         var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
+        image_group_keys.push(image_info.key);
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
     });
@@ -182,5 +206,13 @@ function KineticCtrl($scope, $http) {
 
   $scope.HideIntro = function() {
     $scope.show_intro = false;
+  }
+
+  $scope.NeedsEmail = function() {
+    return !$scope.email;
+  }
+
+  $scope.PromptForEmail = function() {
+    $scope.email = prompt('Please enter your email address so we can associate any potential discoveries with your name.');
   }
 }

@@ -3,12 +3,19 @@ import os
 import random
 import pymongo
 from pymongo import Connection
+from redis import StrictRedis
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+REDIS_STACKBLINK_PREFIX = 'stackblink:'
+REDIS_COUNT_KEY = REDIS_STACKBLINK_PREFIX + 'total_image_count'
 
 connection = Connection('localhost', 27017)
 db = connection.asterank
 asteroids = db.asteroids
 stackblink = db.stackblink
+stackblink_results = db.stackblink_results
+
+redis = StrictRedis(host='localhost', port=6379, db=3)
 
 def get_control_groups():
   # Returns a group of images for stacking/blinking
@@ -19,6 +26,17 @@ def get_control_groups():
       .skip(random.randint(0, count-1)).next()
   # TODO  handle no groups
   return control_object
+
+def record(email, image_keys, interesting):
+  total_count = redis.incr(REDIS_COUNT_KEY, len(image_keys))
+  group_key = '||'.join(image_keys)
+  stackblink_results.insert({
+    'email': email,
+    'group_key': group_key,
+    'interesting': interesting,
+    })
+
+  return {'success': True, 'count': total_count}
 
 def update_group(id, positions, interesting):
   # add crowdsourced info to group
