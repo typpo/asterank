@@ -23,6 +23,12 @@
 
 {{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}" and its provisional designation is "{{ asteroid.prov_des }}".
 
+<div>
+  <ul>
+    <li><a href="/?object={{canonical_name}}">View orbit in 3D</a></li>
+    <li><a href="/api/skymorph/search?target={{canonical_name}}">Search for observations and images of {{canonical_name}}</a></li>
+  </ul>
+</div>
 
 {% set num_close_approaches = jpl['Close Approaches']|length %}
 {% if num_close_approaches > 0 %}
@@ -35,7 +41,7 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 </p>
 
 <p>
-[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">Close approaches table</a>
+[+] <a href="#" onClick="$('#close-approaches-table').toggle();return false;">Predicted close approaches</a>
 </p>
 <table id="close-approaches-table" class="table table-compact" style="display:none;">
   <tr>
@@ -68,7 +74,7 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 </table>
 {% endif %}
 
-<h2>Orbital Parameters</h2>
+<h2>Orbital Elements</h2>
 
 <table class="table" style="width:300px;">
 <tr>
@@ -87,12 +93,127 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
     {{ asteroid.e }}
   </td>
 </tr>
+<tr>
+  <td>
+    Perihelion (AU)
+  </td>
+  <td>
+    {{ asteroid.q }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Aphelion (AU)
+  </td>
+  <td>
+    {{ asteroid.ad }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Inclination (deg)
+  </td>
+  <td>
+    {{ asteroid.i }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Period (days)
+  </td>
+  <td>
+    {{ asteroid.per }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Mean motion (deg/day)
+  </td>
+  <td>
+    {{ asteroid.n }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Long. of Ascending Node
+  </td>
+  <td>
+    {{ asteroid.om }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Argument of Perihelion
+  </td>
+  <td>
+    {{ asteroid.w }}
+  </td>
+</tr>
+<tr>
+  <td>
+    Epoch (JED)
+  </td>
+  <td>
+    {{ asteroid.epoch }}
+  </td>
+</tr>
 </table>
 
-<h2>Physical Characteristics</h2>
+<h2>Physical Parameters</h2>
+<table class="table" style="width:300px;">
+<tr>
+  <td>
+    Absolute Magnitude
+  </td>
+  <td>
+    {{ asteroid.H }}
+  </td>
+</tr>
+{% if asteroid.diameter %}
+<tr>
+  <td>
+    Diameter (km)
+  </td>
+  <td>
+    {{ asteroid.diameter }}
+  </td>
+</tr>
+{% endif %}
+{% if asteroid.albedo %}
+<tr>
+  <td>
+    Geometric albedo
+  </td>
+  <td>
+    {{ asteroid.albedo }}
+  </td>
+</tr>
+{% endif %}
+{% if asteroid.extent %}
+<tr>
+  <td>
+    Extent (km)
+  </td>
+  <td>
+    {{ asteroid.extent }}
+  </td>
+</tr>
+{% endif %}
+{% if asteroid.rot_per %}
+<tr>
+  <td>
+    Rotation Period (h)
+  </td>
+  <td>
+    {{ asteroid.rot_per }}
+  </td>
+</tr>
+{% endif %}
+</table>
 
+{% if Composition %}
 <h2>Composition</h2>
-This asteroid may contain: {{ composition | join(', ') }}.
-
+This asteroid may contain: {{ composition | sort | join(', ') }}.
+{% endif %}
 
 {% endblock %}

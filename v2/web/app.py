@@ -61,7 +61,10 @@ def asteroid_details(asteroid_slug=None):
 
   asteroid = candidates[0]
   jpl_result = api.jpl_lookup(asteroid['prov_des'])
-  composition_result = api.compositions()[asteroid['spec']]
+  if 'spec' in asteroid:
+    composition_result = api.compositions()[asteroid['spec']]
+  else:
+    composition_result = []
 
   return render_template('asteroid.html', asteroid=asteroid, jpl=jpl_result, composition=composition_result)
 

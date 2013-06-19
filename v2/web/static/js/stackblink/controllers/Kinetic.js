@@ -5,9 +5,10 @@ function KineticCtrl($scope, $http) {
 
   $scope.blinking = false;
   $scope.blink_interval = 800;
-  $scope.state = 'STACKING';
+  $scope.state = 'INITIALIZING';
   $scope.show_intro = true;
   $scope.num_images_reviewed = '?';
+  $scope.images_loaded = 0;
   $scope.email = null;
 
   // What we're currently showing
@@ -70,7 +71,10 @@ function KineticCtrl($scope, $http) {
       layer.add(img);
       $scope.stage.add(layer);
 
-      $scope.images[imageidx] = img;
+      $scope.$apply(function() {
+        $scope.images[imageidx] = img;
+        $scope.images_loaded++;
+      });
     };
     imageobj.src = img_url;
   }
@@ -105,8 +109,8 @@ function KineticCtrl($scope, $http) {
       $scope.images[i].show();
     }
     $scope.stage.draw();
-    $scope.blinking = false;
-    $scope.state = 'STACKING';
+    $scope.blinking = true;
+    $scope.state = 'BLINKING';
   }
 
   $scope.BadQuality = function() {
@@ -159,6 +163,15 @@ function KineticCtrl($scope, $http) {
         image_group_keys.push(image_info.key);
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
+
+      var started_blink = false;
+      $scope.$watch('images_loaded', function(newval, oldval) {
+        // wait for all images to load
+        if (newval == data.images.length && !started_blink) {
+          started_blink = true;
+          $scope.StartBlink();
+        }
+      });
     });
   }
 
@@ -176,8 +189,9 @@ function KineticCtrl($scope, $http) {
     $scope.stage.draw();
 
     // reset state
-    $scope.blinking = false;
-    $scope.state = 'STACKING';
+    $scope.blinking = true;
+    $scope.state = 'BLINKING';
+    $scope.images_loaded = 0;
   }
 
   $scope.Init = function() {

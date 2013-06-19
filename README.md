@@ -42,7 +42,7 @@ You'll quickly notice that there's no data.  Continue reading for instructions o
 
 Pipeline tasks are folders in the `pipeline/run` directory and are executed in increasing order.  tasks with the same numeric prefix may be run in parallel.
 
-To execute the pipeline, simply run `./pipeline`.  To execute a specific task, run eg. `./pipeline 00_mytask`, where 00\_mytask matches a directory.
+To execute the pipeline, simply run `./pipeline`.  To execute a specific task, run eg. `./pipeline 00_mytask`, where 00\_mytask matches a directory.  In order to run Asterank, you at least need to run steps `00_deltav` and `10_sbdb`.
 
 ### The sky survey/discovery process
 

@@ -7,6 +7,8 @@ function AsteroidLookupCtrl($scope, $http, pubsub) {
   $scope.Init = function() {
     var preselected = getURLParameter(PRESELECT_URL_PARAM);
     if (preselected) {
+      // FIXME if preselected is already in the list by default,
+      // both are highlighted.
       $scope.autocomplete_default_text = preselected;
       // We manually hit the autocomplete endpoint.  Was
       // not straightforward to trigger dropdown + selection.
