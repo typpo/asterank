@@ -225,7 +225,7 @@ def get_control_groups():
 @app.route('/api/stackblink/record')
 def stackblink_record():
   json_resp = json.dumps(stackblink.record( \
-      request.args.get('email') \
+      request.args.get('email'), \
       request.args.get('keys'), \
       request.args.get('interesting')))
 
