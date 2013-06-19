@@ -88,8 +88,9 @@ function KineticCtrl($scope, $http) {
     var next_idx = 0;
     var next_img = function() {
       if (!$scope.blinking) return;
-      if (next_idx != 0)
+      if (next_idx != 0) {
         $scope.images[(next_idx-1) % $scope.images.length].hide();
+      }
       var showidx = next_idx % $scope.images.length;
       $scope.images[showidx].show();
       next_idx++;
@@ -121,6 +122,7 @@ function KineticCtrl($scope, $http) {
 
   $scope.Interesting = function() {
     UserResponse(true);
+    $scope.Next();
     mixpanel.track('discover action - interesting');
   }
 
@@ -144,14 +146,13 @@ function KineticCtrl($scope, $http) {
       console.log(data);
       $scope.num_images_reviewed = data.images_reviewed;
     });
-    $scope.Next();
   }
 
   $scope.Next = function() {
     $scope.Reset();
     // TODO non-control groups!
     $http.get('/api/stackblink/get_control_groups').success(function(data) {
-      console.log(data);
+      //console.log(data);
       if (!data || !data.images) {
         alert('Sorry, communication with the server failed.');
         return;

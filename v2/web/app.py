@@ -227,10 +227,11 @@ def get_control_groups():
 
 @app.route('/api/stackblink/record', methods=['GET', 'POST'])
 def stackblink_record():
+  postdata = json.loads(request.data)
   json_resp = json.dumps(stackblink.record( \
-      request.args.get('email'), \
-      request.args.get('keys'), \
-      request.args.get('interesting')))
+      postdata.get('email', None), \
+      postdata.get('keys', None), \
+      postdata.get('interesting', None)))
 
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
