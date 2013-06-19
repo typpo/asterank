@@ -227,6 +227,6 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.PromptForEmail = function() {
-    $scope.email = prompt('Please enter your email address so we can associate any potential discoveries with your name.');
+    $scope.email = prompt('Please enter your email address so we can associate any potential discoveries with your name.\n\nYour email will not be used for any other purposes.');
   }
 }

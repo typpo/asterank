@@ -225,7 +225,7 @@ def get_control_groups():
     'Cache-Control': 'no-cache',
   })
 
-@app.route('/api/stackblink/record')
+@app.route('/api/stackblink/record', methods=['GET', 'POST'])
 def stackblink_record():
   json_resp = json.dumps(stackblink.record( \
       request.args.get('email'), \
