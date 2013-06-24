@@ -19,7 +19,9 @@
 %}
 <script type="text/javascript" src="{{ASSET_URL}}"></script>
 {% endassets %}
-
+<script>
+  mixpanel.track('discover');
+</script>
 {% endblock %}
 
 {% block content %}
