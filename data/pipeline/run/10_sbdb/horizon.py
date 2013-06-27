@@ -105,7 +105,7 @@ def _run(partial=False):
       else:
         if partial:
           continue  # don't build the full db of 600k objects
-        row['spec'] = 'S'
+        row['spec'] = '?'
 
     if row['spec'] == 'C type':
       row['spec'] = 'C'
