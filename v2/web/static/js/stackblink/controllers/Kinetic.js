@@ -144,7 +144,7 @@ function KineticCtrl($scope, $http) {
       interesting: interesting
     }).success(function(data) {
       console.log(data);
-      $scope.num_images_reviewed = data.images_reviewed;
+      $scope.num_images_reviewed = data.count;
     });
   }
 

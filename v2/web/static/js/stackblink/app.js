@@ -1,5 +1,8 @@
 (function() {
   angular.module('StackblinkApp', [])
+    .config(function($interpolateProvider) {
+        $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    })
     .directive('kinetic', function() {
       var kineticContainer =
         '<div id="container"></div>';
