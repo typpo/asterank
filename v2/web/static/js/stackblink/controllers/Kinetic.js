@@ -1,5 +1,5 @@
 function KineticCtrl($scope, $http) {
-  var DEFAULT_PADDING = 50;
+  var DEFAULT_PADDING = 0;
 
   $scope.images = [];
 
