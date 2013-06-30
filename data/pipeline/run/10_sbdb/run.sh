@@ -8,7 +8,8 @@ mkdir -p $OUT/sbdb
 
 # Run sbdb calculations
 # TODO find latest fulldb path automatically..
-python horizon.py populatePartialDb \
-  --data_path="$STATIC/fulldb.20130406.csv" \
+#python horizon.py populatePartialDb \
+python horizon.py populateDb \
+  --data_path="$STATIC/fulldb.20130628.csv" \
   --mass_path="$STATIC/masses.txt" \
   --dv_path="$OUT/deltav/computed_dv.csv"
