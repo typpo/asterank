@@ -168,7 +168,7 @@ function KineticCtrl($scope, $http) {
 
       image_group_keys = [];
       angular.forEach(data.images, function(image_info) {
-        var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
+        var url = 'http://www.asterank.com/api/skymorph/fast_image?key=' + image_info.key;
         image_group_keys.push(image_info.key);
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
