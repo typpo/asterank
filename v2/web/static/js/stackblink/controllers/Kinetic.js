@@ -43,7 +43,7 @@ function KineticCtrl($scope, $http) {
         y: posy,
         width: 0,
         height: 0,
-        draggable: true,
+        draggable: false,
         opacity: 0.5,
 
         // border
