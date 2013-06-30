@@ -5,9 +5,10 @@ $scope.DrawImageCascade=function(img_url){var offset=50*$scope.images.length;ret
 $scope.DrawImage=function(posx,posy,img_url){var imageobj=new Image();var imageidx=$scope.images.length;$scope.images.push({});imageobj.onload=function(){var layer=new Kinetic.Layer();var img=new Kinetic.Image({image:imageobj,x:posx,y:posy,width:0,height:0,draggable:false,opacity:0.5, stroke:'red',strokeWidth:5,strokeEnabled:false});img.on('mouseover',function(e){document.body.style.cursor='pointer';e.targetNode.enableStroke();layer.draw();});img.on('mouseout',function(e){document.body.style.cursor='default';e.targetNode.disableStroke();layer.draw();});img.on('dragend',function(e){var x=e.targetNode.getX(),y=e.targetNode.getY();layer.moveToTop();console.log('img #'+imageidx+':',x,y);});layer.add(img);$scope.stage.add(layer);$scope.$apply(function(){$scope.images[imageidx]=img;$scope.images_loaded++;});};imageobj.src=img_url;}
 $scope.StartBlink=function(){$scope.blinking=true;$scope.state='BLINKING';for(var i=0;i<$scope.images.length;i++){$scope.images[i].hide();}
 var next_idx=0;var next_img=function(){if(!$scope.blinking)return;if(next_idx!=0){$scope.images[(next_idx-1)%$scope.images.length].hide();}
-var showidx=next_idx%$scope.images.length;$scope.images[showidx].show();next_idx++;$scope.stage.draw();if($scope.blinking){$scope.blink_timeout=setTimeout(next_img,$scope.blink_interval);}}
+var showidx=next_idx%$scope.images.length;$scope.images[showidx].show();next_idx++;$scope.stage.draw();if($scope.blink_timeout){clearTimeout($scope.blink_timeout);}
+$scope.blink_timeout=setTimeout(next_img,$scope.blink_interval);}
 next_img();}
-$scope.StopBlink=function(){clearTimeout($scope.blink_timeout);for(var i=0;i<$scope.images.length;i++){$scope.images[i].show();}
+$scope.StopBlink=function(){clearTimeout($scope.blink_timeout);$scope.blink_timeout=null;for(var i=0;i<$scope.images.length;i++){$scope.images[i].show();}
 $scope.stage.draw();$scope.blinking=true;$scope.state='BLINKING';}
 $scope.BadQuality=function(){ $scope.Next();mixpanel.track('discover action - bad quality');}
 $scope.Interesting=function(){UserResponse(true);$scope.Next();mixpanel.track('discover action - interesting');}

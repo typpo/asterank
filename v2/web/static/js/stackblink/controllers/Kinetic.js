@@ -97,15 +97,17 @@ function KineticCtrl($scope, $http) {
 
       $scope.stage.draw();
 
-      if ($scope.blinking) {
-        $scope.blink_timeout = setTimeout(next_img, $scope.blink_interval);
+      if ($scope.blink_timeout) {
+        clearTimeout($scope.blink_timeout);
       }
+      $scope.blink_timeout = setTimeout(next_img, $scope.blink_interval);
     }
     next_img();
   }
 
   $scope.StopBlink = function() {
     clearTimeout($scope.blink_timeout);
+    $scope.blink_timeout = null;
     for (var i=0; i < $scope.images.length; i++) {
       $scope.images[i].show();
     }
