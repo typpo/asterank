@@ -132,6 +132,12 @@ function KineticCtrl($scope, $http) {
     mixpanel.track('discover action - not interesting');
   }
 
+  $scope.Unsure = function() {
+    // TODO record unsure!
+    $scope.Next();
+    mixpanel.track('discover action - unsure');
+  }
+
   // Records user response on server side
   function UserResponse(interesting) {
     if ($scope.NeedsEmail()) {
