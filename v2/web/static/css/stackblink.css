@@ -47,11 +47,11 @@ body {
 
 .instruction {
   font-size: 28px;
-  font-weight: bold;
 }
 
 .instruction-container {
   margin: 5px;
+  margin-top: 15px;
 }
 
 .blink-options {
