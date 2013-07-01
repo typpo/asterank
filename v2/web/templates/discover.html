@@ -16,8 +16,10 @@
 
 {% assets filter="jsmin", output="gen/packed-stackblink.js",
 "js/lib/kinetic-v4.4.3.min.js",
+"js/lib/angular-bootstrap-modal.js",
 "js/stackblink/app.js",
-"js/stackblink/controllers/Kinetic.js"
+"js/stackblink/controllers/Kinetic.js",
+"js/stackblink/controllers/Walkthrough.js"
 %}
 <script type="text/javascript" src="{{ASSET_URL}}"></script>
 {% endassets %}
@@ -51,17 +53,50 @@
 
 <div id="right-bar" ng-show="show_intro">
 <div class="hide-intro" ng-click="HideIntro()">&times;</div>
-<h3>Discover an Asteroid</h3>
+<h3>Tips</h3>
 <p>
-Asterank has compiled hundreds of thousands of sky survey images taken by publicly funded observatories.
-</p>
-<p>
-<strong>To discover an asteroid, watch the animation of the night sky.</strong>
-</p>
-<p>
-<strong>Do you see a moving white dot?</strong>  The first user to notice an interesting object gets potential discovery credit and naming rights.
-</ol>
+Real asteroids are discovered at a rate of about 2 per day. It's not that hard! Here are some pointers:
+<ul>
+  <li>Asteroids appear as grayish-white dots.</li>
+  <li>Large squiggles, discolorations, etc. are image artifacts and can be ignored.</li>
+  <li>Tiny white dots, called "hot pixels," can be hard to distinguish from asteroids. It's an acquired skill, but you can usually tell if the dot is only a single pixel.</li>
+</ul>
 </p>
 </div>
 
+<div ng-controller="WalkthroughCtrl">
+  <div modal="show_walkthrough" close="Close()" options="opts">
+      <div class="modal-header">
+        <span ng-click="Close()" style="float:right;font-size:15px;padding-top:10px;cursor:pointer;">&times;</span>
+        <h4>Welcome to Asterank Discover</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-show="state=='intro'">
+          <p>
+          Asterank has compiled hundreds of thousands of sky survey images taken by publicly funded observatories.
+          </p>
+          <p>
+          <strong>To discover an asteroid, watch the animation of the night sky and look for a moving white dot.</strong>
+          </p>
+          <p>
+          There's a good chance that moving dot is an asteroid. The first user to notice the dot gets potential discovery credit and naming rights.
+          </p>
+        </div>
+        <div ng-show="state=='example'">
+          {#
+          http://www.asterank.com/api/skymorph/fast_image?key=|980223095409|50867.4127199074|156.217120220996|8.03505426798803|156.36039|8.14757|13.10|-39.26|8.30|0.10|0.09|-27.54|2393.08441659415|2333.87988915462|y|
+          http://www.asterank.com/api/skymorph/fast_image?key=|980223100855|50867.422974537|156.214466235108|8.03561446355463|156.35514|8.15066|13.10|-39.26|8.30|0.10|0.09|-27.54|2386.42425015584|2340.12002703672|y|
+          #}
+          <p>
+          Genuine asteroids are light gray objects that move around when the rest of the sky isn't moving.  The asteroid is in the center of this image:
+          </p>
+          <img src="http://i.imgur.com/D8f8Wcr.gif"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button ng-show="state=='intro'" class="btn btn-success" ng-click="SeeAnExample()">See an Example</button>
+        <button ng-show="state=='example'" class="btn btn-success" ng-click="Close()">Let's start</button>
+      </div>
+  </div>
+</span>
 {% endblock %}

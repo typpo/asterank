@@ -51,6 +51,7 @@ function KineticCtrl($scope, $http) {
         strokeWidth: 5,
         strokeEnabled: false
       });
+      /*
       img.on('mouseover', function(e) {
         document.body.style.cursor = 'pointer';
         e.targetNode.enableStroke();
@@ -67,6 +68,7 @@ function KineticCtrl($scope, $http) {
         layer.moveToTop();
         console.log('img #' + imageidx + ':', x, y);
       });
+      */
 
       layer.add(img);
       $scope.stage.add(layer);

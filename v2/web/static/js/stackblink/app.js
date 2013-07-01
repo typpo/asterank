@@ -1,5 +1,5 @@
 (function() {
-  angular.module('StackblinkApp', [])
+  angular.module('StackblinkApp', ['ui.bootstrap'])
     .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
     })
