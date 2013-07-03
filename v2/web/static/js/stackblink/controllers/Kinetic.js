@@ -16,8 +16,8 @@ function KineticCtrl($scope, $http) {
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
-    width: window.innerWidth - 50,
-    height: 800
+    width: 500,
+    height: 500
   });
 
   $scope.DrawImageWithOffset = function(offset_x, offset_y, img_url) {

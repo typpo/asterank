@@ -5,7 +5,7 @@
     })
     .directive('kinetic', function() {
       var kineticContainer =
-        '<div id="container"></div>';
+        '<div id="container" style="background:#818181; width:500px; height:500px"></div>';
       return {
         restrict: 'E',
         compile: function (tElement, tAttrs, transclude) {
