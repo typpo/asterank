@@ -51,6 +51,16 @@ function KineticCtrl($scope, $http) {
         strokeWidth: 5,
         strokeEnabled: false
       });
+
+      var frame_label = new Kinetic.Text({
+        x: 5,
+        y: 5,
+        text: 'Frame ' + (imageidx+1),
+        fontSize: 15,
+        fontFamily: 'Calibri',
+        fill: 'red'
+      });
+
       /*
       img.on('mouseover', function(e) {
         document.body.style.cursor = 'pointer';
@@ -71,10 +81,11 @@ function KineticCtrl($scope, $http) {
       */
 
       layer.add(img);
+      layer.add(frame_label);
       $scope.stage.add(layer);
 
       $scope.$apply(function() {
-        $scope.images[imageidx] = img;
+        $scope.images[imageidx] = layer;
         $scope.images_loaded++;
       });
     };
