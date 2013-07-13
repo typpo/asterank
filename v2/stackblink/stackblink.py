@@ -26,6 +26,10 @@ def get_control_groups():
       .skip(random.randint(0, count-1)).next()
   # TODO  handle no groups
   return control_object
+  
+def get_unknown_group():
+  # TODO
+  pass
 
 def record(email, image_keys, interesting):
   total_count = redis.incr(REDIS_COUNT_KEY, len(image_keys))
