@@ -65,6 +65,7 @@ Asteroids are discovered at a rate of about 2 per day. It's not that hard! Here 
 </p>
 </div>
 
+{% if first_time %}
 <div ng-controller="WalkthroughCtrl">
   <div modal="show_walkthrough" close="Close()" options="opts">
       <div class="modal-header">
@@ -100,4 +101,5 @@ Asteroids are discovered at a rate of about 2 per day. It's not that hard! Here 
       </div>
   </div>
 </span>
+{% endif %}
 {% endblock %}

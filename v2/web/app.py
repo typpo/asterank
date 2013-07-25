@@ -216,7 +216,9 @@ def skymorph_fast_image():
 # Stack/blink Discover routes
 @app.route('/discover')
 def discover():
-  return render_template('discover.html')
+  first_time = session['discover_first_time']
+  session['discover_first_time'] = True
+  return render_template('discover.html', first_time=first_time)
 
 @app.route('/api/stackblink/get_control_groups')
 def get_control_groups():
