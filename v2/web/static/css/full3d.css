@@ -58,6 +58,7 @@ body {
   font-size: 11px;
   border: 1px solid #ccc;
   border-collapse: collapse;
+  margin: auto;
   margin-top: 6px;
   margin-bottom: 10px;
 }
