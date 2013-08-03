@@ -54,11 +54,11 @@ function KineticCtrl($scope, $http) {
 
       var frame_label = new Kinetic.Text({
         x: 5,
-        y: 5,
+        y: imageobj.height - 20,
         text: 'Frame ' + (imageidx+1),
         fontSize: 15,
         fontFamily: 'Calibri',
-        fill: 'red'
+        fill: 'black'
       });
 
       /*
