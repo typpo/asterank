@@ -40,6 +40,10 @@ body {
   cursor: pointer;
 }
 
+#right-bar li {
+  padding: 8px;
+}
+
 #control-bar-inline {
   margin-top: 15px;
   margin-bottom: 15px;
