@@ -233,7 +233,8 @@ def stackblink_record():
   json_resp = json.dumps(stackblink.record( \
       postdata.get('email', None), \
       postdata.get('keys', None), \
-      postdata.get('interesting', None)))
+      postdata.get('interesting', None), \
+      postdata.get('poor_quality', None)))
 
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',

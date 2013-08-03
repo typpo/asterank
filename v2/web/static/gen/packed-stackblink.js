@@ -37,11 +37,12 @@ next_img();}
 $scope.StopBlink=function(){clearTimeout($scope.blink_timeout);$scope.blink_timeout=null;for(var i=0;i<$scope.images.length;i++){$scope.images[i].show();}
 $scope.stage.draw();$scope.blinking=true;$scope.state='BLINKING';}
 $scope.BadQuality=function(){ $scope.Next();mixpanel.track('discover action - bad quality');}
-$scope.Interesting=function(){UserResponse(true);$scope.Next();mixpanel.track('discover action - interesting');}
-$scope.NotInteresting=function(){UserResponse(false);$scope.Next();mixpanel.track('discover action - not interesting');}
+$scope.Interesting=function(){UserResponse(true,false);$scope.Next();mixpanel.track('discover action - interesting');}
+$scope.NotInteresting=function(){UserResponse(false,false);$scope.Next();mixpanel.track('discover action - not interesting');}
+$scope.PoorQuality=function(){UserResponse(false,true);$scope.Next();mixpanel.track('discover action - poor quality');}
 $scope.Unsure=function(){$scope.Next();mixpanel.track('discover action - unsure');} 
-function UserResponse(interesting){if($scope.NeedsEmail()){$scope.PromptForEmail();}
-$http.post('/api/stackblink/record',{email:$scope.email,keys:image_group_keys,interesting:interesting}).success(function(data){console.log(data);$scope.num_images_reviewed=data.count;});}
+function UserResponse(interesting,poor_quality){if($scope.NeedsEmail()){$scope.PromptForEmail();}
+$http.post('/api/stackblink/record',{email:$scope.email,keys:image_group_keys,interesting:interesting,poor_quality:poor_quality}).success(function(data){console.log(data);$scope.num_images_reviewed=data.count;});}
 $scope.Next=function(){$scope.Reset();$http.get('/api/stackblink/get_control_groups').success(function(data){if(!data||!data.images){alert('Sorry, communication with the server failed.');return;}
 image_group_keys=[];angular.forEach(data.images,function(image_info){var url='http://www.asterank.com/api/skymorph/fast_image?key='+image_info.key;image_group_keys.push(image_info.key);$scope.DrawImageWithOffset(image_info.offset_x,image_info.offset_y,url);});var started_blink=false;$scope.$watch('images_loaded',function(newval,oldval){ if(newval==data.images.length&&!started_blink){started_blink=true;$scope.StartBlink();}});});}
 $scope.Reset=function(){ if($scope.blinking){$scope.StopBlink();}

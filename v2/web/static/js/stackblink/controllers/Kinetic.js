@@ -136,15 +136,21 @@ function KineticCtrl($scope, $http) {
   }
 
   $scope.Interesting = function() {
-    UserResponse(true);
+    UserResponse(true, false);
     $scope.Next();
     mixpanel.track('discover action - interesting');
   }
 
   $scope.NotInteresting = function() {
-    UserResponse(false);
+    UserResponse(false, false);
     $scope.Next();
     mixpanel.track('discover action - not interesting');
+  }
+
+  $scope.PoorQuality = function() {
+    UserResponse(false, true);
+    $scope.Next();
+    mixpanel.track('discover action - poor quality');
   }
 
   $scope.Unsure = function() {
@@ -154,7 +160,7 @@ function KineticCtrl($scope, $http) {
   }
 
   // Records user response on server side
-  function UserResponse(interesting) {
+  function UserResponse(interesting, poor_quality) {
     if ($scope.NeedsEmail()) {
       $scope.PromptForEmail();
     }
@@ -162,7 +168,8 @@ function KineticCtrl($scope, $http) {
     $http.post('/api/stackblink/record', {
       email: $scope.email,
       keys: image_group_keys,
-      interesting: interesting
+      interesting: interesting,
+      poor_quality: poor_quality
     }).success(function(data) {
       console.log(data);
       $scope.num_images_reviewed = data.count;
