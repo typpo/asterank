@@ -21,6 +21,9 @@ function KineticCtrl($scope, $http) {
   // What we're currently showing
   var image_group_keys = [];
 
+  // User clicks
+  var circles = [];
+
   $scope.stage = new Kinetic.Stage({
     container: 'container',
     width: STAGE_NEAT_WIDTH,
@@ -42,6 +45,13 @@ function KineticCtrl($scope, $http) {
       var layer = new Kinetic.Layer();
       layer.add(circle);
       $scope.stage.add(layer);
+
+      circles.push(layer);
+      var layeridx = circles.length - 1;
+      layer.on('click', function() {
+        layer.remove();
+        circles.splice(layeridx, 1);
+      });
     });
 
     $scope.Next();
