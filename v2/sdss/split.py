@@ -32,6 +32,9 @@ def equalize(im):
     return im.point(lut*1)
 
 im = Image.open(path)
+if im.size[0] < 500 or im.size[1] < 500:
+  print 'Too small.'
+  sys.exit(1)
 im.load()
 r, g, b = im.split()
 
