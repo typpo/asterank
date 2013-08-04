@@ -35,7 +35,7 @@
 </div>
 <div class="instruction-container" ng-show="state == 'BLINKING'" class="ng-cloak">
   <!--<h2>Asterank Discover <span style="color:red;font-size:16px;vertical-align:super">beta</span></h2>-->
-  <span class="instruction">Do you see a single moving white dot?</span>
+  <span class="instruction">Do you see any moving white dots?</span>
   <!--<span class="blink-options">Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" /></span>-->
 </div>
 <div id="control-bar-inline" class="ng-cloak">
@@ -70,7 +70,8 @@ Asteroids are discovered at a rate of about 2 per day. Here are some pointers:
 </div>
 
 {% if first_time %}
-<div ng-controller="WalkthroughCtrl" class="ng-cloak">
+<div ng-controller="WalkthroughCtrl" class="ng-cloak" ng-init="Init()">
+
   <div modal="show_walkthrough" close="Close()" options="opts">
       <div class="modal-header">
         <span ng-click="Close()" style="float:right;font-size:15px;padding-top:10px;cursor:pointer;">&times;</span>

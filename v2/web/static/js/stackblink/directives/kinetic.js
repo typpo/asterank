@@ -1,6 +1,7 @@
 
 ;(function() {
     angular.module('stackblink.directives', [])
+    // TODO get rid of this directive
     .directive('kinetic', function() {
       var kineticContainer =
         //'<div id="container" style="background:#818181; width: 625px; height: 454px;"></div>';
@@ -11,7 +12,6 @@
           tElement.html(kineticContainer);
           // Link function:
           return function (scope, iElement, iAttrs, controller) {
-            scope.Init();
           };
         },
         controller: KineticCtrl
