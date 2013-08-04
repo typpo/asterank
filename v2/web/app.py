@@ -10,6 +10,7 @@ import re
 import api
 from stackblink import stackblink
 from skymorph import skymorph
+from sdss import sdss
 
 app = Flask(__name__)
 app.secret_key = 'not a secret key'
@@ -212,6 +213,21 @@ def skymorph_fast_image():
     response = make_response(ret)
     response.headers["Content-type"] = "image/png"
     return response
+
+# SDSS routes
+@app.route('/api/sdss/get_random_group')
+def sdss_random_group():
+  json_resp = json.dumps(sdss.get_random_group())
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'no-cache',
+  })
+
+@app.route('/api/sdss/image')
+def sdss_image():
+  ret = sdss.image_from_key(request.args.get('key'))
+  response = make_response(ret)
+  response.headers["Content-type"] = "image/png"
+  return response
 
 # Stack/blink Discover routes
 @app.route('/discover')

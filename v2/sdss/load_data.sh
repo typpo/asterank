@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Loads jpgs from SDSS
 # usage: cat stripe_82 | ./load_data
 
@@ -10,3 +10,6 @@ do
     --exclude "*" \
     rsync://data.sdss3.org/dr10/env/BOSS_PHOTOOBJ/frames/$rerun/ ./data/$rerun/
 done
+
+echo "All processing finished"
+echo "Done."
