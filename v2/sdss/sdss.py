@@ -42,6 +42,7 @@ data_index_size = len(data_index_keys)
 def get_unknown_group():
   # Return random rgb group
   keys = data_index[choice(data_index_keys)]
+  keys.sort()
   ret_keys = [{'key': key, 'offset_x': 0, 'offset_y': 0} for key in keys]
   return {'survey': SURVEY_ID, 'images': ret_keys}
 

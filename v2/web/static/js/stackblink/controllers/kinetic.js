@@ -96,7 +96,7 @@ function KineticCtrl($scope, $http) {
         text: 'Frame ' + (imageidx+1),
         fontSize: 15,
         fontFamily: 'Calibri',
-        fill: 'black'
+        fill: 'blue'
       });
 
       layer.add(img);
