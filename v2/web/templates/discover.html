@@ -35,23 +35,28 @@
 </div>
 <div class="instruction-container" ng-show="state == 'BLINKING'" class="ng-cloak">
   <!--<h2>Asterank Discover <span style="color:red;font-size:16px;vertical-align:super">beta</span></h2>-->
-  <span class="instruction">Do you see any moving white dots?</span>
+  <span class="instruction">Click to circle moving white dots.</span>
   <!--<span class="blink-options">Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" /></span>-->
 </div>
+<kinetic></kinetic>
 <div id="control-bar-inline" class="ng-cloak">
+  {#
   <div ng-show="state == 'STACKING'">
   <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">Images aligned (a)</a>
   <a href="#" class="stackblink-button" ng-click="BadQuality()" keyboard-shortcut="q">Bad quality (q)</a>
   </div>
+  #}
   <div ng-show="state == 'BLINKING'">
+    <a href="#" class="stackblink-button primary" ng-click="Circled()" keyboard-shortcut="d">Done (d)</a>
+    {#
     <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
     <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
-    <a href="#" class="stackblink-button" ng-click="PoorQuality()" keyboard-shortcut="p">Poor Quality (p)</a>
+    #}
+    <a href="#" class="stackblink-button poor-quality" ng-click="PoorQuality()" keyboard-shortcut="p">Poor Quality (p)</a>
     {# <a href="#" class="stackblink-button" ng-click="Unsure()" keyboard-shortcut="u">Unsure (u)</a> #}
     {# <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a> #}
   </div>
 </div>
-<kinetic></kinetic>
 
 <div id="right-bar" ng-show="show_intro" class="ng-cloak">
 <div class="hide-intro" ng-click="HideIntro()">&times;</div>

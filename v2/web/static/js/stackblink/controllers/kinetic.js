@@ -148,6 +148,15 @@ function KineticCtrl($scope, $http) {
     $scope.state = 'BLINKING';
   }
 
+  $scope.Circled = function() {
+    var interesting = circles.length > 0;
+    mixpanel.track('discover action - done', {
+      num_circles: circles.length
+    });
+    UserResponse(interesting, false);
+    $scope.Next();
+  }
+
   $scope.Interesting = function() {
     UserResponse(true, false);
     $scope.Next();
@@ -182,7 +191,14 @@ function KineticCtrl($scope, $http) {
       email: $scope.email,
       keys: image_group_keys,
       interesting: interesting,
-      poor_quality: poor_quality
+      poor_quality: poor_quality,
+      circle_coords: (function() {
+        var coords = [];
+        angular.forEach(circles, function(circle_layer) {
+          coords.push([circle_layer.children[0].getX(), circle_layer.children[0].getY()]);
+        });
+        return coords;
+      })()
     }).success(function(data) {
       console.log(data);
       $scope.num_images_reviewed = data.count;
@@ -243,6 +259,10 @@ function KineticCtrl($scope, $http) {
     });
     $scope.images = [];
     $scope.stage.draw();
+    angular.forEach(circles, function(circle_layer) {
+      circle_layer.remove();
+    });
+    circles = [];
 
     // reset state
     $scope.blinking = true;

@@ -23,6 +23,16 @@ body {
   position:relative;
   top:1px;
 }
+.stackblink-button.primary {
+  background-color: #89C35C;
+  color: #000;
+}
+/*
+.stackblink-button.poor-quality {
+  background-color: #ecd;
+}
+*/
+
 
 #right-bar {
   position: fixed;
@@ -46,6 +56,7 @@ body {
 }
 
 #control-bar-inline {
+  margin-left: 55px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
