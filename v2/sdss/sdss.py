@@ -31,13 +31,13 @@ for root, subFolders, files in os.walk(DATA_PATH):
     else:
       data_index.setdefault(f, [])
 
-data_index_keys = data_index.keys()
-data_index_size = len(data_index_keys)
-
 # Prune bad entries
-for key in data_index_keys:
+for key in data_index.keys():
   if len(data_index[key]) < 2:
     del data_index[key]
+
+data_index_keys = data_index.keys()
+data_index_size = len(data_index_keys)
 
 def get_unknown_group():
   # Return random rgb group

@@ -47,7 +47,7 @@ var group_count=0;$scope.Next=function(){$scope.Reset();group_count++;if(group_c
 function LoadNewImage(endpoint,image_prefix){$http.get(endpoint).success(function(data){if(!data||!data.images){alert('Sorry, communication with the server failed.');return;}
 image_group_keys=[];angular.forEach(data.images,function(image_info){var url=image_prefix+image_info.key;image_group_keys.push(image_info.key);$scope.DrawImageWithOffset(image_info.offset_x,image_info.offset_y,url);});var started_blink=false;$scope.$watch('images_loaded',function(newval,oldval){ if(newval==data.images.length&&!started_blink){started_blink=true;$scope.StartBlink();}});});}
 $scope.Reset=function(){ if($scope.blinking){$scope.StopBlink();}
-$scope.stage.clear();angular.forEach($scope.images,function(image){ image.remove();});$scope.images=[];$scope.stage.draw();angular.forEach(circles,function(circle_layer){circle_layer.remove();}); $scope.blinking=true;$scope.state='BLINKING';$scope.images_loaded=0;}
+$scope.stage.clear();angular.forEach($scope.images,function(image){ image.remove();});$scope.images=[];$scope.stage.draw();angular.forEach(circles,function(circle_layer){circle_layer.remove();});circles=[]; $scope.blinking=true;$scope.state='BLINKING';$scope.images_loaded=0;}
 $scope.HideIntro=function(){$scope.show_intro=false;}
 $scope.NeedsEmail=function(){return!$scope.email;}
 $scope.PromptForEmail=function(){$scope.email=prompt('Please enter your email address so we can associate any potential discoveries with your name.\n\nYour email will not be used for any other purposes.');}}
