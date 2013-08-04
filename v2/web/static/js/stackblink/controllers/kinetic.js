@@ -48,7 +48,7 @@ function KineticCtrl($scope, $http) {
 
       circles.push(layer);
       var layeridx = circles.length - 1;
-      layer.on('click', function() {
+      layer.on('click, touchstart', function() {
         layer.remove();
         circles.splice(layeridx, 1);
       });
