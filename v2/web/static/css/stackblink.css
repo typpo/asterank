@@ -27,7 +27,8 @@ body {
 #right-bar {
   position: fixed;
   top: 180px;
-  left: 570px;
+  /*left: 570px;*/
+  left: 650px;
   width: 300px;
   background-color: #555;
   padding: 11px;

@@ -215,9 +215,9 @@ def skymorph_fast_image():
     return response
 
 # SDSS routes
-@app.route('/api/sdss/get_random_group')
-def sdss_random_group():
-  json_resp = json.dumps(sdss.get_random_group())
+@app.route('/api/sdss/get_unknown_group')
+def sdss_unknown_group():
+  json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
   })
@@ -236,9 +236,16 @@ def discover():
   session['discover_first_time'] = True
   return render_template('discover.html', first_time=first_time)
 
-@app.route('/api/stackblink/get_control_groups')
-def get_control_groups():
+@app.route('/api/stackblink/get_neat_control_group')
+def get_neat_control_group():
   json_resp = json.dumps(stackblink.get_control_groups())
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'no-cache',
+  })
+
+@app.route('/api/stackblink/get_sdss_unknown_group')
+def get_sdss_unknown_group():
+  json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
   })

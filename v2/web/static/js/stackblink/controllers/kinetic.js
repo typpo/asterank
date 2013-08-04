@@ -1,5 +1,10 @@
 function KineticCtrl($scope, $http) {
   var DEFAULT_PADDING = 0;
+  var CONTROL_URL = '/api/stackblink/get_neat_control_group';
+  var UNKNOWN_URL = '/api/stackblink/get_sdss_unknown_group';
+
+  var STAGE_WIDTH = 661;
+  var STAGE_HEIGHT = 454;
 
   $scope.images = [];
 
@@ -16,8 +21,8 @@ function KineticCtrl($scope, $http) {
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
-    width: 500,
-    height: 500
+    width: STAGE_WIDTH,
+    height: STAGE_HEIGHT
   });
 
   $scope.DrawImageWithOffset = function(offset_x, offset_y, img_url) {
@@ -179,7 +184,7 @@ function KineticCtrl($scope, $http) {
   $scope.Next = function() {
     $scope.Reset();
     // TODO non-control groups!
-    $http.get('/api/stackblink/get_control_groups').success(function(data) {
+    $http.get(UNKNOWN_URL).success(function(data) {
       //console.log(data);
       if (!data || !data.images) {
         alert('Sorry, communication with the server failed.');
@@ -188,7 +193,8 @@ function KineticCtrl($scope, $http) {
 
       image_group_keys = [];
       angular.forEach(data.images, function(image_info) {
-        var url = 'http://www.asterank.com/api/skymorph/fast_image?key=' + image_info.key;
+        //var url = 'http://www.asterank.com/api/skymorph/fast_image?key=' + image_info.key;
+        var url = '/api/sdss/image?key=' + image_info.key;
         image_group_keys.push(image_info.key);
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });

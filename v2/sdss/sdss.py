@@ -39,10 +39,11 @@ for key in data_index_keys:
   if len(data_index[key]) < 2:
     del data_index[key]
 
-def get_random_group():
+def get_unknown_group():
   # Return random rgb group
   keys = data_index[choice(data_index_keys)]
-  return {'survey': SURVEY_ID, 'images': keys}
+  ret_keys = [{'key': key, 'offset_x': 0, 'offset_y': 0} for key in keys]
+  return {'survey': SURVEY_ID, 'images': ret_keys}
 
 def get_control_group():
   # placeholder for when I set up a real API for image sources
@@ -52,6 +53,8 @@ def image_from_key(key):
   # TODO this should really be static. This is awful.
   if key in data_index_reverse:
     im = Image.open(os.path.join(FILE_DIR, key))
+    # Scale for now
+    im.thumbnail((661, 454), Image.ANTIALIAS)   #  1/3 size
     output = StringIO.StringIO()
     im.save(output, format='PNG')
     return output.getvalue()
