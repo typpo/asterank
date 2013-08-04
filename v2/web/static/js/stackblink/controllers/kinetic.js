@@ -32,11 +32,11 @@ function KineticCtrl($scope, $http) {
 
   $scope.Init = function() {
     var CIRCLE_RADIUS = 15;
-    $scope.stage.on('click', function(e) {
-      var mousepos = $scope.stage.getMousePosition();
+
+    var create_circle = function(xpos, ypos) {
       var circle = new Kinetic.Circle({
-        x: mousepos.x,
-        y: mousepos.y,
+        x: xpos,
+        y: ypos,
         radius: CIRCLE_RADIUS,
         fill: 'none',
         stroke: 'green',
@@ -52,6 +52,14 @@ function KineticCtrl($scope, $http) {
         layer.remove();
         circles.splice(layeridx, 1);
       });
+    }
+    $scope.stage.on('click', function(e) {
+      var mousepos = $scope.stage.getMousePosition();
+      create_circle(mousepos.x, mousepos.y);
+    });
+    $scope.stage.on('touchstart', function(e) {
+      var pos = $scope.stage.getTouchPosition();
+      create_circle(pos.x, pos.y);
     });
 
     $scope.Next();
