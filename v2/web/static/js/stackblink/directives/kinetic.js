@@ -3,7 +3,8 @@
     angular.module('stackblink.directives', [])
     .directive('kinetic', function() {
       var kineticContainer =
-        '<div id="container" style="background:#818181; width: 625px; height: 454px;"></div>';
+        //'<div id="container" style="background:#818181; width: 625px; height: 454px;"></div>';
+        '<div id="container" style="background:#000;"></div>';
       return {
         restrict: 'E',
         compile: function (tElement, tAttrs, transclude) {

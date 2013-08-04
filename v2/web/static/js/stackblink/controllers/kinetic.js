@@ -3,8 +3,10 @@ function KineticCtrl($scope, $http) {
   var CONTROL_URL = '/api/stackblink/get_neat_control_group';
   var UNKNOWN_URL = '/api/stackblink/get_sdss_unknown_group';
 
-  var STAGE_WIDTH = 661;
-  var STAGE_HEIGHT = 454;
+  var STAGE_SDSS_WIDTH = 661;
+  var STAGE_SDSS_HEIGHT = 454;
+  var STAGE_NEAT_WIDTH = 500;
+  var STAGE_NEAT_HEIGHT = 500;
 
   $scope.images = [];
 
@@ -21,8 +23,8 @@ function KineticCtrl($scope, $http) {
 
   $scope.stage = new Kinetic.Stage({
     container: 'container',
-    width: STAGE_WIDTH,
-    height: STAGE_HEIGHT
+    width: STAGE_NEAT_WIDTH,
+    height: STAGE_NEAT_HEIGHT
   });
 
   $scope.DrawImageWithOffset = function(offset_x, offset_y, img_url) {
@@ -65,25 +67,6 @@ function KineticCtrl($scope, $http) {
         fontFamily: 'Calibri',
         fill: 'black'
       });
-
-      /*
-      img.on('mouseover', function(e) {
-        document.body.style.cursor = 'pointer';
-        e.targetNode.enableStroke();
-        layer.draw();
-      });
-      img.on('mouseout', function(e) {
-        document.body.style.cursor = 'default';
-        e.targetNode.disableStroke();
-        layer.draw();
-      });
-      img.on('dragend', function(e) {
-        var x = e.targetNode.getX()
-        ,   y = e.targetNode.getY();
-        layer.moveToTop();
-        console.log('img #' + imageidx + ':', x, y);
-      });
-      */
 
       layer.add(img);
       layer.add(frame_label);
@@ -134,12 +117,6 @@ function KineticCtrl($scope, $http) {
     $scope.state = 'BLINKING';
   }
 
-  $scope.BadQuality = function() {
-    // NYI
-    $scope.Next();
-    mixpanel.track('discover action - bad quality');
-  }
-
   $scope.Interesting = function() {
     UserResponse(true, false);
     $scope.Next();
@@ -181,10 +158,24 @@ function KineticCtrl($scope, $http) {
     });
   }
 
+  var group_count = 0;
   $scope.Next = function() {
     $scope.Reset();
+    group_count++;
+    if (group_count > 2 && Math.random() > .2) {
+      $scope.stage.setWidth(STAGE_SDSS_WIDTH);
+      $scope.stage.setHeight(STAGE_SDSS_HEIGHT);
+      LoadNewImage(UNKNOWN_URL, '/api/sdss/image?key=');
+    } else {
+      $scope.stage.setWidth(STAGE_NEAT_WIDTH);
+      $scope.stage.setHeight(STAGE_NEAT_HEIGHT);
+      LoadNewImage(CONTROL_URL, 'http://www.asterank.com/api/skymorph/fast_image?key=');
+    }
+  }
+
+  function LoadNewImage(endpoint, image_prefix) {
     // TODO non-control groups!
-    $http.get(UNKNOWN_URL).success(function(data) {
+    $http.get(endpoint).success(function(data) {
       //console.log(data);
       if (!data || !data.images) {
         alert('Sorry, communication with the server failed.');
@@ -193,8 +184,7 @@ function KineticCtrl($scope, $http) {
 
       image_group_keys = [];
       angular.forEach(data.images, function(image_info) {
-        //var url = 'http://www.asterank.com/api/skymorph/fast_image?key=' + image_info.key;
-        var url = '/api/sdss/image?key=' + image_info.key;
+        var url = image_prefix + image_info.key;
         image_group_keys.push(image_info.key);
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
