@@ -191,7 +191,7 @@ function KineticCtrl($scope, $http) {
 
   // Records user response on server side
   function UserResponse(interesting, poor_quality) {
-    if ($scope.NeedsEmail()) {
+    if (interesting && $scope.NeedsEmail()) {
       $scope.PromptForEmail();
     }
 
