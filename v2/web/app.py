@@ -232,8 +232,8 @@ def sdss_image():
 # Stack/blink Discover routes
 @app.route('/discover')
 def discover():
-  first_time = session.get('discover_first_time', False)
-  session['discover_first_time'] = True
+  first_time = session.get('discover_first_time', True)
+  session['discover_first_time'] = False
   return render_template('discover.html', first_time=first_time)
 
 @app.route('/api/stackblink/get_neat_control_group')
