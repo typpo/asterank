@@ -103,7 +103,6 @@ function KineticCtrl($scope, $http) {
         y: imageobj.height - 20,
         text: 'Frame ' + (imageidx+1),
         fontSize: 15,
-        fontFamily: 'Calibri',
         fill: 'blue'
       });
 
