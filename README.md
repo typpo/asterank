@@ -40,11 +40,13 @@ You'll quickly notice that there's no data.  Continue reading for instructions o
 
 The `data/pipeline` folder contains the scrapers used to aggregate and build the database and associated APIs.
 
-Pipeline tasks are folders in the `pipeline/run` directory and are executed in increasing order.  tasks with the same numeric prefix may be run in parallel.
+Pipeline tasks are folders in the `pipeline/run` directory and are executed in increasing lexical order.  Tasks with the same numeric prefix may be run in parallel.
 
 To execute the pipeline, simply run `./pipeline`.  To execute a specific task, run eg. `./pipeline 00_mytask`, where 00\_mytask matches a directory.  In order to run Asterank, you at least need to run steps `00_deltav` and `10_sbdb`.
 
 ### The sky survey/discovery process
+
+## NEAT
 
 Sky survey data is scraped from NEAT.  The process is generally three steps per asteroid:
 
@@ -57,6 +59,10 @@ Sky survey data is scraped from NEAT.  The process is generally three steps per 
 Note that sky survey data depends on redis: `sudo apt-get install redis-server`.
 
 All this happens in `v2/stackblink`.  In `data/astrometry` there are scripts available to help you bootstrap your astrometry setup.
+
+## SDSS
+
+SDSS setup is simpler.  Run the rsync script to get a good group of SDSS images, which will be served by the stackblink app.
 
 ## How to collaborate
 
