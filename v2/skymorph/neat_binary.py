@@ -17,7 +17,7 @@ QUERY_FORMAT = '?Id=%s&X0=%d&Y0=%d&Nx=%d&Ny=%d'
 ##### Disk cache config
 # TODO these should be changed to absolute paths so we can get rid of the
 # symlinks in stackblink
-store = Shove('file://neat_binary_store', 'file://neat_binary_cache')
+store = Shove('file:///var/asterank/neat_binary_store', 'file:///var/asterankneat_binary_cache')
 store_mutex = Lock()
 
 def process_from_internet(id, x0, y0, width, height):
