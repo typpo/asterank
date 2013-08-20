@@ -38,7 +38,7 @@ You'll quickly notice that there's no data.  Continue reading for instructions o
 
 ### The data pipeline
 
-`data/pipeline` folder contains the scrapers used to aggregate and build the database and associated APIs.
+The `data/pipeline` folder contains the scrapers used to aggregate and build the database and associated APIs.
 
 Pipeline tasks are folders in the `pipeline/run` directory and are executed in increasing order.  tasks with the same numeric prefix may be run in parallel.
 
