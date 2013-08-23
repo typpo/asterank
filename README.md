@@ -62,7 +62,11 @@ All this happens in `v2/stackblink`.  In `data/astrometry` there are scripts ava
 
 ## SDSS
 
-SDSS setup is simpler.  Run the rsync script to get a good group of SDSS images, which will be served by the stackblink app.
+SDSS setup:
+
+  1. `cd sdss`
+  2. cat stripe_82 | ./load_data.sh
+  3. ./process_images.sh
 
 ## How to collaborate
 
