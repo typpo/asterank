@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response
 from flask.ext.assets import Environment, Bundle
 import urllib
@@ -318,3 +319,6 @@ def skymorph_docs():
 @app.route('/api')
 def api_route():
   return render_template('api.html')
+
+if __name__ == "__main__":
+  app.run(debug=True, host='0.0.0.0', use_reloader=True)
