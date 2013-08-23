@@ -86,23 +86,6 @@ def get_pixel_offset(image_key1, image_key2, reference_ra, reference_dec):
   wcs2 = astWCS.WCS(StringIO(store[shove_key2]))
   x2, y2 = wcs2.wcs2pix(reference_ra, reference_dec)
 
-  """
-  try:
-    wcs1 = astWCS.WCS(StringIO(store[shove_key1]))
-    x1, y1 = wcs1.wcs2pix(reference_ra, reference_dec)
-  except:
-    print store[shove_key1]
-    del store[shove_key1]
-    return None
-  try:
-    wcs2 = astWCS.WCS(StringIO(store[shove_key2]))
-    x2, y2 = wcs2.wcs2pix(reference_ra, reference_dec)
-  except:
-    print store[shove_key2]
-    del store[shove_key2]
-    return None
-  """
-
   return x2-x1, y2-y1
 
 def _timeout_command(command, timeout):

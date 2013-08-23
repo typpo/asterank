@@ -23,11 +23,22 @@ body {
   position:relative;
   top:1px;
 }
+.stackblink-button.primary {
+  background-color: #89C35C;
+  color: #000;
+}
+/*
+.stackblink-button.poor-quality {
+  background-color: #ecd;
+}
+*/
+
 
 #right-bar {
   position: fixed;
-  top: 240px;
-  left: 690px;
+  top: 180px;
+  /*left: 570px;*/
+  left: 650px;
   width: 300px;
   background-color: #555;
   padding: 11px;
@@ -40,18 +51,23 @@ body {
   cursor: pointer;
 }
 
+#right-bar li {
+  padding: 8px;
+}
+
 #control-bar-inline {
+  margin-left: 55px;
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
 .instruction {
   font-size: 28px;
-  font-weight: bold;
 }
 
 .instruction-container {
   margin: 5px;
+  margin-top: 15px;
 }
 
 .blink-options {

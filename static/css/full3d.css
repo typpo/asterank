@@ -44,13 +44,11 @@ body {
   left: 0;
   top: 0;
   padding: 5px 10px;
-  font-size: 15px;
+  font-size: 13px;
   background-color: #000;
   color: #f0f0f0;
-  width: 150px;
-  -moz-border-radius-bottomright: 15px;
-  border-bottom-right-radius: 15px;
-  border-right: 1px solid #ccc;
+  width: 145px;
+  border: 1px solid #ccc;
 }
 .sidebar a {
   color: #f0f0f0;
@@ -60,6 +58,7 @@ body {
   font-size: 11px;
   border: 1px solid #ccc;
   border-collapse: collapse;
+  margin: auto;
   margin-top: 6px;
   margin-bottom: 10px;
 }

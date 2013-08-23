@@ -27,13 +27,18 @@ def get_control_groups():
   # TODO  handle no groups
   return control_object
 
-def record(email, image_keys, interesting):
+def get_unknown_group():
+  # TODO
+  pass
+
+def record(email, image_keys, interesting, poor_quality):
   total_count = redis.incr(REDIS_COUNT_KEY, len(image_keys))
   group_key = '||'.join(image_keys)
   stackblink_results.insert({
     'email': email,
     'group_key': group_key,
     'interesting': interesting,
+    'poor_quality': poor_quality,
     })
 
   return {'success': True, 'count': total_count}

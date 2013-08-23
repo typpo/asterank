@@ -10,8 +10,8 @@ GENERAL_INDEX = {
 # Keys are asteroid spectra type. Values are maps from a material
 # to the percent mass of each material.
 SPECTRA_INDEX = {
-  'A': {
-  },
+  '?': {},
+  'A': {},
   'B': {
     'hydrogen': 0.235,
     'nitrogen': 0.001,

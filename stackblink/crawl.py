@@ -131,6 +131,9 @@ def create_known_groups():
     new_image_groups = process(asteroid)
     if new_image_groups:
       stackblink.insert(new_image_groups)
+      
+def create_unknown_groups():
+  pass
 
 if __name__ == "__main__":
   create_known_groups()
