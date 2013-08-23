@@ -65,8 +65,8 @@ All this happens in `v2/stackblink`.  In `data/astrometry` there are scripts ava
 SDSS setup:
 
   1. `cd sdss`
-  2. cat stripe_82 | ./load_data.sh
-  3. ./process_images.sh
+  2. `cat stripe_82 | ./load_data.sh`
+  3. `./process_images.sh`
 
 ## How to collaborate
 
