@@ -11,27 +11,29 @@ function email() {
 </script>
 <div class="row-fluid basic-content">
 <h1>About</h1>
-<p>This database is created and maintained by <a href="http://ianww.com">Ian Webster</a>. Asterank became part of <a href="http://www.planetaryresources.com/" target="_blank">Planetary Resources</a> in May 2013. The code is available <a href="http://github.com/typpo/asterank">on github</a>.</p>
+<p>This database is created and maintained by <a href="http://ianww.com">Ian Webster</a>. Asterank was acquired by <a href="http://www.planetaryresources.com/" target="_blank">Planetary Resources</a> in May 2013. The code is available <a href="http://github.com/typpo/asterank">on github</a>.</p>
 <p>
-Feedback and questions are welcome.  Email: <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script>.
+Feedback and questions are welcome!  Please email: <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script>.
 </p>
 <div>
   <h3>Accuracy</h3>
-  <p>Scientists know very little about the composition of asteroids. Most data used in our calculations come from the JPL's <a href="http://ssd.jpl.nasa.gov/sbdb.cgi">Small Body Database</a>. The overwhelming majority of asteroids have no spectral classification and are missing other important data attributes. Without full information it is impossible to fully estimate the true value of an asteroid or the cost of mining it.</p>
-  <p>This site applies accurate, up-to-date information from world markets and scientific papers, but all figures come with the disclaimer that they are rough estimations.</p>
+  <p>Scientists know very little about the composition of asteroids. Most data used in our calculations come from the JPL's <a href="http://ssd.jpl.nasa.gov/sbdb.cgi">Small Body Database</a> and the <a href="http://minorplanetcenter.org/iau/mpc.html">Minor Planet Center</a>. The overwhelming majority of asteroids have no spectral classification and are missing other important data attributes. Without full information it is impossible to fully estimate the true value of an asteroid or the cost of mining it.</p>
+
+  <p>Asterank applies accurate, up-to-date information from world markets and scientific papers.  To ensure realistic estimates, data from meteorities on Earth and known reference asteroids heavily influence our calculations.</p>
+
   <p>
   As validation, our accessibility scores agree with numbers produced by a 2012 report on <a href="http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf">asteroid retrieval feasibility</a> by Caltech's Keck Institute for Space Studies.
   </p>
 </div>
 <h3>Overview of estimates</h3>
 <p>
-<strong>Value</strong> estimates are based on the mass of a given asteroid and its spectral type.  I used spectral type to infer the composition of the asteroid, which i referenced with current market prices, mostly from the London Metal Exchange, to determine potential value.
+<strong>Value</strong> estimates are based on the mass of a given asteroid and its spectral type.  Asteroid spectra is used to infer composition, which, in conjunction with current market prices, determine potential value.
 </p>
 <p>
-<strong>Accessibility</strong> estimates are based primarily on delta-v, but it also incorporates orbital characteristics such as perihelion, aphelion, eccentricity, and period.  The formula is biased toward low delta-v with orbits that maintain a generally consistent distance from the sun (ie., no objects that swing far into the belt).
+<strong>Accessibility</strong> estimates are based primarily on delta-v, but it also incorporate orbital characteristics such as perihelion, aphelion, eccentricity, and period.  The formula is biased toward low delta-v with orbits that maintain a generally consistent distance from the sun (ie., no objects that swing far into the belt).
 </p>
 <p>
-<strong>Profit</strong> or "cost effectiveness" is a combination of accessibility and value.  Although it is hard to estimate the costs of an extraction mission to an asteroid, I tried to strike a balance between high value and high distance and energy expenditure.  Mining costs are factored in as a flat percentage of potential value.
+<strong>Profit</strong> and ROI calculations are a combination of accessibility and value.  The formula strikes a balance between high value and high distance and energy expenditure.  Mining costs are factored in as a flat percentage of potential value.
 </p>
 <div>
 <h3>Research & Sources</h3>

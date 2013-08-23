@@ -9,6 +9,9 @@
   })();
 </script>
 <script type="text/javascript">
+  if (~document.location.href.indexOf('localhost')) {
+    window.mixpanel = {track:function(){}};
+  } else {
     (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");
     b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+
     '//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';d=c.getElementsByTagName("script")[0];
@@ -20,5 +23,5 @@
     'set_config','people.set','people.increment','people.track_charge','people.append'];
     for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.2;})(document,window.mixpanel||[]);
     mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");
-    mixpanel.track('home');
+  }
 </script>

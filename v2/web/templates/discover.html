@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}Discover an asteroid - Asterank Discover{% endblock %}
+
 {% block head %}
   {% assets filter="cssmin", output="gen/packed-stackblink.css",
   "css/stackblink.css"
@@ -14,50 +16,98 @@
 
 {% assets filter="jsmin", output="gen/packed-stackblink.js",
 "js/lib/kinetic-v4.4.3.min.js",
+"js/lib/angular-bootstrap-modal.js",
 "js/stackblink/app.js",
-"js/stackblink/controllers/Kinetic.js"
+"js/stackblink/controllers/kinetic.js",
+"js/stackblink/controllers/walkthrough.js",
+"js/stackblink/directives/kinetic.js"
 %}
 <script type="text/javascript" src="{{ASSET_URL}}"></script>
 {% endassets %}
-
+<script>
+  mixpanel.track('discover');
+</script>
 {% endblock %}
 
 {% block content %}
 <div class="instruction-container" ng-show="state == 'STACKING'">
   <span class="instruction">Verify quality &amp; correct image alignment.</span>
 </div>
-<div class="instruction-container" ng-show="state == 'BLINKING'">
-  <h2>Asterank Discover <span style="color:red;font-size:16px;vertical-align:super">beta</span></h2>
-  <span class="instruction">See any moving objects?</span>
+<div class="instruction-container" ng-show="state == 'BLINKING'" class="ng-cloak">
+  <!--<h2>Asterank Discover <span style="color:red;font-size:16px;vertical-align:super">beta</span></h2>-->
+  <span class="instruction">Mark any moving white dots by clicking on them.</span>
   <!--<span class="blink-options">Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" /></span>-->
 </div>
-<div id="control-bar-inline">
+<kinetic></kinetic>
+<div id="control-bar-inline" class="ng-cloak">
+  {#
   <div ng-show="state == 'STACKING'">
   <a href="#" class="stackblink-button" ng-click="StartBlink()" keyboard-shortcut="a">Images aligned (a)</a>
   <a href="#" class="stackblink-button" ng-click="BadQuality()" keyboard-shortcut="q">Bad quality (q)</a>
   </div>
+  #}
   <div ng-show="state == 'BLINKING'">
+    <a href="#" class="stackblink-button primary" ng-click="Circled()" keyboard-shortcut="d">Done (d)</a>
+    {#
     <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
     <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
+    #}
+    <a href="#" class="stackblink-button poor-quality" ng-click="PoorQuality()" keyboard-shortcut="p">Poor Quality (p)</a>
+    {# <a href="#" class="stackblink-button" ng-click="Unsure()" keyboard-shortcut="u">Unsure (u)</a> #}
     {# <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a> #}
   </div>
 </div>
-<kinetic></kinetic>
 
-<div id="right-bar" ng-show="show_intro">
+<div id="right-bar" ng-show="show_intro" class="ng-cloak">
 <div class="hide-intro" ng-click="HideIntro()">&times;</div>
-<h3>How it works</h3>
+<h3>Tips</h3>
 <p>
-Asterank has compiled hundreds of thousands of sky survey images for public review.
-</p>
-<p>
-To discover an asteroid:
-<ol>
-<li>Watch the animation of the night sky.</li>
-<li>Do you see any moving objects in the animation?</li>
-<li>The first user to notice an interesting object gets potential discovery credit and naming rights.</li>
-</ol>
+Asteroids are discovered at a rate of about 2 per day. Here are some pointers:
+<ul>
+  <li>Asteroids appear as <em>moving</em> grayish-white dots.</li>
+  <li>If the image is bad or the entire image is moving, choose "Poor Quality."</li>
+  <li>Large squiggles, discolorations, etc. are image artifacts and can be ignored.</li>
+  {#
+  <li>Tiny white dots, called "hot pixels," can be hard to distinguish from asteroids. It's an acquired skill, but you can usually tell if the dot is only a single pixel.</li>
+  #}
+</ul>
 </p>
 </div>
 
+<div ng-controller="WalkthroughCtrl" class="ng-cloak" ng-init="Init()">
+
+  <div modal="show_walkthrough" close="Close()" options="opts">
+      <div class="modal-header">
+        <span ng-click="Close()" style="float:right;font-size:15px;padding-top:10px;cursor:pointer;">&times;</span>
+        <h4>Welcome to Asterank Discover</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-show="state=='intro'">
+          <p>
+          Asterank has compiled hundreds of thousands of sky survey images taken by publicly funded observatories.
+          </p>
+          <p>
+          <strong>To discover an asteroid, watch the animation of the night sky and look for a moving white dot.</strong>
+          </p>
+          <p>
+          There's a good chance that moving dot is an asteroid. The first user to notice the dot gets potential discovery credit and naming rights.
+          </p>
+        </div>
+        <div ng-show="state=='example'">
+          {#
+          http://www.asterank.com/api/skymorph/fast_image?key=|980223095409|50867.4127199074|156.217120220996|8.03505426798803|156.36039|8.14757|13.10|-39.26|8.30|0.10|0.09|-27.54|2393.08441659415|2333.87988915462|y|
+          http://www.asterank.com/api/skymorph/fast_image?key=|980223100855|50867.422974537|156.214466235108|8.03561446355463|156.35514|8.15066|13.10|-39.26|8.30|0.10|0.09|-27.54|2386.42425015584|2340.12002703672|y|
+          #}
+          <p>
+          Genuine asteroids are light gray objects that move around when the rest of the sky isn't moving.  The asteroid is in the center of this image:
+          </p>
+          <img src="http://i.imgur.com/D8f8Wcr.gif"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button ng-show="state=='intro'" class="btn btn-success" ng-click="SeeAnExample()">See an Example</button>
+        <button ng-show="state=='example'" class="btn btn-success" ng-click="Close()">Let's start</button>
+      </div>
+  </div>
+</span>
 {% endblock %}

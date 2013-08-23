@@ -1,5 +1,12 @@
 function KineticCtrl($scope, $http) {
-  var DEFAULT_PADDING = 50;
+  var DEFAULT_PADDING = 0;
+  var CONTROL_URL = '/api/stackblink/get_neat_control_group';
+  var UNKNOWN_URL = '/api/stackblink/get_sdss_unknown_group';
+
+  var STAGE_SDSS_WIDTH = 661;
+  var STAGE_SDSS_HEIGHT = 454;
+  var STAGE_NEAT_WIDTH = 500;
+  var STAGE_NEAT_HEIGHT = 500;
 
   $scope.images = [];
 
@@ -14,11 +21,50 @@ function KineticCtrl($scope, $http) {
   // What we're currently showing
   var image_group_keys = [];
 
+  // User clicks
+  var circles = [];
+
   $scope.stage = new Kinetic.Stage({
     container: 'container',
-    width: window.innerWidth - 50,
-    height: 800
+    width: STAGE_NEAT_WIDTH,
+    height: STAGE_NEAT_HEIGHT
   });
+
+  $scope.Init = function() {
+    var CIRCLE_RADIUS = 15;
+
+    var create_circle = function(xpos, ypos) {
+      var circle = new Kinetic.Circle({
+        x: xpos,
+        y: ypos,
+        radius: CIRCLE_RADIUS,
+        fill: 'none',
+        stroke: 'green',
+        strokeWidth: 3
+      });
+      var layer = new Kinetic.Layer();
+      layer.add(circle);
+      $scope.stage.add(layer);
+
+      circles.push(layer);
+      var layeridx = circles.length - 1;
+      layer.on('click, touchstart', function() {
+        layer.remove();
+        circles.splice(layeridx, 1);
+      });
+    }
+    $scope.stage.on('click', function(e) {
+      var mousepos = $scope.stage.getMousePosition();
+      create_circle(mousepos.x, mousepos.y);
+    });
+    $scope.stage.on('touchstart', function(e) {
+      var pos = $scope.stage.getTouchPosition();
+      create_circle(pos.x, pos.y);
+    });
+
+    $scope.Next();
+    mixpanel.track('discover loaded');
+  }
 
   $scope.DrawImageWithOffset = function(offset_x, offset_y, img_url) {
     var x = DEFAULT_PADDING + offset_x
@@ -43,7 +89,7 @@ function KineticCtrl($scope, $http) {
         y: posy,
         width: 0,
         height: 0,
-        draggable: true,
+        draggable: false,
         opacity: 0.5,
 
         // border
@@ -51,28 +97,21 @@ function KineticCtrl($scope, $http) {
         strokeWidth: 5,
         strokeEnabled: false
       });
-      img.on('mouseover', function(e) {
-        document.body.style.cursor = 'pointer';
-        e.targetNode.enableStroke();
-        layer.draw();
-      });
-      img.on('mouseout', function(e) {
-        document.body.style.cursor = 'default';
-        e.targetNode.disableStroke();
-        layer.draw();
-      });
-      img.on('dragend', function(e) {
-        var x = e.targetNode.getX()
-        ,   y = e.targetNode.getY();
-        layer.moveToTop();
-        console.log('img #' + imageidx + ':', x, y);
+
+      var frame_label = new Kinetic.Text({
+        x: 5,
+        y: imageobj.height - 20,
+        text: 'Frame ' + (imageidx+1),
+        fontSize: 15,
+        fill: 'blue'
       });
 
       layer.add(img);
+      layer.add(frame_label);
       $scope.stage.add(layer);
 
       $scope.$apply(function() {
-        $scope.images[imageidx] = img;
+        $scope.images[imageidx] = layer;
         $scope.images_loaded++;
       });
     };
@@ -97,15 +136,17 @@ function KineticCtrl($scope, $http) {
 
       $scope.stage.draw();
 
-      if ($scope.blinking) {
-        $scope.blink_timeout = setTimeout(next_img, $scope.blink_interval);
+      if ($scope.blink_timeout) {
+        clearTimeout($scope.blink_timeout);
       }
+      $scope.blink_timeout = setTimeout(next_img, $scope.blink_interval);
     }
     next_img();
   }
 
   $scope.StopBlink = function() {
     clearTimeout($scope.blink_timeout);
+    $scope.blink_timeout = null;
     for (var i=0; i < $scope.images.length; i++) {
       $scope.images[i].show();
     }
@@ -114,44 +155,81 @@ function KineticCtrl($scope, $http) {
     $scope.state = 'BLINKING';
   }
 
-  $scope.BadQuality = function() {
-    // NYI
+  $scope.Circled = function() {
+    var interesting = circles.length > 0;
+    mixpanel.track('discover action - done', {
+      num_circles: circles.length
+    });
+    UserResponse(interesting, false);
     $scope.Next();
-    mixpanel.track('discover action - bad quality');
   }
 
   $scope.Interesting = function() {
-    UserResponse(true);
+    UserResponse(true, false);
     $scope.Next();
     mixpanel.track('discover action - interesting');
   }
 
   $scope.NotInteresting = function() {
-    UserResponse(false);
+    UserResponse(false, false);
     $scope.Next();
     mixpanel.track('discover action - not interesting');
   }
 
+  $scope.PoorQuality = function() {
+    UserResponse(false, true);
+    $scope.Next();
+    mixpanel.track('discover action - poor quality');
+  }
+
+  $scope.Unsure = function() {
+    // TODO record unsure!
+    $scope.Next();
+    mixpanel.track('discover action - unsure');
+  }
+
   // Records user response on server side
-  function UserResponse(interesting) {
-    if ($scope.NeedsEmail()) {
+  function UserResponse(interesting, poor_quality) {
+    if (interesting && $scope.NeedsEmail()) {
       $scope.PromptForEmail();
     }
 
     $http.post('/api/stackblink/record', {
       email: $scope.email,
       keys: image_group_keys,
-      interesting: interesting
+      interesting: interesting,
+      poor_quality: poor_quality,
+      circle_coords: (function() {
+        var coords = [];
+        angular.forEach(circles, function(circle_layer) {
+          coords.push([circle_layer.children[0].getX(), circle_layer.children[0].getY()]);
+        });
+        return coords;
+      })()
     }).success(function(data) {
       console.log(data);
-      $scope.num_images_reviewed = data.images_reviewed;
+      $scope.num_images_reviewed = data.count;
     });
   }
 
+  var group_count = 0;
   $scope.Next = function() {
     $scope.Reset();
+    group_count++;
+    if (group_count > 2 && Math.random() > .2) {
+      $scope.stage.setWidth(STAGE_SDSS_WIDTH);
+      $scope.stage.setHeight(STAGE_SDSS_HEIGHT);
+      LoadNewImage(UNKNOWN_URL, '/api/sdss/image?key=');
+    } else {
+      $scope.stage.setWidth(STAGE_NEAT_WIDTH);
+      $scope.stage.setHeight(STAGE_NEAT_HEIGHT);
+      LoadNewImage(CONTROL_URL, 'http://www.asterank.com/api/skymorph/fast_image?key=');
+    }
+  }
+
+  function LoadNewImage(endpoint, image_prefix) {
     // TODO non-control groups!
-    $http.get('/api/stackblink/get_control_groups').success(function(data) {
+    $http.get(endpoint).success(function(data) {
       //console.log(data);
       if (!data || !data.images) {
         alert('Sorry, communication with the server failed.');
@@ -160,7 +238,7 @@ function KineticCtrl($scope, $http) {
 
       image_group_keys = [];
       angular.forEach(data.images, function(image_info) {
-        var url = 'http://asterank.com/api/skymorph/fast_image?key=' + image_info.key;
+        var url = image_prefix + image_info.key;
         image_group_keys.push(image_info.key);
         $scope.DrawImageWithOffset(image_info.offset_x, image_info.offset_y, url);
       });
@@ -188,35 +266,15 @@ function KineticCtrl($scope, $http) {
     });
     $scope.images = [];
     $scope.stage.draw();
+    angular.forEach(circles, function(circle_layer) {
+      circle_layer.remove();
+    });
+    circles = [];
 
     // reset state
     $scope.blinking = true;
     $scope.state = 'BLINKING';
     $scope.images_loaded = 0;
-  }
-
-  $scope.Init = function() {
-    $scope.Next();
-    mixpanel.track('discover loaded');
-    /*
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326052432|50898.2254861111|111.236381910219|20.0569029379104|111.46854|20.36166|20.10|32.97|-6.28|0.05|0.04|69.49|2575.44655863328|2826.62792908936|y|');
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326053840|50898.2353009259|111.238841847182|20.0565244828237|111.473295|20.36019|20.10|32.99|-6.28|0.05|0.04|69.49|2581.01249388904|2824.01213461076|y|');
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|980326055308|50898.2453472222|111.241360734472|20.0561369557589|111.468225|20.3637|20.10|33.00|-6.28|0.05|0.04|69.49|2562.63877657848|2833.382593133|y|');
-    */
-    /*
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|030515120812|52774.5058101852|300.473171200732|-19.1243473011823|300.016485|-19.31599|20.38|23.96|25.46|0.13|0.10|35.81|884.056345972396|1534.21375252499|y|');
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|030515122353|52774.5167013889|300.474927809682|-19.1224181266901|300.02529|-19.31883|20.38|23.94|25.47|0.13|0.10|35.81|901.655561971625|1521.7331666262|y|');
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|030515123945|52774.5277199074|300.476703412017|-19.1204663645458|300.023115|-19.31639|20.38|23.92|25.47|0.13|0.10|35.80|891.518948967416|1522.88374270101|y|');
-    */
-    /*
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|020811055100|52497.2438657407|242.345149399159|-15.9753595447791|242.00661|-15.834|19.60|22.95|-17.72|0.14|0.09|79.02|1171.68705401819|2423.16928527657|y|');
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|020811060632|52497.2546527778|242.346939597734|-15.9766488327123|242.011935|-15.83452|19.60|22.96|-17.72|0.14|0.09|79.03|1180.89508721214|2425.22751656948|y|');
-    $scope.DrawImage(0, 0, 'http://www.asterank.com/api/skymorph/image?key=|020811062159|52497.2653819444|242.348720774806|-15.977931088641|242.00769|-15.82993|19.60|22.97|-17.72|0.14|0.09|79.03|1165.54925846943|2441.13862176737|y|');
-    */
-    /*
-    $scope.DrawImageCascade('http://www.asterank.com/api/skymorph/image?key=|980125084345|50838.3638310185|125.205629235086|19.0000617925272|125.805075|19.38883|17.21|-120.81|19.77|0.12|0.09|-7.50|3461.14286885139|3062.18843658054|y|');
-    $scope.DrawImageCascade('http://www.asterank.com/api/skymorph/image?key=|980125085746|50838.3735648148|125.19762024079|19.0012706490652|125.809365|19.38706|17.21|-120.80|19.77|0.12|0.09|-7.50|3491.20920724698|3055.32035097508|y|');
-    */
   }
 
   $scope.HideIntro = function() {

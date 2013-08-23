@@ -10,6 +10,7 @@ import re
 import api
 from stackblink import stackblink
 from skymorph import skymorph
+from sdss import sdss
 
 app = Flask(__name__)
 app.secret_key = 'not a secret key'
@@ -213,14 +214,38 @@ def skymorph_fast_image():
     response.headers["Content-type"] = "image/png"
     return response
 
+# SDSS routes
+@app.route('/api/sdss/get_unknown_group')
+def sdss_unknown_group():
+  json_resp = json.dumps(sdss.get_unknown_group())
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'no-cache',
+  })
+
+@app.route('/api/sdss/image')
+def sdss_image():
+  ret = sdss.image_from_key(request.args.get('key'))
+  response = make_response(ret)
+  response.headers["Content-type"] = "image/png"
+  return response
+
 # Stack/blink Discover routes
 @app.route('/discover')
 def discover():
-  return render_template('discover.html')
+  first_time = session.get('discover_first_time', True)
+  session['discover_first_time'] = False
+  return render_template('discover.html', first_time=first_time)
 
-@app.route('/api/stackblink/get_control_groups')
-def get_control_groups():
+@app.route('/api/stackblink/get_neat_control_group')
+def get_neat_control_group():
   json_resp = json.dumps(stackblink.get_control_groups())
+  return Response(json_resp, mimetype='application/json', headers={ \
+    'Cache-Control': 'no-cache',
+  })
+
+@app.route('/api/stackblink/get_sdss_unknown_group')
+def get_sdss_unknown_group():
+  json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
   })
@@ -231,7 +256,8 @@ def stackblink_record():
   json_resp = json.dumps(stackblink.record( \
       postdata.get('email', None), \
       postdata.get('keys', None), \
-      postdata.get('interesting', None)))
+      postdata.get('interesting', None), \
+      postdata.get('poor_quality', None)))
 
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
