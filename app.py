@@ -235,7 +235,9 @@ def sdss_image():
 def discover():
   first_time = session.get('discover_first_time', True)
   session['discover_first_time'] = False
-  return render_template('discover.html', first_time=first_time)
+  return render_template('discover.html',
+      first_time=first_time,
+      count=stackblink.get_count())
 
 @app.route('/api/stackblink/get_neat_control_group')
 def get_neat_control_group():

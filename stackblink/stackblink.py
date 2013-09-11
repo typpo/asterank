@@ -43,6 +43,9 @@ def record(email, image_keys, interesting, poor_quality):
 
   return {'success': True, 'count': total_count}
 
+def get_count():
+  return redis.get(REDIS_COUNT_KEY)
+
 def update_group(id, positions, interesting):
   # add crowdsourced info to group
   # update pos_x, pos_y, reviews, score
