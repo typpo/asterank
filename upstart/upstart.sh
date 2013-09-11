@@ -7,7 +7,7 @@ mkdir -p /var/log/asterank
 echo "starting `date`"
 
 # main app
-./v2/gunicorn.sh 2>> /var/log/asterank/err.log 1>> /var/log/asterank/out.log &
+./gunicorn.sh 2>> /var/log/asterank/err.log 1>> /var/log/asterank/out.log &
 
 # other apps go here...
 
