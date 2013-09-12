@@ -12,10 +12,10 @@ Asterank has been featured by BBC News, Popular Science, and other media.
 
 Asterank is configured to run with virtualenv.  Virtual environment setup:
 
-  1. Install virtualenv for python, eg. on debian:
+  1. Install these dependencies, eg. on ubuntu (jre is for google closure compiler):
 
     ```
-    sudo apt-get install python-virtualenv
+    sudo apt-get install python python-virtualenv default-jre
     ```
 
   2. Enter the Asterank directory.  Then, create the virtual environment and install packages:
@@ -31,7 +31,7 @@ Asterank is configured to run with virtualenv.  Virtual environment setup:
   4. The main app is a Flask web application.  You should be able to run it now.
 
     ```
-    ./v2/web/app.py
+    ./app.py
     ```
 
 You'll quickly notice that there's no data.  Continue reading for instructions on how to import data.
