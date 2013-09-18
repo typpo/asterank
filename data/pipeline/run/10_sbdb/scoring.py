@@ -39,13 +39,13 @@ def closeness_weight(obj):
       dv = DEFAULT_DV
   #dv_score = pow(math.e, -0.9 * dv)
   dv_score = 1 + (1/(1+math.exp(0.9*dv-4)))
-  dv_score *= 2
 
-  return pow(aph_score + ma_score + ph_score + dv_score + 1, 2) / (emoid+1)
+  #return pow(aph_score + ma_score + ph_score + dv_score + 1, 2) / (emoid+1)
+  return pow(aph_score + ma_score + ph_score + 10*dv_score + 1, 2)
 
 def price(obj):
   """
-  Returns a tuple of $ by two metrics:
+  Returns a tuple of $ price estimates for:
     0. Asteroid value per kg in raw materials.
     1. Asteroid $ saved per kg versus sending it up from Earth.
   """

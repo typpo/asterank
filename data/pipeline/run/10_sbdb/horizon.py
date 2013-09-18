@@ -149,13 +149,13 @@ def _run(partial=False):
     row['closeness'] = scoring.closeness_weight(row)
     row['profit'] = scoring.profit(row)
 
-    # TODO this belongs in scoring
-    score = min(row['price'], 1e14) / 5e12
+    # TODO move this final scoring pass into scoring.py
+    score = min(row['price'], 1e14) / 5e13
     if score < 0.0001:
       # It's worthless, so closeness doesn't matter
       row['score'] = score
     else:
-      score = score * row['closeness']**3
+      score = score * row['closeness']
     row['score'] = score
 
     coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
