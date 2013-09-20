@@ -13,9 +13,18 @@ function email() {
 <h1>About</h1>
 <p>This database is created and maintained by <a href="http://ianww.com">Ian Webster</a>. Asterank was acquired by <a href="http://www.planetaryresources.com/" target="_blank">Planetary Resources</a> in May 2013. The code is available <a href="http://github.com/typpo/asterank">on github</a>.</p>
 <p>
-Feedback and questions are welcome!  Please email: <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script>.
+Feedback and questions are welcome!  Please email: <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script> or <a href="#" onClick="$('#contact_form').show();return false;">complete this form</a>.
+
+<div id="contact_form" class="offset1" style="display:none;">
+<form method="POST">
+<label>Your email:<br><input type="text" name="email"/></label>
+Feedback<br><textarea style="width:45%;min-width:300px" name="feedback"></textarea>
+<br>
+<input type="submit"/>
+</form>
+</div>
 </p>
-<div>
+<div class="row-fluid">
   <h3>Accuracy</h3>
   <p>Scientists know very little about the composition of asteroids. Most data used in our calculations come from the JPL's <a href="http://ssd.jpl.nasa.gov/sbdb.cgi">Small Body Database</a> and the <a href="http://minorplanetcenter.org/iau/mpc.html">Minor Planet Center</a>. The overwhelming majority of asteroids have no spectral classification and are missing other important data attributes. Without full information it is impossible to fully estimate the true value of an asteroid or the cost of mining it.</p>
 

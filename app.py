@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response
 from flask.ext.assets import Environment, Bundle
+from flask.ext.mail import Mail
 import urllib
 import urlparse
 import json
@@ -14,6 +15,7 @@ from skymorph import skymorph
 from sdss import sdss
 
 app = Flask(__name__)
+mail = Mail(app)
 app.secret_key = 'not a secret key'
 
 # bundling
@@ -289,9 +291,21 @@ def user_objects():
   return jsonify(api.insert_user_object(obj, image_keys))
 
 # Other Pages
-@app.route('/about')
+@app.route('/about', methods=['GET', 'POST'])
 def about():
-  return render_template('about.html')
+  if request.method == 'GET':
+    return render_template('about.html')
+  else:
+    email = request.form.get('email', None)
+    feedback = request.form.get('feedback', None)
+    if feedback:
+      from flask.ext.mail import Message
+      msg = Message("Asterank Feedback",
+                sender="feedback@asterank.com",
+                recipients=["typppo@gmail.com"],
+                body='%s:\r\n%s' % (email, feedback))
+      mail.send(msg)
+    return render_template('about.html')
 
 @app.route('/feedback')
 @app.route('/contact')
