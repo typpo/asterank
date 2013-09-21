@@ -1,1 +1,1 @@
-../data/pipeline/run/10_sbdb/jpl_lookup.py
+../data/pipeline/run/60_jpl/jpl_lookup.py
