@@ -10,6 +10,46 @@ SITEMAP = """
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>http://www.asterank.com/</loc>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/about</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/3d</loc>
+  <priority>0.95</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/discover</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/exoplanets</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/galaxies/</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/api</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/mpc</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/kepler</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.asterank.com/skymorph</loc>
+  <priority>0.80</priority>
+</url>
 %s
 </urlset>
 """
@@ -17,7 +57,7 @@ SITEMAP = """
 URL_TAG_TEMPLATE = """
 <url>
   <loc>%s</loc>
-  <priority>0.80</priority>
+  <priority>0.50</priority>
 </url>
 """
 
