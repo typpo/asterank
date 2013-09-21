@@ -6,10 +6,10 @@
 *.rdb
 
 venv
-
 build
 pip-log.txt
 nohup.out
 .DS_Store
+local_config.py
 
 data/deltav/db2.csv

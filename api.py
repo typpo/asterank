@@ -66,14 +66,14 @@ def rankings(sort_by, limit, orbits_only=False):
   return ret
 
 def autocomplete(query, limit):
-  query = query.replace('+', ' ')
+  query = query.replace('+', ' ').lower()
   regx = re.compile(query, re.IGNORECASE)
   ret = list(asteroids.find({'full_name': {'$regex': regx}}, \
-          {'_id': False})
-          .limit(limit))
+          {'_id': False}))
+          #.limit(limit))
   # this sorting is not quite exact, as it penalizes asteroids with
   # long prefix numbers.  But it's close enough.
-  return sorted(ret, key=lambda x: x['full_name'].find(query))
+  return sorted(ret, key=lambda x: x['full_name'].lower().find(query))[:limit]
 
 def compositions():
   return horizon.compositions()

@@ -18,6 +18,12 @@ app = Flask(__name__)
 mail = Mail(app)
 app.secret_key = 'not a secret key'
 
+try:
+  import local_config
+  app.config['ASSETS_DEBUG'] = local_config.DEBUG
+except ImportError:
+  pass
+
 # bundling
 assets = Environment(app)
 # This filter can be helping for debugging javascript.
@@ -59,7 +65,8 @@ def asteroid_details(asteroid_slug=None):
   if not asteroid_slug:
     return 'Sorry, could not find this asteroid in our database.', 404
   unslug = asteroid_slug.replace('-', ' ')
-  candidates = api.autocomplete(unslug, 1)  # TODO better way
+  # Need to get top 10, otherwise sometimes the best match is not returned by mongo.
+  candidates = api.autocomplete(unslug, 10)  # TODO better way?
   if len(candidates) < 1:
     return 'Sorry, could not find this asteroid in our database.', 404
 

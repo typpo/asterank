@@ -13,7 +13,7 @@
   {% set orbit_explanation = 'orbit is entirely contained within Earth\'s, with a semimajor axis less than 1' %}
 {% elif asteroid.class == 'AMO' %}
   {% set canonical_orbit_type = 'Amor' %}
-  {% set orbit_explanation = 'orbit may approach Earth\'s, but its orbit is larger ' %}
+  {% set orbit_explanation = 'orbit may approach Earth\'s, but its orbit is larger' %}
 {% endif %}
 
 {% block title %}{{ canonical_name }} information - orbit, physical parameters{% endblock %}
@@ -21,7 +21,7 @@
 {% block content %}
 <h1>{{ canonical_name }}</h1>
 
-{{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}" and its provisional designation is "{{ asteroid.prov_des }}".
+{{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}" and its provisional designation is "{{ asteroid.prov_des }}".  {{ canonical_name }}'s {{ orbit_explanation }}.
 
 <div>
   <ul>

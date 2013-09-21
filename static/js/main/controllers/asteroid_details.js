@@ -159,9 +159,9 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
         // Object.keys not supported < ie9, so shim is required (see misc.js)
         $scope.composition = Object.keys(compositions_map[$scope.asteroid.spec]);
       }
-      else {
+      else if ($scope.asteroid.spec) {    // This is not set when object is passed via &object param
         $http.get('/api/compositions').success(function(data) {
-          compositions_map = data;
+          var compositions_map = data;
           $scope.composition =
             Object.keys(compositions_map[$scope.asteroid.spec]);
         });
