@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response
+from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response, send_from_directory
 from flask.ext.assets import Environment, Bundle
 from flask.ext.mail import Mail
 import urllib
@@ -29,6 +29,12 @@ assets = Environment(app)
 # This filter can be helping for debugging javascript.
 def noop_filter(_in, out, **kw):
   out.write(_in.read())
+
+# static files
+@app.route('/sitemap.xml')
+@app.route('/robots.txt')
+def static_from_route():
+  return send_from_directory(app.static_folder, request.path[1:])
 
 # main routes
 @app.route("/")
