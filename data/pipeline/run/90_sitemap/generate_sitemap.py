@@ -56,7 +56,7 @@ SITEMAP = """<?xml version="1.0" encoding="UTF-8"?>
 URL_TAG_TEMPLATE = """
 <url>
   <loc>%s</loc>
-  <priority>0.50</priority>
+  <priority>%f</priority>
 </url>
 """
 
@@ -67,9 +67,28 @@ jpl = connection.asterank.jpl
 asteroids = connection.asterank.asteroids
 
 url_tags = []
+dedup = set()
 for asteroid in jpl.find():
-  slug = asteroid['tag_name'].lower().replace(' ', '-')
+  if 'tag_name' not in asteroid or not asteroid['tag_name']:
+    continue
+  name = asteroid['tag_name']
+  if name in dedup or name == 'undefined' or name == '':
+    continue
+  dedup.add(name)
+
+  slug = name.lower().replace(' ', '-')
   url = URL_TEMPLATE % slug
-  url_tags.append(URL_TAG_TEMPLATE % url)
+
+  priority = .2
+  splits = name.split(' ')
+  if len(splits) > 0:
+    try:
+      num = int(splits[0])
+      if num < 1000:
+        priority = .5
+    except:
+      pass
+
+  url_tags.append(URL_TAG_TEMPLATE % (url, priority))
 
 print SITEMAP % (''.join(url_tags))
