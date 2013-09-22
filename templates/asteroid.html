@@ -21,7 +21,7 @@
 {% block content %}
 <h1>{{ canonical_name }}</h1>
 
-{{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}" and its provisional designation is "{{ asteroid.prov_des }}".  {{ canonical_name }}'s {{ orbit_explanation }}.
+{{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}"{% if asteroid.prov_des %} and its provisional designation is "{{ asteroid.prov_des }}"{% endif %}.  {{ canonical_name }}'s {{ orbit_explanation }}.
 
 <div>
   <ul>
@@ -216,5 +216,9 @@ They take place between {{ jpl['Close Approaches'][0].date }} and {{ jpl['Close 
 <h2>Composition</h2>
 This asteroid may contain: {{ composition | sort | join(', ') }}.
 {% endif %}
+
+<script>
+  mixpanel.track('asteroid page', {name: "{{canonical_name}}"});
+</script>
 
 {% endblock %}
