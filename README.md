@@ -40,6 +40,12 @@ You'll quickly notice that there's no data.  Continue reading for instructions o
 
 The `data/pipeline` folder contains the scrapers used to aggregate and build the database and associated APIs.
 
+#### SBDB setup
+
+The SBDB is too large to include in this repo, and downloading it takes some time.  Download http://www.ianww.com/fulldb.20130910.csv to `data/pipeline/static/`, or produce your own database by going to http://ssd.jpl.nasa.gov/sbdb_query.cgi and downloading all attributes for all objects in CSV format.
+
+#### Running the pipeline
+
 Pipeline tasks are folders in the `pipeline/run` directory and are executed in increasing lexical order.  Tasks with the same numeric prefix may be run in parallel.
 
 To execute the pipeline, simply run `./pipeline`.  To execute a specific task, run eg. `./pipeline 00_mytask`, where 00\_mytask matches a directory.  In order to run Asterank, you at least need to run steps `00_deltav` and `10_sbdb`.
