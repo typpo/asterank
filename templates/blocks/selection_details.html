@@ -51,9 +51,9 @@
           </div>
           <div ng-repeat="image in images">
             <label>
-              <input type="radio" name="currentImage" value="[[$index]]" ng-model="blinkData.currentImage" title="Click to choose this image"/>
+              <input type="radio" name="currentImage" value="[[$index]]" ng-model="blinkData.currentImage" title="View this image"/>
               <span ng-bind="image.time"></span>
-              <input type="checkbox" style="margin-bottom:5px" ng-model="image.checked" title="Should it shown at slide-show above1" />
+              <input type="checkbox" style="margin-bottom:5px" ng-model="image.checked" title="Show in slideshow" />
             </label>
           </div>
         </div>
