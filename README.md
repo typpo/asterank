@@ -6,9 +6,7 @@ The main purpose of Asterank (www.asterank.com) is to make space-related data re
 
 Asterank has been featured by BBC News, Popular Science, and other media.
 
-## Setup
-
-### The basics
+## The basics
 
 Asterank is configured to run with virtualenv.  Virtual environment setup:
 
@@ -36,17 +34,23 @@ Asterank is configured to run with virtualenv.  Virtual environment setup:
 
 You'll quickly notice that there's no data.  Continue reading for instructions on how to import data.
 
-### The data pipeline
+## The data pipeline
 
 The `data/pipeline` folder contains the scrapers used to aggregate and build the database and associated APIs.
+
+### SBDB setup
+
+The SBDB is too large to include in this repo, and downloading it takes some time.  Download http://www.ianww.com/fulldb.20130910.csv to `data/pipeline/static/`, or produce your own database by going to http://ssd.jpl.nasa.gov/sbdb_query.cgi and downloading all attributes for all objects in CSV format.
+
+### Running the pipeline
 
 Pipeline tasks are folders in the `pipeline/run` directory and are executed in increasing lexical order.  Tasks with the same numeric prefix may be run in parallel.
 
 To execute the pipeline, simply run `./pipeline`.  To execute a specific task, run eg. `./pipeline 00_mytask`, where 00\_mytask matches a directory.  In order to run Asterank, you at least need to run steps `00_deltav` and `10_sbdb`.
 
-### The sky survey/discovery process
+## The sky survey/discovery process
 
-## NEAT
+### NEAT
 
 Sky survey data is scraped from NEAT.  The process is generally three steps per asteroid:
 
@@ -60,7 +64,7 @@ Note that sky survey data depends on redis: `sudo apt-get install redis-server`.
 
 All this happens in `v2/stackblink`.  In `data/astrometry` there are scripts available to help you bootstrap your astrometry setup.
 
-## SDSS
+### SDSS
 
 SDSS setup:
 
