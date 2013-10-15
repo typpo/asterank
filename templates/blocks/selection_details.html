@@ -50,11 +50,14 @@
             <img ng-src="/api/skymorph/image?key=[[image.key]]" />
           </div>
           <div ng-repeat="image in images">
-            <label>
+              <label>
+              <!--
               <input type="radio" name="currentImage" value="[[$index]]" ng-model="blinkData.currentImage" title="View this image"/>
-              <span ng-bind="image.time"></span>
+              -->
               <input type="checkbox" style="margin-bottom:5px" ng-model="image.checked" title="Show in slideshow" />
-            </label>
+              <span ng-bind="image.time" style="cursor:pointer"></span>
+              <sup><a ng-click="blinkData.currentImage = $index"> view</a></sup>
+              </label>
           </div>
         </div>
         <div ng-show="images_loading">
