@@ -35,7 +35,7 @@
 </div>
 <div class="instruction-container" ng-show="state == 'BLINKING'" class="ng-cloak">
   <!--<h2>Asterank Discover <span style="color:red;font-size:16px;vertical-align:super">beta</span></h2>-->
-  <span class="instruction">Mark any potential asteroids by clicking on them. When finished, click 'Done'.</span>
+  <span class="instruction">Mark potential asteroids by clicking on them. When finished, click 'Done'.</span>
   <!--<span class="blink-options">Blink interval: <input type="range" min="100" max="2000" step="10" value="1000" ng-model="blink_interval" /></span>-->
 </div>
 <kinetic></kinetic>
@@ -47,12 +47,12 @@
   </div>
   #}
   <div ng-show="state == 'BLINKING'">
-    <a href="#" class="stackblink-button primary" ng-click="Circled()" keyboard-shortcut="d">Done (d)</a>
+    <a href="#" class="stackblink-button primary" ng-click="Circled()" keyboard-shortcut="d">Done marking (d)</a>
     {#
     <a href="#" class="stackblink-button" ng-click="Interesting()" keyboard-shortcut="y">Yes (y)</a>
     <a href="#" class="stackblink-button" ng-click="NotInteresting()" keyboard-shortcut="n">No (n)</a>
     #}
-    <a href="#" class="stackblink-button poor-quality" ng-click="PoorQuality()" keyboard-shortcut="p">Poor Quality (p)</a>
+    <a href="#" class="stackblink-button poor-quality" ng-click="PoorQuality()" keyboard-shortcut="p">Poor quality (p)</a>
     {# <a href="#" class="stackblink-button" ng-click="Unsure()" keyboard-shortcut="u">Unsure (u)</a> #}
     {# <a href="#" class="stackblink-button" ng-click="StopBlink()" keyboard-shortcut="b">Go back (b)</a> #}
   </div>
@@ -71,7 +71,7 @@ Asteroids are discovered at a rate of about 2 per day. Here are some pointers:
   <li>Tiny white dots, called "hot pixels," can be hard to distinguish from asteroids. It's an acquired skill, but you can usually tell if the dot is only a single pixel.</li>
   #}
 </ul>
-{{count|format}} images have been reviewed on this site, with hundreds of potentially new asteroids!
+{{count|format}} images have been reviewed on this site, containing hundreds of potential asteroids!
 </p>
 </div>
 
