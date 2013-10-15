@@ -8,8 +8,10 @@
 venv
 build
 pip-log.txt
+npm-log.txt
 nohup.out
 .DS_Store
-local_config.py
+.webassets-cache
 
-data/deltav/db2.csv
+local_config.py
+data/pipeline/out

@@ -38,13 +38,26 @@
       <div id="imagery" ng-show="!asteroid.custom_object">
         <h4>Imagery from NEAT sky survey</h4>
         <div ng-show="images.length > 0">
-          <a href="#" ng-click="blink()">Blink checked images</a>
-          <div class="image-container" ng-repeat="image in images">
-            <label>
-            <input type="checkbox" style="margin-bottom:5px" />
-            <span style="font-size: 16px; font-weight:bold;" ng-bind="image.time"></span>
-            <img ng-src="/api/skymorph/image?key=[[image.key]]"/>
-            </label>
+          <div class="btn-group">
+            <button class="btn" type="button" ng-click="prevImage()" title="Prev"><i class="icon-step-backward"></i></button>
+            <button class="btn" type="button" ng-click="startBlinking()" title="Play" ng-show="!blinkData.blinkingNow"><i class="icon-play"></i></button>
+            <button class="btn" type="button" ng-click="stopBlinking()" title="Stop" ng-show="blinkData.blinkingNow"><i class="icon-stop"></i></button>
+            <button class="btn" type="button" ng-click="nextImage()" title="Next"><i class="icon-step-forward"></i></button>
+            <button class="btn" type="button" ng-click="checkAll(true)" title="Check all"><i class="icon-ok"></i></button>
+            <button class="btn" type="button" ng-click="checkAll(false)" title="Uncheck all"><i class="icon-remove"></i></button>
+          </div>
+          <div ng-repeat="image in images" ng-show="$index==blinkData.currentImage">
+            <img ng-src="/api/skymorph/image?key=[[image.key]]" />
+          </div>
+          <div ng-repeat="image in images">
+              <label>
+              <!--
+              <input type="radio" name="currentImage" value="[[$index]]" ng-model="blinkData.currentImage" title="View this image"/>
+              -->
+              <input type="checkbox" style="margin-bottom:5px" ng-model="image.checked" title="Show in slideshow" />
+              <span ng-bind="image.time" style="cursor:pointer"></span>
+              <sup><a ng-click="blinkData.currentImage = $index"> view</a></sup>
+              </label>
           </div>
         </div>
         <div ng-show="images_loading">
@@ -58,3 +71,4 @@
     {% endraw %}
   </div>
 </div>
+
