@@ -72,3 +72,9 @@ body {
 .blink-options {
   margin-left: 20px;
 }
+
+.stats {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+
+}

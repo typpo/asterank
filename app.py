@@ -252,7 +252,10 @@ def discover():
   session['discover_first_time'] = False
   return render_template('discover.html',
       first_time=first_time,
-      count=stackblink.get_count())
+      image_count=stackblink.get_image_count(),
+      interesting_count=stackblink.get_interesting_count(),
+      user_count=stackblink.get_user_count(),
+      )
 
 @app.route('/api/stackblink/get_neat_control_group')
 def get_neat_control_group():

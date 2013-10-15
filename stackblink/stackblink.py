@@ -43,8 +43,14 @@ def record(email, image_keys, interesting, poor_quality):
 
   return {'success': True, 'count': total_count}
 
-def get_count():
+def get_image_count():
   return redis.get(REDIS_COUNT_KEY)
+
+def get_interesting_count():
+  return stackblink_results.find({'interesting': True}).count()
+
+def get_user_count():
+  return len(stackblink_results.distinct('email'))
 
 def update_group(id, positions, interesting):
   # add crowdsourced info to group
