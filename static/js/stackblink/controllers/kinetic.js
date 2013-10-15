@@ -44,14 +44,15 @@ function KineticCtrl($scope, $http) {
       });
       var layer = new Kinetic.Layer();
       layer.add(circle);
-      $scope.stage.add(layer);
 
       circles.push(layer);
       var layeridx = circles.length - 1;
-      layer.on('click, touchstart', function() {
+      layer.on('click touchstart', function() {
         layer.remove();
         circles.splice(layeridx, 1);
       });
+
+      $scope.stage.add(layer);
     }
     $scope.stage.on('click', function(e) {
       var mousepos = $scope.stage.getMousePosition();
