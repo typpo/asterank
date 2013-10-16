@@ -2,6 +2,8 @@
 # Loads jpgs from SDSS
 # usage: cat stripe_82 | ./load_data
 
+echo "Reading from stdin..."
+
 while read rerun run
 do
   echo "Loading rerun $rerun, run $run..."

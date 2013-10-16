@@ -3,6 +3,7 @@
 #
 
 import os
+import re
 import cStringIO as StringIO
 from random import choice
 from PIL import Image
@@ -12,6 +13,8 @@ SURVEY_ID = 'sdss'
 DATA_DIR = 'data'
 FILE_DIR = os.path.dirname(__file__)
 DATA_PATH = os.path.join(FILE_DIR, DATA_DIR)
+
+print DATA_PATH
 
 data_index = {}    # map from original file to a list of its RGB splits
 data_index_reverse = {}
@@ -23,8 +26,10 @@ for root, subFolders, files in os.walk(DATA_PATH):
   for file in files:
     f = os.path.relpath(os.path.join(root, file), FILE_DIR)
     if not f.endswith('.jpg'): continue
-    if f.endswith('split.jpg'):
-      key = f[:-12] + '.jpg'
+    if f.find('split') > -1:
+      # r, g, b for each split should be grouped under the same key
+      key = re.sub('_[rgb]_', '_', f)
+
       data_index.setdefault(key, [])
       data_index[key].append(f)
       data_index_reverse[f] = key
@@ -38,6 +43,8 @@ for key in data_index.keys():
 
 data_index_keys = data_index.keys()
 data_index_size = len(data_index_keys)
+
+print 'SDSS data index size: %d images' % data_index_size
 
 def get_unknown_group():
   # Return random rgb group
@@ -55,7 +62,7 @@ def image_from_key(key):
   if key in data_index_reverse:
     im = Image.open(os.path.join(FILE_DIR, key))
     # Scale for now
-    im.thumbnail((661, 454), Image.ANTIALIAS)   #  1/3 size
+    # im.thumbnail((661, 454), Image.ANTIALIAS)   #  1/3 size
     output = StringIO.StringIO()
     im.save(output, format='PNG')
     return output.getvalue()
