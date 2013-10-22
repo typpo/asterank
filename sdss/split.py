@@ -58,7 +58,7 @@ while xmax < im.size[0]:  # width
 
     r, g, b = im_frame.split()
 
-    #b = b.point(lambda p: p * 1.5)   # blues tend to be too dim
+    b = b.point(lambda p: p * 1.3)   # blues tend to be too dim
 #r = r.point(lambda p: p * 0.8)   # reds tend to overpower in sdss imagery
 #r = equalize(r)
 #g = equalize(g)
