@@ -1,8 +1,8 @@
 ## Asterank
 
-Asterank is a platform for developers interested in space.  It includes 3D visualizations and APIs for many data sources, including NASA/JPL Horizons, NASA SkyMorph/NEAT sky survey imagery, the Kepler Project, and the Minor Planet Center.
+Asterank (www.asterank.com) is a space development platform.  It supports calculations over the entire set of known asteroids and provides APIs and visualizations for many data sources, including NASA/JPL Horizons, NASA SkyMorph/NEAT and SDSS sky surveys, the Kepler Project, and the Minor Planet Center.
 
-The main purpose of Asterank (www.asterank.com) is to make space-related data readily accessible to the public.  Another goal of the site is to educate and inspire by demonstrating the importance of asteroid discovery and exploration.  Using publicly available data and scientific papers, it evaluates the economic prospects of mining nearly 600,000 cataloged asteroids.  It also provides accurate interactive visualizations of our inner solar system and Near-Earth Asteroids (NEAs).
+The main purpose of Asterank is to make space-related data readily accessible to the public.  Another goal of the site is to educate and inspire by demonstrating the importance of asteroid discovery and exploration.  Using publicly available data and scientific papers, the project evaluates the economic prospects of mining nearly 600,000 cataloged asteroids.  In addition, Asterank is the basis of a crowdsourced asteroid discovery citizen science initiative.
 
 Asterank has been featured by BBC News, Popular Science, and other media.
 
@@ -76,7 +76,7 @@ SDSS setup:
 
   1. Fork this repository
   2. Make changes
-  3. Create a pull request to this github repository
+  3. Create a pull request on github
 
 If you think you might like to contribute, feel free to contact me! ianw\_asterank at ianww.com.
 
