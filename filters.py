@@ -1,9 +1,11 @@
+import locale
 
-@app.template_filter('format_number')
-def format_number(value, form='%n'):
+def register_filters(app):
+  @app.template_filter('format_number')
+  def format_number(value, form='%d'):
     locale.setlocale(locale.LC_ALL, "")
     if value > 0:
-        result = locale.format(form, value, True)
+      result = locale.format(form, value, True)
     else:
-        result = 'na'
+      result = 'na'
     return result

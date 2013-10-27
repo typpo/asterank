@@ -44,7 +44,7 @@ def record(email, image_keys, interesting, poor_quality):
   return {'success': True, 'count': total_count}
 
 def get_image_count():
-  return redis.get(REDIS_COUNT_KEY)
+  return int(redis.get(REDIS_COUNT_KEY))
 
 def get_interesting_count():
   return stackblink_results.find({'interesting': True}).count()

@@ -8,6 +8,7 @@ import json
 import random
 import base64
 import re
+import filters
 
 import api
 from stackblink import stackblink
@@ -16,6 +17,7 @@ from sdss import sdss
 
 app = Flask(__name__)
 mail = Mail(app)
+filters.register_filters(app)
 app.secret_key = 'not a secret key'
 
 try:
