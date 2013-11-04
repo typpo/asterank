@@ -10,6 +10,6 @@ mkdir -p $OUT/sbdb
 # TODO find latest fulldb path automatically..
 #python horizon.py populatePartialDb \
 python horizon.py populateDb \
-  --data_path="$STATIC/fulldb.20130910.csv" \
+  --data_path="$STATIC/fulldb.20131103.csv" \
   --mass_path="$STATIC/masses.txt" \
   --dv_path="$OUT/deltav/computed_dv.csv"

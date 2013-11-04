@@ -175,7 +175,7 @@ def materials():
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Load data from NASA/JPL SBDB')
-  parser.add_argument('--data_path', help='path to sbdb export', default='data/fulldb.20130910.csv')
+  parser.add_argument('--data_path', help='path to sbdb export', default='data/fulldb.20131103.csv')
   parser.add_argument('--dv_path', help='path to delta-v calculations', default='data/deltav/db.csv')
   parser.add_argument('--mass_path', help='path to mass data', default='data/masses.txt')
   parser.add_argument('fn', choices=['populateDb', 'populatePartialDb', 'compositions', 'materials'])
