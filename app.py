@@ -11,6 +11,7 @@ import re
 import filters
 
 import api
+import closure
 from stackblink import stackblink
 from skymorph import skymorph
 from sdss import sdss
