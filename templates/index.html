@@ -4,7 +4,7 @@
 
 {% block scripts %}
 
-{% assets filters="closure_js", output="gen/packed.js",
+{% assets filters="jsmin", output="gen/packed.js",
 "js/lib/jquery.autocomplete.js",
 "js/lib/d3.v2.js",
 "js/main/orbit.js",

@@ -9,11 +9,17 @@ import random
 import base64
 import re
 import filters
+import threading
 
 import api
 from stackblink import stackblink
 from skymorph import skymorph
-from sdss import sdss
+
+def import_sdss():
+  from sdss import sdss
+  pass
+t1 = threading.Thread(target=import_sdss)
+t1.start()
 
 app = Flask(__name__)
 mail = Mail(app)
@@ -25,6 +31,7 @@ try:
   app.config['ASSETS_DEBUG'] = local_config.DEBUG
 except ImportError:
   pass
+app.config['ASSETS_DEBUG'] = True
 
 # bundling
 assets = Environment(app)
@@ -235,6 +242,7 @@ def skymorph_fast_image():
 # SDSS routes
 @app.route('/api/sdss/get_unknown_group')
 def sdss_unknown_group():
+  from sdss import sdss
   json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
@@ -242,6 +250,7 @@ def sdss_unknown_group():
 
 @app.route('/api/sdss/image')
 def sdss_image():
+  from sdss import sdss
   ret = sdss.image_from_key(request.args.get('key'))
   response = make_response(ret)
   response.headers["Content-type"] = "image/png"
@@ -268,6 +277,7 @@ def get_neat_control_group():
 
 @app.route('/api/stackblink/get_sdss_unknown_group')
 def get_sdss_unknown_group():
+  from sdss import sdss
   json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
