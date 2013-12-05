@@ -95,6 +95,7 @@ def _run(partial=False):
   items = []
   for row in reader:
     row['spec'] = row['spec_B']
+    row['full_name'] = row['full_name'].strip()
     if row['spec'] == '':
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
@@ -103,7 +104,7 @@ def _run(partial=False):
       elif row['pdes'] == '2012 DA14':
         print 'Adjust 2012 DA14'
         row['spec'] = 'L'
-      elif row['pdes'] == '1986 DA':
+      elif row['full_name'] == '6178 (1986 DA)':
         print 'Adjust 1986 DA'
         row['spec'] = 'M'
       elif row['class'] in COMET_CLASSES:
@@ -164,12 +165,11 @@ def _run(partial=False):
       score = score * row['closeness']
     row['score'] = score
 
-    #coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
     items.append(row)
     n += 1
     if len(items) > 30000:
       # insert into mongo
-      print n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
+      print 'Row #', n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
       coll.insert(items, continue_on_error=True)
       items = []
 
