@@ -172,6 +172,10 @@ def _run(partial=False):
       print 'Row #', n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
       coll.insert(items, continue_on_error=True)
       items = []
+  # insert into mongo
+  print 'Row #', n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
+  coll.insert(items, continue_on_error=True)
+  items = []
 
   print 'Loaded', n, 'asteroids'
 

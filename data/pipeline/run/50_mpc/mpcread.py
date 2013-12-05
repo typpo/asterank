@@ -104,3 +104,6 @@ for object in open(FILE, 'r'):
     print 'Inserting/updating %d items into MPC collection' % (len(items))
     coll.insert(items, continue_on_error=True)
     items = []
+print 'Inserting/updating %d items into MPC collection' % (len(items))
+coll.insert(items, continue_on_error=True)
+items = []
