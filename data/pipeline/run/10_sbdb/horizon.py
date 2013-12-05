@@ -97,9 +97,13 @@ def _run(partial=False):
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
         row['spec'] = newspec.strip()
+      # TODO(@ian) move specific adjustments out into its own file.
       elif row['pdes'] == '2012 DA14':
         print 'Adjust 2012 DA14'
         row['spec'] = 'L'
+      elif row['pdes'] == '1986 DA':
+        print 'Adjust 1986 DA'
+        row['spec'] = 'M'
       elif row['class'] in COMET_CLASSES:
         row['spec'] = 'comet'
       else:
