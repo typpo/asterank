@@ -33,31 +33,3 @@ server {
     # what to serve if upstream is not available or crashes
     error_page 500 502 503 504 /media/50x.html;
 }
-
-server {
-    listen   5001;
-    server_name www.asterank.com 97.107.131.22;
-
-    location / {
-        proxy_pass_header Server;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_connect_timeout 40;
-        proxy_read_timeout 40;
-        proxy_pass http://localhost:5000/;
-    }
-
-    # galaxies
-    location /galaxies {
-      alias /home/ian/galaxies;
-    }
-
-    proxy_cache my-cache;
-    proxy_cache_valid 200 302 600m;
-    proxy_cache_valid 404 500 1m;
-    #add_header X-Cache $upstream_cache_status; # HIT / MISS / BYPASS / EXPIRED
-    # what to serve if upstream is not available or crashes
-    error_page 500 502 503 504 /media/50x.html;
-}
