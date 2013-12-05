@@ -7,9 +7,9 @@ STATIC="`git rev-parse --show-toplevel`/data/pipeline/static"
 mkdir -p $OUT/sbdb
 
 # Run sbdb calculations
-# TODO find latest fulldb path automatically..
-#python horizon.py populateDb \
-python horizon.py populatePartialDb \
-  --data_path="$STATIC/fulldb.20131103.csv" \
+# TODO define latest fulldb path in one place, or find it automatically
+#python horizon.py populatePartialDb \
+python horizon.py populateDb \
+  --data_path="$STATIC/fulldb.20131204.csv" \
   --mass_path="$STATIC/masses.txt" \
   --dv_path="$OUT/deltav/computed_dv.csv"
