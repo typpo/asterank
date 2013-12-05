@@ -796,31 +796,33 @@
       w: { type: 'f', value: [] },
       P: { type: 'f', value: [] },
       epoch: { type: 'f', value: [] },
-      value_color : { type: 'c', value: [] },
       size: { type: 'f', value: [] },
-      locked: { type: 'f', value: [] },  // attributes can't be bool or int in some versions of opengl
-      is_planet: { type: 'f', value: [] }  // attributes can't be bool or int in some versions of opengl
+      value_color : { type: 'c', value: [] },
+
+      // attributes can't be bool or int in some versions of opengl
+      locked: { type: 'f', value: [] },
+      is_planet: { type: 'f', value: [] }
     };
 
     uniforms = {
-      color: { type: "c", value: new THREE.Color( 0xffffff ) },
+      color: { type: 'c', value: new THREE.Color( 0xffffff ) },
       jed: { type: 'f', value: jed },
-      earth_i: { type: "f", value: Ephemeris.earth.i },
-      earth_om: { type: "f", value: Ephemeris.earth.om },
+      earth_i: { type: 'f', value: Ephemeris.earth.i },
+      earth_om: { type: 'f', value: Ephemeris.earth.om },
       planet_texture:
-        { type: "t", value: loadTexture(opts.static_prefix + "/img/cloud4.png") },
+        { type: 't', value: loadTexture(opts.static_prefix + '/img/cloud4.png') },
       small_roid_texture:
-        { type: "t", value: loadTexture(opts.object_texture_path) },
+        { type: 't', value: loadTexture(opts.object_texture_path) },
       small_roid_circled_texture:
-        { type: "t", value: loadTexture(opts.static_prefix + "/img/cloud4-circled.png") }
+        { type: 't', value: loadTexture(opts.static_prefix + '/img/cloud4-circled.png') }
     };
-    var vertexshader = document.getElementById( 'vertexshader' ).textContent
+    var vertexshader = document.getElementById('vertexshader').textContent
                           .replace('{{PIXELS_PER_AU}}', PIXELS_PER_AU.toFixed(1));
     var particle_system_shader_material = new THREE.ShaderMaterial( {
       uniforms:       uniforms,
       attributes:     attributes,
       vertexShader:   vertexshader,
-      fragmentShader: document.getElementById( 'fragmentshader' ).textContent
+      fragmentShader: document.getElementById('fragmentshader').textContent
     });
     particle_system_shader_material.depthTest = false;
     particle_system_shader_material.vertexColor = true;
@@ -875,12 +877,12 @@
 
   function starTexture(color, size) {
     var size = (size) ? parseInt(size*24) : 24;
-    var canvas = document.createElement( 'canvas' );
+    var canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     var col = new THREE.Color(color);
 
-    var context = canvas.getContext( '2d' );
+    var context = canvas.getContext('2d');
     var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
     var rgbaString = 'rgba(' + ~~ ( col.r * 255 ) + ',' + ~~ ( col.g * 255 ) + ',' + ~~ ( col.b * 255 ) + ',' + (1) + ')';
     gradient.addColorStop( 0, rgbaString);

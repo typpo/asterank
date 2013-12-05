@@ -4,8 +4,6 @@
     // https://github.com/typpo/asterank/blob/master/LICENSE
     #define pi 3.141592653589793238462643383279
 
-    varying vec2 vUv;
-
     attribute vec3 value_color;
     varying vec3 vColor;
 
@@ -90,7 +88,6 @@
     // MIT License.
     // Copyright Ian Webster 2012 (asterank.com)
     // https://github.com/typpo/asterank/blob/master/LICENSE
-    varying vec2 vUv;
     varying vec3 vColor;
     varying float vLocked;
     varying float vPlanet;
@@ -100,19 +97,19 @@
     uniform sampler2D small_roid_circled_texture;
 
     void main() {
-      if (vLocked == 0.0) {
-        if (vPlanet == 0.0) {
-          gl_FragColor = vec4(vColor, 1.0) * texture2D(small_roid_texture,
+      if (vLocked < .5) {
+        if (vPlanet < .5) {
+          gl_FragColor = vec4(color, 1.0) * texture2D(small_roid_texture,
             vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
         }
         else {
-          gl_FragColor = vec4(vColor, 1.0) * texture2D(planet_texture,
+          gl_FragColor = vec4(color, 1.0) * texture2D(planet_texture,
             vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
         }
       }
       else {
-      gl_FragColor = vec4(vColor, 1.0) * texture2D(small_roid_circled_texture,
-        vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
+        gl_FragColor = vec4(color, 1.0) * texture2D(small_roid_circled_texture,
+          vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
       }
     }
 </script>

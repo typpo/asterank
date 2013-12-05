@@ -9,7 +9,7 @@ import estimate
 DEFAULT_RADIUS = 5  # km
 DEFAULT_MASS = 1.47e15  # kg
 DEFAULT_MOID = 2  # TODO get avg moid
-DEFAULT_DV = 6.5 #km/s
+DEFAULT_DV = 12#6.5 #km/s
 DEFAULT_COMET_DV = 50  # km/s
 
 def closeness_weight(obj):
@@ -37,11 +37,10 @@ def closeness_weight(obj):
       dv = DEFAULT_COMET_DV
     else:
       dv = DEFAULT_DV
-  #dv_score = pow(math.e, -0.9 * dv)
+      return 0
   dv_score = 1 + (1/(1+math.exp(0.9*dv-4)))
 
-  #return pow(aph_score + ma_score + ph_score + dv_score + 1, 2) / (emoid+1)
-  return pow(aph_score + ma_score + ph_score + 10*dv_score + 1, 2)
+  return pow(aph_score + ma_score + ph_score + 50*dv_score + 1, 2)
 
 def price(obj):
   """
@@ -63,8 +62,8 @@ def price(obj):
 
     if mass > 1e18:
       # if it's huge, penalize it because the surface will be covered in ejecta, etc.
-      # and the goodies will be far beneath
-      mass = mass * 1e-4
+      # and the goodies will be far beneath. Also, gravity well.
+      mass = mass * 1e-6
 
 
   """
