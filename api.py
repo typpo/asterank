@@ -1,3 +1,4 @@
+import math
 import json
 import re
 import datetime
@@ -58,10 +59,12 @@ def rankings(sort_by, limit, orbits_only=False):
     appendme = {key:val for key,val in obj.iteritems() if val != ''}
     # Some sanitation for a python json serialization bug where very
     # small numbers are serialized to -Infinity, breaking client JSON parsing.
-    if appendme['price'] < 1:
-      appendme['price'] = 0
-    if appendme['profit'] < 1:
-      appendme['profit'] = 0
+    for field in fields:
+      if field in appendme and type(appendme[field]) == float:
+        if appendme[field] > 1e308:
+          appendme[field] = 1e50
+        if math.isnan(appendme[field]) or appendme[field] < 1e-300:
+          appendme[field] = 0
     ret.append(appendme)
   return ret
 
