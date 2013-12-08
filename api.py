@@ -25,7 +25,7 @@ VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
     SMALL_SIZE_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
-    'om', 'ma', 'n', 'w', 'per', 'epoch']
+    'om', 'ma', 'n', 'w', 'per', 'epoch', 'spec']
 
 # some of these were poorly named, so we map better names, but the database stays the
 # same for backwards compatibility
@@ -56,6 +56,9 @@ def rankings(sort_by, limit, orbits_only=False):
   # remove empty fields
   ret = []
   for obj in results:
+    if obj['spec'] == 'comet':
+      # omit comets from rankings
+      continue
     appendme = {key:val for key,val in obj.iteritems() if val != ''}
     # Some sanitation for a python json serialization bug where very
     # small numbers are serialized to -Infinity, breaking client JSON parsing.

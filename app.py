@@ -153,14 +153,13 @@ def rankings():
   try:
     limit = int(request.args.get('limit')) or 10
     orbital_info_only = request.args.get('orbits_only')
-    results = api.rankings(request.args.get('sort_by'), limit, orbital_info_only)
+    results = api.rankings(request.args.get('sort_by'), limit, orbits_only=orbital_info_only)
     json_resp = json.dumps(results)
     return Response(json_resp, mimetype='application/json', headers={ \
       'Cache-Control': 'max-age=432000', # 5 days
     })
   except Exception, e:
-    print str(e)
-    resp = jsonify({'error': 'bad request'})
+    resp = jsonify({'error': 'bad request', 'details': str(e)})
     resp.status_code = 500
     return resp
 
