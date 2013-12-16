@@ -329,6 +329,9 @@ def about():
   else:
     email = request.form.get('email', None)
     feedback = request.form.get('feedback', None)
+    if email.find('</a>') > -1:
+      return 'Form rejected because you look like a spambot. Please email me directly.'
+
     if feedback:
       from flask.ext.mail import Message
       msg = Message("Asterank Feedback",
