@@ -49,7 +49,8 @@ def _run(partial=False):
   conn = Connection('localhost', 27017)
   db = conn.asterank
   coll = db.asteroids
-  #coll.drop()
+  print 'Dropping asteroids (SBDB) collection...'
+  coll.drop()
   coll.ensure_index('full_name', unique=True, background=True)
   coll.ensure_index('score', background=True)
   coll.ensure_index('profit', background=True)
@@ -91,15 +92,21 @@ def _run(partial=False):
   reader = csv.DictReader(open(DATA_PATH), delimiter=',', quotechar='"')
   designation_regex = re.compile('.*\(([^\)]*)\)')
   n = 0
+  items = []
   for row in reader:
     row['spec'] = row['spec_B']
+    row['full_name'] = row['full_name'].strip()
     if row['spec'] == '':
       newspec = THOLEN_MAPPINGS.get(row['spec_T'], None)
       if newspec:
         row['spec'] = newspec.strip()
+      # TODO(@ian) move specific adjustments out into its own file.
       elif row['pdes'] == '2012 DA14':
         print 'Adjust 2012 DA14'
         row['spec'] = 'L'
+      elif row['full_name'] == '6178 (1986 DA)':
+        print 'Adjust 1986 DA'
+        row['spec'] = 'M'
       elif row['class'] in COMET_CLASSES:
         row['spec'] = 'comet'
       else:
@@ -158,10 +165,17 @@ def _run(partial=False):
       score = score * row['closeness']
     row['score'] = score
 
-    coll.update({'full_name': row['full_name']}, {'$set': row}, True)  # upsert
+    items.append(row)
     n += 1
-    if n % 3000 == 0:
-      print n, '...'
+    if len(items) > 30000:
+      # insert into mongo
+      print 'Row #', n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
+      coll.insert(items, continue_on_error=True)
+      items = []
+  # insert into mongo
+  print 'Row #', n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
+  coll.insert(items, continue_on_error=True)
+  items = []
 
   print 'Loaded', n, 'asteroids'
 
@@ -175,7 +189,7 @@ def materials():
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Load data from NASA/JPL SBDB')
-  parser.add_argument('--data_path', help='path to sbdb export', default='data/fulldb.20131103.csv')
+  parser.add_argument('--data_path', help='path to sbdb export', default='data/fulldb.20131204.csv')
   parser.add_argument('--dv_path', help='path to delta-v calculations', default='data/deltav/db.csv')
   parser.add_argument('--mass_path', help='path to mass data', default='data/masses.txt')
   parser.add_argument('fn', choices=['populateDb', 'populatePartialDb', 'compositions', 'materials'])

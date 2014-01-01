@@ -9,12 +9,18 @@ import random
 import base64
 import re
 import filters
+import threading
 
 import api
 import goog_closure
 from stackblink import stackblink
 from skymorph import skymorph
-from sdss import sdss
+
+def import_sdss():
+  from sdss import sdss
+  pass
+t1 = threading.Thread(target=import_sdss)
+t1.start()
 
 app = Flask(__name__)
 mail = Mail(app)
@@ -26,6 +32,7 @@ try:
   app.config['ASSETS_DEBUG'] = local_config.DEBUG
 except ImportError:
   pass
+app.config['ASSETS_DEBUG'] = True
 
 # bundling
 assets = Environment(app)
@@ -97,7 +104,8 @@ def api_mpc():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.mpc(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except Exception, e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp
@@ -109,7 +117,8 @@ def api_kepler():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.kepler(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except Exception, e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp
@@ -133,7 +142,8 @@ def api_asterank():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.asterank(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except Exception, e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp
@@ -143,14 +153,13 @@ def rankings():
   try:
     limit = int(request.args.get('limit')) or 10
     orbital_info_only = request.args.get('orbits_only')
-    results = api.rankings(request.args.get('sort_by'), limit, orbital_info_only)
-    json_resp = json.dumps(results, allow_nan=False)
+    results = api.rankings(request.args.get('sort_by'), limit, orbits_only=orbital_info_only)
+    json_resp = json.dumps(results)
     return Response(json_resp, mimetype='application/json', headers={ \
       'Cache-Control': 'max-age=432000', # 5 days
     })
-  except Exception,e:
-    print str(e)
-    resp = jsonify({'error': 'bad request'})
+  except Exception, e:
+    resp = jsonify({'error': 'bad request', 'details': str(e)})
     resp.status_code = 500
     return resp
 
@@ -236,6 +245,7 @@ def skymorph_fast_image():
 # SDSS routes
 @app.route('/api/sdss/get_unknown_group')
 def sdss_unknown_group():
+  from sdss import sdss
   json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
@@ -243,6 +253,7 @@ def sdss_unknown_group():
 
 @app.route('/api/sdss/image')
 def sdss_image():
+  from sdss import sdss
   ret = sdss.image_from_key(request.args.get('key'))
   response = make_response(ret)
   response.headers["Content-type"] = "image/png"
@@ -269,6 +280,7 @@ def get_neat_control_group():
 
 @app.route('/api/stackblink/get_sdss_unknown_group')
 def get_sdss_unknown_group():
+  from sdss import sdss
   json_resp = json.dumps(sdss.get_unknown_group())
   return Response(json_resp, mimetype='application/json', headers={ \
     'Cache-Control': 'no-cache',
@@ -317,6 +329,9 @@ def about():
   else:
     email = request.form.get('email', None)
     feedback = request.form.get('feedback', None)
+    if email.find('</a>') > -1:
+      return 'Form rejected because you look like a spambot. Please email me directly.'
+
     if feedback:
       from flask.ext.mail import Message
       msg = Message("Asterank Feedback",
@@ -356,4 +371,4 @@ def api_route():
   return render_template('api.html')
 
 if __name__ == "__main__":
-  app.run(debug=True, host='0.0.0.0', use_reloader=True)
+  app.run(debug=True, host='0.0.0.0', use_reloader=True, threaded=True)

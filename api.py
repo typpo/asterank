@@ -1,3 +1,4 @@
+import math
 import json
 import re
 import datetime
@@ -24,7 +25,7 @@ VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
     SMALL_SIZE_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
-    'om', 'ma', 'n', 'w', 'per', 'epoch']
+    'om', 'ma', 'n', 'w', 'per', 'epoch', 'spec']
 
 # some of these were poorly named, so we map better names, but the database stays the
 # same for backwards compatibility
@@ -55,13 +56,18 @@ def rankings(sort_by, limit, orbits_only=False):
   # remove empty fields
   ret = []
   for obj in results:
+    if obj['spec'] == 'comet':
+      # omit comets from rankings
+      continue
     appendme = {key:val for key,val in obj.iteritems() if val != ''}
     # Some sanitation for a python json serialization bug where very
     # small numbers are serialized to -Infinity, breaking client JSON parsing.
-    if appendme['price'] < 1:
-      appendme['price'] = 0
-    if appendme['profit'] < 1:
-      appendme['profit'] = 0
+    for field in fields:
+      if field in appendme and type(appendme[field]) == float:
+        if appendme[field] > 1e308:
+          appendme[field] = 1e50
+        if math.isnan(appendme[field]) or appendme[field] < 1e-300:
+          appendme[field] = 0
     ret.append(appendme)
   return ret
 

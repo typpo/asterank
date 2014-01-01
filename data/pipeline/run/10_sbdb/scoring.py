@@ -49,6 +49,8 @@ def price(obj):
     1. Asteroid $ saved per kg versus sending it up from Earth.
   """
   G = 6.67300e-20   # km^3 / kgs^2
+  if obj['spec'] == 'comet':
+    return (-1, -1)
 
   # mass in kg
   exactmass = False
@@ -99,6 +101,8 @@ def price(obj):
   return (value, saved)
 
 def profit(obj):
+  if obj['spec'] == 'comet':
+    return -1
   my_dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
   #return obj['price'] * obj['closeness'] / 6 * estimate.profitRatio(DEFAULT_DV, my_dv)
-  return obj['price'] / 6 * estimate.profitRatio(DEFAULT_DV, my_dv)
+  return obj['price'] / 12 * obj['closeness'] / 3417.5490736698116 * estimate.profitRatio(DEFAULT_DV, my_dv)
