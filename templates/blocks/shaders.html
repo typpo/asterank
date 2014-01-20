@@ -91,7 +91,6 @@
     varying vec3 vColor;
     varying float vLocked;
     varying float vPlanet;
-    uniform vec3 color;
     uniform sampler2D planet_texture;
     uniform sampler2D small_roid_texture;
     uniform sampler2D small_roid_circled_texture;
@@ -99,16 +98,16 @@
     void main() {
       if (vLocked < .5) {
         if (vPlanet < .5) {
-          gl_FragColor = vec4(color, 1.0) * texture2D(small_roid_texture,
+          gl_FragColor = vec4(vColor, 1.0) * texture2D(small_roid_texture,
             vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
         }
         else {
-          gl_FragColor = vec4(color, 1.0) * texture2D(planet_texture,
+          gl_FragColor = vec4(vColor, 1.0) * texture2D(planet_texture,
             vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
         }
       }
       else {
-        gl_FragColor = vec4(color, 1.0) * texture2D(small_roid_circled_texture,
+        gl_FragColor = vec4(vColor, 1.0) * texture2D(small_roid_circled_texture,
           vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y));
       }
     }

@@ -103,7 +103,8 @@ def api_mpc():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.mpc(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except Exception, e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp
@@ -115,7 +116,8 @@ def api_kepler():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.kepler(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except Exception, e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp
@@ -139,7 +141,8 @@ def api_asterank():
     limit = min(1000, int(request.args.get('limit')))
     json_resp = json.dumps(api.asterank(query, limit))
     return Response(json_resp, mimetype='application/json')
-  except:
+  except Exception, e:
+    print str(e)
     resp = jsonify({'error': 'bad request'})
     resp.status_code = 500
     return resp
@@ -149,14 +152,13 @@ def rankings():
   try:
     limit = int(request.args.get('limit')) or 10
     orbital_info_only = request.args.get('orbits_only')
-    results = api.rankings(request.args.get('sort_by'), limit, orbital_info_only)
-    json_resp = json.dumps(results, allow_nan=False)
+    results = api.rankings(request.args.get('sort_by'), limit, orbits_only=orbital_info_only)
+    json_resp = json.dumps(results)
     return Response(json_resp, mimetype='application/json', headers={ \
       'Cache-Control': 'max-age=432000', # 5 days
     })
-  except Exception,e:
-    print str(e)
-    resp = jsonify({'error': 'bad request'})
+  except Exception, e:
+    resp = jsonify({'error': 'bad request', 'details': str(e)})
     resp.status_code = 500
     return resp
 
@@ -326,6 +328,9 @@ def about():
   else:
     email = request.form.get('email', None)
     feedback = request.form.get('feedback', None)
+    if email.find('</a>') > -1:
+      return 'Form rejected because you look like a spambot. Please email me directly.'
+
     if feedback:
       from flask.ext.mail import Message
       msg = Message("Asterank Feedback",
