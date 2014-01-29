@@ -70,7 +70,7 @@
     sizeContainers();
   });
 
-  var mod = angular.module('AsterankApp', ['filters', 'ui.bootstrap'])
+  var mod = angular.module('AsterankApp', ['filters', 'ui.bootstrap', 'pasvaz.bindonce'])
     .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
     });

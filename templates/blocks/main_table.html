@@ -52,16 +52,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="asteroid in rankings" ng-click="AsteroidClick(asteroid)" ng-class="{info: selected.full_name == asteroid.full_name}">
-          <td><span ng-bind="asteroid.name | ifempty:asteroid.prov_des"></span></td>
-          <td><span ng-bind="asteroid.spec"></span></td>
-          <td><span ng-bind="asteroid.a | number:3"></span></td>
-          <td><span ng-bind="asteroid.e | number:3"></span></td>
-          <td><span ng-bind="asteroid.price | fuzzynum"></span></td>
-          <td><span ng-bind="asteroid.profit | fuzzynum"></span></td>
-          <td><span ng-bind="asteroid.dv | number:3"></span></td>
-          <td ng-show="sort_by.search_value == 'smallest'"><span ng-bind="asteroid.diameter"></span></td>
-          <td><span ng-bind="asteroid.class"></span> <span ng-show="asteroid.pha == 'Y'">(PHA)</span></td>
+        <tr bindonce ng-repeat="asteroid in rankings" ng-click="AsteroidClick(asteroid)" ng-class="{info: selected.full_name == asteroid.full_name}">
+          <td bo-text="asteroid.name | ifempty:asteroid.prov_des"></td>
+          <td bo-text="asteroid.spec"></td>
+          <td bo-text="asteroid.a | number:3"></td>
+          <td bo-text="asteroid.e | number:3"></td>
+          <td bo-text="asteroid.price | fuzzynum"></td>
+          <td bo-text="asteroid.profit | fuzzynum"></td>
+          <td bo-text="asteroid.dv | number:3"></td>
+          <td bo-text="asteroid.diameter" ng-show="sort_by.search_value == 'smallest'"></td>
+          <td><span bo-text="asteroid.class"></span> <span bo-show="asteroid.pha == 'Y'">(PHA)</span></td>
         </tr>
       </tbody>
     </table>
