@@ -46,19 +46,19 @@ def static_from_route():
   return send_from_directory(app.static_folder, request.path[1:])
 
 # main routes
-@app.route("/")
+@app.route('/')
 def index():
   return render_template('index.html')
 
-@app.route("/3d")
+@app.route('/3d')
 def view_3d():
   return render_template('full3d.html', noop=noop_filter)
 
-@app.route("/3d/")
+@app.route('/3d/')
 def view_3d_slash():
   return render_template('full3d.html', noop=noop_filter)
 
-@app.route("/offline_3d")
+@app.route('/offline_3d')
 def view_3d_offline():
   pt_vars = {};
   pt_vars['offline_mode'] = True
@@ -70,11 +70,11 @@ def view_3d_offline():
   return render_template('full3d.html', noop=noop_filter, passthrough_vars=pt_vars,  \
       offline_mode=True)
 
-@app.route("/3d/notsupported.html")
+@app.route('/3d/notsupported.html')
 def notsupported_3d():
   return render_template('notsupported.html')
 
-@app.route("/asteroid-<asteroid_slug>")
+@app.route('/asteroid-<asteroid_slug>')
 def asteroid_details(asteroid_slug=None):
   # slug is a slug of asteroid prov des
   if not asteroid_slug:
@@ -228,7 +228,7 @@ def skymorph_image():
     return jsonify(ret)
   else:
     response = make_response(ret)
-    response.headers["Content-type"] = "image/gif"
+    response.headers['Content-type'] = 'image/gif'
     return response
 
 @app.route('/api/skymorph/fast_image')
@@ -238,7 +238,7 @@ def skymorph_fast_image():
     return jsonify(ret)
   else:
     response = make_response(ret)
-    response.headers["Content-type"] = "image/png"
+    response.headers['Content-type'] = 'image/png'
     return response
 
 # SDSS routes
@@ -255,7 +255,7 @@ def sdss_image():
   from sdss import sdss
   ret = sdss.image_from_key(request.args.get('key'))
   response = make_response(ret)
-  response.headers["Content-type"] = "image/png"
+  response.headers['Content-type'] = 'image/png'
   return response
 
 # Stack/blink Discover routes
@@ -333,9 +333,9 @@ def about():
 
     if feedback:
       from flask.ext.mail import Message
-      msg = Message("Asterank Feedback",
-                sender="feedback@asterank.com",
-                recipients=["typppo@gmail.com"],
+      msg = Message('Asterank Feedback',
+                sender='feedback@asterank.com',
+                recipients=['typppo@gmail.com'],
                 body='%s:\r\n%s' % (email, feedback))
       mail.send(msg)
     return render_template('about.html')
@@ -369,5 +369,5 @@ def skymorph_docs():
 def api_route():
   return render_template('api.html')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', use_reloader=True, threaded=True)
