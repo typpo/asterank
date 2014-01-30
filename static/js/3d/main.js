@@ -380,6 +380,7 @@
 
     // Sky
     if (using_webgl) {
+      /*
       var materialArray = [];
       var path = opts.static_prefix + "/img/dark-s_";
       var format = '.jpg';
@@ -398,7 +399,29 @@
       skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
       skyBox.rotation.z = pi*25/32;  // get the milky way in the right place
       skyBox.rotation.x = pi/11;
-      scene.add( skyBox );
+      */
+
+      var geometry = new THREE.SphereGeometry(3000, 60, 40);
+      var uniforms = {
+        texture: { type: 't', value: loadTexture(opts.static_prefix + '/img/eso_dark.jpg') }
+      };
+
+      var material = new THREE.ShaderMaterial( {
+        uniforms:       uniforms,
+        vertexShader:   document.getElementById('sky-vertex').textContent,
+        fragmentShader: document.getElementById('sky-density').textContent
+      });
+
+      skyBox = new THREE.Mesh(geometry, material);
+      skyBox.scale.set(-1, 1, 1);
+      skyBox.eulerOrder = 'XZY';
+      //skyBox.rotation.set(0, .3, -.9);
+      skyBox.rotation.z = pi/2;
+      skyBox.rotation.x = pi;
+      skyBox.renderDepth = 1000.0;
+      skyBox.tag = "tag";
+      scene.add(skyBox);
+      window.skyBox = skyBox;
     }
 
     $(opts.container).on('mousedown', function() {
