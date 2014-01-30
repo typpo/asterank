@@ -419,7 +419,6 @@
       skyBox.rotation.z = pi/2;
       skyBox.rotation.x = pi;
       skyBox.renderDepth = 1000.0;
-      skyBox.tag = "tag";
       scene.add(skyBox);
       window.skyBox = skyBox;
     }
