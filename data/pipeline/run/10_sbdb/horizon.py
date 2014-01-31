@@ -157,12 +157,10 @@ def _run(partial=False):
     row['profit'] = scoring.profit(row)
 
     # TODO move this final scoring pass into scoring.py
-    score = min(row['price'], 1e14) / 5e13
-    if score < 0.0001:
-      # It's worthless, so closeness doesn't matter
-      row['score'] = score
-    else:
-      score = score * row['closeness']
+    # cap price influence on score at 10 B
+    score = min(row['price'], 1e10) / 5e11
+    if score > 0.0001:
+      score = score + row['closeness'] / 20
     row['score'] = score
 
     items.append(row)
