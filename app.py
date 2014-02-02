@@ -328,7 +328,7 @@ def about():
   else:
     email = request.form.get('email', None)
     feedback = request.form.get('feedback', None)
-    if email.find('</a>') > -1:
+    if email.find('href') > -1:
       return 'Form rejected because you look like a spambot. Please email me directly.'
 
     if feedback:
