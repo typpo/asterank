@@ -37,8 +37,8 @@ def closeness_weight(obj):
       dv = DEFAULT_COMET_DV
     else:
       dv = DEFAULT_DV
-      return 0
-  dv_score = 1 + (1/(1+math.exp(0.9*dv-4)))
+      #return 0      # closeness shouldn't influence rank
+  dv_score = 1 + (1/(1+math.exp(1.3*dv-6)))
 
   return pow(aph_score + ma_score + ph_score + 50*dv_score + 1, 2)
 
@@ -104,5 +104,4 @@ def profit(obj):
   if obj['spec'] == 'comet':
     return -1
   my_dv = obj['dv'] if 'dv' in obj else DEFAULT_DV
-  #return obj['price'] * obj['closeness'] / 6 * estimate.profitRatio(DEFAULT_DV, my_dv)
   return obj['price'] / 12 * obj['closeness'] / 3417.5490736698116 * estimate.profitRatio(DEFAULT_DV, my_dv)
