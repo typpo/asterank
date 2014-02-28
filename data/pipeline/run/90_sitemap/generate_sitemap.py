@@ -23,7 +23,7 @@ SITEMAP = """<?xml version="1.0" encoding="UTF-8"?>
 </url>
 <url>
   <loc>http://www.asterank.com/discover</loc>
-  <priority>0.80</priority>
+  <priority>0.90</priority>
 </url>
 <url>
   <loc>http://www.asterank.com/exoplanets</loc>

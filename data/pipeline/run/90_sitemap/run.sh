@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Boilerplate
 cd `dirname $0`
