@@ -68,7 +68,8 @@ window.EarthOrbitDiagram = (function() {
     var rx = opts.rx;
     var ry = opts.ry;
     var f = opts.foci;
-    var rotate_deg = opts.w;
+    // rotate so 0 is pointing straight up, like a clock
+    var rotate_deg = -1 * (opts.w + 90);
     var object_color = opts.object_color;
     var orbit_color = opts.orbit_color;
     var size = opts.size || 10;
