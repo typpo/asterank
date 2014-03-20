@@ -60,6 +60,7 @@ window.EarthOrbitDiagram = (function() {
     var rotate_deg = opts.w;
     var object_color = opts.object_color;
     var orbit_color = opts.orbit_color;
+    var size = opts.size || 10;
 
     var cx = this.SUN_X;
     var cy = this.SUN_Y + f;
@@ -76,25 +77,27 @@ window.EarthOrbitDiagram = (function() {
     }
 
     if (object_color) {
-      this.orbit_svg.append('svg:ellipse')
+      var obj = this.orbit_svg.append('svg:ellipse')
           .style('stroke', 'red')
           .style('fill', object_color)
           // TODO scale by size
-          .attr('rx', 10)
-          .attr('ry', 10)
+          .attr('rx', size)
+          .attr('ry', size)
           .attr('cx', cx+rx)
           .attr('cy', cy)
           .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
 
       if (opts.label) {
-        this.orbit_svg.append('text')
-            .attr('x', cx+rx)
-            .attr('y', cy)
+        var bbox = obj.node().getBoundingClientRect();
+        var text = this.orbit_svg.append('text')
             .text(opts.label)
             .attr('font-family', 'sans-serif')
-            .attr('font-size', '20px')
+            .attr('font-size', '12px')
             .attr('fill', 'red')
-            .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+
+        text
+            .attr('x', bbox.left - (text.node().getBBox().width / 2))
+            .attr('y', bbox.bottom + 4)
       }
     }
   }
