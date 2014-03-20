@@ -31,11 +31,11 @@ window.EarthOrbitDiagram = (function() {
     return this.renderAnother(a, e, w);
   }
 
-  EarthOrbitDiagram.prototype.renderAnother = function(a, e, w, color) {
-    return this.plotOrbit(a, e, w, color);
-  }
+  EarthOrbitDiagram.prototype.plotOrbit = function(opts) {
+    var a = opts.a;
+    var e = opts.e || 0;
+    var w = opts.w || 0;
 
-  EarthOrbitDiagram.prototype.plotOrbit = function(a, e, w, color) {
     var sqrtme = 1 - e * e;
     var b = a * Math.sqrt(Math.max(0, sqrtme));
     var f = a * e;
@@ -43,19 +43,31 @@ window.EarthOrbitDiagram = (function() {
     var rx = b * this.DIAGRAM_AU_FACTOR + EARTH_FATNESS;
     var ry = Math.abs(a * this.DIAGRAM_AU_FACTOR) + EARTH_FATNESS;
 
-    console.log(rx, ry);
     var foci = f * this.DIAGRAM_AU_FACTOR;
 
-    return this.plotCoords(rx, ry, foci, w, color);
+    return this.plotCoords({
+      rx: rx,
+      ry: ry,
+      foci: foci,
+      w: w,
+      object_color: opts.object_color,
+      orbit_color: opts.orbit_color,
+    });
   }
 
-  EarthOrbitDiagram.prototype.plotCoords = function(rx, ry, f, rotate_deg, color) {
-    color = color || 'white';
+  EarthOrbitDiagram.prototype.plotCoords = function(opts) {
+    var rx = opts.rx;
+    var ry = opts.ry;
+    var f = opts.foci;
+    var rotate_deg = opts.w;
+    var object_color = opts.object_color || null;
+    var orbit_color = opts.orbit_color || '#ccc';
+
     var cx = this.SUN_X;
     var cy = this.SUN_Y + f;
 
     this.orbit_svg.append('svg:ellipse')
-        .style('stroke', '#ccc')
+        .style('stroke', orbit_color)
         .style('fill', 'none')
         .attr('rx', rx)
         .attr('ry', ry)
@@ -63,15 +75,17 @@ window.EarthOrbitDiagram = (function() {
         .attr('cy', cy)
         .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
 
-    this.orbit_svg.append('svg:ellipse')
-        .style('stroke', 'red')
-        .style('fill', color)
-        // TODO scale by size
-        .attr('rx', 10)
-        .attr('ry', 10)
-        .attr('cx', cx+rx)
-        .attr('cy', cy)
-        .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+    if (object_color) {
+      this.orbit_svg.append('svg:ellipse')
+          .style('stroke', 'red')
+          .style('fill', object_color)
+          // TODO scale by size
+          .attr('rx', 10)
+          .attr('ry', 10)
+          .attr('cx', cx+rx)
+          .attr('cy', cy)
+          .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+    }
   }
 
   EarthOrbitDiagram.prototype.plotEarth = function() {
