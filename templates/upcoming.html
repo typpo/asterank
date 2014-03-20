@@ -1,0 +1,28 @@
+<html>
+<head>
+<style>
+body {
+background-color: #000;
+
+}
+</style>
+</head>
+<body>
+
+{% assets filters="jsmin", output="gen/upcoming-packed.js",
+"js/lib/jquery-1.9.1.min.js",
+"js/lib/d3.v2.js",
+"js/main/earth_orbit.js",
+"js/main/cache.js",
+"js/main/misc.js",
+"js/main/upcoming.js"
+%}
+<script type="text/javascript" src="{{ASSET_URL}}"></script>
+{% endassets %}
+
+<div id="diagram">
+
+</div>
+
+</body>
+</html>
