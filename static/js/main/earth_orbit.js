@@ -14,7 +14,7 @@ window.EarthOrbitDiagram = (function() {
     this.SUN_X = options.sun_x || this.DIAGRAM_WIDTH / 2;
     this.SUN_Y = options.sun_y || this.DIAGRAM_HEIGHT / 2 - 10;
     this.DIAGRAM_AU_FACTOR = options.diagram_au_factor || 50;
-  }
+  };
 
   EarthOrbitDiagram.prototype.prepareRender = function() {
     this.$e.empty();
@@ -24,12 +24,7 @@ window.EarthOrbitDiagram = (function() {
         .attr('height', this.DIAGRAM_HEIGHT)
 
     this.plotEarth();
-  }
-
-  EarthOrbitDiagram.prototype.render = function(a, e, w) {
-    this.prepareRender();
-    return this.renderAnother(a, e, w);
-  }
+  };
 
   EarthOrbitDiagram.prototype.plotOrbit = function(opts) {
     var a = opts.a;
@@ -52,6 +47,21 @@ window.EarthOrbitDiagram = (function() {
       w: w,
     }));
   }
+
+  EarthOrbitDiagram.prototype.plotSlice = function(angle_deg) {
+    angle_deg *= -1;
+    var cx = this.SUN_X;
+    var cy = this.SUN_Y;
+    var rads = angle_deg * Math.PI/180;
+    this.orbit_svg.append('svg:line')
+        .attr('x1', cx)
+        .attr('y1', cy)
+        .attr('x2', cx + 500 * Math.cos(rads))
+        .attr('y2', cy + 500 * Math.sin(rads))
+        .attr('class', 'line')
+        .attr('stroke', 'red')
+        .attr('stroke-width', 10)
+  };
 
   EarthOrbitDiagram.prototype.plotCoords = function(opts) {
     var rx = opts.rx;
@@ -88,6 +98,14 @@ window.EarthOrbitDiagram = (function() {
           .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
 
       if (opts.label) {
+        obj.append('svg:text')
+            .text(opts.label)
+            .attr('font-family', 'sans-serif')
+            .attr('font-size', '12px')
+            .attr('fill', 'red')
+            .attr('cx', cx+rx)
+            .attr('dy', '1.4em')
+        /*
         var bbox = obj.node().getBoundingClientRect();
         var text = this.orbit_svg.append('text')
             .text(opts.label)
@@ -95,12 +113,28 @@ window.EarthOrbitDiagram = (function() {
             .attr('font-size', '12px')
             .attr('fill', 'red')
 
+        var text_left_adjust = text.node().getBBox().width / 2 + size/2;
+
+          console.log(bbox);
         text
-            .attr('x', bbox.left - (text.node().getBBox().width / 2))
+            .attr('x', bbox.left - text_left_adjust)
             .attr('y', bbox.bottom + 4)
+
+        var tspan = text.append('svg:tspan')
+            .attr('font-size', '9px')
+            .attr('dy', '1.4em')
+            .attr('fill', '#ccc')
+            .text(opts.sublabel)
+
+        var tspanwidth = text.node().getBoundingClientRect().left
+                          + bbox.width/2;
+        tspan
+            .attr('x', tspanwidth)
+            */
+
       }
     }
-  }
+  };
 
   EarthOrbitDiagram.prototype.plotEarth = function() {
     this.orbit_svg.append('svg:ellipse')
@@ -110,29 +144,7 @@ window.EarthOrbitDiagram = (function() {
         .attr('ry', EARTH_FATNESS)
         .attr('cx', this.SUN_X)
         .attr('cy', this.SUN_Y);
-  }
-
-  /*
-  EarthOrbitDiagram.prototype.plotEarth = function() {
-    this.plotOrbit(1.00000011, 0.01671022, 102.93768193, 'cyan');
-  }
-
-  EarthOrbitDiagram.prototype.plotJupiter = function() {
-    this.plotOrbit(5.20336301, 0.04839266, 14.72847983, 'orange');
-  }
-
-  EarthOrbitDiagram.prototype.plotMars = function() {
-    this.plotOrbit(1.52366231, 0.0935, 336.04084, 'red');
-  }
-
-  EarthOrbitDiagram.prototype.plotVenus = function() {
-    this.plotOrbit(0.72333199, 0.00677323, 131.60246718, 'orange');
-  }
-
-  EarthOrbitDiagram.prototype.plotMercury = function() {
-    this.plotOrbit(0.38709893, 0.20563069, 77.45779628, 'purple');
-  }
-  */
+  };
 
   return EarthOrbitDiagram;
 })();

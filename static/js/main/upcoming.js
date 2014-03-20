@@ -14,6 +14,10 @@ $(function() {
   });
 
   diagram.prepareRender();
+  diagram.plotSlice(0);
+  diagram.plotSlice(90);
+  diagram.plotSlice(180);
+  diagram.plotSlice(270);
   diagram.plotEarth();
 
   // Concentric circles marking X moon distance
@@ -23,7 +27,7 @@ $(function() {
       a: dist,
       orbit_color: '#ccc',
     });
-    dist += .0026;
+    dist += .001;
   }
 
   // Moon
@@ -36,6 +40,7 @@ $(function() {
     size: 20,
   });
 
+  /*
   // Geosynchronous
   diagram.plotOrbit({
     a: 0.000239214635,
@@ -55,6 +60,7 @@ $(function() {
     label: 'ISS',
     size: 5,
   });
+  */
 
   // Asteroid orbits
   var deg = 0;
@@ -62,7 +68,8 @@ $(function() {
     var roid = asteroids[i];
     var date = roid.month + ' ' + parseInt(roid.day) + ', ' + roid.year;
     diagram.plotOrbit({
-      label: roid.name + ' - ' + date,
+      label: roid.name,
+      sublabel: date,
       a: roid.distance,
       // year 2125 = 360 degrees
       w: -1 * (360 *  (roid.year - 2014))/(2125-2000),
