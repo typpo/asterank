@@ -14,13 +14,14 @@ $(function() {
   diagram.prepareRender();
   diagram.plotEarth();
 
-  // Concentric circles
+  // Concentric circles marking X moon distance
   var dist = .0026;
   for (var i=0; i < 50; i++) {
     diagram.plotOrbit({
       a: dist,
+      orbit_color: '#ccc',
     });
-    dist = .0026;
+    dist += .0026;
   }
 
   // Moon
@@ -28,6 +29,7 @@ $(function() {
     a: .0026,
     w: 180,
     object_color: '#ccc',
+    orbit_color: null,
   });
 
   // Geosynchronous
@@ -35,6 +37,7 @@ $(function() {
     a: 0.000239214635,
     w: 180,
     object_color: '#ccc',
+    orbit_color: null,
   });
 
   // ISS
@@ -42,16 +45,19 @@ $(function() {
     a: 1.67114678e-6,
     w: 180,
     object_color: '#ccc',
+    orbit_color: null,
   });
 
-  // Apophis
+  // Asteroid orbits
   var deg = 0;
   for (var i=0; i < asteroids.length && i < 20; i++) {
     var roid = asteroids[i];
     diagram.plotOrbit({
+      label: roid.name,
       a: roid.distance,
       w: deg,
       object_color: 'pink',
+      orbit_color: null,
     });
     deg -= 5;
   }

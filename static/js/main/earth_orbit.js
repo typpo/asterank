@@ -45,14 +45,12 @@ window.EarthOrbitDiagram = (function() {
 
     var foci = f * this.DIAGRAM_AU_FACTOR;
 
-    return this.plotCoords({
+    return this.plotCoords($.extend(opts, {
       rx: rx,
       ry: ry,
       foci: foci,
       w: w,
-      object_color: opts.object_color,
-      orbit_color: opts.orbit_color,
-    });
+    }));
   }
 
   EarthOrbitDiagram.prototype.plotCoords = function(opts) {
@@ -60,20 +58,22 @@ window.EarthOrbitDiagram = (function() {
     var ry = opts.ry;
     var f = opts.foci;
     var rotate_deg = opts.w;
-    var object_color = opts.object_color || null;
-    var orbit_color = opts.orbit_color || '#ccc';
+    var object_color = opts.object_color;
+    var orbit_color = opts.orbit_color;
 
     var cx = this.SUN_X;
     var cy = this.SUN_Y + f;
 
-    this.orbit_svg.append('svg:ellipse')
-        .style('stroke', orbit_color)
-        .style('fill', 'none')
-        .attr('rx', rx)
-        .attr('ry', ry)
-        .attr('cx', cx)
-        .attr('cy', cy)
-        .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+    if (orbit_color) {
+      this.orbit_svg.append('svg:ellipse')
+          .style('stroke', orbit_color)
+          .style('fill', 'none')
+          .attr('rx', rx)
+          .attr('ry', ry)
+          .attr('cx', cx)
+          .attr('cy', cy)
+          .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+    }
 
     if (object_color) {
       this.orbit_svg.append('svg:ellipse')
@@ -85,6 +85,17 @@ window.EarthOrbitDiagram = (function() {
           .attr('cx', cx+rx)
           .attr('cy', cy)
           .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+
+      if (opts.label) {
+        this.orbit_svg.append('text')
+            .attr('x', cx+rx)
+            .attr('y', cy)
+            .text(opts.label)
+            .attr('font-family', 'sans-serif')
+            .attr('font-size', '20px')
+            .attr('fill', 'red')
+            .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
+      }
     }
   }
 
