@@ -1,5 +1,6 @@
 window.OrbitDiagram = (function() {
-  "use strict";
+  'use strict';
+
   function OrbitDiagram(selector, options) {
     this.$e = $(selector);
     this.selector = selector;
@@ -43,8 +44,6 @@ window.OrbitDiagram = (function() {
   OrbitDiagram.prototype.plotOrbit = function(a, e, w, color) {
     var sqrtme = 1 - e * e;
     var b = a * Math.sqrt(Math.max(0, sqrtme));
-    //var q = a*(1-e);
-    //var Q = a*(1+e);
     var f = a * e;
 
     var rx = b * this.DIAGRAM_AU_FACTOR;
@@ -67,36 +66,6 @@ window.OrbitDiagram = (function() {
         .attr("cx", cx)
         .attr("cy", cy)
         .attr("transform", "rotate(" + rotate_deg + ", " + this.SUN_X + ", " + this.SUN_Y + ")")
-
-    /* draw ellipse
-     * x0,y0 = center of the ellipse
-     * a = greater semi-axis
-     * exc = ellipse excentricity (exc = 0 for circle, 0 < exc < 1 for ellipse, exc > 1 for hiperboloid)
-     */
-        /*
-    function drawEllipse(ctx, x0, y0, a, exc, lineWidth, color)
-    {
-        x0 += a * exc;
-        var r = a * (1 - exc*exc)/(1 + exc),
-            x = x0 + r,
-            y = y0;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        var i = 0.01 * Math.PI;
-        var twoPi = 2 * Math.PI;
-        while (i < twoPi) {
-            r = a * (1 - exc*exc)/(1 + exc * Math.cos(i));
-            x = x0 + r * Math.cos(i);
-            y = y0 + r * Math.sin(i);
-            ctx.lineTo(x, y);
-            i += 0.01;
-        }
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = color;
-        ctx.closePath();
-        ctx.stroke();
-    }
-    */
   }
 
   OrbitDiagram.prototype.plotSun = function() {

@@ -72,12 +72,11 @@ window.EarthOrbitDiagram = (function() {
         .attr('cx', cx+rx)
         .attr('cy', cy)
         .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
-
   }
 
   EarthOrbitDiagram.prototype.plotEarth = function() {
     this.orbit_svg.append('svg:ellipse')
-        .style('stroke', 'steelblue')
+        .style('stroke', 'gray')
         .style('fill', 'steelblue')
         .attr('rx', EARTH_FATNESS)
         .attr('ry', EARTH_FATNESS)

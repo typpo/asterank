@@ -50,6 +50,10 @@ def static_from_route():
 def index():
   return render_template('index.html')
 
+@app.route('/upcoming')
+def upcoming():
+  return render_template('upcoming.html')
+
 @app.route('/3d')
 def view_3d():
   return render_template('full3d.html', noop=noop_filter)
