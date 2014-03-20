@@ -60,7 +60,7 @@ window.EarthOrbitDiagram = (function() {
         .attr('x2', cx + 2000 * Math.cos(rads))
         .attr('y2', cy + 2000 * Math.sin(rads))
         .attr('class', 'line')
-        .attr('stroke', '#ccc')
+        .attr('stroke', '#ddd')
         .attr('stroke-width', stroke_width)
   };
 
@@ -100,6 +100,7 @@ window.EarthOrbitDiagram = (function() {
           .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
 
       if (opts.label) {
+        /*
         obj.append('svg:text')
             .text(opts.label)
             .attr('font-family', 'sans-serif')
@@ -107,7 +108,8 @@ window.EarthOrbitDiagram = (function() {
             .attr('fill', 'red')
             .attr('cx', cx+rx)
             .attr('dy', '1.4em')
-        /*
+            */
+
         var bbox = obj.node().getBoundingClientRect();
         var text = this.orbit_svg.append('text')
             .text(opts.label)
@@ -117,7 +119,6 @@ window.EarthOrbitDiagram = (function() {
 
         var text_left_adjust = text.node().getBBox().width / 2 + size/2;
 
-          console.log(bbox);
         text
             .attr('x', bbox.left - text_left_adjust)
             .attr('y', bbox.bottom + 4)
@@ -128,11 +129,9 @@ window.EarthOrbitDiagram = (function() {
             .attr('fill', '#ccc')
             .text(opts.sublabel)
 
-        var tspanwidth = text.node().getBoundingClientRect().left
-                          + bbox.width/2;
+        //var tspanwidth = text.node().getBoundingClientRect().left;
         tspan
-            .attr('x', tspanwidth)
-            */
+            .attr('x', bbox.left - text_left_adjust)
 
       }
     }

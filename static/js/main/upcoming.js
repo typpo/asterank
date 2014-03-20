@@ -2,6 +2,7 @@
 $(function() {
 
   var MAX_ASTEROIDS = 512;
+  var MAX_YEAR = 2136;
 
   var diagram = new EarthOrbitDiagram('#diagram', {
     diagram_height: $(window).height(),
@@ -14,13 +15,13 @@ $(function() {
   });
 
   diagram.prepareRender();
-  for (var i=0; i <= 360; i+=20) {
+  for (var i=0; i <= 360; i+=30) {
     diagram.plotSlice(i, {
-      stroke_width: 1
+      stroke_width: 1.2
     });
   }
   for (var i=0; i <= 360; i+=5) {
-    if (i % 20 === 0) continue;
+    if (i % 30 === 0) continue;
     diagram.plotSlice(i, {
       stroke_width: .5
     });
@@ -73,13 +74,17 @@ $(function() {
   var deg = 0;
   for (var i=0; i < asteroids.length && i < MAX_ASTEROIDS; i++) {
     var roid = asteroids[i];
+    if (roid.year > MAX_YEAR) {
+      i--;
+      continue;
+    }
     var date = roid.month + ' ' + parseInt(roid.day) + ', ' + roid.year;
     diagram.plotOrbit({
       label: roid.name,
       sublabel: date,
       a: roid.distance,
-      // year 2125 = 360 degrees
-      w: -1 * (360 *  (roid.year - 2014))/(2125-2000),
+      // year MAX_YEAR = 360 degrees
+      w: -1 * (360 *  (roid.year - 2014))/(MAX_YEAR-2014),
       object_color: 'pink',
       orbit_color: null,
       size: 5,
