@@ -48,19 +48,20 @@ window.EarthOrbitDiagram = (function() {
     }));
   }
 
-  EarthOrbitDiagram.prototype.plotSlice = function(angle_deg) {
+  EarthOrbitDiagram.prototype.plotSlice = function(angle_deg, opts) {
+    var stroke_width = opts.stroke_width || .5;
     angle_deg *= -1;
     var cx = this.SUN_X;
     var cy = this.SUN_Y;
     var rads = angle_deg * Math.PI/180;
     this.orbit_svg.append('svg:line')
-        .attr('x1', cx)
-        .attr('y1', cy)
-        .attr('x2', cx + 500 * Math.cos(rads))
-        .attr('y2', cy + 500 * Math.sin(rads))
+        .attr('x1', cx + 160 * Math.cos(rads))
+        .attr('y1', cy + 160 * Math.sin(rads))
+        .attr('x2', cx + 2000 * Math.cos(rads))
+        .attr('y2', cy + 2000 * Math.sin(rads))
         .attr('class', 'line')
-        .attr('stroke', 'red')
-        .attr('stroke-width', 10)
+        .attr('stroke', '#ccc')
+        .attr('stroke-width', stroke_width)
   };
 
   EarthOrbitDiagram.prototype.plotCoords = function(opts) {
@@ -78,6 +79,7 @@ window.EarthOrbitDiagram = (function() {
     if (orbit_color) {
       this.orbit_svg.append('svg:ellipse')
           .style('stroke', orbit_color)
+          .attr('stroke-width', .5)
           .style('fill', 'none')
           .attr('rx', rx)
           .attr('ry', ry)

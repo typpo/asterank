@@ -1,7 +1,7 @@
 
 $(function() {
 
-  var MAX_ASTEROIDS = 128;
+  var MAX_ASTEROIDS = 512;
 
   var diagram = new EarthOrbitDiagram('#diagram', {
     diagram_height: $(window).height(),
@@ -14,10 +14,17 @@ $(function() {
   });
 
   diagram.prepareRender();
-  diagram.plotSlice(0);
-  diagram.plotSlice(90);
-  diagram.plotSlice(180);
-  diagram.plotSlice(270);
+  for (var i=0; i <= 360; i+=20) {
+    diagram.plotSlice(i, {
+      stroke_width: 1
+    });
+  }
+  for (var i=0; i <= 360; i+=5) {
+    if (i % 20 === 0) continue;
+    diagram.plotSlice(i, {
+      stroke_width: .5
+    });
+  }
   diagram.plotEarth();
 
   // Concentric circles marking X moon distance
