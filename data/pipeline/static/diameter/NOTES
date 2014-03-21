@@ -6,4 +6,8 @@ diameter (m) D = 1329km * 10 ^ (-H/5) * p_v ^ (-1/2)
 H = absolute magnitude
 p_v = albedo, assumed to range from .05-.5 (dark-icy)
 
+.15 default is reasonable
+
 also helpful: http://en.wikipedia.org/wiki/Standard_asteroid_physical_characteristics
+
+http://www.physics.sfasu.edu/astro/asteroids/sizemagnitude.html

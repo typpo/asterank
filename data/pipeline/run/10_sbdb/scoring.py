@@ -6,11 +6,32 @@ import math
 import random
 import estimate
 
-DEFAULT_RADIUS = 5  # km
+DEFAULT_RADIUS = .5  # km
 DEFAULT_MASS = 1.47e15  # kg
 DEFAULT_MOID = 2  # TODO get avg moid
 DEFAULT_DV = 12#6.5 #km/s
 DEFAULT_COMET_DV = 50  # km/s
+DEFAULT_ALBEDO = .15
+DEFAULT_DENSITY = 2 # g / cm^3
+
+# g/cm^3
+# https://en.wikipedia.org/wiki/Standard_asteroid_physical_characteristics#Density
+TYPE_DENSITY_MAP = {
+  'C': 1.38,
+  'D': 1.38,
+  'P': 1.38,
+  'T': 1.38,
+  'B': 1.38,
+  'G': 1.38,
+  'F': 1.38,
+  'S': 2.71,
+  'K': 2.71,
+  'Q': 2.71,
+  'V': 2.71,
+  'R': 2.71,
+  'A': 2.71,
+  'M': 5.32,
+}
 
 def closeness_weight(obj):
   if obj['spec'] == 'comet':
@@ -52,12 +73,52 @@ def price(obj):
   if obj['spec'] == 'comet':
     return (-1, -1)
 
+  # estimate albedo
+  if isinstance(obj['albedo'], basestring):
+    albedo = DEFAULT_ALBEDO
+  else:
+    albedo = float(obj['albedo'])
+
+  # estimate diameter
+  if isinstance(obj['diameter'], basestring):
+    if isinstance(obj['H'], basestring):
+      # Can't estimate diameter :(
+      diameter = DEFAULT_RADIUS * 2
+    else:
+      # Compute diameter in meters
+      abs_magnitude = float(obj['H'])
+      #diameter = 1329 * 10 ** (-abs_magnitude/5) * albedo ** (-1/2)
+      diameter = 1329 / math.sqrt(albedo) * (10 ** (-0.2 * abs_magnitude))
+      obj['est_diameter'] = diameter * 1000     # convert to meters
+
   # mass in kg
   exactmass = False
   if isinstance(obj['GM'], basestring):
-    mass = DEFAULT_MASS
-    obj['inexact'] = True
-    mass = mass + (random.random() - .5) * 1e14   # some random factor
+    diameter = obj['est_diameter'] if 'est_diameter' in obj else obj['diameter']
+    if diameter:
+      # Use diameter to estimate mass --> estimate price
+      # Pick density based on spectral type
+      general_spec_type = obj['spec'][0].upper()
+      if general_spec_type in TYPE_DENSITY_MAP:
+        assumed_density = TYPE_DENSITY_MAP[general_spec_type]
+      else:
+        assumed_density = DEFAULT_DENSITY
+
+      # Compute mass form density and diameter
+      # FIXME assuming a perfect sphere for now...
+      assumed_vol = 4/3 * math.pi * ((diameter / 2) ** 3)
+      assumed_vol = assumed_vol * 1000  # convert to km^3
+      # Volume: m^3
+      # Density: g/cm^3
+      mass = assumed_vol * assumed_density / 6 * 1e3
+      print 'Estimated diameter to be', diameter
+      print 'Estimated volume to be', mass
+      print 'Estimated mass to be', mass
+    else:
+      mass = DEFAULT_MASS
+      obj['inexact'] = True
+      mass = mass + (random.random() - .5) * 1e14   # some random factor
+      print 'Used fake default mass'
   else:
     exactmass = True
     mass = obj['GM'] / G
@@ -66,7 +127,6 @@ def price(obj):
       # if it's huge, penalize it because the surface will be covered in ejecta, etc.
       # and the goodies will be far beneath. Also, gravity well.
       mass = mass * 1e-6
-
 
   """
   # radius in m
