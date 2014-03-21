@@ -71,10 +71,13 @@ window.EarthOrbitDiagram = (function() {
     var cy = this.SUN_Y;
     var rads = angle_deg * Math.PI/180;
     rads -= Math.PI / 2;  // rotate 90 counterclokwise
-    rads += Math.PI / 64;
     var r = 450;
     var xcoord = cx + r * Math.cos(rads);
     var ycoord = cy + r * Math.sin(rads);
+    if (angle_deg === 90 || angle_deg == 270) {
+      // Lift above the line a little bit
+      ycoord -= 3;
+    }
     // Rotate 90
     var text = this.orbit_svg.append('svg:text')
         .attr('font-family', 'sans-serif')
