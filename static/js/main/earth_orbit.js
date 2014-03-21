@@ -2,7 +2,7 @@ window.EarthOrbitDiagram = (function() {
   'use strict';
 
   var EARTH_FATNESS = 60; // px
-  var LABELING_ENABLED = true;
+  var LABELING_ENABLED = false;
   var pi = Math.PI;
 
   function EarthOrbitDiagram(selector, options) {
@@ -51,6 +51,10 @@ window.EarthOrbitDiagram = (function() {
   }
 
   function degAdjust(deg) {
+    return deg;
+    // Not needed anymore because we're explicitly specifying the angle
+    // ranges for each year period.
+    /*
     var offset = 12;
 
     if (deg > -90 - offset && deg < -90 + offset) {
@@ -70,6 +74,7 @@ window.EarthOrbitDiagram = (function() {
     }
 
     return deg;
+    */
   }
 
   function radAdjust(rad) {
@@ -83,7 +88,7 @@ window.EarthOrbitDiagram = (function() {
     angle_deg = (angle_deg - 90);
     var cx = this.SUN_X;
     var cy = this.SUN_Y;
-    var rads = angle_deg * Math.PI/180;
+    var rads = angle_deg * pi/180;
     rads = radAdjust(rads);
     this.orbit_svg.append('svg:line')
         .attr('x1', cx + 160 * Math.cos(rads))
@@ -99,8 +104,8 @@ window.EarthOrbitDiagram = (function() {
     var stroke_width = opts.stroke_width || .5;
     var cx = this.SUN_X;
     var cy = this.SUN_Y;
-    var rads = angle_deg * Math.PI/180;
-    rads -= Math.PI / 2;  // rotate 90 counterclokwise
+    var rads = angle_deg * pi/180;
+    rads -= pi / 2;  // rotate 90 counterclokwise
     rads = radAdjust(rads);
     var r = 450;
     var xcoord = cx + r * Math.cos(rads);

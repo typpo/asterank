@@ -10,6 +10,7 @@ function render(asteroids) {
   var NOW_YEAR = 2015;
   var MOON_VISIBLE = false;
 
+  var YEAR_SLICE_ANGLE_SEPARATOR = 26;
   var YEAR_SLICES = [2015, 2025, 2035, 2046, 2055, 2065, 2075,
                      2076, 2086, 2096, 2106, 2116, 2126, 2136];
   var YEAR_ANGLES = [12, 38, 64, 90, 116, 142, 168,
@@ -58,14 +59,44 @@ function render(asteroids) {
     });
   }
   */
+  var prev_angle = YEAR_ANGLES[YEAR_ANGLES.length - 1];
   YEAR_SLICES.map(function(year, i) {
     //var angle = (360 *  (year - NOW_YEAR))/(MAX_YEAR-NOW_YEAR);
     var angle = YEAR_ANGLES[i];
-    console.log(year, ':', angle);
     diagram.plotSlice(angle, {
       stroke_width: 1.2
     });
+
+    /*
+    if (prev_angle) {
+      for (var j=0; j < 5; j++) {
+        diagram.plotSlice(prev_angle + (prev_angle - angle)/5*j, {
+          stroke_width: .5
+        });
+      }
+    }
+    prev_angle = angle;
+   */
   });
+
+  for (var j=0; j < YEAR_SLICES.length; j++) {
+    var before_angle;
+    var after_angle;
+    if (j === 0) {
+      before_angle = YEAR_ANGLES[YEAR_ANGLES.length - 1];
+      after_angle = before_angle + YEAR_SLICE_ANGLE_SEPARATOR;
+    } else {
+      before_angle = YEAR_ANGLES[j-1];
+      after_angle = YEAR_ANGLES[j];
+    }
+    var angle_offset = (before_angle - after_angle)/5;
+    for (var k=1; k < 5; k++) {
+      diagram.plotSlice(before_angle + k*angle_offset, {
+        stroke_width: .5,
+        color: '#ddd',
+      });
+    }
+  }
 /*
   for (var i=0; i <= 360; i+=6) {
     if (i % 30 === 0) continue;
@@ -138,11 +169,8 @@ function render(asteroids) {
         var below_year = YEAR_SLICES[i];
         var above_angle = YEAR_ANGLES[i-1];
         var below_angle = YEAR_ANGLES[i];
-
-        console.log(above_year, below_year, above_angle, below_angle);
         angle = above_angle + (below_angle - above_angle)
                   * (roid.year - above_year) / (below_year - above_year);
-        console.log(roid.year, ':', angle);
         break;
       }
     }
