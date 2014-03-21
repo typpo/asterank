@@ -3,6 +3,8 @@ $(function() {
 
   var MAX_ASTEROIDS = 512;
   var MAX_YEAR = 2136;
+  var NOW_YEAR = 2015;
+  var MOON_VISIBLE = false;
 
   var diagram = new EarthOrbitDiagram('#diagram', {
     diagram_height: $(window).height(),
@@ -38,15 +40,17 @@ $(function() {
     dist += .001;
   }
 
-  // Moon
-  diagram.plotOrbit({
-    a: .0026,
-    w: 0,
-    object_color: '#ccc',
-    orbit_color: null,
-    label: 'Moon',
-    size: 20,
-  });
+  if (MOON_VISIBLE) {
+    // Moon
+    diagram.plotOrbit({
+      a: .0026,
+      w: 0,
+      object_color: '#ccc',
+      orbit_color: null,
+      label: 'Moon',
+      size: 20,
+    });
+  }
 
   /*
   // Geosynchronous
@@ -84,11 +88,21 @@ $(function() {
       sublabel: date,
       a: roid.distance,
       // year MAX_YEAR = 360 degrees
-      w: -1 * (360 *  (roid.year - 2014))/(MAX_YEAR-2014),
-      object_color: 'pink',
+      w: -1 * (360 *  (roid.year - NOW_YEAR))/(MAX_YEAR-NOW_YEAR),
+      object_color: '#7c7070',
+      //object_outline_color: '#e0d4d4',
+      object_outline_color: '#ff7b7b',
       orbit_color: null,
       size: 5,
     });
     deg -= 5;
+  }
+
+  // Timeslice labels
+  for (var i=0; i < 360; i+=30) {
+    var year_divider = Math.round(NOW_YEAR + ((MAX_YEAR-NOW_YEAR) * i / 360));
+    diagram.plotSliceLabel(i, {
+      label: ''+year_divider
+    });
   }
 });

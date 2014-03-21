@@ -65,13 +65,36 @@ window.EarthOrbitDiagram = (function() {
         .attr('stroke-width', stroke_width)
   };
 
+  EarthOrbitDiagram.prototype.plotSliceLabel = function(angle_deg, opts) {
+    var stroke_width = opts.stroke_width || .5;
+    var cx = this.SUN_X;
+    var cy = this.SUN_Y;
+    var rads = angle_deg * Math.PI/180;
+    rads -= Math.PI / 2;  // rotate 90 counterclokwise
+    rads += Math.PI / 64;
+    var r = 450;
+    var xcoord = cx + r * Math.cos(rads);
+    var ycoord = cy + r * Math.sin(rads);
+    // Rotate 90
+    var text = this.orbit_svg.append('svg:text')
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '16px')
+        .attr('font-weight', 'bold')
+        .attr('fill', '#eee')
+        .attr('x', xcoord)
+        .attr('y', ycoord)
+        .text(opts.label)
+    text.attr('dx', -text.node().getBoundingClientRect().width / 2);
+  };
+
   EarthOrbitDiagram.prototype.plotCoords = function(opts) {
     var rx = opts.rx;
     var ry = opts.ry;
     var f = opts.foci;
     // rotate so 0 is pointing straight up, like a clock
-    var rotate_deg = -1 * (opts.w + 90);
+    var rotate_deg = -(opts.w + 90);
     var object_color = opts.object_color;
+    var object_outline_color = opts.object_outline_color || 'red';
     var orbit_color = opts.orbit_color;
     var size = opts.size || 10;
 
@@ -92,7 +115,7 @@ window.EarthOrbitDiagram = (function() {
 
     if (object_color) {
       var obj = this.orbit_svg.append('svg:ellipse')
-          .style('stroke', 'red')
+          .style('stroke', object_outline_color)
           .style('fill', object_color)
           // TODO scale by size
           .attr('rx', size)
