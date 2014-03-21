@@ -117,7 +117,6 @@ def price(obj):
       mass = DEFAULT_MASS
       obj['inexact'] = True
       mass = mass + (random.random() - .5) * 1e14   # some random factor
-      print 'Used fake default mass'
   else:
     exactmass = True
     mass = obj['GM'] / G
