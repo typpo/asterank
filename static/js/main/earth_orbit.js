@@ -25,6 +25,11 @@ window.EarthOrbitDiagram = (function() {
         .attr('width', this.DIAGRAM_WIDTH)
         .attr('height', this.DIAGRAM_HEIGHT)
 
+    this.orbit_svg.append('rect')
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr('fill', '#000')
+
     this.plotEarth();
   };
 

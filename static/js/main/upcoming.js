@@ -17,10 +17,11 @@ function render(asteroids) {
                      192, 218, 244, 270, 296, 322, 348];
 
   var diagram = new EarthOrbitDiagram('#diagram', {
-    diagram_height: $(window).height(),
-    diagram_width: $(window).width(),
-    // .00026 AU = 20 pixels
-    //diagram_au_factor: 20/.00026,
+    //diagram_height: $(window).height(),
+    //diagram_width: $(window).width(),
+
+    diagram_height: 2046,
+    diagram_width: 2046,
 
     // Moon's distance = N px
     diagram_au_factor: 100/.0026,
@@ -129,8 +130,8 @@ function render(asteroids) {
     });
   }
 
-  /*
   // Geosynchronous
+  /*
   diagram.plotOrbit({
     a: 0.000239214635,
     w: 0,
@@ -139,7 +140,8 @@ function render(asteroids) {
     label: 'GEO',
     size: 5,
   });
-
+  */
+  /*
   // ISS
   diagram.plotOrbit({
     a: 1.67114678e-6,
@@ -186,7 +188,8 @@ function render(asteroids) {
       //object_outline_color: '#e0d4d4',
       object_outline_color: '#ff7b7b',
       orbit_color: null,
-      size: Math.max(2, (roid.diameter*10+1)^2),
+      // Basically 1km = 10 px
+      size: Math.max(2, roid.diameter*10+1),
     });
   }
 
