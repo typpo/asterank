@@ -111,9 +111,6 @@ def price(obj):
       # Volume: m^3
       # Density: g/cm^3
       mass = assumed_vol * assumed_density / 6 * 1e3
-      print 'Estimated diameter to be', diameter
-      print 'Estimated volume to be', mass
-      print 'Estimated mass to be', mass
     else:
       mass = DEFAULT_MASS
       obj['inexact'] = True
