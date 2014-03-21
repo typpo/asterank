@@ -131,19 +131,18 @@ function render(asteroids) {
 
     // Figure out timeslice
     var angle = null;
-    for (var i=0; i < YEAR_SLICES.length - 1; i++) {
-      if (YEAR_SLICES[i] < roid.year) {
+    for (var i=1; i < YEAR_SLICES.length; i++) {
+      if (YEAR_SLICES[i] > roid.year) {
         // it belongs in this year slice
-        var above_year = YEAR_SLICES[i];
-        var below_year = YEAR_SLICES[i+1];
-        var above_angle = YEAR_ANGLES[i];
-        var below_angle = YEAR_ANGLES[i+1];
+        var above_year = YEAR_SLICES[i-1];
+        var below_year = YEAR_SLICES[i];
+        var above_angle = YEAR_ANGLES[i-1];
+        var below_angle = YEAR_ANGLES[i];
 
         console.log(above_year, below_year, above_angle, below_angle);
-        angle = (below_angle - above_angle) * (roid.year - above_year) / (below_year - above_year);
-        console.log(angle);
-        angle = (angle + below_angle) % 360;
-
+        angle = above_angle + (below_angle - above_angle)
+                  * (roid.year - above_year) / (below_year - above_year);
+        console.log(roid.year, ':', angle);
         break;
       }
     }

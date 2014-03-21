@@ -51,7 +51,7 @@ window.EarthOrbitDiagram = (function() {
   }
 
   function degAdjust(deg) {
-    var offset = 10;
+    var offset = 12;
 
     if (deg > -90 - offset && deg < -90 + offset) {
       deg += offset;
@@ -126,9 +126,8 @@ window.EarthOrbitDiagram = (function() {
     var ry = opts.ry;
     var f = opts.foci;
     // rotate so 0 is pointing straight up, like a clock
-    //var rotate_deg = -(opts.w + 90);
+    var rotate_deg = opts.w - 90;
     //rotate_deg = degAdjust(rotate_deg);
-    var rotate_deg = opts.w;
     var object_color = opts.object_color;
     var object_outline_color = opts.object_outline_color || 'red';
     var orbit_color = opts.orbit_color;
@@ -166,8 +165,8 @@ window.EarthOrbitDiagram = (function() {
             .attr('font-family', 'sans-serif')
             .attr('font-size', '12px')
             .attr('fill', 'red')
-            //.text(opts.label)
-            .text(rotate_deg.toFixed(2) + '')
+            .text(opts.label)
+            //.text(rotate_deg.toFixed(2) + '')
 
         var text_left_adjust = text.node().getBBox().width / 2 + size/2;
 
