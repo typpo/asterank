@@ -12,8 +12,8 @@ function render(asteroids) {
 
   var YEAR_SLICES = [2015, 2025, 2035, 2046, 2055, 2065, 2075,
                      2076, 2086, 2096, 2106, 2116, 2126, 2136];
-  var YEAR_ANGLES = [0, 30, 60, 90, 120, 160, 179.9999,
-                     180, 210, 240, 270, 300, 330, 360];
+  var YEAR_ANGLES = [12, 38, 64, 90, 116, 142, 168,
+                     192, 218, 244, 270, 296, 322, 348];
 
   var diagram = new EarthOrbitDiagram('#diagram', {
     diagram_height: $(window).height(),
@@ -121,19 +121,40 @@ function render(asteroids) {
   */
 
   // Asteroid orbits
-  for (var i=0; i < asteroids.length && i < MAX_ASTEROIDS; i++) {
-    var roid = asteroids[i];
+  for (var j=0; j < asteroids.length && j < MAX_ASTEROIDS; j++) {
+    var roid = asteroids[j];
     if (roid.year > MAX_YEAR) {
-      i--;
+      j--;
       continue;
     }
     var date = roid.month + ' ' + parseInt(roid.day) + ', ' + roid.year;
+
+    // Figure out timeslice
+    var angle = null;
+    for (var i=0; i < YEAR_SLICES.length - 1; i++) {
+      if (YEAR_SLICES[i] < roid.year) {
+        // it belongs in this year slice
+        var above_year = YEAR_SLICES[i];
+        var below_year = YEAR_SLICES[i+1];
+        var above_angle = YEAR_ANGLES[i];
+        var below_angle = YEAR_ANGLES[i+1];
+
+        console.log(above_year, below_year, above_angle, below_angle);
+        angle = (below_angle - above_angle) * (roid.year - above_year) / (below_year - above_year);
+        console.log(angle);
+        angle = (angle + below_angle) % 360;
+
+        break;
+      }
+    }
+
     diagram.plotOrbit({
       label: roid.name,
       sublabel: date,
       a: roid.distance,
       // year MAX_YEAR = 360 degrees
-      w: -1 * (360 *  (roid.year - NOW_YEAR))/(MAX_YEAR-NOW_YEAR),
+      //w: -1 * (360 *  (roid.year - NOW_YEAR))/(MAX_YEAR-NOW_YEAR),
+      w: angle,
       object_color: '#7c7070',
       //object_outline_color: '#e0d4d4',
       object_outline_color: '#ff7b7b',

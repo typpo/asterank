@@ -126,8 +126,9 @@ window.EarthOrbitDiagram = (function() {
     var ry = opts.ry;
     var f = opts.foci;
     // rotate so 0 is pointing straight up, like a clock
-    var rotate_deg = -(opts.w + 90);
-    rotate_deg = degAdjust(rotate_deg);
+    //var rotate_deg = -(opts.w + 90);
+    //rotate_deg = degAdjust(rotate_deg);
+    var rotate_deg = opts.w;
     var object_color = opts.object_color;
     var object_outline_color = opts.object_outline_color || 'red';
     var orbit_color = opts.orbit_color;
