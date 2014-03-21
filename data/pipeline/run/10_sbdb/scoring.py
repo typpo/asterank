@@ -87,8 +87,9 @@ def price(obj):
     else:
       # Compute diameter in meters
       abs_magnitude = float(obj['H'])
-      diameter = 1329 * 10 ** (-abs_magnitude/5) * albedo ** (-1/2)
-      obj['est_diameter'] = diameter / 1000
+      #diameter = 1329 * 10 ** (-abs_magnitude/5) * albedo ** (-1/2)
+      diameter = 1329 / math.sqrt(albedo) * (10 ** (-0.2 * abs_magnitude))
+      obj['est_diameter'] = diameter * 1000     # convert to meters
 
   # mass in kg
   exactmass = False
@@ -106,9 +107,10 @@ def price(obj):
       # Compute mass form density and diameter
       # FIXME assuming a perfect sphere for now...
       assumed_vol = 4/3 * math.pi * ((diameter / 2) ** 3)
-      # Volume: km^3
+      assumed_vol = assumed_vol * 1000  # convert to km^3
+      # Volume: m^3
       # Density: g/cm^3
-      mass = assumed_vol * assumed_density / 6 * 1e12
+      mass = assumed_vol * assumed_density / 6 * 1e3
       print 'Estimated diameter to be', diameter
       print 'Estimated volume to be', mass
       print 'Estimated mass to be', mass
