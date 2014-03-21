@@ -2,6 +2,7 @@ window.EarthOrbitDiagram = (function() {
   'use strict';
 
   var EARTH_FATNESS = 60; // px
+  var LABELING_ENABLED = false;
 
   function EarthOrbitDiagram(selector, options) {
     this.$e = $(selector);
@@ -100,17 +101,7 @@ window.EarthOrbitDiagram = (function() {
           .attr('cy', cy)
           .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
 
-      if (opts.label) {
-        /*
-        obj.append('svg:text')
-            .text(opts.label)
-            .attr('font-family', 'sans-serif')
-            .attr('font-size', '12px')
-            .attr('fill', 'red')
-            .attr('cx', cx+rx)
-            .attr('dy', '1.4em')
-            */
-
+      if (opts.label && LABELING_ENABLED) {
         var bbox = obj.node().getBoundingClientRect();
         var text = this.orbit_svg.append('text')
             .text(opts.label)
