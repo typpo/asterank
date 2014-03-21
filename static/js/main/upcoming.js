@@ -26,7 +26,7 @@ function render(asteroids) {
       stroke_width: 1.2
     });
   }
-  for (var i=0; i <= 360; i+=5) {
+  for (var i=0; i <= 360; i+=6) {
     if (i % 30 === 0) continue;
     diagram.plotSlice(i, {
       stroke_width: .5
