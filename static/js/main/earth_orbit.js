@@ -2,7 +2,8 @@ window.EarthOrbitDiagram = (function() {
   'use strict';
 
   var EARTH_FATNESS = 60; // px
-  var LABELING_ENABLED = false;
+  var LABELING_ENABLED = true;
+  var pi = Math.PI;
 
   function EarthOrbitDiagram(selector, options) {
     this.$e = $(selector);
@@ -49,19 +50,48 @@ window.EarthOrbitDiagram = (function() {
     }));
   }
 
+  function degAdjust(deg) {
+    var offset = 10;
+
+    if (deg > -90 - offset && deg < -90 + offset) {
+      deg += offset;
+    }
+
+    if (deg < 90 + offset && deg > 90 - offset) {
+      if (deg >= 90) {
+        deg += offset;
+      } else {
+       deg -= offset;
+      }
+    }
+
+    if (deg > 270 - offset && deg < 270 + offset) {
+      deg -= offset;
+    }
+
+    return deg;
+  }
+
+  function radAdjust(rad) {
+    var deg = rad * 180 / pi;
+    return degAdjust(deg) * pi/180;
+  }
+
   EarthOrbitDiagram.prototype.plotSlice = function(angle_deg, opts) {
     var stroke_width = opts.stroke_width || .5;
-    angle_deg *= -1;
+    var color = opts.color || '#ddd';
+    angle_deg = (angle_deg - 90);
     var cx = this.SUN_X;
     var cy = this.SUN_Y;
     var rads = angle_deg * Math.PI/180;
+    rads = radAdjust(rads);
     this.orbit_svg.append('svg:line')
         .attr('x1', cx + 160 * Math.cos(rads))
         .attr('y1', cy + 160 * Math.sin(rads))
         .attr('x2', cx + 2000 * Math.cos(rads))
         .attr('y2', cy + 2000 * Math.sin(rads))
         .attr('class', 'line')
-        .attr('stroke', '#ddd')
+        .attr('stroke', color)
         .attr('stroke-width', stroke_width)
   };
 
@@ -71,6 +101,7 @@ window.EarthOrbitDiagram = (function() {
     var cy = this.SUN_Y;
     var rads = angle_deg * Math.PI/180;
     rads -= Math.PI / 2;  // rotate 90 counterclokwise
+    rads = radAdjust(rads);
     var r = 450;
     var xcoord = cx + r * Math.cos(rads);
     var ycoord = cy + r * Math.sin(rads);
@@ -96,6 +127,7 @@ window.EarthOrbitDiagram = (function() {
     var f = opts.foci;
     // rotate so 0 is pointing straight up, like a clock
     var rotate_deg = -(opts.w + 90);
+    rotate_deg = degAdjust(rotate_deg);
     var object_color = opts.object_color;
     var object_outline_color = opts.object_outline_color || 'red';
     var orbit_color = opts.orbit_color;
@@ -130,10 +162,11 @@ window.EarthOrbitDiagram = (function() {
       if (opts.label && LABELING_ENABLED) {
         var bbox = obj.node().getBoundingClientRect();
         var text = this.orbit_svg.append('text')
-            .text(opts.label)
             .attr('font-family', 'sans-serif')
             .attr('font-size', '12px')
             .attr('fill', 'red')
+            //.text(opts.label)
+            .text(rotate_deg.toFixed(2) + '')
 
         var text_left_adjust = text.node().getBBox().width / 2 + size/2;
 
