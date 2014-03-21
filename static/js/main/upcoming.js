@@ -1,6 +1,10 @@
-
 $(function() {
+  $.getJSON('/static/js/main/upcoming_asteroids_annotated.json', function(data) {
+    render(data);
+  });
+});
 
+function render(asteroids) {
   var MAX_ASTEROIDS = 512;
   var MAX_YEAR = 2136;
   var NOW_YEAR = 2015;
@@ -75,7 +79,6 @@ $(function() {
   */
 
   // Asteroid orbits
-  var deg = 0;
   for (var i=0; i < asteroids.length && i < MAX_ASTEROIDS; i++) {
     var roid = asteroids[i];
     if (roid.year > MAX_YEAR) {
@@ -93,9 +96,8 @@ $(function() {
       //object_outline_color: '#e0d4d4',
       object_outline_color: '#ff7b7b',
       orbit_color: null,
-      size: 5,
+      size: Math.max(2, (roid.diameter*10+1)^2),
     });
-    deg -= 5;
   }
 
   // Timeslice labels
@@ -105,4 +107,4 @@ $(function() {
       label: ''+year_divider
     });
   }
-});
+}
