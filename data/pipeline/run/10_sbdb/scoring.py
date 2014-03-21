@@ -88,21 +88,23 @@ def price(obj):
       diameter = 1329 * 10 ** (-abs_magnitude/5) * albedo ** (-1/2)
       obj['est_diameter'] = diameter / 1000
 
-  # TODO use diameter to estimate mass --> estimate price
-
   # mass in kg
   exactmass = False
   if isinstance(obj['GM'], basestring):
     diameter = obj['est_diameter'] if 'est_diameter' in obj else obj['diameter']
     if diameter:
-      # Assume it's a sphere for now...
-      # TODO pick density based on spectral type
+      # Use diameter to estimate mass --> estimate price
+      # Pick density based on spectral type
       general_spec_type = obj['spec'][0].upper()
       if general_spec_type in TYPE_DENSITY_MAP:
         assumed_density = TYPE_DENSITY_MAP[general_spec_type]
       else:
         assumed_density = DEFAULT_DENSITY
-      mass = math.pi * (diameter ** 4) * assumed_density / 6
+
+      # Compute mass form density and diameter
+      # FIXME assuming a perfect sphere for now...
+      assumed_vol = 4 * math.pi * ((diameter / 2) ** 2)
+      mass = assumed_vol * assumed_density / 6 * 1e16
     else:
       mass = DEFAULT_MASS
       obj['inexact'] = True
