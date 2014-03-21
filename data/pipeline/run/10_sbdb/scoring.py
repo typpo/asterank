@@ -12,8 +12,10 @@ DEFAULT_MOID = 2  # TODO get avg moid
 DEFAULT_DV = 12#6.5 #km/s
 DEFAULT_COMET_DV = 50  # km/s
 DEFAULT_ALBEDO = .15
-DEFAULT_DENSITY = .002 # kg / cm^3
+DEFAULT_DENSITY = 2 # g / cm^3
 
+# g/cm^3
+# https://en.wikipedia.org/wiki/Standard_asteroid_physical_characteristics#Density
 TYPE_DENSITY_MAP = {
   'C': 1.38,
   'D': 1.38,
@@ -103,12 +105,18 @@ def price(obj):
 
       # Compute mass form density and diameter
       # FIXME assuming a perfect sphere for now...
-      assumed_vol = 4 * math.pi * ((diameter / 2) ** 2)
-      mass = assumed_vol * assumed_density / 6 * 1e15
+      assumed_vol = 4/3 * math.pi * ((diameter / 2) ** 3)
+      # Volume: km^3
+      # Density: g/cm^3
+      mass = assumed_vol * assumed_density / 6 * 1e12
+      print 'Estimated diameter to be', diameter
+      print 'Estimated volume to be', mass
+      print 'Estimated mass to be', mass
     else:
       mass = DEFAULT_MASS
       obj['inexact'] = True
       mass = mass + (random.random() - .5) * 1e14   # some random factor
+      print 'Used fake default mass'
   else:
     exactmass = True
     mass = obj['GM'] / G
