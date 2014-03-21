@@ -104,7 +104,7 @@ def price(obj):
       # Compute mass form density and diameter
       # FIXME assuming a perfect sphere for now...
       assumed_vol = 4 * math.pi * ((diameter / 2) ** 2)
-      mass = assumed_vol * assumed_density / 6 * 1e16
+      mass = assumed_vol * assumed_density / 6 * 1e15
     else:
       mass = DEFAULT_MASS
       obj['inexact'] = True
