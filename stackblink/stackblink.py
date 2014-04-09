@@ -32,7 +32,7 @@ def get_unknown_group():
   pass
 
 def record(email, image_keys, interesting, poor_quality):
-  total_count = redis.incr(REDIS_COUNT_KEY, len(image_keys))
+  total_count = redis.incr(REDIS_COUNT_KEY, min(10, len(image_keys)))
   group_key = '||'.join(image_keys)
   stackblink_results.insert({
     'email': email,
