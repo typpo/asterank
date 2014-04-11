@@ -179,7 +179,6 @@ def compositions():
   json_resp = json.dumps(api.compositions())
   return Response(json_resp, mimetype='application/json')
 
-
 @app.route('/jpl/lookup')
 def horizons():
   query = request.args.get('query')
