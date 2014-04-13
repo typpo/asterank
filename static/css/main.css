@@ -123,6 +123,10 @@ hr.top-bottom-divider {
   line-height: 14px;
 }
 
+#results-table th {
+  cursor: default;
+}
+
 #results-table tr:hover {
   cursor: pointer;
 }
