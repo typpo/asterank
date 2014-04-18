@@ -70,15 +70,16 @@
     sizeContainers();
   });
 
-  var mod = angular.module('AsterankApp', ['filters', 'ui.bootstrap', 'pasvaz.bindonce'])
+  var mod = angular.module('AsterankApp', ['asterank.filters', 'asterank.directives',
+      'ui.bootstrap', 'pasvaz.bindonce'])
     .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
     });
 
-  angular.module('filters',[])
-    .filter('fuzzynum', function(){
+  angular.module('asterank.filters', [])
+    .filter('fuzzynum', function() {
       return function(num){
-          return toFuzz(num)
+        return toFuzz(num)
       };
     })
     .filter('truncate', function() {
@@ -91,6 +92,16 @@
         if (!s1) return s2;
         return s1;
       }
+    });
+
+  angular.module('asterank.directives', [])
+    .directive('bsTooltip', function() {
+      return {
+        link: function(scope, elt, attrs) {
+          console.log('frick', elt);
+          $(elt).tooltip();
+        }
+      };
     });
 
   mod.factory('pubsub', function() {
