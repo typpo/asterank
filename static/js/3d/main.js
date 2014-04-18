@@ -188,7 +188,7 @@
   // init the scene
   function init(){
     $('#loading-text').html('renderer');
-    if (WEB_GL_ENABLED && Detector.webgl){
+    if (me.IsWebGLSupported()){
       renderer = new THREE.WebGLRenderer({
         antialias		: true	// to get smoother output
         //preserveDrawingBuffer	: true	// to allow screenshot
@@ -657,6 +657,10 @@
     }
   }
 
+  me.IsWebGLSupported = function() {
+    return WEB_GL_ENABLED && Detector.webgl
+  };
+
   me.clearRankings = function() {
     // Remove any old setup
     for (var i=0; i < added_objects.length; i++) {
@@ -674,7 +678,7 @@
     if (lastHovered) {
       scene.remove(lastHovered);
     }
-  }
+  };
 
   me.processAsteroidRankings = function(data) {
     if (!data) {
@@ -804,7 +808,7 @@
     $('#loading').hide();
 
     if (typeof mixpanel !== 'undefined') mixpanel.track('simulation started');
-  }
+  };
 
   function createParticleSystem() {
     // attributes
