@@ -45,20 +45,20 @@ function Asterank3DCtrl($scope, pubsub) {
   }
 
   pubsub.subscribe('Lock3DView', function(asteroid) {
-    if (asterank3d.IsWebGLSupported()) {
+    if (asterank3d.isWebGLSupported()) {
       asterank3d.setLock(asteroid.full_name);
     }
   });
 
   pubsub.subscribe('NewAsteroidRanking', function(rankings) {
     asterank3d.clearRankings();
-    if (asterank3d.IsWebGLSupported()) {
+    if (asterank3d.isWebGLSupported()) {
       asterank3d.processAsteroidRankings(rankings);
     }
   });
 
   pubsub.subscribe('Default3DView', function() {
-    if (asterank3d.IsWebGLSupported()) {
+    if (asterank3d.isWebGLSupported()) {
       asterank3d.clearLock();
     }
   });

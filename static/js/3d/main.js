@@ -185,10 +185,14 @@
     skyBox.visible = opts.milky_way_visible = !opts.milky_way_visible;
   }
 
+  function isWebGLSupported() {
+    return WEB_GL_ENABLED && Detector.webgl
+  }
+
   // init the scene
   function init(){
     $('#loading-text').html('renderer');
-    if (me.IsWebGLSupported()){
+    if (isWebGLSupported()){
       renderer = new THREE.WebGLRenderer({
         antialias		: true	// to get smoother output
         //preserveDrawingBuffer	: true	// to allow screenshot
@@ -657,8 +661,8 @@
     }
   }
 
-  me.IsWebGLSupported = function() {
-    return WEB_GL_ENABLED && Detector.webgl
+  me.isWebGLSupported = function() {
+    return isWebGLSupported();
   };
 
   me.clearRankings = function() {
