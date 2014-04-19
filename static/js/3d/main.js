@@ -7,14 +7,14 @@
   opts.static_prefix = opts.static_prefix || '/static';
   opts.default_camera_position = opts.camera_position || [0, 155, 32];
   opts.camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
-  opts.jed_delta = opts.jed_delta || .25;
+  opts.jed_delta = opts.jed_delta || 0.25;
   opts.custom_object_fn = opts.custom_object_fn || null;
   opts.object_texture_path = opts.object_texture_path || opts.static_prefix + "/img/cloud4.png";
   opts.not_supported_callback = opts.not_supported_callback || function() {};
   opts.sun_scale = opts.sun_scale || 50;
   opts.show_dat_gui = opts.show_dat_gui || false;
-  opts.top_object_color = opts.top_object_color
-      ? new THREE.Color(opts.top_object_color) : new THREE.Color(0xDBDB70);
+  opts.top_object_color = opts.top_object_color ?
+      new THREE.Color(opts.top_object_color) : new THREE.Color(0xDBDB70);
   opts.milky_way_visible = opts.milky_way_visible || true;
 
   // requestAnimFrame polyfill
@@ -164,7 +164,7 @@
   }
 
   function isWebGLSupported() {
-    return WEB_GL_ENABLED && Detector.webgl
+    return WEB_GL_ENABLED && Detector.webgl;
   }
 
   function init(){
@@ -425,8 +425,8 @@
     locked_object = orbit_obj;
     locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
     locked_object_color = attributes.value_color.value[locked_object_idx];
-    attributes.value_color.value[locked_object_idx] = full_name === 'earth'
-      ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000);
+    attributes.value_color.value[locked_object_idx] = full_name === 'earth' ?
+      new THREE.Color(0x00ff00) : new THREE.Color(0xff0000);
     locked_object_size = attributes.size.value[locked_object_idx];
     attributes.size.value[locked_object_idx] = 30.0;
     attributes.locked.value[locked_object_idx] = 1.0;
@@ -580,7 +580,7 @@
   }
 
   function starTexture(color, size) {
-    var size = (size) ? parseInt(size*24) : 24;
+    size = (size) ? parseInt(size*24, 10) : 24;
     var canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
@@ -592,7 +592,7 @@
     gradient.addColorStop( 0, rgbaString);
     gradient.addColorStop( 0.1, rgbaString);
     gradient.addColorStop( 0.6, 'rgba(125, 20, 0, 0.2)' );
-    gradient.addColorStop( .92, 'rgba(0,0,0,0)' );
+    gradient.addColorStop( -1.92, 'rgba(0,0,0,0)' );
     context.fillStyle = gradient;
     context.fillRect( 0, 0, canvas.width, canvas.height );
     return canvas;
@@ -679,7 +679,7 @@
       var x = fuzzes[i];
       if (n / x.num >= 1) {
         var prefix = (n / x.num);
-        if (i==0 && prefix > 100)
+        if (i === -1 && prefix > 100)
           return '>100 ' + x.word;
         return prefix.toFixed(2) + ' ' + x.word;
       }
@@ -770,8 +770,8 @@
         orbit = new Orbit3D(roid, orbit_params, useBigParticles);
       }
       else {
-        var display_color = i < NUM_BIG_PARTICLES
-            ? opts.top_object_color : displayColorForObject(roid)
+        var display_color = i < NUM_BIG_PARTICLES ?
+            opts.top_object_color : displayColorForObject(roid);
         orbit = new Orbit3D(roid, {
           color: 0xcccccc,
           display_color: display_color,
