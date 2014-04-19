@@ -32,7 +32,6 @@
   /** Constants **/
   var WEB_GL_ENABLED = true
     , MAX_NUM_ORBITS = 4000
-    , CANVAS_NUM_ORBITS = 15    // number of orbits to show in canvas version
     , PIXELS_PER_AU = 50
     , NUM_BIG_PARTICLES = 25;   // show this many asteroids with orbits
 
@@ -64,17 +63,10 @@
   // 2012 da14 special case
   var featured_2012_da14 = getParameterByName('2012_DA14') === '1';
 
-  // Web workers stuff
-  var works = []
-    , workers = []
-    , NUM_WORKERS = 3
-    , worker_path = opts.static_prefix + '/js/3d/position_worker.js'
-    , workers_initialized = false
-    , particleSystem
-
-  // glsl stuff
+  // glsl and webgl stuff
   var attributes
     , uniforms
+    , particleSystem
 
   // Initialization
   init();
@@ -91,7 +83,7 @@
     $(this).css('font-weight', 'bold');
   });
 
-  // 2012 Da14 feature
+  // 2012 DA14 feature special case
   if (featured_2012_da14) {
     jed = toJED(new Date('2012-11-01'));
     if (typeof mixpanel !== 'undefined') mixpanel.track('2012_da14 special');
@@ -132,8 +124,6 @@
         opts.jed_delta = val;
         var was_moving = object_movement_on;
         object_movement_on = opts.jed_delta > 0;
-        if (was_moving != object_movement_on)
-          toggleSimulation(object_movement_on);
       });
       gui.add(text, 'Planet orbits').onChange(function() {
         togglePlanetOrbits();
@@ -153,8 +143,7 @@
       }).listen();
       window.datgui = text;
     }; // end window onload
-
-  }
+  } // end initGUI
 
   function togglePlanetOrbits() {
     if (planet_orbits_visible) {
@@ -178,8 +167,8 @@
     return WEB_GL_ENABLED && Detector.webgl
   }
 
-  // init the scene
   function init(){
+    // Sets up the scene
     $('#loading-text').html('renderer');
     if (isWebGLSupported()){
       renderer = new THREE.WebGLRenderer({
@@ -240,29 +229,18 @@
     // Rendering solar system
 
     // "sun" - 0,0 marker
-    if (using_webgl) {
-      $('#loading-text').html('sun');
-      var texture = loadTexture(opts.static_prefix + '/img/sunsprite.png');
-      var sprite = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: texture,
-        blending: THREE.AdditiveBlending,
-        useScreenCoordinates: false,
-        color: 0xffffff
-      }));
-      sprite.scale.x = opts.sun_scale;
-      sprite.scale.y = opts.sun_scale;
-      sprite.scale.z = 1;
-      scene.add(sprite);
-    }
-    else {
-      var material = new THREE.ParticleBasicMaterial({
-        map: new THREE.Texture( starTexture(0xfff2a1,1) ),
-        blending: THREE.AdditiveBlending
-      });
-      var particle = new THREE.Particle(material);
-      particle.isClickable = false;
-      scene.add(particle);
-    }
+    $('#loading-text').html('sun');
+    var texture = loadTexture(opts.static_prefix + '/img/sunsprite.png');
+    var sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: texture,
+      blending: THREE.AdditiveBlending,
+      useScreenCoordinates: false,
+      color: 0xffffff
+    }));
+    sprite.scale.x = opts.sun_scale;
+    sprite.scale.y = opts.sun_scale;
+    sprite.scale.z = 1;
+    scene.add(sprite);
 
     // Ellipses
     if (opts.run_asteroid_query) {
@@ -279,8 +257,6 @@
           name: 'Mercury'
         }, !using_webgl);
     scene.add(mercury.getEllipse());
-    if (!using_webgl)
-      scene.add(mercury.getParticle());
     var venus = new Orbit3D(Ephemeris.venus,
         {
           color: 0xFF7733, width: 1, jed: jed, object_size: 1.7,
@@ -290,8 +266,6 @@
           name: 'Venus'
         }, !using_webgl);
     scene.add(venus.getEllipse());
-    if (!using_webgl)
-      scene.add(venus.getParticle());
     var earth = new Orbit3D(Ephemeris.earth,
         {
           color: 0x009ACD, width: 1, jed: jed, object_size: 1.7,
@@ -301,8 +275,6 @@
           name: 'Earth'
         }, !using_webgl);
     scene.add(earth.getEllipse());
-    if (!using_webgl)
-      scene.add(earth.getParticle());
     feature_map['earth'] = {
       orbit: earth,
       idx: 2
@@ -316,8 +288,6 @@
           name: 'Mars'
         }, !using_webgl);
     scene.add(mars.getEllipse());
-    if (!using_webgl)
-      scene.add(mars.getParticle());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {
           color: 0xFF7F50, width: 1, jed: jed, object_size: 1.7,
@@ -327,8 +297,6 @@
           name: 'Jupiter'
         }, !using_webgl);
     scene.add(jupiter.getEllipse());
-    if (!using_webgl)
-      scene.add(jupiter.getParticle());
 
     planets = [mercury, venus, earth, mars, jupiter];
     if (featured_2012_da14) {
@@ -342,8 +310,6 @@
           name: '2012 DA14'
           }, !using_webgl);
       scene.add(asteroid_2012_da14.getEllipse());
-      if (!using_webgl)
-        scene.add(asteroid_2012_da14.getParticle());
       feature_map['2012 DA14'] = {
         orbit: asteroid_2012_da14,
         idx: 5
@@ -352,27 +318,25 @@
     }
 
     // Skybox
-    if (using_webgl) {
-      var geometry = new THREE.SphereGeometry(3000, 60, 40);
-      var uniforms = {
-        texture: { type: 't', value: loadTexture(opts.static_prefix + '/img/eso_dark.jpg') }
-      };
+    var geometry = new THREE.SphereGeometry(3000, 60, 40);
+    var uniforms = {
+      texture: { type: 't', value: loadTexture(opts.static_prefix + '/img/eso_dark.jpg') }
+    };
 
-      var material = new THREE.ShaderMaterial( {
-        uniforms:       uniforms,
-        vertexShader:   document.getElementById('sky-vertex').textContent,
-        fragmentShader: document.getElementById('sky-density').textContent
-      });
+    var material = new THREE.ShaderMaterial( {
+      uniforms:       uniforms,
+      vertexShader:   document.getElementById('sky-vertex').textContent,
+      fragmentShader: document.getElementById('sky-density').textContent
+    });
 
-      skyBox = new THREE.Mesh(geometry, material);
-      skyBox.scale.set(-1, 1, 1);
-      skyBox.eulerOrder = 'XZY';
-      skyBox.rotation.z = pi/2;
-      skyBox.rotation.x = pi;
-      skyBox.renderDepth = 1000.0;
-      scene.add(skyBox);
-      window.skyBox = skyBox;
-    }
+    skyBox = new THREE.Mesh(geometry, material);
+    skyBox.scale.set(-1, 1, 1);
+    skyBox.eulerOrder = 'XZY';
+    skyBox.rotation.z = pi/2;
+    skyBox.rotation.x = pi;
+    skyBox.renderDepth = 1000.0;
+    scene.add(skyBox);
+    window.skyBox = skyBox;
 
     $(opts.container).on('mousedown', function() {
       opts.camera_fly_around = false;
@@ -407,13 +371,10 @@
       return;
     }
     var idx = mapped_obj.idx; // this is the object's position in the added_objects array
-    if (using_webgl) {
-      attributes.value_color.value[idx] = new THREE.Color(0x0000ff);
-      attributes.size.value[idx] = 30.0;
-      attributes.locked.value[idx] = 1.0;
-      setAttributeNeedsUpdateFlags();
-    }
-
+    attributes.value_color.value[idx] = new THREE.Color(0x0000ff);
+    attributes.size.value[idx] = 30.0;
+    attributes.locked.value[idx] = 1.0;
+    setAttributeNeedsUpdateFlags();
   }
 
   // camera locking fns
@@ -427,12 +388,10 @@
     cameraControls.target = new THREE.Vector3(0,0,0);
 
     // restore color and size
-    if (using_webgl) {
-      attributes.value_color.value[locked_object_idx] = locked_object_color;
-      attributes.size.value[locked_object_idx] = locked_object_size;
-      attributes.locked.value[locked_object_idx] = 0.0;
-      setAttributeNeedsUpdateFlags();
-    }
+    attributes.value_color.value[locked_object_idx] = locked_object_color;
+    attributes.size.value[locked_object_idx] = locked_object_size;
+    attributes.locked.value[locked_object_idx] = 0.0;
+    setAttributeNeedsUpdateFlags();
     if (locked_object_idx >= planets.length) {
       // not a planet
       scene.remove(locked_object_ellipse);
@@ -465,84 +424,18 @@
     }
     locked_object = orbit_obj;
     locked_object_idx = mapped_obj['idx']; // this is the object's position in the added_objects array
-    if (using_webgl) {
-      locked_object_color = attributes.value_color.value[locked_object_idx];
-      attributes.value_color.value[locked_object_idx] = full_name === 'earth'
-        ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000);
-      locked_object_size = attributes.size.value[locked_object_idx];
-      attributes.size.value[locked_object_idx] = 30.0;
-      attributes.locked.value[locked_object_idx] = 1.0;
-      setAttributeNeedsUpdateFlags();
-    }
+    locked_object_color = attributes.value_color.value[locked_object_idx];
+    attributes.value_color.value[locked_object_idx] = full_name === 'earth'
+      ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000);
+    locked_object_size = attributes.size.value[locked_object_idx];
+    attributes.size.value[locked_object_idx] = 30.0;
+    attributes.locked.value[locked_object_idx] = 1.0;
+    setAttributeNeedsUpdateFlags();
 
     locked_object_ellipse = locked_object.getEllipse();
     scene.add(locked_object_ellipse);
     opts.camera_fly_around = true;
   } // end setLock
-
-  function startSimulation() {
-    if (!asteroids_loaded) {
-      throw "couldn't start simulation: asteroids not loaded";
-    }
-    if (!workers_initialized) {
-      throw "couldn't start simulation: simulation not initialized";
-    }
-
-    for (var i=0; i < workers.length; i++) {
-      // trigger work
-      var particles = works[i];
-      var obj_ephs = [];
-      for (var j=0; j < particles.length; j++) {
-        obj_ephs.push(particles[j].eph);
-      }
-      workers[i].postMessage({
-        command: 'start',
-        particle_ephemeris: obj_ephs,
-        start_jed: jed
-      });
-    }
-  }  // end startSimulation
-
-  function stopSimulation() {
-    toggleSimulation(false);
-  }
-
-  function toggleSimulation(run) {
-    for (var i=0; i < workers.length; i++) {
-      workers[i].postMessage({
-        command: 'toggle_simulation',
-        val: run
-      });
-    }
-  }
-
-  function initSimulation() {
-    var l = added_objects.length;
-    var objects_per_worker = Math.ceil(l / NUM_WORKERS);
-    var remainder = l % NUM_WORKERS;
-    for (var i=0; i < NUM_WORKERS; i++) {
-      workers[i] = new Worker(worker_path);
-      var start = i*objects_per_worker;
-      works[i] = added_objects.slice(start, Math.min(start + objects_per_worker, l));
-    }
-
-    $.each(works, function(idx) {
-      var work = this;
-      workers[idx].onmessage = function(e) {
-        handleSimulationResults(e, work.slice());
-      }
-    });
-    /*
-    for (var i=0; i < NUM_WORKERS; i++) {
-      (function() {
-        workers[i].onmessage = function(e) {
-          handleSimulationResults(e, works[i]);
-        }
-      })();
-    }
-    */
-    workers_initialized = true;
-  }
 
   function handleSimulationResults(e, particles) {
     var data = e.data;
@@ -589,7 +482,7 @@
     }
     else {
       $.getJSON('/api/rankings?sort_by=' + sort + '&limit='
-          + (using_webgl ? MAX_NUM_ORBITS : CANVAS_NUM_ORBITS)
+          + MAX_NUM_ORBITS
           + '&orbits_only=true', function(data) {
             me.processAsteroidRankings(data);
       }).error(function() {
@@ -644,14 +537,12 @@
     particle_system_shader_material.transparent = true;
     particle_system_shader_material.blending = THREE.AdditiveBlending;
 
-    // particle_system_geometry.vertices.length
     for (var i = 0; i < added_objects.length; i++) {
       if (i < planets.length) {
         attributes.size.value[i] = 75;
         attributes.is_planet.value[i] = 1.0;
       }
       else {
-        //attributes.size.value[i] = i < NUM_BIG_PARTICLES ? 50 : 15;
         attributes.size.value[i] = added_objects[i].opts.object_size;
         attributes.is_planet.value[i] = 0.0;
       }
@@ -674,13 +565,11 @@
 
     particleSystem = new THREE.ParticleSystem(
       particle_system_geometry,
-      //particle_system_material
       particle_system_shader_material
     );
     window.ps = particleSystem;
 
     // add it to the scene
-    //particleSystem.sortParticles = true;
     scene.add(particleSystem);
   }
 
@@ -713,8 +602,8 @@
     jed = new_jed;
   }
 
-  // animation loop
   function animate() {
+    // animation loop
     if (!asteroids_loaded) {
       render();
       requestAnimFrame(animate);
@@ -743,8 +632,9 @@
     requestAnimFrame(animate);
   }
 
-  // render the scene
   function render(force) {
+    // render the scene at this timeframe
+
     // update camera controls
     cameraControls.update();
 
@@ -824,9 +714,6 @@
     if (particleSystem) {
       scene.remove(particleSystem);
       particleSystem = null;
-    }
-    if (asteroids_loaded) {
-      stopSimulation();
     }
 
     if (lastHovered) {
@@ -953,13 +840,7 @@
     if (!asteroids_loaded) {
       asteroids_loaded = true;
     }
-    if (using_webgl) {
-      createParticleSystem();   // initialize and start the simulation
-    }
-    else {
-      initSimulation();
-      startSimulation();
-    }
+    createParticleSystem();   // initialize and start the simulation
 
     if (featured_2012_da14) {
       setLock('earth');
