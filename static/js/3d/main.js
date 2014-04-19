@@ -255,7 +255,7 @@
           display_color: new THREE.Color(0x913CEE),
           particle_geometry: particle_system_geometry,
           name: 'Mercury'
-        }, !using_webgl);
+        });
     scene.add(mercury.getEllipse());
     var venus = new Orbit3D(Ephemeris.venus,
         {
@@ -264,7 +264,7 @@
           display_color: new THREE.Color(0xFF7733),
           particle_geometry: particle_system_geometry,
           name: 'Venus'
-        }, !using_webgl);
+        });
     scene.add(venus.getEllipse());
     var earth = new Orbit3D(Ephemeris.earth,
         {
@@ -273,7 +273,7 @@
           display_color: new THREE.Color(0x009ACD),
           particle_geometry: particle_system_geometry,
           name: 'Earth'
-        }, !using_webgl);
+        });
     scene.add(earth.getEllipse());
     feature_map['earth'] = {
       orbit: earth,
@@ -286,7 +286,7 @@
           display_color: new THREE.Color(0xA63A3A),
           particle_geometry: particle_system_geometry,
           name: 'Mars'
-        }, !using_webgl);
+        });
     scene.add(mars.getEllipse());
     var jupiter = new Orbit3D(Ephemeris.jupiter,
         {
@@ -295,7 +295,7 @@
           display_color: new THREE.Color(0xFF7F50),
           particle_geometry: particle_system_geometry,
           name: 'Jupiter'
-        }, !using_webgl);
+        });
     scene.add(jupiter.getEllipse());
 
     planets = [mercury, venus, earth, mars, jupiter];
@@ -308,7 +308,7 @@
           display_color: new THREE.Color(0xff0000),
           particle_geometry: particle_system_geometry,
           name: '2012 DA14'
-          }, !using_webgl);
+          });
       scene.add(asteroid_2012_da14.getEllipse());
       feature_map['2012 DA14'] = {
         orbit: asteroid_2012_da14,
@@ -647,7 +647,7 @@
       display_date_last_updated = now;
     }
 
-    if (using_webgl && (object_movement_on || force)) {
+    if (object_movement_on || force) {
       // update shader vals for asteroid cloud
       uniforms.jed.value = jed;
       jed += opts.jed_delta;

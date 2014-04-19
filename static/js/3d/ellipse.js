@@ -8,7 +8,7 @@
   var attributes
   var uniforms;
 
-  var Orbit3D = function(eph, opts, bigParticle) {
+  var Orbit3D = function(eph, opts) {
     opts = opts || {};
     opts.width = opts.width || 1;
     opts.object_size = opts.object_size || 1;
@@ -18,7 +18,6 @@
     this.name = opts.name;
     this.eph = eph;
     this.particle_geometry = opts.particle_geometry;
-    this.bigParticle = bigParticle;
 
     this.CreateParticle(opts.jed, opts.texture_path);
   }
@@ -54,34 +53,10 @@
   }
 
   Orbit3D.prototype.CreateParticle = function(jed, texture_path) {
-    if (!this.bigParticle && this.particle_geometry) {
-      // dummy position for particle geometry
-      var tmp_vec = new THREE.Vector3(0,0,0);
-      this.particle_geometry.vertices.push(tmp_vec);
-      return;
-    }
-
-    // this is used by broken canvas mode only
-
-    var pos = this.getPosAtTime(jed);
-
-    if (this.bigParticle) {
-      //var obj = new THREE.Object3D();
-      var geometry = new THREE.SphereGeometry(this.opts.object_size);
-      //var geometry = new THREE.CubeGeometry(100, 100, 100);
-      var mat_opts = {color: this.opts.color};
-      if (texture_path) {
-        $.extend(mat_opts, {
-          map: THREE.ImageUtils.loadTexture(texture_path),
-          wireframe: false,
-          overdraw: true
-        });
-      }
-      var material= new THREE.MeshBasicMaterial(mat_opts);
-      this.particle = new THREE.Mesh(geometry, material);
-      //this.particle.scale.x = -1; // flip so texture shows up oriented correctly
-      this.particle.position.set(pos[0], pos[1], pos[2]);
-    }
+    // dummy position for particle geometry
+    if (!this.particle_geometry) return;
+    var tmp_vec = new THREE.Vector3(0,0,0);
+    this.particle_geometry.vertices.push(tmp_vec);
   }
 
   Orbit3D.prototype.MoveParticle = function(time_jed) {
@@ -90,15 +65,7 @@
   }
 
   Orbit3D.prototype.MoveParticleToPosition = function(pos) {
-    if (this.bigParticle) {
-      this.particle.position.set(pos[0], pos[1], pos[2]);
-    }
-    else {
-      var vertex_particle = this.particle_geometry.vertices[this.vertex_pos];
-      vertex_particle.x = pos[0];
-      vertex_particle.y = pos[1];
-      vertex_particle.z = pos[2];
-    }
+    this.particle.position.set(pos[0], pos[1], pos[2]);
   }
 
   Orbit3D.prototype.getPosAtTime = function(jed) {

@@ -98,7 +98,6 @@
     .directive('bsTooltip', function() {
       return {
         link: function(scope, elt, attrs) {
-          console.log('frick', elt);
           $(elt).tooltip();
         }
       };
