@@ -1,16 +1,11 @@
 ;function Asterank3D(opts) {
-  "use strict";
+  'use strict';
 
   var me = this;
 
-  // options and defaults
+  /** Options and defaults **/
   opts.static_prefix = opts.static_prefix || '/static';
-  //opts.default_camera_position = opts.camera_position || [-23, 168, -76];
-  //opts.default_camera_position = opts.camera_position || [0, -155, 32];
   opts.default_camera_position = opts.camera_position || [0, 155, 32];
-  //opts.default_camera_position = opts.camera_position || [96, 144, 72];
-  //opts.default_camera_position = opts.camera_position || [65.22970312254904, 193.81630564233313, 98.45479575249281];
-  //opts.default_camera_rotation = opts.camera_rotation || [-1.1007851453433237, 0.291511304900361, 2.9567279354302483];
   opts.camera_fly_around = typeof opts.camera_fly_around === 'undefined' ? true : opts.camera_fly_around;
   opts.jed_delta = opts.jed_delta || .25;
   opts.custom_object_fn = opts.custom_object_fn || null;
@@ -37,7 +32,7 @@
   /** Constants **/
   var WEB_GL_ENABLED = true
     , MAX_NUM_ORBITS = 4000
-    , CANVAS_NUM_ORBITS = 15    // gimped version orbits
+    , CANVAS_NUM_ORBITS = 15    // number of orbits to show in canvas version
     , PIXELS_PER_AU = 50
     , NUM_BIG_PARTICLES = 25;   // show this many asteroids with orbits
 
@@ -66,10 +61,10 @@
     , locked_object_size = -1
     , locked_object_color = -1
 
-  // 2012 da14
+  // 2012 da14 special case
   var featured_2012_da14 = getParameterByName('2012_DA14') === '1';
 
-  // workers stuff
+  // Web workers stuff
   var works = []
     , workers = []
     , NUM_WORKERS = 3
@@ -81,6 +76,7 @@
   var attributes
     , uniforms
 
+  // Initialization
   init();
   if (opts.show_dat_gui) {
     initGUI();
@@ -94,13 +90,6 @@
     $('#controls .js-sort').css('font-weight', 'normal');
     $(this).css('font-weight', 'bold');
   });
-
-  me.pause = function() {
-    object_movement_on = false;
-  }
-  me.play = function() {
-    object_movement_on = true;
-  }
 
   // 2012 Da14 feature
   if (featured_2012_da14) {
@@ -212,14 +201,6 @@
     renderer.setSize(containerWidth, containerHeight);
     opts.container.appendChild(renderer.domElement);
 
-    /*
-    // Set up stats
-    stats = new Stats();
-    stats.domElement.style.position	= 'absolute';
-    stats.domElement.style.bottom	= '0px';
-    document.body.appendChild(stats.domElement);
-    */
-
     // create a scene
     scene = new THREE.Scene();
 
@@ -228,20 +209,7 @@
     var cameraW	= cameraH / containerHeight * containerWidth;
     window.cam = camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 1, 5000);
     setDefaultCameraPosition();
-    //camera.rotation.setZ(-Math.PI)
-    /*
-    camera.rotation.set(
-        opts.default_camera_rotation[0],
-        opts.default_camera_rotation[1],
-        opts.default_camera_rotation[2]);
-    */
-    //camera.position.set(22.39102192510384, -124.78460848134833, -55.29382439584528);
-    //camera.position.set(12.39102192510384, -124.78460848134833, -75.29382439584528);
 
-    //camera.position.set(-145, 41, -31);
-    // 77, -155, 23
-
-    //THREE.Object3D._threexDomEvent.camera(camera);    // camera mouse handler
     THREEx.WindowResize(renderer, camera, opts.container);    // handle window resize
     // Fullscreen api
     if (THREEx.FullScreen && THREEx.FullScreen.available()) {
@@ -259,7 +227,8 @@
     cameraControls.maxDistance = 1100;
     cameraControls.dynamicDampingFactor = 0.5;
     window.cc = cameraControls;
-    // This is one of the stupidest things I've ever done
+
+    // This is stupid but it's how I set up the initial rotation
     cameraControls.forceRotate(
         new THREE.Vector3(0.09133858267716535, 0.4658716047427351, 0.1826620371691377),
         new THREE.Vector3(-0.12932885444884135, 0.35337196181704117,  0.023557202790282953));
@@ -268,7 +237,7 @@
         new THREE.Vector3(-0.0656536826099882, 0.5746939531732201, 0.7470641189675084));
 
 
-    // Rendering stuff
+    // Rendering solar system
 
     // "sun" - 0,0 marker
     if (using_webgl) {
@@ -382,29 +351,8 @@
       planets.push(asteroid_2012_da14);
     }
 
-    // Sky
+    // Skybox
     if (using_webgl) {
-      /*
-      var materialArray = [];
-      var path = opts.static_prefix + "/img/dark-s_";
-      var format = '.jpg';
-      var urls = [
-          path + 'px' + format, path + 'nx' + format,
-          path + 'py' + format, path + 'ny' + format,
-          path + 'pz' + format, path + 'nz' + format
-        ];
-      for (var i = 0; i < 6; i++)
-        materialArray.push( new THREE.MeshBasicMaterial({
-            map: loadTexture(urls[i]),
-            side: THREE.BackSide
-        }));
-      var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
-      var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-      skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
-      skyBox.rotation.z = pi*25/32;  // get the milky way in the right place
-      skyBox.rotation.x = pi/11;
-      */
-
       var geometry = new THREE.SphereGeometry(3000, 60, 40);
       var uniforms = {
         texture: { type: 't', value: loadTexture(opts.static_prefix + '/img/eso_dark.jpg') }
@@ -419,7 +367,6 @@
       skyBox = new THREE.Mesh(geometry, material);
       skyBox.scale.set(-1, 1, 1);
       skyBox.eulerOrder = 'XZY';
-      //skyBox.rotation.set(0, .3, -.9);
       skyBox.rotation.z = pi/2;
       skyBox.rotation.x = pi;
       skyBox.renderDepth = 1000.0;
@@ -432,7 +379,7 @@
     });
 
     window.renderer = renderer;
-  }
+  }  // end init
 
   function setNeutralCameraPosition() {
     // Follow floating path around
@@ -447,7 +394,6 @@
         opts.default_camera_position[2]);
   }
 
-  // camera highlight fns
   function setHighlight(full_name) {
     // Colors the object differently, but doesn't follow it.
     var mapped_obj = feature_map[full_name];
@@ -471,10 +417,6 @@
   }
 
   // camera locking fns
-  me.clearLock = function() {
-    return clearLock(true);
-  }
-
   function clearLock(set_default_camera) {
     if (!locked_object) return;
 
@@ -504,11 +446,7 @@
 
     // reset camera pos so subsequent locks don't get into crazy positions
     setNeutralCameraPosition();
-  }
-
-  me.setLock = function(full_name) {
-    return setLock(full_name);
-  }
+  }   // end clearLock
 
   function setLock(full_name) {
     if (locked_object) {
@@ -540,7 +478,7 @@
     locked_object_ellipse = locked_object.getEllipse();
     scene.add(locked_object_ellipse);
     opts.camera_fly_around = true;
-  }
+  } // end setLock
 
   function startSimulation() {
     if (!asteroids_loaded) {
@@ -563,7 +501,7 @@
         start_jed: jed
       });
     }
-  }
+  }  // end startSimulation
 
   function stopSimulation() {
     toggleSimulation(false);
@@ -660,159 +598,6 @@
       });
     }
   }
-
-  me.isWebGLSupported = function() {
-    return isWebGLSupported();
-  };
-
-  me.clearRankings = function() {
-    // Remove any old setup
-    for (var i=0; i < added_objects.length; i++) {
-      scene.remove(added_objects[i].getParticle());
-    }
-    clearLock(true);
-    if (particleSystem) {
-      scene.remove(particleSystem);
-      particleSystem = null;
-    }
-    if (asteroids_loaded) {
-      stopSimulation();
-    }
-
-    if (lastHovered) {
-      scene.remove(lastHovered);
-    }
-  };
-
-  me.processAsteroidRankings = function(data) {
-    if (!data) {
-      alert('Sorry, something went wrong and the server failed to return data.');
-      return;
-    }
-    var n = data.length;
-    // add planets
-    added_objects = planets.slice();
-    particle_system_geometry = new THREE.Geometry();
-
-    for (var i=0; i < planets.length; i++) {
-      // FIXME this is a workaround for the poor handling of PSG vertices in ellipse.js
-      // needs to be cleaned up
-      particle_system_geometry.vertices.push(new THREE.Vector3(0,0,0));
-    }
-
-    var useBigParticles = !using_webgl;
-    var featured_count = 0;
-    var featured_html = '';
-    for (var i=0; i < n; i++) {
-      if (i === NUM_BIG_PARTICLES) {
-        if (!using_webgl) {
-          // only show objects of interest if there's no particlesystem support
-          break;
-        }
-        useBigParticles = false;
-      }
-      var roid = data[i];
-      var locked = false;
-      var orbit;
-      if (opts.custom_object_fn) {
-        var orbit_params = opts.custom_object_fn(roid);
-        orbit_params.particle_geometry = particle_system_geometry; // will add itself to this geometry
-        orbit_params.jed = jed;
-        orbit = new Orbit3D(roid, orbit_params, useBigParticles);
-      }
-      else {
-        var display_color = i < NUM_BIG_PARTICLES
-            ? opts.top_object_color : displayColorForObject(roid)
-        orbit = new Orbit3D(roid, {
-          color: 0xcccccc,
-          display_color: display_color,
-          width: 2,
-          object_size: i < NUM_BIG_PARTICLES ? 50 : 15, //1.5,
-          jed: jed,
-          particle_geometry: particle_system_geometry // will add itself to this geometry
-        }, useBigParticles);
-      }
-
-      // Add it to featured list
-      feature_map[roid.full_name] = {
-        'orbit': orbit,
-        'idx': added_objects.length
-      };
-      // TODO(@ian) all this specific objects-of-interest/featured stuff
-      // needs to be moved out of 3d code !!
-      if (featured_count++ < NUM_BIG_PARTICLES) {
-        featured_html += '<tr data-full-name="'
-          + roid.full_name
-          + '"><td><a href="#">'
-          + (roid.prov_des || roid.full_name)
-          + '</a></td><td>'
-          + (roid.price < 1 ? 'N/A' : '$' + fuzzy_price(roid.price))
-          + '</td></tr>';
-      }
-
-      // Add to list of objects in scene
-      added_objects.push(orbit);
-    } // end asteroid results for loop
-
-    // handle when view mode is switched - need to clear every row but the sun
-    if (featured_2012_da14) {
-      $('#objects-of-interest tr:gt(2)').remove();
-    }
-    else {
-      $('#objects-of-interest tr:gt(1)').remove();
-    }
-    $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
-      $('#objects-of-interest tr').css('background-color', '#000');
-      var $e = $(this);
-      var full_name = $e.data('full-name');
-      $('#sun-selector').css('background-color', 'green');
-      switch (full_name) {
-        // special case full names
-        case 'sun':
-          clearLock(true);
-          return false;
-        case '2012 DA14':
-          // highlight the earth too
-          //setHighlight('earth');
-          break;
-      }
-      clearLock();
-
-      // set new lock
-      $e.css('background-color', 'green');
-      $('#sun-selector').css('background-color', '#000');
-      setLock(full_name);
-
-      return false;
-    });
-    $('#objects-of-interest-container').show();
-
-    jed = toJED(new Date());  // reset date
-    if (!asteroids_loaded) {
-      asteroids_loaded = true;
-    }
-    if (using_webgl) {
-      createParticleSystem();   // initialize and start the simulation
-    }
-    else {
-      initSimulation();
-      startSimulation();
-    }
-
-    if (featured_2012_da14) {
-      setLock('earth');
-      $('#sun-selector').css('background-color', 'black');
-      $('#earth-selector').css('background-color', 'green');
-    }
-    if (!first_loaded) {
-      animate();
-      first_loaded = true;
-    }
-
-    $('#loading').hide();
-
-    if (typeof mixpanel !== 'undefined') mixpanel.track('simulation started');
-  };
 
   function createParticleSystem() {
     // attributes
@@ -1027,5 +812,175 @@
     }
     return THREE.ImageUtils.loadTexture(path);
   }
+
+  /** Public functions **/
+
+  me.clearRankings = function() {
+    // Remove any old setup
+    for (var i=0; i < added_objects.length; i++) {
+      scene.remove(added_objects[i].getParticle());
+    }
+    clearLock(true);
+    if (particleSystem) {
+      scene.remove(particleSystem);
+      particleSystem = null;
+    }
+    if (asteroids_loaded) {
+      stopSimulation();
+    }
+
+    if (lastHovered) {
+      scene.remove(lastHovered);
+    }
+  };
+
+  me.clearLock = function() {
+    return clearLock(true);
+  };
+
+  me.setLock = function(full_name) {
+    return setLock(full_name);
+  };
+
+  me.isWebGLSupported = function() {
+    return isWebGLSupported();
+  };
+
+  me.processAsteroidRankings = function(data) {
+    if (!data) {
+      alert('Sorry, something went wrong and the server failed to return data.');
+      return;
+    }
+    var n = data.length;
+    // add planets
+    added_objects = planets.slice();
+    particle_system_geometry = new THREE.Geometry();
+
+    for (var i=0; i < planets.length; i++) {
+      // FIXME this is a workaround for the poor handling of PSG vertices in ellipse.js
+      // needs to be cleaned up
+      particle_system_geometry.vertices.push(new THREE.Vector3(0,0,0));
+    }
+
+    var useBigParticles = !using_webgl;
+    var featured_count = 0;
+    var featured_html = '';
+    for (var i=0; i < n; i++) {
+      if (i === NUM_BIG_PARTICLES) {
+        if (!using_webgl) {
+          // only show objects of interest if there's no particlesystem support
+          break;
+        }
+        useBigParticles = false;
+      }
+      var roid = data[i];
+      var locked = false;
+      var orbit;
+      if (opts.custom_object_fn) {
+        var orbit_params = opts.custom_object_fn(roid);
+        orbit_params.particle_geometry = particle_system_geometry; // will add itself to this geometry
+        orbit_params.jed = jed;
+        orbit = new Orbit3D(roid, orbit_params, useBigParticles);
+      }
+      else {
+        var display_color = i < NUM_BIG_PARTICLES
+            ? opts.top_object_color : displayColorForObject(roid)
+        orbit = new Orbit3D(roid, {
+          color: 0xcccccc,
+          display_color: display_color,
+          width: 2,
+          object_size: i < NUM_BIG_PARTICLES ? 50 : 15, //1.5,
+          jed: jed,
+          particle_geometry: particle_system_geometry // will add itself to this geometry
+        }, useBigParticles);
+      }
+
+      // Add it to featured list
+      feature_map[roid.full_name] = {
+        'orbit': orbit,
+        'idx': added_objects.length
+      };
+      // TODO(@ian) all this specific objects-of-interest/featured stuff
+      // needs to be moved out of 3d code !!
+      if (featured_count++ < NUM_BIG_PARTICLES) {
+        featured_html += '<tr data-full-name="'
+          + roid.full_name
+          + '"><td><a href="#">'
+          + (roid.prov_des || roid.full_name)
+          + '</a></td><td>'
+          + (roid.price < 1 ? 'N/A' : '$' + fuzzy_price(roid.price))
+          + '</td></tr>';
+      }
+
+      // Add to list of objects in scene
+      added_objects.push(orbit);
+    } // end asteroid results for loop
+
+    // handle when view mode is switched - need to clear every row but the sun
+    if (featured_2012_da14) {
+      $('#objects-of-interest tr:gt(2)').remove();
+    }
+    else {
+      $('#objects-of-interest tr:gt(1)').remove();
+    }
+    $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
+      $('#objects-of-interest tr').css('background-color', '#000');
+      var $e = $(this);
+      var full_name = $e.data('full-name');
+      $('#sun-selector').css('background-color', 'green');
+      switch (full_name) {
+        // special case full names
+        case 'sun':
+          clearLock(true);
+          return false;
+        case '2012 DA14':
+          // highlight the earth too
+          //setHighlight('earth');
+          break;
+      }
+      clearLock();
+
+      // set new lock
+      $e.css('background-color', 'green');
+      $('#sun-selector').css('background-color', '#000');
+      setLock(full_name);
+
+      return false;
+    });
+    $('#objects-of-interest-container').show();
+
+    jed = toJED(new Date());  // reset date
+    if (!asteroids_loaded) {
+      asteroids_loaded = true;
+    }
+    if (using_webgl) {
+      createParticleSystem();   // initialize and start the simulation
+    }
+    else {
+      initSimulation();
+      startSimulation();
+    }
+
+    if (featured_2012_da14) {
+      setLock('earth');
+      $('#sun-selector').css('background-color', 'black');
+      $('#earth-selector').css('background-color', 'green');
+    }
+    if (!first_loaded) {
+      animate();
+      first_loaded = true;
+    }
+
+    $('#loading').hide();
+
+    if (typeof mixpanel !== 'undefined') mixpanel.track('simulation started');
+  };    // end processAsteroidRankings
+
+  me.pause = function() {
+    object_movement_on = false;
+  };
+
+  me.play = function() {
+    object_movement_on = true;
+  };
 }
-if (!window.console) window.console = {log: function() {}};
