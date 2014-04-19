@@ -123,33 +123,6 @@ def price(obj):
       # and the goodies will be far beneath. Also, gravity well.
       mass = mass * 1e-6
 
-  """
-  # radius in m
-  if isinstance(obj['diameter'], basestring):
-    if exactmass:
-      # If we know the mass, don't make assumptions about radius
-      print 'Disqualified', obj['full_name']
-      return -1
-
-    # 5km radius by default
-    radius = DEFAULT_RADIUS
-  else:
-    if not exactmass:
-      # If we know the radius, don't make assumptions about mass
-      # a lot of things meet this test
-      #print 'Disqualified', obj['full_name']
-      radius = DEFAULT_RADIUS
-    else:
-      radius = obj['diameter'] / 2
-
-  # vol in km^3
-  # TODO switch to ellipsoid vol
-  vol = 4/3 * math.pi * math.pow(radius, 3) # model as sphere
-
-  # density in kg/km^3
-  #density = mass / vol
-  """
-
   stype = obj['spec']
   value = estimate.valuePerKg(stype) * mass
   saved = estimate.savedPerKg(stype) * mass
