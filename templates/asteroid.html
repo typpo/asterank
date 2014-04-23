@@ -16,12 +16,12 @@
   {% set orbit_explanation = 'orbit may approach Earth\'s, but its orbit is larger' %}
 {% endif %}
 
-{% block title %}{{ canonical_name }} information - orbit, physical parameters{% endblock %}
+{% block title %}{{ canonical_name }} asteroid information{% endblock %}
 
 {% block content %}
 <h1>{{ canonical_name }}</h1>
 
-{{ canonical_name }} is a {{ canonical_orbit_type }}-class asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}"{% if asteroid.prov_des %} and its provisional designation is "{{ asteroid.prov_des }}"{% endif %}.  {{ canonical_name }}'s {{ orbit_explanation }}.
+{{ canonical_name }} is a {{ canonical_orbit_type }} asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}"{% if asteroid.prov_des %} and its provisional designation is "{{ asteroid.prov_des }}"{% endif %}.  {{ canonical_name }}'s {{ orbit_explanation }}.
 
 <div>
   <ul>
