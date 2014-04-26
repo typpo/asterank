@@ -40,7 +40,7 @@ The `data/pipeline` folder contains the scrapers used to aggregate and build the
 
 ### SBDB setup
 
-The SBDB is too large to include in this repo, and downloading it takes some time.  Download http://www.ianww.com/fulldb.20130910.csv to `data/pipeline/static/`, or produce your own database by going to http://ssd.jpl.nasa.gov/sbdb_query.cgi and downloading all attributes for all objects in CSV format.
+The SBDB is too large to include in this repo, and downloading it takes some time.  Download http://www.ianww.com/latest_fulldb.csv to `data/pipeline/static/`, or produce your own database by going to http://ssd.jpl.nasa.gov/sbdb_query.cgi and downloading all attributes for all objects in CSV format.
 
 ### Running the pipeline
 
