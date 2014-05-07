@@ -21,7 +21,7 @@
 {% block content %}
 <h1>{{ canonical_name }}</h1>
 
-{{ canonical_name }} is a {{ canonical_orbit_type }} asteroid with spectral type {{ asteroid.spec }}.  Its full name is "{{ asteroid.full_name }}"{% if asteroid.prov_des %} and its provisional designation is "{{ asteroid.prov_des }}"{% endif %}.  {{ canonical_name }}'s {{ orbit_explanation }}.
+{{ canonical_name }} is a {{ canonical_orbit_type }} asteroid of {% if asteroid.spec == '?' %}unknown spectral type{%else%}spectral type {{ asteroid.spec }}{% endif %}.  Its full name is "{{ asteroid.full_name }}"{% if asteroid.prov_des %} and its provisional designation is "{{ asteroid.prov_des }}"{% endif %}.  {{ canonical_name }}'s {{ orbit_explanation }}.
 
 <div>
   <ul>
