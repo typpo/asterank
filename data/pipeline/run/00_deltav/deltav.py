@@ -13,7 +13,7 @@ import operator
 import pandas as pp
 
 if len(sys.argv) < 3:
-  DATA_PATH = 'data/fulldb.20140320.csv'
+  DATA_PATH = 'data/latest_sbdb.csv'
   DV_TEST_PATH = 'data/deltav/db.csv'
   OUTPUT_PATH = 'data/deltav/db2.csv'
 else:
