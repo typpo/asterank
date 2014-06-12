@@ -331,16 +331,15 @@ def about():
   else:
     email = request.form.get('email', None)
     feedback = request.form.get('feedback', None)
-    if email.find('href') > -1:
+    if not feedback or feedback.find('a href') > -1:
       return 'Form rejected because you look like a spambot. Please email me directly.'
 
-    if feedback:
-      from flask.ext.mail import Message
-      msg = Message('Asterank Feedback',
-                sender='feedback@asterank.com',
-                recipients=['typppo@gmail.com'],
-                body='%s:\r\n%s' % (email, feedback))
-      mail.send(msg)
+    from flask.ext.mail import Message
+    msg = Message('Asterank Feedback',
+              sender='feedback@asterank.com',
+              recipients=['typppo@gmail.com'],
+              body='%s:\r\n%s' % (email, feedback))
+    mail.send(msg)
     return render_template('about.html')
 
 @app.route('/feedback')
