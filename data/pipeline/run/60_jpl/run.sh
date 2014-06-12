@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python crawl_top.py
+python `dirname $0`/crawl_top.py
