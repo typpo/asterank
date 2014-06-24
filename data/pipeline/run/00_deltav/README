@@ -1,0 +1,3 @@
+Calculates DV for asteroids in database.  Checks against Lance Benner's calculations.
+
+Note that this typically takes more than 4GB of RAM.
