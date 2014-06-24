@@ -43,7 +43,6 @@ def populatePartialDb():
 
 def _run(partial=False):
   # Constants and settings
-  # TODO this method should be factored out
 
   # Fill database
   conn = Connection('localhost', 27017)
@@ -111,7 +110,8 @@ def _run(partial=False):
         row['spec'] = 'comet'
       else:
         if partial:
-          continue  # don't build the full db of 600k objects
+          # don't build the full db of 600k objects
+          continue
         row['spec'] = '?'
 
     if row['spec'] == 'C type':
@@ -157,6 +157,7 @@ def _run(partial=False):
     row['profit'] = scoring.profit(row)
 
     # TODO move this final scoring pass into scoring.py
+
     # cap price influence on score at 10 B
     score = min(row['price'], 1e10) / 5e11
     if score > 0.0001:

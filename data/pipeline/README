@@ -1,0 +1,19 @@
+A pipeline is a series of steps executed in order, usually via cron or some
+other regular trigger.
+
+- Pipeline steps are in the run/ directory.  They are executed in order, hence
+the naming convention of ##_foo, where ## indicates priority (lower is better).
+- Every step is a folder that contains a run.sh.  Each run.sh is called once
+each time the pipeline runs.
+
+Sample invocation:
+
+  ./pipeline
+
+Sample invocation of a single step:
+
+  ./pipline 00_foo
+
+It matches patterns (same as above):
+
+  ./pipline 00_

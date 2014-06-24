@@ -57,6 +57,5 @@ def get_user_count():
   return len(stackblink_results.distinct('email'))
 
 def update_group(id, positions, interesting):
-  # add crowdsourced info to group
-  # update pos_x, pos_y, reviews, score
+  # TODO add crowdsourced info to group. Update pos_x, pos_y, reviews, score
   pass

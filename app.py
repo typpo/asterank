@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response, send_from_directory
 from flask.ext.assets import Environment, Bundle
 from flask.ext.mail import Mail
@@ -245,6 +246,7 @@ def skymorph_fast_image():
     return response
 
 # SDSS routes
+
 @app.route('/api/sdss/get_unknown_group')
 def sdss_unknown_group():
   from sdss import sdss
@@ -262,6 +264,7 @@ def sdss_image():
   return response
 
 # Stack/blink Discover routes
+
 @app.route('/discover')
 def discover():
   first_time = session.get('discover_first_time', True)
