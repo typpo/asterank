@@ -18,12 +18,12 @@ kepler_coll = db.kepler
 exoplanets_coll = db.exo
 user_objects_coll = db.user_objects
 
-VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
-    SMALL_SIZE_SORT])
-
 # Special case sorts
 UPCOMING_SORT = 'upcoming'
 SMALL_SIZE_SORT = 'smallest'
+
+VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
+    SMALL_SIZE_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
     'om', 'ma', 'n', 'w', 'per', 'epoch', 'spec']
