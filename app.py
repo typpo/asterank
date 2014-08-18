@@ -55,10 +55,6 @@ def index():
 def upcoming():
   return render_template('upcoming.html')
 
-@app.route('/3d')
-def view_3d():
-  return render_template('full3d.html', noop=noop_filter)
-
 @app.route('/3d/')
 def view_3d_slash():
   return render_template('full3d.html', noop=noop_filter)
