@@ -15,14 +15,10 @@ function email() {
 <p>
 Feedback and questions are always appreciated.  Please email <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script> or <a href="#" onClick="$('#contact_form').show();return false;">use this form</a>.
 
-<div id="contact_form" class="offset1" style="display:none;">
-<form method="POST">
-<label>Your email:<br><input type="text" name="email"/></label>
-Feedback<br><textarea style="width:45%;min-width:300px" name="feedback"></textarea>
-<br>
-<input type="submit"/>
-</form>
-</div>
+<script>
+document.write("<div id=\"contact_form\" class=\"offset1\" style=\"display:none;\">\r\n<form method=\"POST\">\r\n<label>Your email:<br><input type=\"text\" name=\"email\"\/><\/label>\r\nFeedback<br><textarea style=\"width:45%;min-width:300px\" name=\"feedback\"><\/textarea>\r\n<br>\r\n<input type=\"submit\"\/>\r\n<\/form>\r\n<\/div>");
+</script>
+
 </p>
 <div class="row-fluid">
   <h3>Accuracy</h3>
