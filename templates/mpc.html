@@ -16,10 +16,10 @@ function email() {
 
 <h3>Overview</h3>
 <p>
-Asterank is happy to offer a basic queryable database for the Minor Planet Center's MPCORB.DAT data files.  It is a simple way to quickly apply constraints to a set of over 600,000 asteroids.  The database supports comparators and specific criteria for all attributes provided by the MPC.
+Asterank offers a database API for the Minor Planet Center's MPCORB.DAT data files.  This API is a simple way to quickly apply constraints to a set of over 600,000 asteroids.  Users can construct queries with specific constraints across all data attributes recorded by the MPC.  Information is updated nightly from the MPC's MPCORB.dat dataset.
 </p>
 <p>
-The database currently runs on <strong>mongodb</strong> and queries must adhere to mongo's json format for a 'find' operation.  Information is updated nightly from the MPC's MPCORB.dat dataset.
+The database queries are based on mongodb's json-formatted 'find' operation.  See below for an example of a complex query.
 </p>
 <h3>Format</h3>
 <p>
@@ -31,20 +31,92 @@ Requests are of the form:
 </div>
 </p>
 <p>
-MPC results are parsed as per the orbit format specified <a href="http://www.minorplanetcenter.net/iau/info/MPOrbitFormat.html">here</a>.  In some cases, a field may not be present in the results if it was not present in MPCORB.dat.  This can be treated as an empty or unspecified attribute.
+MPC results are parsed per the orbit format specified <a href="http://www.minorplanetcenter.net/iau/info/MPOrbitFormat.html">here</a>.  In some cases, a field may not be present in the results if it was not present in MPCORB.dat.
 </p>
-<h3>Sample Request</h3>
+<h3>Sample Requests</h3>
+<h4>List all asteroids</h4>
 <p>
-{% raw %}
-This request returns 10 asteroids with roughly circular orbits, low inclination, and semi-major axis less than 1.5 AU:
-
-<p><a href='/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10'>/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10</a></p>
-{% endraw %}
+This sample request lists all asteroids.  The <code>query</code> and <code>limit</code> parameters are optional:
+</p>
+<p><strong><a href='/api/mpc'>http://asterank.com/api/mpc</a></strong></p>
+<p>
+Results:
+<div>
+  <pre style="background-color: #eee; width: 500px">
+[
+   {
+      "rms":0.6,
+      "epoch":"K134I",
+      "readable_des":"(1) Ceres",
+      "H":3.34,
+      "num_obs":6342,
+      "ref":"MPO247369",
+      "G":0.12,
+      "last_obs":"20121203",
+      "comp":"MPCLINUX  ",
+      "M":327.85412,
+      "U":" ",
+      "e":0.0761669,
+      "a":2.767993,
+      "om":80.33008,
+      "pert_p":"30h",
+      "d":0.2140211,
+      "i":10.59423,
+      "des":"00001",
+      "flags":"0000",
+      "num_opp":100,
+      "w":72.16707,
+      "pert_c":"M-v"
+   },
+   ...
+]
+  </pre>
+</div>
+</p>
+<h4>A more complicated query</h4>
+<p>
+</p>
+<p>
+<code>query</code> takes a JSON object that uses the MongoDB query language.  Specifically, it can be treated like a <a href="http://docs.mongodb.org/manual/reference/method/db.collection.find/">find()</a> operation.
+</p>
+<p>
+For example, let's build a request that returns 10 asteroids with roughly circular orbits, low inclination, and semi-major axis less than 1.5 AU.
+</p>
+<p>
+We construct the following query:
+<div>
+  <pre style="background-color: #eee; width: 500px">
+{
+   "e":{
+      "$lt":0.1
+   },
+   "i":{
+      "$lt":4
+   },
+   "a":{
+      "$lt":1.5
+   }
+}
+  </pre>
+</div>
+</p>
+<p>
+In plain English, we filter objects by the following conditions:<br>
+<ul>
+<li><code>e</code>, representing eccentricity, is less than ("$lt") 0.1.</li>
+<li><code>i</code>, representing inclination, is less than 4.</li>
+<li><code>a</code>, representing the semi-major axis, is less than 1.5.</li>
+</ul>
+</p>
+<p>
+Finally, put it in our API request:
+</p>
+<p><strong><a href='/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10'>http://asterank.com/api/mpc?query={"e":{"$lt":0.1},"i":{"$lt":4},"a":{"$lt":1.5}}&limit=10</a></strong></p>
 </p>
 <p>
 Results:
 <div>
-  <pre style="background-color: #ccc; width: 500px">
+  <pre style="background-color: #eee; width: 500px">
 [
    {
       "rms":0.52,
@@ -98,10 +170,6 @@ Results:
 ]
   </pre>
 </div>
-</p>
-<h3>Other APIs coming soon</h3>
-<p>
-Asterank has processed NASA/JPL Horizons data and we've built our own internal tools for estimating economic value and composition.
 </p>
 </div>
 {% endblock %}
