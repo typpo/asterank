@@ -15,20 +15,6 @@ f = open(FILE, 'r')
 lines = f.readlines()
 f.close()
 
-"""
-idx = 0
-objects = None
-for line in lines:
-  if line.startswith('00001'):
-    # first line
-    objects = lines[idx:]
-    break
-  idx += 1
-
-if not objects:
-  print 'Could not find beginning'
-"""
-
 # set up mongo connection
 conn = MongoClient()
 db = conn.asterank
