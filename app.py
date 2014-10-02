@@ -100,8 +100,8 @@ def asteroid_details(asteroid_slug=None):
 @app.route('/api/mpc')
 def api_mpc():
   try:
-    query = json.loads(request.args.get('query'))
-    limit = min(1000, int(request.args.get('limit')))
+    query = json.loads(request.args.get('query') or '{}')
+    limit = min(5000, int(request.args.get('limit') or 1000))
     json_resp = json.dumps(api.mpc(query, limit))
     return Response(json_resp, mimetype='application/json')
   except Exception, e:
