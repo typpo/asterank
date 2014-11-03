@@ -1,11 +1,8 @@
 ;(function() {
   "use strict";
 
-  var pi = Math.PI;
+  var pi = Math.PI, sin = Math.sin, cos = Math.cos;
   var PIXELS_PER_AU = 50;
-
-  var attributes
-  var uniforms;
 
   var Orbit3D = function(eph, opts) {
     opts = opts || {};
@@ -92,7 +89,6 @@
     var d = jed - epoch;
     M = ma + n * d;
 
-    var sin = Math.sin, cos = Math.cos;
     // Estimate eccentric and true anom using iterative approx
     var E0 = M;
     var lastdiff;
