@@ -3,7 +3,6 @@
 
   var pi = Math.PI;
   var PIXELS_PER_AU = 50;
-  var USE_REAL_ELLIPSE = true;
 
   var attributes
   var uniforms;
