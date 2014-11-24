@@ -40,14 +40,14 @@ def rankings(sort_by, limit, orbits_only=False):
   if orbits_only:
     fields = {field: True for field in ORBIT_FIELDS}
   fields['_id'] = False
+  
+  if sort_by in FIELD_ALIASES:
+    sort_by = FIELD_ALIASES[sort_by]
 
   if sort_by not in VALID_SORTS:
     return None
   if sort_by == UPCOMING_SORT:
     return upcoming_passes()
-  if sort_by in FIELD_ALIASES:
-    sort_by = FIELD_ALIASES[sort_by]
-
   if sort_by == SMALL_SIZE_SORT:
     results = ranking_by_smallest(limit, fields)
   else:
