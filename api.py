@@ -22,7 +22,7 @@ user_objects_coll = db.user_objects
 UPCOMING_SORT = 'upcoming'
 SMALL_SIZE_SORT = 'smallest'
 
-VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
+VALID_SORTS = set(['price', 'profit', 'closeness', 'score', UPCOMING_SORT, \
     SMALL_SIZE_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
@@ -40,9 +40,8 @@ def rankings(sort_by, limit, orbits_only=False):
   if orbits_only:
     fields = {field: True for field in ORBIT_FIELDS}
   fields['_id'] = False
-  
-  if sort_by in FIELD_ALIASES:
-    sort_by = FIELD_ALIASES[sort_by]
+
+  sort_by = FIELD_ALIASES.get(sort_by, sort_by)
 
   if sort_by not in VALID_SORTS:
     return None
