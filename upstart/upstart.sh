@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pushd `dirname $0`
-cd "$(git rev-parse --show-toplevel)"
+pushd ..
 mkdir -p /var/log/asterank
 
 echo "starting `date`"
@@ -18,4 +18,5 @@ echo $job
   wait $job
 done
 
+popd
 popd
