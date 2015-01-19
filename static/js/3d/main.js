@@ -661,15 +661,15 @@
 
   var fuzzes = [
     {
-      word: 'trillion',
+      word: 'T',
       num: 1000000000000
     },
     {
-      word: 'billion',
+      word: 'B',
       num: 1000000000
     },
     {
-      word: 'million',
+      word: 'M',
       num: 1000000
     }
   ];
