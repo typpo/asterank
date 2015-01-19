@@ -35,11 +35,14 @@
 
   <div id="show_sidebar_container" class="sidebar">
     <span id="show_sidebar" style="float:right;cursor:pointer;">+</span>
+    <p style="margin-top:0">
+      &laquo; <a href="/">Asteroid data view</a>
+    </p>
   </div>
   <div id="sidebar" class="sidebar">
     <span id="hide_sidebar" style="float:right;cursor:pointer;">-</span>
-    <p>
-    &laquo; <a href="/">Asteroid data view</a>
+    <p style="margin-top:0">
+      &laquo; <a href="/">Asteroid data view</a>
     </p>
 {% if not offline_mode %}
     <div class="fb-like" data-href="http://www.asterank.com/3d/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
@@ -51,7 +54,7 @@
 
     <hr/>
     <div id="objects-of-interest-container" style="text-align:center;display:none;opacity:.7;">
-      <span>Significant Objects<br>&amp; estimated value</span>
+      <span>Significant objects<br>&amp; estimated value</span>
       <table id="objects-of-interest">
         <tr id="sun-selector" data-full-name="sun" style="background-color:green;">
           <td colspan="2"><a href="#">Sun</a> (default view)</td>

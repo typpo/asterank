@@ -45,10 +45,10 @@ body {
   top: 0;
   padding: 5px 10px;
   font-size: 13px;
-  background-color: #252525;
+  background-color: #000;
   color: #f0f0f0;
   width: 145px;
-  border: 1px solid #ccc;
+  border: 1px solid #222;
 }
 .sidebar a {
   color: #f0f0f0;
