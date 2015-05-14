@@ -3,6 +3,7 @@
 from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response, send_from_directory
 from flask.ext.assets import Environment, Bundle
 from flask.ext.mail import Mail
+from flask.ext.cors import CORS
 import urllib
 import urlparse
 import json
@@ -23,6 +24,7 @@ t1 = threading.Thread(target=import_sdss)
 t1.start()
 
 app = Flask(__name__)
+cors = CORS(app)
 mail = Mail(app)
 filters.register_filters(app)
 app.secret_key = 'not a secret key'
