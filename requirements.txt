@@ -2,7 +2,6 @@ flask
 pymongo==2.4.2
 gunicorn
 Flask-Assets==0.8
-Flask-Cors==2.0.1
 jsmin
 cssmin
 BeautifulSoup4
