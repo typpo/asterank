@@ -21,6 +21,10 @@ server {
         proxy_pass http://localhost:9990/;
     }
 
+    location ^\/api\/(.*)$ {
+        add_header Access-Control-Allow-Origin *;
+    }
+
     # galaxies
     location /galaxies {
       alias /home/ian/galaxies;
