@@ -141,7 +141,11 @@
           }
         }
       }).listen();
-      window.datgui = text;
+      if (window.self !== window.top) {
+        // In an iframe, so close controls by default.
+        gui.close();
+      }
+      window.datgui = gui;
     }; // end window onload
   } // end initGUI
 
