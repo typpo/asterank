@@ -106,6 +106,9 @@ def _run(partial=False):
       elif row['full_name'] == '6178 (1986 DA)':
         print 'Adjust 1986 DA'
         row['spec'] = 'M'
+      elif row['full_name'] == '436724 (2011 UW158)':
+        print 'Adjust 2011 UW158'
+        row['spec'] = 'Xc'
       elif row['class'] in COMET_CLASSES:
         row['spec'] = 'comet'
       else:
