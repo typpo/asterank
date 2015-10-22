@@ -145,7 +145,7 @@
         // In an iframe, so close controls by default.
         gui.close();
       }
-      window.datgui = gui;
+      window.datgui = text;
     }; // end window onload
   } // end initGUI
 
@@ -307,9 +307,9 @@
       // Special: 2015 TB145
       var asteroid_2015_tb145 = new Orbit3D(Ephemeris.asteroid_2015_tb145,
           {
-            color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
+            color: 0xffffff, width: 1, jed: jed, object_size: 1.7,
           texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
-          display_color: new THREE.Color(0xff0000),
+          display_color: new THREE.Color(0xffffff),
           particle_geometry: particle_system_geometry,
           name: '2015 TB145'
           });
