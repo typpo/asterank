@@ -60,8 +60,8 @@
     , locked_object_size = -1
     , locked_object_color = -1
 
-  // 2012 da14 special case
-  var featured_2012_da14 = getParameterByName('2012_DA14') === '1';
+  // 2015 TB145 special case
+  var featured_2015_tb145 = getParameterByName('2015_tb145') === '1';
 
   // glsl and webgl stuff
   var attributes
@@ -83,10 +83,10 @@
     $(this).css('font-weight', 'bold');
   });
 
-  // 2012 DA14 feature special case
-  if (featured_2012_da14) {
-    jed = toJED(new Date('2012-11-01'));
-    if (typeof mixpanel !== 'undefined') mixpanel.track('2012_da14 special');
+  // 2015 TB145 feature special case
+  if (featured_2015_tb145) {
+    jed = toJED(new Date('2015-10-01'));
+    if (typeof mixpanel !== 'undefined') mixpanel.track('2015_tb145 special');
   }
 
   function initGUI() {
@@ -110,7 +110,7 @@
       this['Speed'] = opts.jed_delta;
       this['Planet orbits'] = planet_orbits_visible;
       this['Milky Way'] = opts.milky_way_visible;
-      this['Display date'] = '12/26/2012';
+      this['Display date'] = '12/26/2015';
     };
 
     window.onload = function() {
@@ -303,22 +303,22 @@
     scene.add(jupiter.getEllipse());
 
     planets = [mercury, venus, earth, mars, jupiter];
-    if (featured_2012_da14) {
-      // Special: 2012 DA14
-      var asteroid_2012_da14 = new Orbit3D(Ephemeris.asteroid_2012_da14,
+    if (featured_2015_tb145) {
+      // Special: 2015 TB145
+      var asteroid_2015_tb145 = new Orbit3D(Ephemeris.asteroid_2015_tb145,
           {
             color: 0xff0000, width: 1, jed: jed, object_size: 1.7,
           texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
           display_color: new THREE.Color(0xff0000),
           particle_geometry: particle_system_geometry,
-          name: '2012 DA14'
+          name: '2015 TB145'
           });
-      scene.add(asteroid_2012_da14.getEllipse());
-      feature_map['2012 DA14'] = {
-        orbit: asteroid_2012_da14,
+      scene.add(asteroid_2015_tb145.getEllipse());
+      feature_map['2015 TB145'] = {
+        orbit: asteroid_2015_tb145,
         idx: 5
       };
-      planets.push(asteroid_2012_da14);
+      planets.push(asteroid_2015_tb145);
     }
 
     // Skybox
@@ -618,7 +618,7 @@
       if (locked_object) {
         // Follow locked object
         var pos = locked_object.getPosAtTime(jed);
-        if (featured_2012_da14 && locked_object.name === 'Earth') {
+        if (featured_2015_tb145 && locked_object.name === 'Earth') {
           cam.position.set(pos[0]-20, pos[1]+20, pos[2]+20);
         }
         else {
@@ -808,10 +808,9 @@
     } // end asteroid results for loop
 
     // handle when view mode is switched - need to clear every row but the sun
-    if (featured_2012_da14) {
+    if (featured_2015_tb145) {
       $('#objects-of-interest tr:gt(2)').remove();
-    }
-    else {
+    } else {
       $('#objects-of-interest tr:gt(1)').remove();
     }
     $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
@@ -824,7 +823,7 @@
         case 'sun':
           clearLock(true);
           return false;
-        case '2012 DA14':
+        case '2015 TB145':
           // highlight the earth too
           //setHighlight('earth');
           break;
@@ -846,7 +845,7 @@
     }
     createParticleSystem();   // initialize and start the simulation
 
-    if (featured_2012_da14) {
+    if (featured_2015_tb145) {
       setLock('earth');
       $('#sun-selector').css('background-color', 'black');
       $('#earth-selector').css('background-color', 'green');

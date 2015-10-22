@@ -1,18 +1,18 @@
 window.Ephemeris = {
-  asteroid_2012_da14: {
-    full_name: '2012 DA14',
-    ma: 299.99868,
-    epoch: 2456200.5,
-    n: 0.98289640,
-    a: 1.0018381,
-    e: 0.1081389,
-    i: 10.33722,
+  asteroid_2015_tb145: {
+    full_name: '2015 TB145',
+    ma: 341.1997245774324,
+    epoch: 2457309.5,
+    n: 0.3206641595150288,
+    a: 2.113987596229848,
+    e: 0.860594945068473,
+    i: 39.69623810439965,
 
-    w_bar: 58.33968,
-    w: 271.07725,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
-    om: 147.26243,
+    //w_bar: 58.33968,
+    w: 121.5282023177674,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
+    om: 37.73535717530614,
 
-    P: 365.256
+    P: 1122.669900323325
   },
 
   // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
