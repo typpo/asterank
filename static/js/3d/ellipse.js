@@ -24,7 +24,7 @@
     var time = jed;
     var pts = []
     var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
-    var parts = this.eph.e > .20 ? 300 : 100;   // extra precision for high eccentricity
+    var parts = this.eph.e > .20 ? 1000 : 500;   // extra precision for high eccentricity
     var delta = Math.ceil(limit / parts);
     var prev;
     for (var i=0; i <= parts; i++, time+=delta) {
@@ -69,16 +69,13 @@
     // This position calculation is used to follow asteroids in 'lock-on' mode
     var e = this.eph.e;
     var a = this.eph.a;
-    var i = (this.eph.i) * pi/180;
-    var o = (this.eph.om) * pi/180; // longitude of ascending node
+    var i = this.eph.i * pi/180;
+    var o = this.eph.om * pi/180; // longitude of ascending node
     // TODO this logic prevents values of 0 from being treated properly.
-    var p = (this.eph.w_bar
-        || this.eph.w + this.eph.om)
-      * pi/180; // LONGITUDE of perihelion
-    var ma = this.eph.ma;
-    var M;
-    // Calculate mean anomaly at jed
-    ma = ma * pi/180;
+    var p = (this.eph.w_bar || (this.eph.w + this.eph.om)) * pi/180; // LONGITUDE of perihelion
+    var ma = this.eph.ma * pi/180;
+
+    // Calculate mean anomaly at jed.
     var n;
     if (this.eph.n) {
       n = this.eph.n * pi/180; // mean motion
@@ -88,9 +85,9 @@
     }
     var epoch = this.eph.epoch;
     var d = jed - epoch;
-    M = ma + n * d;
+    var M = ma + n * d;
 
-    // Estimate eccentric and true anom using iterative approx
+    // Estimate eccentric and true anom using iterative approx.
     var E0 = M;
     var lastdiff;
     do {

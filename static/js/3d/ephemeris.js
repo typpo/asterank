@@ -1,18 +1,17 @@
 window.Ephemeris = {
   asteroid_2015_tb145: {
     full_name: '2015 TB145',
-    ma: 341.1997245774324,
-    epoch: 2457309.5,
-    n: 0.3206641595150288,
-    a: 2.113987596229848,
-    e: 0.860594945068473,
-    i: 39.69623810439965,
+    epoch: 2457200.5,
+    a: 2.110377062287013,
+    e: 0.8603477664602396,
+    i: 39.67901769443974,
 
-    w_bar: 159.263559,
-    w: 121.5282023177674,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
-    om: 37.73535717530614,
+    w: 121.5407017387367,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
+    om: 37.7330440756587,  // long of ascending node
+    ma: 306.1071625012957,   // mean anomaly
 
-    P: 1122.669900323325
+    P: 1119.794973417489,
+    n: 0.3214874227389327,
   },
 
   // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
@@ -86,6 +85,6 @@ window.Ephemeris = {
 
 for (var x in Ephemeris) {
   if (Ephemeris.hasOwnProperty(x) && Ephemeris[x].w_bar && Ephemeris[x].L) {
-    Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
+    //Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
   }
 }

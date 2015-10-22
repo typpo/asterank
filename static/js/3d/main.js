@@ -85,7 +85,7 @@
 
   // 2015 TB145 feature special case
   if (featured_2015_tb145) {
-    jed = toJED(new Date('2015-08-01'));
+    jed = toJED(new Date('2015-10-01'));
     if (typeof mixpanel !== 'undefined') mixpanel.track('2015_tb145 special');
     setTimeout(function() {
       $('#hide_sidebar').trigger('click');
@@ -568,6 +568,7 @@
       attributes.value_color.value[i] = added_objects[i].opts.display_color;
       attributes.locked.value[i] = 0.0;
     }  // end added_objects loop
+
     setAttributeNeedsUpdateFlags();
 
     particleSystem = new THREE.ParticleSystem(
@@ -649,8 +650,8 @@
     var now = new Date().getTime();
     if (now - display_date_last_updated > 500 && typeof datgui !== 'undefined') {
       var georgian_date = fromJED(jed);
-      datgui['Display date'] = georgian_date.getMonth()+1 + "/"
-        + georgian_date.getDate() + "/" + georgian_date.getFullYear();
+      datgui['Display date'] = georgian_date.getMonth()+1 + '/'
+        + georgian_date.getDate() + '/' + georgian_date.getFullYear();
       display_date_last_updated = now;
     }
 
