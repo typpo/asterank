@@ -85,9 +85,11 @@
 
   // 2015 TB145 feature special case
   if (featured_2015_tb145) {
-    jed = toJED(new Date('2015-05-01'));
+    jed = toJED(new Date('2015-01-01'));
     if (typeof mixpanel !== 'undefined') mixpanel.track('2015_tb145 special');
-    $('#hide_sidebar').trigger('click');
+    setTimeout(function() {
+      $('#hide_sidebar').trigger('click');
+    }, 0);
   }
 
   function initGUI() {
