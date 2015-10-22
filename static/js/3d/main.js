@@ -110,7 +110,7 @@
       this['Speed'] = opts.jed_delta;
       this['Planet orbits'] = planet_orbits_visible;
       this['Milky Way'] = opts.milky_way_visible;
-      this['Display date'] = '12/26/2015';
+      this['Display date'] = '12/26/2012';
     };
 
     window.onload = function() {
