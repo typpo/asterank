@@ -842,7 +842,9 @@
     });
     $('#objects-of-interest-container').show();
 
-    jed = toJED(new Date());  // reset date
+    if (!featured_2015_tb145) {
+      jed = toJED(new Date());  // reset date
+    }
     if (!asteroids_loaded) {
       asteroids_loaded = true;
     }
@@ -853,6 +855,7 @@
       $('#sun-selector').css('background-color', 'black');
       $('#earth-selector').css('background-color', 'green');
     }
+
     if (!first_loaded) {
       animate();
       first_loaded = true;
