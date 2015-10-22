@@ -308,14 +308,16 @@
     planets = [mercury, venus, earth, mars, jupiter];
     if (featured_2015_tb145) {
       // Special: 2015 TB145
-      var asteroid_2015_tb145 = new Orbit3D(Ephemeris.asteroid_2015_tb145,
-          {
-            color: 0xffffff, width: 1, jed: jed, object_size: 1.7,
-          texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
-          display_color: new THREE.Color(0xffffff),
-          particle_geometry: particle_system_geometry,
-          name: '2015 TB145'
-          });
+      var asteroid_2015_tb145 = new Orbit3D(Ephemeris.asteroid_2015_tb145, {
+        color: 0xffffff,
+        width: 1,
+        jed: jed,
+        object_size: 1.7,
+        texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
+        display_color: new THREE.Color(0xffffff),
+        particle_geometry: particle_system_geometry,
+        name: '2015 TB145'
+      });
       scene.add(asteroid_2015_tb145.getEllipse());
       feature_map['2015 TB145'] = {
         orbit: asteroid_2015_tb145,
@@ -548,8 +550,7 @@
       if (i < planets.length) {
         attributes.size.value[i] = 75;
         attributes.is_planet.value[i] = 1.0;
-      }
-      else {
+      } else {
         attributes.size.value[i] = added_objects[i].opts.object_size;
         attributes.is_planet.value[i] = 0.0;
       }
@@ -564,7 +565,6 @@
         || (added_objects[i].eph.w + added_objects[i].eph.om);
       attributes.P.value[i] = added_objects[i].eph.P || -1.0;
       attributes.epoch.value[i] = added_objects[i].eph.epoch;
-      // http://threejsdoc.appspot.com/doc/three.js/examples.source/webgl_custom_attributes_lines.html.html
       attributes.value_color.value[i] = added_objects[i].opts.display_color;
       attributes.locked.value[i] = 0.0;
     }  // end added_objects loop

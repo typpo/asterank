@@ -8,7 +8,7 @@ window.Ephemeris = {
     e: 0.860594945068473,
     i: 39.69623810439965,
 
-    //w_bar: 58.33968,
+    w_bar: 159.263559,
     w: 121.5282023177674,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
     om: 37.73535717530614,
 
@@ -45,16 +45,15 @@ window.Ephemeris = {
   },
   earth: {
     full_name: 'Earth',
-    ma: -2.47311027,
     epoch: 2451545.0,
-    a:1.00000261,
+    ma: -2.47311027,
+    a: 1.00000261,
     e: 0.01671123,
-    i: 0.00001531,
-    w_bar: 102.93768193,
-    w: 102.93768193,
-    L: 100.46457166,
-    //om:-11.26064,
-    om: 0,
+    i: 0,
+    w_bar: 102.93768193,    // longitude of perihelion
+    w: 114.20783,           // arg of perihelion
+    L: 100.46457166,        // mean longitude
+    om: 348.73936,          // longitude of ascending node
     P: 365.256
   },
   mars:{

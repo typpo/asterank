@@ -71,6 +71,7 @@
     var a = this.eph.a;
     var i = (this.eph.i) * pi/180;
     var o = (this.eph.om) * pi/180; // longitude of ascending node
+    // TODO this logic prevents values of 0 from being treated properly.
     var p = (this.eph.w_bar
         || this.eph.w + this.eph.om)
       * pi/180; // LONGITUDE of perihelion
@@ -79,10 +80,10 @@
     // Calculate mean anomaly at jed
     ma = ma * pi/180;
     var n;
-    if (this.eph.n)
+    if (this.eph.n) {
       n = this.eph.n * pi/180; // mean motion
       //n = 17.0436 / sqrt(a*a*a);
-    else {
+    } else {
       n = 2*pi / this.eph.P;
     }
     var epoch = this.eph.epoch;
