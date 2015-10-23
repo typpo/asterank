@@ -62,6 +62,9 @@
 
   // 2015 TB145 special case
   var featured_2015_tb145 = getParameterByName('2015_tb145') === '1';
+  if (featured_2015_tb145) {
+    opts.jed_delta = 0.1;
+  }
 
   // glsl and webgl stuff
   var attributes
@@ -85,7 +88,7 @@
 
   // 2015 TB145 feature special case
   if (featured_2015_tb145) {
-    jed = toJED(new Date('2015-08-01'));
+    jed = toJED(new Date('2015-09-01'));
     if (typeof mixpanel !== 'undefined') mixpanel.track('2015_tb145 special');
     setTimeout(function() {
       $('#hide_sidebar').trigger('click');
@@ -547,7 +550,11 @@
     particle_system_shader_material.blending = THREE.AdditiveBlending;
 
     for (var i = 0; i < added_objects.length; i++) {
-      if (i < planets.length) {
+      var is_featured_object = added_objects[i].name == '2015 TB145';
+      if (is_featured_object) {
+        attributes.size.value[i] = 50;
+        attributes.is_planet.value[i] = 1.0;
+      } else if (i < planets.length) {
         attributes.size.value[i] = 75;
         attributes.is_planet.value[i] = 1.0;
       } else {
@@ -566,7 +573,7 @@
       attributes.P.value[i] = added_objects[i].eph.P || -1.0;
       attributes.epoch.value[i] = added_objects[i].eph.epoch;
       attributes.value_color.value[i] = added_objects[i].opts.display_color;
-      attributes.locked.value[i] = 0.0;
+      attributes.locked.value[i] = is_featured_object ? 1.0 : 0.0;
     }  // end added_objects loop
 
     setAttributeNeedsUpdateFlags();
@@ -623,15 +630,13 @@
         // Follow locked object
         var pos = locked_object.getPosAtTime(jed);
         if (featured_2015_tb145 && locked_object.name === 'Earth') {
-          cam.position.set(pos[0]-20, pos[1]+20, pos[2]+20);
-        }
-        else {
+          cam.position.set(pos[0]-35, pos[1]+35, pos[2]+35);
+        } else {
           //cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
           cam.position.set(pos[0]+25, pos[1]-25, pos[2]-70);
         }
         cameraControls.target = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      }
-      else {
+      } else {
         setNeutralCameraPosition();
       }
     }
