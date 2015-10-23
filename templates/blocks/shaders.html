@@ -65,7 +65,6 @@
 
       // radius vector, in AU
       float r = a * (1.0 - e*e) / (1.0 + e * cos(v)) * 50.;  // 50 pixels per AU
-// 50.235806799645424
 
       // heliocentric coords
       float X = r * (cos(o_rad) * cos(v + p_rad - o_rad) - sin(o_rad) * sin(v + p_rad - o_rad) * cos(i_rad));
