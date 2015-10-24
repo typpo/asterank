@@ -18,7 +18,9 @@ function AsteroidLookupCtrl($scope, $http, pubsub) {
             alert('Sorry, could not load object "' + preselected + '"');
             return;
           }
-          pubsub.publish('UpdateRankingsWithFeaturedAsteroid', [data[0]]);
+          setTimeout(function() {
+            pubsub.publish('UpdateRankingsWithFeaturedAsteroid', [data[0]]);
+          }, 0);
       });
     }
   }
