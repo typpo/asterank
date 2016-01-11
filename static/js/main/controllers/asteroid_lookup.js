@@ -20,7 +20,7 @@ function AsteroidLookupCtrl($scope, $http, pubsub) {
           }
           setTimeout(function() {
             pubsub.publish('UpdateRankingsWithFeaturedAsteroid', [data[0]]);
-          }, 0);
+          }, 100);
       });
     }
   }
