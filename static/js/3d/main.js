@@ -66,6 +66,8 @@
     opts.jed_delta = 0.1;
   }
 
+  var featured_davidbowie = getParameterByName('object') === 'davidbowie';
+
   // glsl and webgl stuff
   var attributes
     , uniforms
@@ -90,6 +92,11 @@
   if (featured_2015_tb145) {
     jed = toJED(new Date('2015-09-01'));
     if (typeof mixpanel !== 'undefined') mixpanel.track('2015_tb145 special');
+    setTimeout(function() {
+      $('#hide_sidebar').trigger('click');
+    }, 0);
+  } else if (featured_davidbowie) {
+    if (typeof mixpanel !== 'undefined') mixpanel.track('davidbowie special');
     setTimeout(function() {
       $('#hide_sidebar').trigger('click');
     }, 0);
@@ -327,6 +334,25 @@
         idx: 5
       };
       planets.push(asteroid_2015_tb145);
+    }
+    if (featured_davidbowie) {
+      // Special: davidbowie
+      var asteroid_davidbowie = new Orbit3D(Ephemeris.asteroid_davidbowie, {
+        color: 0xffffff,
+        width: 1,
+        jed: jed,
+        object_size: 1.7,
+        texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
+        display_color: new THREE.Color(0xffffff),
+        particle_geometry: particle_system_geometry,
+        name: '2015 TB145'
+      });
+      scene.add(asteroid_davidbowie.getEllipse());
+      feature_map['342843 Davidbowie'] = {
+        orbit: asteroid_davidbowie,
+        idx: 5
+      };
+      planets.push(asteroid_davidbowie);
     }
 
     // Skybox
@@ -629,7 +655,8 @@
       if (locked_object) {
         // Follow locked object
         var pos = locked_object.getPosAtTime(jed);
-        if (featured_2015_tb145 && locked_object.name === 'Earth') {
+        if ((featured_2015_tb145 || featured_davidbowie)
+            && locked_object.name === 'Earth') {
           cam.position.set(pos[0]-35, pos[1]+35, pos[2]+35);
         } else {
           //cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
@@ -817,7 +844,7 @@
     } // end asteroid results for loop
 
     // handle when view mode is switched - need to clear every row but the sun
-    if (featured_2015_tb145) {
+    if (featured_2015_tb145 || featured_davidbowie) {
       $('#objects-of-interest tr:gt(2)').remove();
     } else {
       $('#objects-of-interest tr:gt(1)').remove();

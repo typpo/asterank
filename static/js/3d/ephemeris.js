@@ -14,6 +14,21 @@ window.Ephemeris = {
     n: 0.3214874227389327,
   },
 
+  asteroid_davidbowie: {
+    full_name: '342843 Davidbowie',
+    epoch: 2457200.5,
+    a: 2.747666931600445,
+    e: 0.08879027843646621,
+    i: 2.768108067009298,
+
+    w: 300.6986330539765,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
+    om: 62.36399100210148,  // long of ascending node
+    ma: 220.1004135757952,   // mean anomaly
+
+    P: 1663.583320494612,
+    n: 0.2164003423002377,
+  },
+
   // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
   // http://ssd.jpl.nasa.gov/txt/aprx_pos_planets.pdf
   mercury: {
