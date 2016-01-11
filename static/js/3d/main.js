@@ -550,7 +550,6 @@
     for (var i = 0; i < added_objects.length; i++) {
       // TODO(ian): Make this generic.
       var is_featured_object = added_objects[i].name === '342843 Davidbowie';
-      console.log(added_objects[i].name, is_featured_object);
       if (is_featured_object) {
         attributes.size.value[i] = 40;
         attributes.is_planet.value[i] = 1.0;
@@ -819,6 +818,12 @@
     // handle when view mode is switched - need to clear every row but the sun
     if (featured_davidbowie) {
       $('#objects-of-interest tr:gt(2)').remove();
+      setTimeout(function() {
+        setLock('342843 Davidbowie');
+        $('#sun-selector').css('background-color', 'black');
+        $('#earth-selector').css('background-color', 'green');
+      }, 0);
+
     } else {
       $('#objects-of-interest tr:gt(1)').remove();
     }
