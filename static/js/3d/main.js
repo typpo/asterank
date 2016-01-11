@@ -348,7 +348,7 @@
     scene.add(skyBox);
     window.skyBox = skyBox;
 
-    $(opts.container).on('mousedown', function() {
+    $container.on('mousedown mousewheel', function() {
       opts.camera_fly_around = false;
     });
 
