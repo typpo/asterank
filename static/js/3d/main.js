@@ -60,12 +60,7 @@
     , locked_object_size = -1
     , locked_object_color = -1
 
-  // 2015 TB145 special case
-  var featured_2015_tb145 = getParameterByName('2015_tb145') === '1';
-  if (featured_2015_tb145) {
-    opts.jed_delta = 0.1;
-  }
-
+  // David Bowie special case.
   var featured_davidbowie = getParameterByName('object') === 'davidbowie';
 
   // glsl and webgl stuff
@@ -88,14 +83,8 @@
     $(this).css('font-weight', 'bold');
   });
 
-  // 2015 TB145 feature special case
-  if (featured_2015_tb145) {
-    jed = toJED(new Date('2015-09-01'));
-    if (typeof mixpanel !== 'undefined') mixpanel.track('2015_tb145 special');
-    setTimeout(function() {
-      $('#hide_sidebar').trigger('click');
-    }, 0);
-  } else if (featured_davidbowie) {
+  // Soecial cases.
+  if (featured_davidbowie) {
     if (typeof mixpanel !== 'undefined') mixpanel.track('davidbowie special');
     setTimeout(function() {
       $('#hide_sidebar').trigger('click');
@@ -316,25 +305,6 @@
     scene.add(jupiter.getEllipse());
 
     planets = [mercury, venus, earth, mars, jupiter];
-    if (featured_2015_tb145) {
-      // Special: 2015 TB145
-      var asteroid_2015_tb145 = new Orbit3D(Ephemeris.asteroid_2015_tb145, {
-        color: 0xffffff,
-        width: 1,
-        jed: jed,
-        object_size: 1.7,
-        texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
-        display_color: new THREE.Color(0xffffff),
-        particle_geometry: particle_system_geometry,
-        name: '2015 TB145'
-      });
-      scene.add(asteroid_2015_tb145.getEllipse());
-      feature_map['2015 TB145'] = {
-        orbit: asteroid_2015_tb145,
-        idx: 5
-      };
-      planets.push(asteroid_2015_tb145);
-    }
     if (featured_davidbowie) {
       // Special: davidbowie
       var asteroid_davidbowie = new Orbit3D(Ephemeris.asteroid_davidbowie, {
@@ -577,9 +547,10 @@
 
     for (var i = 0; i < added_objects.length; i++) {
       // TODO(ian): Make this generic.
-      var is_featured_object = added_objects[i].name == '2015 TB145';
+      var is_featured_object = added_objects[i].name === '342843 Davidbowie';
+      console.log(added_objects[i].name, is_featured_object);
       if (is_featured_object) {
-        attributes.size.value[i] = 50;
+        attributes.size.value[i] = 40;
         attributes.is_planet.value[i] = 1.0;
       } else if (i < planets.length) {
         attributes.size.value[i] = 75;
@@ -656,8 +627,7 @@
       if (locked_object) {
         // Follow locked object
         var pos = locked_object.getPosAtTime(jed);
-        if ((featured_2015_tb145 || featured_davidbowie)
-            && locked_object.name === 'Earth') {
+        if (featured_davidbowie && locked_object.name === 'Earth') {
           cam.position.set(pos[0]-35, pos[1]+35, pos[2]+35);
         } else {
           //cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
@@ -828,7 +798,7 @@
         'orbit': orbit,
         'idx': added_objects.length
       };
-      // TODO(@ian) all this specific objects-of-interest/featured stuff
+      // TODO(ian) all this specific objects-of-interest/featured stuff
       // needs to be moved out of 3d code !!
       if (featured_count++ < NUM_BIG_PARTICLES) {
         featured_html += '<tr data-full-name="'
@@ -845,7 +815,7 @@
     } // end asteroid results for loop
 
     // handle when view mode is switched - need to clear every row but the sun
-    if (featured_2015_tb145 || featured_davidbowie) {
+    if (featured_davidbowie) {
       $('#objects-of-interest tr:gt(2)').remove();
     } else {
       $('#objects-of-interest tr:gt(1)').remove();
@@ -860,10 +830,6 @@
         case 'sun':
           clearLock(true);
           return false;
-        case '2015 TB145':
-          // highlight the earth too
-          //setHighlight('earth');
-          break;
       }
       clearLock();
 
@@ -876,19 +842,11 @@
     });
     $('#objects-of-interest-container').show();
 
-    if (!featured_2015_tb145) {
-      jed = toJED(new Date());  // reset date
-    }
+    jed = toJED(new Date());  // reset date
     if (!asteroids_loaded) {
       asteroids_loaded = true;
     }
     createParticleSystem();   // initialize and start the simulation
-
-    if (featured_2015_tb145) {
-      setLock('earth');
-      $('#sun-selector').css('background-color', 'black');
-      $('#earth-selector').css('background-color', 'green');
-    }
 
     if (!first_loaded) {
       animate();
