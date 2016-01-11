@@ -628,8 +628,9 @@
       if (locked_object) {
         // Follow locked object
         var pos = locked_object.getPosAtTime(jed);
-        if (featured_davidbowie && locked_object.name === 'Earth') {
-          cam.position.set(pos[0]-35, pos[1]+35, pos[2]+35);
+        if (featured_davidbowie && locked_object.name === '342843 Davidbowie') {
+          cam.position.set(pos[0]-125, pos[1]+125, pos[2]+125);
+          //cam.position.set(pos[0]-35, pos[1]+35, pos[2]+35);
         } else {
           //cam.position.set(pos[0]+50, pos[1]+50, pos[2]+50);
           cam.position.set(pos[0]+25, pos[1]-25, pos[2]-70);
