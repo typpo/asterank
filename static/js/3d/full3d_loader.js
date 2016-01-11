@@ -8,7 +8,7 @@
       $('#not-supported').show();
     },
     run_asteroid_query: true,
-    show_dat_gui: true,
+    show_dat_gui: !isMobileOrTablet(),
     static_prefix: window.passthrough_vars.offline_mode ? 'static' : '/static'
   });
 
@@ -30,4 +30,8 @@
     $('#sidebar').show();
     $('#show_sidebar_container').hide();
   });
+
+  function isMobileOrTablet() {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  }
 })();
