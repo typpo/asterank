@@ -345,7 +345,7 @@
         texture_path: opts.static_prefix + '/img/cloud4.png',   // not using loadTexture, no support for offline mode...
         display_color: new THREE.Color(0xffffff),
         particle_geometry: particle_system_geometry,
-        name: '2015 TB145'
+        name: '342843 Davidbowie'
       });
       scene.add(asteroid_davidbowie.getEllipse());
       feature_map['342843 Davidbowie'] = {
@@ -576,6 +576,7 @@
     particle_system_shader_material.blending = THREE.AdditiveBlending;
 
     for (var i = 0; i < added_objects.length; i++) {
+      // TODO(ian): Make this generic.
       var is_featured_object = added_objects[i].name == '2015 TB145';
       if (is_featured_object) {
         attributes.size.value[i] = 50;

@@ -1,6 +1,6 @@
 function AsteroidLookupCtrl($scope, $http, pubsub) {
   'use strict';
-  var PRESELECT_URL_PARAM = 'object';
+  var PRESELECT_URL_PARAM = 'lookup';
 
   $scope.lookup_query = '';
 
