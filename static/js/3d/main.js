@@ -61,6 +61,8 @@
     , locked_object_color = -1
 
   // David Bowie special case.
+  // Note: If you're updating a featured case here, make sure you update in the
+  // full3d.html tempalte too.
   var featured_davidbowie = getParameterByName('object') === 'davidbowie';
 
   // glsl and webgl stuff
