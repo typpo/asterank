@@ -8,7 +8,10 @@ fi
 
 find . | grep $filter| grep run.sh | grep -v .swp | sort | while read ln; do
   echo "Processing $ln ...";
-  $ln || { echo "Failed."; exit 1; }
+  $ln || {
+    echo -e "\e[31mFailed!\e[0m"
+    # exit 1
+  }
   echo "Success."
 done;
 
