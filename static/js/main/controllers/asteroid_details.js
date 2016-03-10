@@ -201,6 +201,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
       }
 
       // Imagery data!
+      /*
       var imagery_req_url = '/api/skymorph/images_for?target=' + $scope.asteroid.prov_des;
       var requesting_images_for = $scope.asteroid.prov_des;
       $http.get(imagery_req_url).success(function(data) {
@@ -210,6 +211,7 @@ function AsteroidDetailsCtrl($scope, $http, pubsub) {
           $scope.checkAll(true);
         }
       });
+      */
     }
   }
 

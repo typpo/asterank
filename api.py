@@ -46,7 +46,7 @@ def rankings(sort_by, limit, orbits_only=False):
   if sort_by not in VALID_SORTS:
     return None
   if sort_by == UPCOMING_SORT:
-    return upcoming_passes()
+    return upcoming_passes(limit)
   if sort_by == SMALL_SIZE_SORT:
     results = ranking_by_smallest(limit, fields)
   else:
@@ -84,11 +84,11 @@ def autocomplete(query, limit):
 def compositions():
   return horizon.compositions()
 
-def upcoming_passes():
+def upcoming_passes(limit):
   jpl_objs = jpl.find({'Next Pass': {'$exists': True, '$ne': None}, \
     'Next Pass.date_iso': {'$gte': datetime.datetime.now().isoformat()}}, \
     {'_id': False},) \
-    .sort('Next Pass.date_iso', direction=pymongo.ASCENDING).limit(30)
+    .sort('Next Pass.date_iso', direction=pymongo.ASCENDING).limit(limit)
 
   ret = []
   seen = set()

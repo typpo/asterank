@@ -5,16 +5,16 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
   $scope.loading_initial_rankings = true;
   $scope.sort_orders = [
     {
+      text: 'most accessible',
+      search_value: 'accessibility'
+    },
+    {
       text: 'most cost effective',
       search_value: 'score'
     },
     {
       text: 'most valuable',
       search_value: 'value'
-    },
-    {
-      text: 'most accessible',
-      search_value: 'accessibility'
     },
     {
       text: 'upcoming passes',
