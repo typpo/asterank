@@ -18,21 +18,70 @@
     this.CreateParticle(opts.jed, opts.texture_path);
   }
 
-  Orbit3D.prototype.CreateOrbit = function(jed) {
-    var pts;
-    var points;
-    var time = jed;
-    var pts = []
-    var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
-    var parts = this.eph.e > .20 ? 1000 : 500;   // extra precision for high eccentricity
-    var delta = Math.ceil(limit / parts);
-    var prev;
-    for (var i=0; i <= parts; i++, time+=delta) {
-      var pos = this.getPosAtTime(time);
-      var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
-      prev = vector;
-      pts.push(vector);
+  Orbit3D.prototype.getR = function(t) {
+    // returns distance in AU to point on ellipse with angular parameter t
+    var a = this.eph.a;
+    var e = this.eph.e;
+    var r = a*(1 - e*e)/(1 + e*cos(t));
+    return r;
+  }
+
+  Orbit3D.prototype.getPosByAngle = function(t, i, o, w) {
+    // returns a point on the orbit using angular parameter t and 3 orbital angular parameters i, o, w
+    // distance to the point from the orbit focus
+    var r = this.getR(t) * PIXELS_PER_AU;
+    // heliocentric coords
+    var x = r * (cos(o) * cos(t + w) - sin(o) * sin(t + w) * cos(i));
+    var y = r * (sin(o) * cos(t + w) + cos(o) * sin(t + w) * cos(i));
+    var z = r * (sin(t + w) * sin(i));
+    
+    var point = [x, y, z];
+    return point;
+  }
+
+  Orbit3D.prototype.getSmoothOrbit = function(pnum) {
+    // returns an pnum-sized array of moore or less uniformly separated points along the orbit path
+    var points = [];
+    var delta = pi/pnum;
+    var alpha = 0;
+    var inc = this.eph.i*pi/180.0;
+    var w = this.eph.w*pi/180.0;
+    var om = this.eph.om*pi/180.0;
+    // var beta = om - w;
+    var beta = (this.eph.om + this.eph.w)*pi/180.0;
+    var base = 0.0;
+    for (var i=0; i <= pnum; i++, alpha+=delta) {
+        // get non-uniformly separated angular parameters
+        var angle = Math.abs(base - pi * sin(alpha)) + base;
+        if (i == Math.ceil(pnum/2.0)) {
+            base = pi;
+        }
+        var point = this.getPosByAngle(angle, inc, om, w);
+        var vector = new THREE.Vector3(point[0], point[1], point[2]);
+        points.push(vector);
     }
+    return points;
+  }
+
+  Orbit3D.prototype.CreateOrbit = function(jed) {
+    // var pts;
+    var points;
+    // var time = jed;
+    // var pts = []
+    // var limit = this.eph.P ? this.eph.P+1 : this.eph.per;
+    // var parts = this.eph.e > .20 ? 1000 : 500;   // extra precision for high eccentricity
+    // var delta = Math.ceil(limit / parts);
+    // var prev;
+    // for (var i=0; i <= parts; i++, time+=delta) {
+    //   var pos = this.getPosAtTime(time);
+    //   var vector = new THREE.Vector3(pos[0], pos[1], pos[2]);
+    //   prev = vector;
+    //   pts.push(vector);
+    // }
+
+    // Make more efficient:
+    var parts = 200;
+    var pts = this.getSmoothOrbit(parts);
 
     points = new THREE.Geometry();
     points.vertices = pts;
