@@ -15,11 +15,9 @@ db = conn.asterank
 coll = db.exo
 coll.drop()
 coll.ensure_index('kepoi_name', unique=True)  # kepid isn't actually unique...
-# TODO ensure koi_sma descending index
 
 c = 0
 for row in reader:
-  #row['pl_fulldes'] = '%s%s' % (row['pl_hostname'], row['pl_letter'])
   for key, val in row.iteritems():
     try:
       val = float(val)
@@ -28,9 +26,6 @@ for row in reader:
     row[key] = val
   coll.insert(row, continue_on_error=True)
   c += 1
-
-
-# put in db
 
 print 'Added', c, 'candidate exoplanets'
 print 'Done.'
