@@ -10,10 +10,10 @@ Asterank has been featured by BBC News, Popular Science, and other media.
 
 Asterank is configured to run with virtualenv.  Virtual environment setup:
 
-  1. Install these dependencies, eg. on ubuntu (jre is for google closure compiler):
+  1. Install python and python virtualenv dependencies, eg. on ubuntu:
 
     ```
-    sudo apt-get install python python-virtualenv default-jre
+    sudo apt-get install python python-virtualenv
     ```
 
   2. Enter the Asterank directory.  Then, create the virtual environment and install packages:
