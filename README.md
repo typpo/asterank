@@ -26,7 +26,16 @@ Asterank is configured to run with virtualenv.  Virtual environment setup:
 
   3. The web app requires mongodb.  `sudo apt-get install mongodb`.
 
-  4. The main app is a Flask web application.  You should be able to run it now.
+  4. The image pipeline requires some paths in `/var/asterank`.  Set them up like so:
+
+     ```
+     mkdir -p /var/asterank/neat_binary_store
+     mkdir -p /var/asterank/neat_binary_cache
+     mkdir -p /var/asterank/skymorph_store
+     mkdir -p /var/asterank/skymorph_cache
+     ```
+
+  5. The main app is a Flask web application.  You should be able to run it now.
 
     ```
     ./app.py
