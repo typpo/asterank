@@ -136,6 +136,7 @@ def _run(partial=False):
 
     # Clean up inputs
     for key,val in row.items():
+      if val is None: val = ''
       try:
         fv = float(val)
       except ValueError, TypeError:
