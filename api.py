@@ -21,9 +21,10 @@ user_objects_coll = db.user_objects
 # Special case sorts
 UPCOMING_SORT = 'upcoming'
 SMALL_SIZE_SORT = 'smallest'
+MOID_SORT = 'moid'
 
 VALID_SORTS = set(['price', 'profit', 'closeness', 'score', UPCOMING_SORT, \
-    SMALL_SIZE_SORT])
+    SMALL_SIZE_SORT, MOID_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
     'om', 'ma', 'n', 'w', 'per', 'epoch', 'spec']
@@ -49,6 +50,9 @@ def rankings(sort_by, limit, orbits_only=False):
     return upcoming_passes()
   if sort_by == SMALL_SIZE_SORT:
     results = ranking_by_smallest(limit, fields)
+  if sort_by == MOID_SORT:
+    return ranking_by_moid(limit, fields)
+    # results = ranking_by_smallest(limit, fields)
   else:
     results = list(asteroids.find({}, fields) \
             .sort(sort_by, direction=pymongo.DESCENDING) \
@@ -105,6 +109,10 @@ def upcoming_passes():
 def ranking_by_smallest(limit, fields):
   return list(asteroids.find({'diameter': {'$ne': ''}}, fields) \
       .sort('diameter', direction=pymongo.ASCENDING).limit(limit));
+
+def ranking_by_moid(limit, fields):
+  return list(asteroids.find({'moid': {'$ne': ''}}, fields) \
+      .sort('moid', direction=pymongo.ASCENDING).limit(limit));
 
 def jpl_lookup(query):
   result = jpl.find_one({'tag_name': query}, {'_id': False})
