@@ -49,6 +49,9 @@
           <th>
             Group
           </th>
+          <th>
+            <span>MOID <i bs-tooltip title="Minimum orbit intersection distance" class="icon-info-sign icon-white"></i></span>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +65,7 @@
           <td bo-text="asteroid.dv | number:3"></td>
           <td bo-text="asteroid.diameter" ng-show="sort_by.search_value == 'smallest'"></td>
           <td><span bo-text="asteroid.class"></span> <span bo-show="asteroid.pha == 'Y'">(PHA)</span></td>
+          <td bo-text="asteroid.moid | number:6"></td>
         </tr>
       </tbody>
     </table>

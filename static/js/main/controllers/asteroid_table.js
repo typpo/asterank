@@ -23,6 +23,10 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
     {
       text: 'smallest',
       search_value: 'smallest'
+    },
+    {
+      text: 'closest approaching',
+      search_value: 'moid'
     }
   ];
   $scope.limit_options = [100, 300, 500, 1000, 4000];
