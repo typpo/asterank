@@ -392,16 +392,26 @@
     setAttributeNeedsUpdateFlags();
   }
 
-  // camera locking fns
-  function clearLock(set_default_camera) {
-    if (!locked_object) return;
+  // camera locking and releasing fns
+
+  function resetView() {
+    if (locked_object) {
+      locked_object = null;
+    }
+
+    setDefaultCameraPosition();
+    cameraControls.target = new THREE.Vector3(0,0,0);
+    // reset camera pos
+    setNeutralCameraPosition();
+  }
+
+  function doClearLock(set_default_camera) {
 
     if (set_default_camera) {
       setDefaultCameraPosition();
     }
 
     cameraControls.target = new THREE.Vector3(0,0,0);
-
     // restore color and size
     attributes.value_color.value[locked_object_idx] = locked_object_color;
     attributes.size.value[locked_object_idx] = locked_object_size;
@@ -420,7 +430,12 @@
 
     // reset camera pos so subsequent locks don't get into crazy positions
     setNeutralCameraPosition();
-  }   // end clearLock
+  } 
+
+  function clearLock(set_default_camera) {
+    if (!locked_object) return;
+    doClearLock(set_default_camera)
+  }
 
   function setLock(full_name) {
     if (locked_object) {
@@ -721,6 +736,17 @@
     return THREE.ImageUtils.loadTexture(path);
   }
 
+  function resetColors(blacken) {
+
+    if (blacken) {
+      $('#objects-of-interest tr').css('background-color', '#000');
+    }
+
+    $('#sun-selector').css('background-color', 'yellowgreen'); //olivedrab
+    $('#reset-selector').css('background-color', 'dimgray');
+  }
+
+
   /** Public functions **/
 
   me.clearRankings = function() {
@@ -826,29 +852,36 @@
       $('#objects-of-interest tr:gt(2)').remove();
       setTimeout(function() {
         setLock('342843 Davidbowie');
-        $('#sun-selector').css('background-color', 'black');
-        $('#earth-selector').css('background-color', 'green');
+        resetColors()
       }, 0);
 
-    } else {
-      $('#objects-of-interest tr:gt(1)').remove();
+    } 
+    else {
+      $('#objects-of-interest tr:gt(2)').remove();
     }
     $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
-      $('#objects-of-interest tr').css('background-color', '#000');
       var $e = $(this);
       var full_name = $e.data('full-name');
-      $('#sun-selector').css('background-color', 'green');
+      resetColors()
       switch (full_name) {
         // special case full names
-        case 'sun':
-          clearLock(true);
+
+        case 'reset':
+          doClearLock(true);
+          resetColors(true);
           return false;
+
+        case 'sun':
+          resetView();
+          return false;
+
       }
-      clearLock();
+      // clearLock();
+      resetColors(true)
+      doClearLock();
 
       // set new lock
       $e.css('background-color', 'green');
-      $('#sun-selector').css('background-color', '#000');
       setLock(full_name);
 
       return false;
@@ -879,3 +912,4 @@
     object_movement_on = true;
   };
 }
+
