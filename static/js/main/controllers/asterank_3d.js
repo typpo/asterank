@@ -1,5 +1,6 @@
 function Asterank3DCtrl($scope, pubsub) {
   $scope.running = true;
+  var selected_object = null
 
   $scope.Init = function() {
     asterank3d = new Asterank3D({
@@ -19,14 +20,21 @@ function Asterank3DCtrl($scope, pubsub) {
         $ls.height($ls.height() + 250);
       },
       top_object_color: 0xffffff
+      // top_object_color: 0xdda0dd
     });
   }
 
+  $scope.ResetView = function() {
+    pubsub.publish('DeselectAsteroid', [selected_object]);
+    asterank3d.resetView(true, pubsub);
+  }
+
   $scope.SunView = function() {
-    asterank3d.clearLock();
+    asterank3d.resetView(false);
   }
 
   $scope.EarthView = function() {
+    pubsub.publish('DeselectAsteroid', [selected_object]);
     asterank3d.setLock('earth');
   }
 
@@ -43,6 +51,10 @@ function Asterank3DCtrl($scope, pubsub) {
   $scope.FullView = function() {
     window.location.href="http://asterank.com/3d";
   }
+
+  pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
+    selected_object = asteroid
+  });
 
   pubsub.subscribe('Lock3DView', function(asteroid) {
     if (asterank3d.isWebGLSupported()) {
