@@ -1,6 +1,7 @@
 function Asterank3DCtrl($scope, pubsub) {
   $scope.running = true;
   var selected_object = null
+  var initial_object = null
 
   $scope.Init = function() {
     asterank3d = new Asterank3D({
@@ -25,8 +26,10 @@ function Asterank3DCtrl($scope, pubsub) {
   }
 
   $scope.ResetView = function() {
-    pubsub.publish('DeselectAsteroid', [selected_object]);
-    asterank3d.resetView(true, pubsub);
+    if (selected_object) {
+      pubsub.publish('DeselectAsteroid', [selected_object]);
+    }
+    asterank3d.resetView(true);
   }
 
   $scope.SunView = function() {
@@ -53,7 +56,12 @@ function Asterank3DCtrl($scope, pubsub) {
   }
 
   pubsub.subscribe('AsteroidDetailsClick', function(asteroid) {
-    selected_object = asteroid
+    if (selected_object == asteroid) {
+      selected_object = null;
+    }
+    else {
+      selected_object = asteroid;
+    }
   });
 
   pubsub.subscribe('Lock3DView', function(asteroid) {
