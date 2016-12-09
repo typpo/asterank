@@ -51,8 +51,7 @@ def rankings(sort_by, limit, orbits_only=False):
   if sort_by == SMALL_SIZE_SORT:
     results = ranking_by_smallest(limit, fields)
   if sort_by == MOID_SORT:
-    return ranking_by_moid(limit, fields)
-    # results = ranking_by_smallest(limit, fields)
+    results = ranking_by_moid(limit, fields)
   else:
     results = list(asteroids.find({}, fields) \
             .sort(sort_by, direction=pymongo.DESCENDING) \
