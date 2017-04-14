@@ -1,4 +1,5 @@
-proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:100m max_size=1000m inactive=600m;
+# See http://serverfault.com/questions/583570/understanding-the-nginx-proxy-cache-path-directive
+proxy_cache_path  /var/www/cache levels=1:2 keys_zone=my-cache:100m max_size=1000m inactive=3d;
 proxy_temp_path /var/www/cache/tmp;
 
 server {
