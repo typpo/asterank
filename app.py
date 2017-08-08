@@ -32,7 +32,6 @@ try:
   app.config['ASSETS_DEBUG'] = local_config.DEBUG
 except ImportError:
   pass
-app.config['ASSETS_DEBUG'] = True
 
 # bundling
 assets = Environment(app)
