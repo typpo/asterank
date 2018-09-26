@@ -29,13 +29,13 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
       search_value: 'moid'
     }
   ];
-  $scope.limit_options = [100, 300, 500, 1000, 4000];
+  $scope.limit_options = [10, 100, 300, 500, 1000, 4000];
 
   // Functions
 
   $scope.Init = function() {
     // Initialization
-    $scope.limit = $scope.limit_options[1];
+    $scope.limit = $scope.limit_options[2];
     $scope.sort_by = $scope.sort_orders[0];
 
     $scope.UpdateRankings();
