@@ -17,9 +17,9 @@ window.OrbitDiagram = (function() {
   OrbitDiagram.prototype.prepareRender = function() {
     this.$e.empty();
     this.orbit_svg = d3.select(this.selector)
-        .append("svg:svg")
-        .attr("width", this.DIAGRAM_WIDTH)
-        .attr("height", this.DIAGRAM_HEIGHT)
+        .append('svg:svg')
+        .attr('width', this.DIAGRAM_WIDTH)
+        .attr('height', this.DIAGRAM_HEIGHT)
 
     this.plotSun();
   }
@@ -58,24 +58,24 @@ window.OrbitDiagram = (function() {
     var cx = this.SUN_X;
     var cy = this.SUN_Y + f;
 
-    return this.orbit_svg.append("svg:ellipse")
-        .style("stroke", color)
-        .style("fill", 'none')
-        .attr("rx", rx)
-        .attr("ry", ry)
-        .attr("cx", cx)
-        .attr("cy", cy)
-        .attr("transform", "rotate(" + rotate_deg + ", " + this.SUN_X + ", " + this.SUN_Y + ")")
+    return this.orbit_svg.append('svg:ellipse')
+        .style('stroke', color)
+        .style('fill', 'none')
+        .attr('rx', rx)
+        .attr('ry', ry)
+        .attr('cx', cx)
+        .attr('cy', cy)
+        .attr('transform', 'rotate(' + rotate_deg + ', ' + this.SUN_X + ', ' + this.SUN_Y + ')')
   }
 
   OrbitDiagram.prototype.plotSun = function() {
-    this.orbit_svg.append("svg:ellipse")
-        .style("stroke", "yellow")
-        .style("fill", "yellow")
-        .attr("rx", 2)
-        .attr("ry", 2)
-        .attr("cx", this.SUN_X)
-        .attr("cy", this.SUN_Y);
+    this.orbit_svg.append('svg:ellipse')
+        .style('stroke', 'yellow')
+        .style('fill', 'yellow')
+        .attr('rx', 2)
+        .attr('ry', 2)
+        .attr('cx', this.SUN_X)
+        .attr('cy', this.SUN_Y);
   }
 
   OrbitDiagram.prototype.plotEarth = function() {
