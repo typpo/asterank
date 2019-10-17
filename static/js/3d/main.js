@@ -60,6 +60,7 @@
     , locked_object_size = -1
     , locked_object_color = -1
 
+  var full_name_temp = null
   // David Bowie special case.
   // Note: If you're updating a featured case here, make sure you update in the
   // full3d.html tempalte too.
@@ -392,16 +393,27 @@
     setAttributeNeedsUpdateFlags();
   }
 
-  // camera locking fns
-  function clearLock(set_default_camera) {
-    if (!locked_object) return;
+  // camera locking and releasing fns
 
+  function resetView(set_default_camera, clear_lock) {
+    locked_object = null;
+
+    // setDefaultCameraPosition();
     if (set_default_camera) {
       setDefaultCameraPosition();
     }
 
     cameraControls.target = new THREE.Vector3(0,0,0);
 
+    if (clear_lock){
+      dropLock() 
+    }
+
+    // reset camera pos
+    setNeutralCameraPosition();
+  }
+
+  function dropLock(){
     // restore color and size
     attributes.value_color.value[locked_object_idx] = locked_object_color;
     attributes.size.value[locked_object_idx] = locked_object_size;
@@ -417,10 +429,12 @@
     locked_object_idx = -1;
     locked_object_size = -1;
     locked_object_color = null;
+  }
 
-    // reset camera pos so subsequent locks don't get into crazy positions
-    setNeutralCameraPosition();
-  }   // end clearLock
+  function clearLock(set_default_camera) {
+    if (!locked_object) return;
+    resetView(set_default_camera, true);
+  }
 
   function setLock(full_name) {
     if (locked_object) {
@@ -721,6 +735,16 @@
     return THREE.ImageUtils.loadTexture(path);
   }
 
+  function resetColors(blacken) {
+
+    if (blacken) {
+      $('#objects-of-interest tr').css('background-color', '#000');
+    }
+
+    $('#sun-selector').css('background-color', '#0DDD3B'); // 00D32F
+    $('#reset-selector').css('background-color', '#365A3E');
+  }
+
   /** Public functions **/
 
   me.clearRankings = function() {
@@ -739,11 +763,16 @@
     }
   };
 
+  me.resetView = function(clear_lock) {
+    return resetView(true, clear_lock);
+  };
+
   me.clearLock = function() {
     return clearLock(true);
   };
 
   me.setLock = function(full_name) {
+    dropLock();
     return setLock(full_name);
   };
 
@@ -826,29 +855,35 @@
       $('#objects-of-interest tr:gt(2)').remove();
       setTimeout(function() {
         setLock('342843 Davidbowie');
-        $('#sun-selector').css('background-color', 'black');
-        $('#earth-selector').css('background-color', 'green');
+        resetColors()
       }, 0);
 
-    } else {
-      $('#objects-of-interest tr:gt(1)').remove();
+    } 
+    else {
+      $('#objects-of-interest tr:gt(2)').remove();
     }
     $('#objects-of-interest').append(featured_html).on('click', 'tr', function() {
-      $('#objects-of-interest tr').css('background-color', '#000');
       var $e = $(this);
       var full_name = $e.data('full-name');
-      $('#sun-selector').css('background-color', 'green');
+      resetColors()
       switch (full_name) {
         // special case full names
+
+        case 'reset':
+          resetView(true, true);
+          resetColors(true);
+          return false;
+
         case 'sun':
-          clearLock(true);
+          resetView(true, false);
           return false;
       }
-      clearLock();
+
+      resetColors(true)
+      resetView(false, true);
 
       // set new lock
       $e.css('background-color', 'green');
-      $('#sun-selector').css('background-color', '#000');
       setLock(full_name);
 
       return false;
@@ -879,3 +914,4 @@
     object_movement_on = true;
   };
 }
+
