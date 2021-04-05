@@ -335,7 +335,7 @@ def about():
     from flask.ext.mail import Message
     msg = Message('Asterank Feedback',
               sender='feedback@asterank.com',
-              recipients=['typppo@gmail.com'],
+              recipients=['ianw_asterank_feedback2@ianww.com'],
               body='%s:\r\n%s' % (email, feedback))
     mail.send(msg)
     return render_template('about.html')
