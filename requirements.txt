@@ -4,7 +4,7 @@ Flask-Cors==2.0.1
 Flask-Mail==0.9.1
 Jinja2==2.11.3
 MarkupSafe==0.23
-Pillow==2.8.1
+Pillow==9.0.0
 PyYAML==3.11
 Werkzeug==0.15.3
 argparse==1.2.1
