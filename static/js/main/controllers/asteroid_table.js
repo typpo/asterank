@@ -77,6 +77,12 @@ function AsteroidTableCtrl($scope, $http, pubsub) {
 
   } // end UpdateRankings
 
+  // Reset asteroid selection in table and hide asteroid details
+  pubsub.subscribe('DeselectAsteroid', function(obj) {
+    $scope.selected = null;
+    pubsub.publish('AsteroidDetailsClick', [obj]);
+  });
+
   $scope.AsteroidClick = function(obj) {
     if (obj === $scope.selected) {
       // deselect
